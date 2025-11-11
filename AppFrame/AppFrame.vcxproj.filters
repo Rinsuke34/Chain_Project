@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ヘッダー ファイル">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ソース ファイル\プレイヤー入力">
+      <UniqueIdentifier>{150df228-381a-4cf8-b4c5-ff5dad7d993a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\プレイヤー入力">
+      <UniqueIdentifier>{9703e4ad-755b-4a6f-9a0c-be41ff6c06a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\シーン">
+      <UniqueIdentifier>{e9726881-3a88-4e46-973a-a9d5ff08c4bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\シーン\ベース">
+      <UniqueIdentifier>{ee5a0274-c36e-4f72-a970-51528ecba65f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\定義">
+      <UniqueIdentifier>{75d63d9f-a766-4588-ae66-a91120fea6c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\定義">
+      <UniqueIdentifier>{f8c328dd-bf3f-4704-adef-27e40b13edb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\フレームレート制御">
+      <UniqueIdentifier>{f15c7c2f-3110-4161-885f-2dfd448b8b73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\フレームレート制御">
+      <UniqueIdentifier>{88e71791-14aa-44b3-bcb2-a904d4e8ef80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\シーン\サーバー">
+      <UniqueIdentifier>{838fcb2c-c6d8-4b07-a266-aa6aa5db63e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\データリスト">
+      <UniqueIdentifier>{3a70bd4c-7a33-4dc0-9383-b4a93d534240}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\データリスト\ベース">
+      <UniqueIdentifier>{08debf6c-2d01-481c-850d-1be72ab33b0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\データリスト\サーバー">
+      <UniqueIdentifier>{0aee72a3-553a-468a-86c0-5d06e27a5ba8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\シーン">
+      <UniqueIdentifier>{fe24f884-f09a-43b1-8bdc-ca0ef570fe0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\シーン\ベース">
+      <UniqueIdentifier>{ffc2d1aa-14fe-417e-96d7-f03c207dc77b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\シーン\サーバー">
+      <UniqueIdentifier>{0fee6b54-5c98-4ecf-9bc9-5d5c7ce16fa8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\データリスト">
+      <UniqueIdentifier>{98dbccfd-a2ae-4c49-af23-e3654aab0276}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\データリスト\ベース">
+      <UniqueIdentifier>{889d56af-5864-47cc-a940-944752f08d26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\データリスト\サーバー">
+      <UniqueIdentifier>{48886f2f-95fc-4fdf-99e9-9d375168db53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\汎用関数">
+      <UniqueIdentifier>{7ba01d80-664d-4c8d-bbfb-d7203d1adfcd}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\AppMain.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="source\PlayerInput.cpp">
+      <Filter>ソース ファイル\プレイヤー入力</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Scene_Base.cpp">
+      <Filter>ソース ファイル\シーン\ベース</Filter>
+    </ClCompile>
+    <ClCompile Include="source\AppVariableDefine.cpp">
+      <Filter>ソース ファイル\定義</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Fps.cpp">
+      <Filter>ソース ファイル\フレームレート制御</Filter>
+    </ClCompile>
+    <ClCompile Include="source\SceneServer.cpp">
+      <Filter>ソース ファイル\シーン\サーバー</Filter>
+    </ClCompile>
+    <ClCompile Include="source\DataList_Base.cpp">
+      <Filter>ソース ファイル\データリスト\ベース</Filter>
+    </ClCompile>
+    <ClCompile Include="source\DataListServer.cpp">
+      <Filter>ソース ファイル\データリスト\サーバー</Filter>
+    </ClCompile>
+    <ClCompile Include="source\PublicProcess.cpp">
+      <Filter>ソース ファイル\汎用関数</Filter>
+    </ClCompile>
+    <ClCompile Include="source\PublicFunction.cpp">
+      <Filter>ソース ファイル\汎用関数</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="source\AppMain.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="source\PlayerInput.h">
+      <Filter>ヘッダー ファイル\プレイヤー入力</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Scene_Base.h">
+      <Filter>ヘッダー ファイル\シーン\ベース</Filter>
+    </ClInclude>
+    <ClInclude Include="source\AppStructDefine.h">
+      <Filter>ヘッダー ファイル\定義</Filter>
+    </ClInclude>
+    <ClInclude Include="source\AppVariableDefine.h">
+      <Filter>ヘッダー ファイル\定義</Filter>
+    </ClInclude>
+    <ClInclude Include="source\AppConstantDefine.h">
+      <Filter>ヘッダー ファイル\定義</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Fps.h">
+      <Filter>ヘッダー ファイル\フレームレート制御</Filter>
+    </ClInclude>
+    <ClInclude Include="source\AppFunctionDefine.h">
+      <Filter>ヘッダー ファイル\定義</Filter>
+    </ClInclude>
+    <ClInclude Include="source\AppFrame.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="source\SceneServer.h">
+      <Filter>ヘッダー ファイル\シーン\サーバー</Filter>
+    </ClInclude>
+    <ClInclude Include="source\DataList_Base.h">
+      <Filter>ヘッダー ファイル\データリスト\ベース</Filter>
+    </ClInclude>
+    <ClInclude Include="source\DataListServer.h">
+      <Filter>ヘッダー ファイル\データリスト\サーバー</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

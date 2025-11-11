@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ヘッダー ファイル">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ソース ファイル\シーン">
+      <UniqueIdentifier>{793aec4e-494c-4874-8a71-3c3e8d4b99e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\シーン">
+      <UniqueIdentifier>{5f7db13e-268a-4501-b34d-689582d1768d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\データリスト">
+      <UniqueIdentifier>{9ca8048b-1a6e-4789-b71e-d8ff4dd2f3ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\データリスト">
+      <UniqueIdentifier>{25931879-4600-4e59-a192-28e8117c6994}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\定義">
+      <UniqueIdentifier>{cef91479-a514-4f8a-8aa5-35ea10ddd82e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\定義">
+      <UniqueIdentifier>{8fdf0a69-3949-41b0-8a8b-1a7ec2983df0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\Main.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
