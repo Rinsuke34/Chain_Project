@@ -54,7 +54,7 @@
     <ClCompile Include="source\Main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="source\Scene_Load.cpp">
+    <ClCompile Include="source\Scene_Load_Checker.cpp">
       <Filter>ソース ファイル\シーン\ロード画面</Filter>
     </ClCompile>
     <ClCompile Include="source\Scene_Title.cpp">
@@ -63,9 +63,12 @@
     <ClCompile Include="source\Scene_Build.cpp">
       <Filter>ソース ファイル\シーン\ビルド設定画面</Filter>
     </ClCompile>
+    <ClCompile Include="source\Scene_Load_Draw.cpp">
+      <Filter>ソース ファイル\シーン\ロード画面</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="source\Scene_Load.h">
+    <ClInclude Include="source\Scene_Load_Checker.h">
       <Filter>ヘッダー ファイル\シーン\ロード画面</Filter>
     </ClInclude>
     <ClInclude Include="source\Scene_Title.h">
@@ -73,6 +76,9 @@
     </ClInclude>
     <ClInclude Include="source\Scene_Build.h">
       <Filter>ヘッダー ファイル\シーン\ビルド設定画面</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Scene_Load_Draw.h">
+      <Filter>ヘッダー ファイル\シーン\ロード画面</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

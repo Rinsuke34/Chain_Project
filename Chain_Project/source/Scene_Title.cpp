@@ -8,9 +8,11 @@
 
 // テスト
 #include "Scene_Build.h"
+#include "Scene_Load_Checker.h"
+#include "Scene_Load_Draw.h"
 
 // コンストラクタ
-Scene_Title::Scene_Title() : Scene_Base("Scene_Title", 0, true)
+Scene_Title::Scene_Title() : Scene_Base("Scene_Title", 0, true, false)
 {
 
 }
@@ -21,7 +23,8 @@ void Scene_Title::Update()
 	if (gstKeyboardInputData.cgInput[INPUT_TRG][KEY_INPUT_Z] == TRUE)
 	{
 		gpSceneServer->SetDeleteCurrentSceneFlg(true);
-		gpSceneServer->SetAddLoadSceneFlg(true);
+		gpSceneServer->AddSceneReservation(std::make_shared<Scene_Load_Checker>());
+		gpSceneServer->AddSceneReservation(std::make_shared<Scene_Load_Draw>());
 		gpSceneServer->AddSceneReservation(std::make_shared<Scene_Build>());
 		return;
 	}

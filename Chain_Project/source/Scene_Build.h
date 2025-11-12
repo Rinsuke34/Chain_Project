@@ -19,5 +19,5 @@ class Scene_Build : public Scene_Base
 
 	private:
 		// テスト用
-		int GrHandle[100];
+		int GrHandle[1000];
 };

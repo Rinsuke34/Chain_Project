@@ -171,7 +171,8 @@
   <ItemGroup>
     <ClCompile Include="source\Main.cpp" />
     <ClCompile Include="source\Scene_Build.cpp" />
-    <ClCompile Include="source\Scene_Load.cpp" />
+    <ClCompile Include="source\Scene_Load_Checker.cpp" />
+    <ClCompile Include="source\Scene_Load_Draw.cpp" />
     <ClCompile Include="source\Scene_Title.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -181,7 +182,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Scene_Build.h" />
-    <ClInclude Include="source\Scene_Load.h" />
+    <ClInclude Include="source\Scene_Load_Checker.h" />
+    <ClInclude Include="source\Scene_Load_Draw.h" />
     <ClInclude Include="source\Scene_Title.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -75,7 +75,7 @@ void Main::MainLoop()
 void Main::DxLibInit()
 {
 	/* タイトルの設定 */
-	SetMainWindowText("Post_Project");
+	SetMainWindowText("Chain_Project");
 
 	/* ログ出力を無効にする */
 	SetOutApplicationLogValidFlag(FALSE);

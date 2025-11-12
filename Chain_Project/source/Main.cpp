@@ -7,7 +7,8 @@
 #include "AppFrame.h"
 // 関連クラス
 #include "Scene_Title.h"
-#include "Scene_Load.h"
+#include "Scene_Load_Checker.h"
+#include "Scene_Load_Draw.h"
 
 // メインプログラム
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -25,14 +26,9 @@ namespace SCENE_SET
 	// ゲーム起動時のシーンをセット
 	void	SetFastScene()
 	{
-		gpSceneServer->SetAddLoadSceneFlg(true);
+		//gpSceneServer->AddSceneReservation(std::make_shared<Scene_Load_Checker>());
+		//gpSceneServer->AddSceneReservation(std::make_shared<Scene_Load_Draw>());
 		gpSceneServer->AddSceneReservation(std::make_shared<Scene_Title>());
-	}
-
-	// ロードシーンのセット
-	void	SetLoadScene()
-	{
-		gpSceneServer->AddSceneReservation(std::make_shared<Scene_Load>());
 	}
 }
 

@@ -1,4 +1,4 @@
-/* シーン"ロード画面"の宣言 */
+/* シーン"ロード画面(描写)"の宣言 */
 
 #pragma once
 
@@ -6,12 +6,12 @@
 // 共通定義
 #include "AppFrame.h"
 
-// シーン"ロード画面"
-class Scene_Load : public Scene_Base
+// シーン"ロード画面(描写)"
+class Scene_Load_Draw : public Scene_Base
 {
 	public:
-		Scene_Load();				// コンストラクタ
-		virtual ~Scene_Load() {};	// デストラクタ
+		Scene_Load_Draw();				// コンストラクタ
+		virtual ~Scene_Load_Draw() {};	// デストラクタ
 
 		/* 関数 */
 		virtual void	Update()			override;	// 更新

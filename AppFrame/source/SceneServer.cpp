@@ -15,7 +15,6 @@ SceneServer::SceneServer()
 	this->bSceneDeleteFlg			= false;	// シーン削除フラグ
 	this->bSceneAddFlg				= false;	// シーン追加フラグ
 	this->bDeleteCurrentSceneFlg	= false;	// 現行シーン削除フラグ
-	this->bAddLoadSceneFlg			= false;	// ロードシーン追加フラグ
 }
 
 // デストラクタ
@@ -68,6 +67,14 @@ void SceneServer::SceneDraw()
 	{
 		/* シーンの描写処理 */
 		Scene->get()->Draw();
+
+		/* 対象シーンの上層レイヤー描写停止フラグの確認 */
+		if (Scene->get()->bGetUpperLayerDrawStopFlg())
+		{
+			// 上層レイヤー描写停止フラグが有効であるなら
+			/* シーン描画処理を終了する */
+			break;
+		}
 	}
 }
 
@@ -83,17 +90,6 @@ void SceneServer::AddSceneReservation(std::shared_ptr<Scene_Base> NewScene)
 
 	/* 追加予定のシーンリストにシーンを追加する */
 	this->pstAddSceneList.push_back(NewScene);
-
-	/* ロードシーン追加フラグが有効であるか確認 */
-	if (this->bAddLoadSceneFlg == true)
-	{
-		// ロードシーン追加フラグが有効であるならば
-		/* ロードシーンの追加処理を行う */
-		SCENE_SET::SetLoadScene();
-
-		/* ロードシーン追加フラグの無効化 */
-		this->bAddLoadSceneFlg = false;
-	}
 }
 
 // シーン取得

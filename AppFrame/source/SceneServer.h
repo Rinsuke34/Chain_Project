@@ -26,7 +26,6 @@ class SceneServer
 		/* セッター */
 		void	AddSceneReservation(std::shared_ptr<Scene_Base> NewScene);																// シーン追加予約
 		void	SetDeleteCurrentSceneFlg(bool bDeleteCurrentSceneFlg)	{ this->bDeleteCurrentSceneFlg	= bDeleteCurrentSceneFlg; };	// シーン追加時の現行シーン削除フラグ設定
-		void	SetAddLoadSceneFlg(bool bAddLoadSceneFlg)				{ this->bAddLoadSceneFlg		= bAddLoadSceneFlg; };			// ロードシーン追加フラグ設定
 
 		/* ゲッター */
 		std::shared_ptr<Scene_Base>	GetScene(const std::string& cName);		// シーン取得
@@ -49,5 +48,4 @@ class SceneServer
 		bool	bSceneDeleteFlg;			// シーン削除フラグ(削除予定のシーンがあるならば有効にする)
 		bool	bSceneAddFlg;				// シーン追加フラグ(追加予定のシーンがあるならば有効にする)
 		bool	bDeleteCurrentSceneFlg;		// 現行シーン削除フラグ(シーンリスト内のすべてのシーンを削除するかのフラグ)
-		bool	bAddLoadSceneFlg;			// ロードシーン追加フラグ
 };
