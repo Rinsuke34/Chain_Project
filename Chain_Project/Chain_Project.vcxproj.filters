@@ -49,6 +49,12 @@
     <Filter Include="ヘッダー ファイル\シーン\ビルド設定画面">
       <UniqueIdentifier>{c58ace87-40fd-4264-afd3-a7d76426ba41}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\データリスト\画像データ管理">
+      <UniqueIdentifier>{198df300-d521-4654-905f-e6f02d1f32b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\データリスト\画像データ管理">
+      <UniqueIdentifier>{696c48ed-e4a4-4520-9f0a-fcd2215da09e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Main.cpp">
@@ -69,6 +75,9 @@
     <ClCompile Include="source\FunctionDefine.cpp">
       <Filter>ソース ファイル\定義</Filter>
     </ClCompile>
+    <ClCompile Include="source\DataList_Image.cpp">
+      <Filter>ソース ファイル\データリスト\画像データ管理</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Scene_Load_Checker.h">
@@ -85,6 +94,9 @@
     </ClInclude>
     <ClInclude Include="source\FunctionDefine.h">
       <Filter>ヘッダー ファイル\定義</Filter>
+    </ClInclude>
+    <ClInclude Include="source\DataList_Image.h">
+      <Filter>ヘッダー ファイル\データリスト\画像データ管理</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

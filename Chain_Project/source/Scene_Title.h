@@ -16,4 +16,7 @@ class Scene_Title : public Scene_Base
 		/* ŠÖ” */
 		virtual void	Update()			override;	// XV
 		virtual void	Draw()				override;	// •`‰æ
+
+	private:
+
 };
