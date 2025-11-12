@@ -66,39 +66,3 @@ namespace Struct_Collision
 		VECTOR	vecBoxHalfSize;		// 箱のサイズ(各軸の半径)
 	};
 };
-
-// 2Dパーツアニメーション関連
-namespace Struct_2DPartsAnim
-{
-	struct PARTS_ANIM_PARTS_IMAGE_DATA	// 各パーツの基本情報
-	{
-		std::string stPartsName;		// パーツ名
-		std::string stPartsPath;		// パーツの画像ファイルパス
-		int			iPartsGrHandle;		// パーツの画像のグラフィックハンドル(LoadGraphで取得した値)
-	};
-
-	struct PARTS_ANIM_PARTS_FRAME_DATA // フレームでのパーツの情報
-	{
-		std::string stPartsName;		// パーツ名
-		float		fPartsX;			// パーツのX座標
-		float		fPartsY;			// パーツのY座標
-		float		fPartsScaleX;		// パーツのXスケール
-		float		fPartsScaleY;		// パーツのYスケール
-		float		fPartsAngle;		// パーツの角度(ラジアン)
-		bool		bPartsFlipX;		// パーツの左右反転フラグ(有効であるならばパーツを反転する)
-	};
-
-	struct PARTS_ANIM_ANIM_DATA			// パーツアニメーションの情報
-	{
-		std::string													AnimName;			// アニメーション名
-		std::vector<std::vector<PARTS_ANIM_PARTS_FRAME_DATA>>		PartsAnimFrameData;	// パーツアニメーションの時間単位での情報
-	};
-
-	struct PARTS_ANIM_DATA				// パーツアニメーション群の情報
-	{
-		std::string									FileName;		// パーツアニメーション群の名称(==ファイル名)
-		std::vector<PARTS_ANIM_PARTS_IMAGE_DATA>	PartsImageData;	// パーツの画像データ(アニメーション用パーツの画像データ)
-		std::vector<PARTS_ANIM_ANIM_DATA>			PartsAnimData;	// パーツアニメーションの情報(アニメーションのフレーム情報など)
-	};
-
-}

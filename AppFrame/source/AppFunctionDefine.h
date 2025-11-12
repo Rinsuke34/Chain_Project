@@ -21,6 +21,7 @@ namespace SCENE_SET
 // 初期化
 namespace PROJECT_INIT
 {
+	void	DxLibInit();		// DXライブラリ初期化設定
 	void	Init();				// プロジェクト初期化処理
 }
 

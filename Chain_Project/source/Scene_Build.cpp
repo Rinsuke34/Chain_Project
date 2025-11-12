@@ -5,11 +5,10 @@
 /* 使用する要素のインクルード */
 // ヘッダファイル
 #include "Scene_Build.h"
-
-// テスト
+// 共通定義
+#include "FunctionDefine.h"
+// 関連クラス
 #include "Scene_Title.h"
-#include "Scene_Load_Checker.h"
-#include "Scene_Load_Draw.h"
 
 // コンストラクタ
 Scene_Build::Scene_Build() : Scene_Base("Scene_Build", 0, false, false)
@@ -38,8 +37,7 @@ void Scene_Build::Update()
 	if (gstKeyboardInputData.cgInput[INPUT_TRG][KEY_INPUT_Z] == TRUE)
 	{
 		gpSceneServer->SetDeleteCurrentSceneFlg(true);
-		//gpSceneServer->AddSceneReservation(std::make_shared<Scene_Load_Checker>());
-		//gpSceneServer->AddSceneReservation(std::make_shared<Scene_Load_Draw>());
+		LOAD_FUNCTION::AddLoadScene();
 		gpSceneServer->AddSceneReservation(std::make_shared<Scene_Title>());
 		return;
 	}

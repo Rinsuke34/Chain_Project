@@ -74,9 +74,6 @@ void Main::MainLoop()
 // DXライブラリ初期化
 void Main::DxLibInit()
 {
-	/* タイトルの設定 */
-	SetMainWindowText("Chain_Project");
-
 	/* ログ出力を無効にする */
 	SetOutApplicationLogValidFlag(FALSE);
 
@@ -94,6 +91,9 @@ void Main::DxLibInit()
 
 	/* 使用するDirect3DのバージョンをDirectX11に設定(デフォルトでなっているはずだが念のため) */
 	SetUseDirect3DVersion(DX_DIRECT3D_11);
+
+	/* プロジェクトでの初期設定を行う */
+	PROJECT_INIT::DxLibInit();
 }
 
 // メインプログラム初期化
@@ -142,7 +142,6 @@ void Main::MainEnd()
 
 	/* データリストサーバーを削除する */
 	gpDataListServer.reset();
-
 
 	/* DXライブラリの使用を終了する */
 	DxLib_End();

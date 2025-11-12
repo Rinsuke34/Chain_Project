@@ -7,8 +7,6 @@
 #include "AppFrame.h"
 // 関連クラス
 #include "Scene_Title.h"
-#include "Scene_Load_Checker.h"
-#include "Scene_Load_Draw.h"
 
 // メインプログラム
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -26,8 +24,6 @@ namespace SCENE_SET
 	// ゲーム起動時のシーンをセット
 	void	SetFastScene()
 	{
-		//gpSceneServer->AddSceneReservation(std::make_shared<Scene_Load_Checker>());
-		//gpSceneServer->AddSceneReservation(std::make_shared<Scene_Load_Draw>());
 		gpSceneServer->AddSceneReservation(std::make_shared<Scene_Title>());
 	}
 }
@@ -35,6 +31,13 @@ namespace SCENE_SET
 // 初期化
 namespace PROJECT_INIT
 {
+	// DXライブラリ初期化設定
+	void	DxLibInit()
+	{
+		/* タイトルの設定 */
+		SetMainWindowText("ChainCrash");
+	}
+
 	// プロジェクト初期化処理
 	void	Init()
 	{

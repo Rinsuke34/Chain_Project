@@ -66,6 +66,9 @@
     <ClCompile Include="source\Scene_Load_Draw.cpp">
       <Filter>ソース ファイル\シーン\ロード画面</Filter>
     </ClCompile>
+    <ClCompile Include="source\FunctionDefine.cpp">
+      <Filter>ソース ファイル\定義</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Scene_Load_Checker.h">
@@ -79,6 +82,9 @@
     </ClInclude>
     <ClInclude Include="source\Scene_Load_Draw.h">
       <Filter>ヘッダー ファイル\シーン\ロード画面</Filter>
+    </ClInclude>
+    <ClInclude Include="source\FunctionDefine.h">
+      <Filter>ヘッダー ファイル\定義</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
