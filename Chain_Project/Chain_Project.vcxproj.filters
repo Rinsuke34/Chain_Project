@@ -31,10 +31,48 @@
     <Filter Include="ソース ファイル\定義">
       <UniqueIdentifier>{8fdf0a69-3949-41b0-8a8b-1a7ec2983df0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\シーン\ロード画面">
+      <UniqueIdentifier>{fc95a68f-389a-47fe-9168-32a07ff34724}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\シーン\ロード画面">
+      <UniqueIdentifier>{b0cea324-cfa1-477a-85f9-53ababbea649}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\シーン\タイトル画面">
+      <UniqueIdentifier>{ce8543a2-985c-4bf5-8815-615971a7ff14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\シーン\タイトル画面">
+      <UniqueIdentifier>{97123717-88c3-4e65-bfb8-5aef8d0dc324}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\シーン\ビルド設定画面">
+      <UniqueIdentifier>{bb9739ed-0556-46c1-b165-64d0bb3a7618}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\シーン\ビルド設定画面">
+      <UniqueIdentifier>{c58ace87-40fd-4264-afd3-a7d76426ba41}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="source\Scene_Load.cpp">
+      <Filter>ソース ファイル\シーン\ロード画面</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Scene_Title.cpp">
+      <Filter>ソース ファイル\シーン\タイトル画面</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Scene_Build.cpp">
+      <Filter>ソース ファイル\シーン\ビルド設定画面</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="source\Scene_Load.h">
+      <Filter>ヘッダー ファイル\シーン\ロード画面</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Scene_Title.h">
+      <Filter>ヘッダー ファイル\シーン\タイトル画面</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Scene_Build.h">
+      <Filter>ヘッダー ファイル\シーン\ビルド設定画面</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

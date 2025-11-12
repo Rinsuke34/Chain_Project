@@ -170,11 +170,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="source\Main.cpp" />
+    <ClCompile Include="source\Scene_Build.cpp" />
+    <ClCompile Include="source\Scene_Load.cpp" />
+    <ClCompile Include="source\Scene_Title.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AppFrame\AppFrame.vcxproj">
       <Project>{2649d2cb-85d2-4b89-a222-109ede46ff05}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="source\Scene_Build.h" />
+    <ClInclude Include="source\Scene_Load.h" />
+    <ClInclude Include="source\Scene_Title.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

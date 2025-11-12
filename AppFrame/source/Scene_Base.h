@@ -12,7 +12,7 @@
 class Scene_Base
 {
 	public:
-		Scene_Base(const std::string& cName, const int iLayer, const bool bLowerLayerUpdataStopFlg, const bool bUpperLayerDrawStopFlg);	// コンストラクタ
+		Scene_Base(const std::string& cName, const int iLayer, const bool bLowerLayerUpdataStopFlg);	// コンストラクタ
 		virtual ~Scene_Base() {};	// デストラクタ
 
 		/* 関数 */
@@ -26,7 +26,6 @@ class Scene_Base
 		bool	bGetDeleteFlg()					{ return this->bDeleteFlg; };				// 削除フラグを取得
 		int		iGetSceneLayerOrder()			{ return this->iLayerOrder; };				// レイヤー順序を取得
 		bool	bGetLowerLayerUpdateStopFlg()	{ return this->bLowerLayerUpdataStopFlg; }	// 下層レイヤー計算停止フラグを取得
-		bool	bGetUpperLayerDrawStopFlg()		{ return this->bUpperLayerDrawStopFlg; }	// 上層レイヤー描写停止フラグを取得
 		std::string	stGetSceneName()			{ return this->stSceneName; }				// シーン名称を取得
 
 	protected:
@@ -35,6 +34,5 @@ class Scene_Base
 		std::string		stSceneName;					// シーン名称
 		int				iLayerOrder;					// レイヤー順序(値が大きいほど手前に描写)
 		bool			bLowerLayerUpdataStopFlg;		// 下層レイヤー計算停止フラグ(有効なら下層レイヤーで計算を行わない)
-		bool			bUpperLayerDrawStopFlg;			// 上層レイヤー描写停止フラグ(有効なら上層レイヤーの描画を行わない)
 		bool			bDeleteFlg;						// 削除フラグ(有効ならシーンを削除)
 };
