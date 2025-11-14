@@ -5,6 +5,8 @@
 #include <windows.h>
 // 外部ライブラリ
 #include "AppFrame.h"
+// 共通定義
+#include "FunctionDefine.h"
 // 関連クラス
 #include "Scene_Title.h"
 #include "DataList_Image.h"
@@ -25,6 +27,7 @@ namespace SCENE_SET
 	// ゲーム起動時のシーンをセット
 	void	SetFastScene()
 	{
+		LOAD_FUNCTION::AddLoadScene();
 		gpSceneServer->AddSceneReservation(std::make_shared<Scene_Title>());
 	}
 }
@@ -36,7 +39,7 @@ namespace PROJECT_INIT
 	void	DxLibInit()
 	{
 		/* タイトルの設定 */
-		SetMainWindowText("ChainCrash");
+		SetMainWindowText("ArcanaChain");
 	}
 
 	// プロジェクト初期化処理

@@ -18,5 +18,11 @@ class Scene_Title : public Scene_Base
 		virtual void	Draw()				override;	// 描画
 
 	private:
+		/* 関数 */
+		void AdvanceImageLoad();		// 画像リソースの先行ロード
+
+		/* 変数 */
+		// 画像
+		std::shared_ptr<int> Image_TitleLogo;	// タイトルロゴ
 
 };

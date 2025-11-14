@@ -23,7 +23,7 @@ DataList_Image::~DataList_Image()
 }
 
 // 画像データ読み込み
-void DataList_Image::LoadImage(std::string& cFilePath)
+void DataList_Image::LoadImageHandle(std::string& cFilePath)
 {
 	// 引数
 	// cFilePath	<- 読み込む画像データのファイル名
@@ -44,7 +44,7 @@ void DataList_Image::LoadImage(std::string& cFilePath)
 }
 
 // 画像データ読み込み(非同期読み込み対応)
-void DataList_Image::LoadImage_ASync(std::string& cFilePath)
+void DataList_Image::LoadImageHandle_ASync(std::string& cFilePath)
 {
 	// 引数
 	// cFilePath	<- 読み込む画像データのファイル名
@@ -53,7 +53,7 @@ void DataList_Image::LoadImage_ASync(std::string& cFilePath)
 	SetUseASyncLoadFlag(TRUE);
 
 	/* 対象の画像データを読み込む */
-	LoadImage(cFilePath);
+	LoadImageHandle(cFilePath);
 
 	/* 非同期読み込みフラグを無効にする */
 	SetUseASyncLoadFlag(FALSE);
@@ -75,7 +75,7 @@ std::shared_ptr<int> DataList_Image::iGetImageHandle(std::string& cFilePath)
 	{
 		// 読み込まれていない場合
 		/* 画像データを読み込む */
-		LoadImage(cFilePath);
+		LoadImageHandle(cFilePath);
 	}
 
 	/* 画像ハンドルのポインタをスマートポインタで返す */

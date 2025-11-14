@@ -14,9 +14,9 @@ class DataList_Image : public DataList_Base
 		virtual ~DataList_Image();	// デストラクタ
 
 		/* 関数 */
-		void					LoadImage(std::string& cFilePath);			// 画像データ読み込み
-		void					LoadImage_ASync(std::string& cFilePath);	// 画像データ読み込み(非同期読み込み対応)
-		std::shared_ptr<int>	iGetImageHandle(std::string& cFilePath);	// 画像データハンドル取得
+		void					LoadImageHandle(std::string& cFilePath);		// 画像データ読み込み
+		void					LoadImageHandle_ASync(std::string& cFilePath);	// 画像データ読み込み(非同期読み込み対応)
+		std::shared_ptr<int>	iGetImageHandle(std::string& cFilePath);		// 画像データハンドル取得
 
 	private:
 		/* 変数 */
