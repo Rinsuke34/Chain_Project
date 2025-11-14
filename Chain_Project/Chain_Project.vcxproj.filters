@@ -55,6 +55,12 @@
     <Filter Include="ソース ファイル\データリスト\画像データ管理">
       <UniqueIdentifier>{696c48ed-e4a4-4520-9f0a-fcd2215da09e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\データリスト\フォントデータ管理">
+      <UniqueIdentifier>{1e4a59e5-ac34-490b-8342-9efa0671dae3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\データリスト\フォントデータ管理">
+      <UniqueIdentifier>{d561c7ab-5a30-4aa1-9a3b-96e1d8adee59}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Main.cpp">
@@ -78,6 +84,12 @@
     <ClCompile Include="source\DataList_Image.cpp">
       <Filter>ソース ファイル\データリスト\画像データ管理</Filter>
     </ClCompile>
+    <ClCompile Include="source\DataList_Font.cpp">
+      <Filter>ソース ファイル\データリスト\フォントデータ管理</Filter>
+    </ClCompile>
+    <ClCompile Include="source\VariableDefine.cpp">
+      <Filter>ソース ファイル\定義</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Scene_Load_Checker.h">
@@ -97,6 +109,12 @@
     </ClInclude>
     <ClInclude Include="source\DataList_Image.h">
       <Filter>ヘッダー ファイル\データリスト\画像データ管理</Filter>
+    </ClInclude>
+    <ClInclude Include="source\DataList_Font.h">
+      <Filter>ヘッダー ファイル\データリスト\フォントデータ管理</Filter>
+    </ClInclude>
+    <ClInclude Include="source\VariableDefine.h">
+      <Filter>ヘッダー ファイル\定義</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

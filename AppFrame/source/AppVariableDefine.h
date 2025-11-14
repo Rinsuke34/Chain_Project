@@ -38,4 +38,3 @@ extern int giNowFps;							// 現在のフレームレート
 extern bool gbDrawSceneListFlg;					// シーンリストの描写
 extern bool	gbDrawDatalistFlg;					// プレイヤーステータスの描写
 extern bool gbDrawFpsFlg;						// フレームレートの描写
-

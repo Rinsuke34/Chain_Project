@@ -169,6 +169,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\DataList_Font.cpp" />
     <ClCompile Include="source\DataList_Image.cpp" />
     <ClCompile Include="source\FunctionDefine.cpp" />
     <ClCompile Include="source\Main.cpp" />
@@ -176,6 +177,7 @@
     <ClCompile Include="source\Scene_Load_Checker.cpp" />
     <ClCompile Include="source\Scene_Load_Draw.cpp" />
     <ClCompile Include="source\Scene_Title.cpp" />
+    <ClCompile Include="source\VariableDefine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AppFrame\AppFrame.vcxproj">
@@ -183,12 +185,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\DataList_Font.h" />
     <ClInclude Include="source\DataList_Image.h" />
     <ClInclude Include="source\FunctionDefine.h" />
     <ClInclude Include="source\Scene_Build.h" />
     <ClInclude Include="source\Scene_Load_Checker.h" />
     <ClInclude Include="source\Scene_Load_Draw.h" />
     <ClInclude Include="source\Scene_Title.h" />
+    <ClInclude Include="source\VariableDefine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

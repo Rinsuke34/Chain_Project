@@ -20,9 +20,9 @@ class Scene_Title : public Scene_Base
 	private:
 		/* 関数 */
 		void AdvanceImageLoad();		// 画像リソースの先行ロード
+		void AdvanceFontLoad();			// フォントリソースの先行ロード
 
 		/* 変数 */
 		// 画像
 		std::shared_ptr<int> Image_TitleLogo;	// タイトルロゴ
-
 };
