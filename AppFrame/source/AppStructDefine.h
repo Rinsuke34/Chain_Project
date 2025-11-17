@@ -66,3 +66,13 @@ namespace Struct_Collision
 		VECTOR	vecBoxHalfSize;		// 箱のサイズ(各軸の半径)
 	};
 };
+
+// 2D関係
+namespace Struct_2D
+{
+	struct POSITION		// 2D座標
+	{
+		int	iX;		// X座標
+		int	iY;		// Y座標
+	};
+};

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -169,14 +169,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\Card_Base.cpp" />
     <ClCompile Include="source\DataList_Font.cpp" />
     <ClCompile Include="source\DataList_Image.cpp" />
     <ClCompile Include="source\FunctionDefine.cpp" />
     <ClCompile Include="source\Main.cpp" />
     <ClCompile Include="source\Scene_Build.cpp" />
+    <ClCompile Include="source\Scene_Buttle.cpp" />
     <ClCompile Include="source\Scene_Load_Checker.cpp" />
     <ClCompile Include="source\Scene_Load_Draw.cpp" />
     <ClCompile Include="source\Scene_Title.cpp" />
+    <ClCompile Include="source\Scene_UI_Button.cpp" />
     <ClCompile Include="source\VariableDefine.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -185,13 +188,16 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\Card_Base.h" />
     <ClInclude Include="source\DataList_Font.h" />
     <ClInclude Include="source\DataList_Image.h" />
     <ClInclude Include="source\FunctionDefine.h" />
+    <ClInclude Include="source\Scene_Battle.h" />
     <ClInclude Include="source\Scene_Build.h" />
     <ClInclude Include="source\Scene_Load_Checker.h" />
     <ClInclude Include="source\Scene_Load_Draw.h" />
     <ClInclude Include="source\Scene_Title.h" />
+    <ClInclude Include="source\Scene_UI_Button.h" />
     <ClInclude Include="source\VariableDefine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -61,6 +61,30 @@
     <Filter Include="ソース ファイル\データリスト\フォントデータ管理">
       <UniqueIdentifier>{d561c7ab-5a30-4aa1-9a3b-96e1d8adee59}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\シーン\汎用UI">
+      <UniqueIdentifier>{eb53c335-cab8-4d54-bae8-4935e66b401d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\シーン\汎用UI">
+      <UniqueIdentifier>{a70e388a-86b1-4e94-8020-4994aa610377}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\シーン\汎用UI\ボタン">
+      <UniqueIdentifier>{8a4beb1f-9fb3-473b-b0d5-41426e504771}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\シーン\汎用UI\ボタン">
+      <UniqueIdentifier>{095df6c8-90d0-4f5d-a8ae-7249565f259e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\シーン\バトル画面">
+      <UniqueIdentifier>{78727398-a4ea-4464-a9b4-42cb5a9de745}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\シーン\バトル画面">
+      <UniqueIdentifier>{a2975fa9-12d8-4199-b216-fe73069b83aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\カード">
+      <UniqueIdentifier>{bb39d4a7-7ffb-494d-af54-ee575986ca1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\カード">
+      <UniqueIdentifier>{0e4c181f-c3f1-440f-b685-013d2a4aef90}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Main.cpp">
@@ -90,6 +114,15 @@
     <ClCompile Include="source\VariableDefine.cpp">
       <Filter>ソース ファイル\定義</Filter>
     </ClCompile>
+    <ClCompile Include="source\Scene_UI_Button.cpp">
+      <Filter>ソース ファイル\シーン\汎用UI\ボタン</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Scene_Buttle.cpp">
+      <Filter>ソース ファイル\シーン\バトル画面</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Card_Base.cpp">
+      <Filter>ソース ファイル\カード</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Scene_Load_Checker.h">
@@ -115,6 +148,15 @@
     </ClInclude>
     <ClInclude Include="source\VariableDefine.h">
       <Filter>ヘッダー ファイル\定義</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Scene_UI_Button.h">
+      <Filter>ヘッダー ファイル\シーン\汎用UI\ボタン</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Scene_Battle.h">
+      <Filter>ヘッダー ファイル\シーン\バトル画面</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Card_Base.h">
+      <Filter>ヘッダー ファイル\カード</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

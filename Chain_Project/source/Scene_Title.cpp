@@ -10,6 +10,8 @@
 #include "VariableDefine.h"
 // 関連クラス
 #include "Scene_Build.h"
+#include "Scene_UI_Button.h"
+#include "Scene_Battle.h"
 #include "DataList_Image.h"
 #include "DataList_Font.h"
 
@@ -21,16 +23,36 @@ Scene_Title::Scene_Title() : Scene_Base("Scene_Title", 0, false, false)
 
 	/* フォントリソースの先行ロード */
 	AdvanceFontLoad();
+
+	/* UI(ボタン)の作成 */
+	AddButton();
 }
 
 // 更新
 void Scene_Title::Update()
 {
-	if (gstKeyboardInputData.cgInput[INPUT_TRG][KEY_INPUT_Z] == TRUE)
+	/* "はじめから"ボタンが押された場合の処理 */
+	if (this->UI_Button[0]->GetMouseOverFlg() && (gstKeyboardInputData.igInput[INPUT_TRG] & MOUSE_INPUT_LEFT))
+	{
+		gpSceneServer->SetDeleteCurrentSceneFlg(true);
+		LOAD_FUNCTION::AddLoadScene();
+		gpSceneServer->AddSceneReservation(std::make_shared<Scene_Battle>());
+		return;
+	}
+
+	/* "ビルド設定"ボタンが押された場合の処理 */
+	if (this->UI_Button[1]->GetMouseOverFlg() && (gstKeyboardInputData.igInput[INPUT_TRG] & MOUSE_INPUT_LEFT))
 	{
 		gpSceneServer->SetDeleteCurrentSceneFlg(true);
 		LOAD_FUNCTION::AddLoadScene();
 		gpSceneServer->AddSceneReservation(std::make_shared<Scene_Build>());
+		return;
+	}
+
+	/* "終了"ボタンが押された場合の処理 */
+	if (this->UI_Button[2]->GetMouseOverFlg() && (gstKeyboardInputData.igInput[INPUT_TRG] & MOUSE_INPUT_LEFT))
+	{
+		gbEndFlg = true;
 		return;
 	}
 }
@@ -38,10 +60,8 @@ void Scene_Title::Update()
 // 描画
 void Scene_Title::Draw()
 {
-//	DrawString(16, 16, "Title", GetColor(255, 255, 255));
-	DrawStringToHandle(16, 16, "タイトル", GetColor(255, 0, 0), giFont_DonguriDuel);
-//	DrawExtendGraph(0, int y1, int x2, int y2, int GrHandle, int TransFlag);
-//	DrawGraph(0, 0, *(this->Image_TitleLogo), TRUE);
+	DrawExtendGraph(0, 0, SCREEN_SIZE_WIDE, SCREEN_SIZE_HEIGHT, *(this->Image_BackGround), TRUE);
+	DrawExtendGraph(0, 0, SCREEN_SIZE_WIDE, 500, *(this->Image_TitleLogo), TRUE);
 }
 
 // 画像リソースの先行ロード
@@ -58,6 +78,23 @@ void Scene_Title::AdvanceImageLoad()
 	std::string ImageFilePath = "Logo/Title";
 	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
 	this->Image_TitleLogo = pDataList_Image->iGetImageHandle(ImageFilePath);
+	// タイトル背景
+	ImageFilePath = "BackGround/Title_BackGround";
+	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
+	this->Image_BackGround = pDataList_Image->iGetImageHandle(ImageFilePath);
+	// UI(ボタン)
+	ImageFilePath = "UI/Button/Button_Frame_Corner";
+	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
+	ImageFilePath = "UI/Button/Button_Frame_Corner_Over";
+	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
+	ImageFilePath = "UI/Button/Button_Frame_Line";
+	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
+	ImageFilePath = "UI/Button/Button_Frame_Line_Over";
+	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
+	ImageFilePath = "UI/Button/Button_Frame_Inside";
+	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
+	ImageFilePath = "UI/Button/Button_Frame_Inside_Over";
+	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
 }
 
 // フォントリソースの先行ロード
@@ -70,8 +107,37 @@ void Scene_Title::AdvanceFontLoad()
 	std::shared_ptr<DataList_Font> pDataList_Font = std::dynamic_pointer_cast<DataList_Font>(gpDataListServer->GetDataList("DataList_Font"));
 
 	/* フォントデータ読み込み */
-	// どんぐりデュエル
-	std::string FontFilePath = "DonguriDuel";
+	// どんぐりデュエル(32px)
+	std::string FontFilePath = "DonguriDuel_32px";
 	pDataList_Font->LoadFontHandle_ASync(FontFilePath, 0);
-	giFont_DonguriDuel = pDataList_Font->iGetFontHnadle(FontFilePath);
+	giFont_DonguriDuel_32 = pDataList_Font->iGetFontHnadle(FontFilePath);
+	// どんぐりデュエル(64px)
+	FontFilePath = "DonguriDuel_64px";
+	pDataList_Font->LoadFontHandle_ASync(FontFilePath, 0);
+	giFont_DonguriDuel_64 = pDataList_Font->iGetFontHnadle(FontFilePath);
+}
+
+// UI(ボタン)の作成
+void Scene_Title::AddButton()
+{
+	/* "はじめから"ボタンの作成 */
+	this->UI_Button[0] = std::make_shared<Scene_UI_Button>("Title_StartButton", 1);
+	this->UI_Button[0]->SetButtonText("はじめから");
+	this->UI_Button[0]->SetCenterPos({ SCREEN_SIZE_WIDE / 2, SCREEN_SIZE_HEIGHT / 2 + 100 });
+	this->UI_Button[0]->SetFontHandle(giFont_DonguriDuel_32);
+	gpSceneServer->AddSceneReservation(this->UI_Button[0]);
+
+	/* "ビルド設定"ボタンの作成 */
+	this->UI_Button[1] = std::make_shared<Scene_UI_Button>("Title_BuildButton", 1);
+	this->UI_Button[1]->SetFontHandle(giFont_DonguriDuel_32);
+	this->UI_Button[1]->SetButtonText("ビルドせってい");
+	this->UI_Button[1]->SetCenterPos({ SCREEN_SIZE_WIDE / 2, SCREEN_SIZE_HEIGHT / 2 + 200 });
+	gpSceneServer->AddSceneReservation(this->UI_Button[1]);
+
+	/* "終了"ボタンの作成 */
+	this->UI_Button[2] = std::make_shared<Scene_UI_Button>("Title_EndButton", 1);
+	this->UI_Button[2]->SetFontHandle(giFont_DonguriDuel_32);
+	this->UI_Button[2]->SetButtonText("しゅうりょう");
+	this->UI_Button[2]->SetCenterPos({ SCREEN_SIZE_WIDE / 2, SCREEN_SIZE_HEIGHT / 2 + 300 });
+	gpSceneServer->AddSceneReservation(this->UI_Button[2]);
 }
