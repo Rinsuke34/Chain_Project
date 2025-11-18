@@ -85,6 +85,12 @@
     <Filter Include="ヘッダー ファイル\カード">
       <UniqueIdentifier>{0e4c181f-c3f1-440f-b685-013d2a4aef90}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\データリスト\バトル用データ管理">
+      <UniqueIdentifier>{99e80c55-b415-4b75-8fbf-111c6534c003}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\データリスト\バトル用データ管理">
+      <UniqueIdentifier>{8e282d7a-820d-4fab-bc01-ebce8391caa6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Main.cpp">
@@ -123,6 +129,15 @@
     <ClCompile Include="source\Card_Base.cpp">
       <Filter>ソース ファイル\カード</Filter>
     </ClCompile>
+    <ClCompile Include="source\DataList_Battle.cpp">
+      <Filter>ソース ファイル\データリスト\バトル用データ管理</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Scene_Buttle_Update.cpp">
+      <Filter>ソース ファイル\シーン\バトル画面</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Scene_Buttle_Draw.cpp">
+      <Filter>ソース ファイル\シーン\バトル画面</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Scene_Load_Checker.h">
@@ -157,6 +172,9 @@
     </ClInclude>
     <ClInclude Include="source\Card_Base.h">
       <Filter>ヘッダー ファイル\カード</Filter>
+    </ClInclude>
+    <ClInclude Include="source\DataList_Battle.h">
+      <Filter>ヘッダー ファイル\データリスト\バトル用データ管理</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

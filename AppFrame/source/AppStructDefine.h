@@ -75,4 +75,12 @@ namespace Struct_2D
 		int	iX;		// X座標
 		int	iY;		// Y座標
 	};
+
+	struct RANGE		// 2D範囲
+	{
+		int iTopX;		// 範囲の左上X座標
+		int iTopY;		// 範囲の左上Y座標
+		int iBottomX;	// 範囲の右下X座標
+		int iBottomY;	// 範囲の右下Y座標
+	};
 };

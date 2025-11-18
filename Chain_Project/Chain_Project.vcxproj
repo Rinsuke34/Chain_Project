@@ -170,12 +170,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="source\Card_Base.cpp" />
+    <ClCompile Include="source\DataList_Battle.cpp" />
     <ClCompile Include="source\DataList_Font.cpp" />
     <ClCompile Include="source\DataList_Image.cpp" />
     <ClCompile Include="source\FunctionDefine.cpp" />
     <ClCompile Include="source\Main.cpp" />
     <ClCompile Include="source\Scene_Build.cpp" />
     <ClCompile Include="source\Scene_Buttle.cpp" />
+    <ClCompile Include="source\Scene_Buttle_Draw.cpp" />
+    <ClCompile Include="source\Scene_Buttle_Update.cpp" />
     <ClCompile Include="source\Scene_Load_Checker.cpp" />
     <ClCompile Include="source\Scene_Load_Draw.cpp" />
     <ClCompile Include="source\Scene_Title.cpp" />
@@ -189,6 +192,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Card_Base.h" />
+    <ClInclude Include="source\DataList_Battle.h" />
     <ClInclude Include="source\DataList_Font.h" />
     <ClInclude Include="source\DataList_Image.h" />
     <ClInclude Include="source\FunctionDefine.h" />

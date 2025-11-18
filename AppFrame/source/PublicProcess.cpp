@@ -373,3 +373,27 @@ bool PUBLIC_PROCESS::bBoxHitCheck(Struct_Collision::COLLISION_BOX BoxA, Struct_C
 	// すべての軸で重なりがあればtrue
 	return true;
 }
+
+// 指定の座標が指定範囲内に存在するか確認
+bool PUBLIC_PROCESS::bPositionIn2DRangeCheck(Struct_2D::POSITION Position, Struct_2D::RANGE Range)
+{
+	// 引数
+	// Position	<- 確認する座標(2D)
+	// Range	<- 範囲(2D)
+	// 戻り値
+	// bool		<- 指定範囲内に存在するか(true:存在する、false:存在しない)
+
+	// X座標が範囲内に存在するか確認
+	if (Range.iTopX <= Position.iX && Position.iX <= Range.iBottomX)
+	{
+		// Y座標が範囲内に存在するか確認
+		if (Range.iTopY <= Position.iY && Position.iY <= Range.iBottomY)
+		{
+			// 指定範囲内に存在するならtrueを返す
+			return true;
+		}
+	}
+
+	// 指定範囲内に存在しないならfalseを返す
+	return false;
+}

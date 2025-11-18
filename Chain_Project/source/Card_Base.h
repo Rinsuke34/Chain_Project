@@ -14,6 +14,7 @@ class Card_Base
 		virtual ~Card_Base() {};	// デストラクタ
 
 		/* 関数 */
+		virtual void Update();						// 更新
 		virtual void Draw();						// 描画
 		virtual void Effect_StartTurn()		{};		// 効果発動:ターン開始時
 		virtual void Effect_StartAction()	{};		// 効果発動:行動開始時
@@ -21,22 +22,31 @@ class Card_Base
 		virtual void Effect_EndTurn()		{};		// 効果発動:ターン終了時
 
 		/* セッター */
-		void SetRarity(int rarity)					{ iRarity	= rarity; }				// レアリティの設定
-		void SetCardType(int type)					{ iCardType	= type; }				// カードの種類の設定
-		void SetName(std::string name)				{ Name	= name; }					// カード名の設定
+		// カード情報
+		void SetRarity(int rarity)					{ iRarity			= rarity; }		// レアリティの設定
+		void SetCardType(int type)					{ iCardType			= type; }		// カードの種類の設定
+		void SetName(std::string name)				{ Name				= name; }		// カード名の設定
 		void AddSuite(int suite)					{ Suite_List.push_back(suite); }	// スートの追加
-		void SetImage(std::shared_ptr<int> image)	{ Image	= image; }					// 画像の設定
-		void SetDrawPos(Struct_2D::POSITION pos)	{ Pos_Draw = pos; }					// 描画位置の設定
+		void SetImage(std::shared_ptr<int> image)	{ Image				= image; }		// 画像の設定
+		// その他
+		void SetNowPos(Struct_2D::POSITION pos)		{ Now_Position		= pos; }		// 現在座標の設定
+		void SetSettingPos(Struct_2D::POSITION pos) { Setting_Position	= pos; }		// 設定座標の設定
 
 		/* ゲッター */
-		int GetRarity()						{ return iRarity; }		// レアリティの取得
-		int GetCardType()					{ return iCardType; }	// カードの種類の取得
-		std::string GetName()				{ return Name; }		// カード名の取得
-		std::vector<int> GetSuiteList()		{ return Suite_List; }	// スートリストの取得
-		std::shared_ptr<int> GetImage()		{ return Image; }		// 画像の取得
-		Struct_2D::POSITION GetDrawPos()	{ return Pos_Draw; }	// 描画位置の取得
+		// カード情報
+		int						GetRarity()		{ return iRarity; }			// レアリティの取得
+		int						GetCardType()	{ return iCardType; }		// カードの種類の取得
+		std::string				GetName()		{ return Name; }			// カード名の取得
+		std::vector<int>		GetSuiteList()	{ return Suite_List; }		// スートリストの取得
+		std::shared_ptr<int>	GetImage()		{ return Image; }			// 画像の取得
+		// その他
+		Struct_2D::POSITION		GetNowPos()		{ return Now_Position; }		// 現在座標の取得
+		Struct_2D::POSITION		GetSettingPos() { return Setting_Position; }	// 設定座標の取得
 
 		/* 定数 */
+		// サイズ
+		static const int CARD_WIDTH		= 120;	// カード幅
+		static const int CARD_HEIGHT	= 170;	// カード高さ
 		// レアリティの種類
 		static const int RARITY_COMMON	= 0;	// コモン
 		static const int RARITY_RARE	= 1;	// レア
@@ -50,10 +60,13 @@ class Card_Base
 
 	protected:
 		/* 変数 */
-		int						iRarity;	// レアリティ
-		int						iCardType;	// カードの種類
-		std::string				Name;		// カード名
-		std::vector<int>		Suite_List;	// スートリスト
-		std::shared_ptr<int>	Image;		// 画像
-		Struct_2D::POSITION		Pos_Draw;	// 描画位置
+		// カード情報
+		int						iRarity;			// レアリティ
+		int						iCardType;			// カードの種類
+		std::string				Name;				// カード名
+		std::vector<int>		Suite_List;			// スートリスト
+		std::shared_ptr<int>	Image;				// 画像
+		// その他
+		Struct_2D::POSITION		Now_Position;		// 現在座標
+		Struct_2D::POSITION		Setting_Position;	// 設定座標(ホールドが解除された際に自動で補正される座標)
 };

@@ -40,6 +40,7 @@ namespace PUBLIC_PROCESS
 	std::string aInsertNewLine(std::string ShiftJis, int iLength);																		// Shift-JIS文字列を指定文字数で改行
 	bool		bIsFloatDiffWithinThreshold(float fA, float fB, float fThreshold);														// 2つのfloat型の値の差が閾値以内であるか確認
 	bool		bBoxHitCheck(Struct_Collision::COLLISION_BOX BoxA, Struct_Collision::COLLISION_BOX BoxB);								// AABB同士の当たり判定
+	bool		bPositionIn2DRangeCheck(Struct_2D::POSITION Position, Struct_2D::RANGE Range);											// 指定の座標が指定範囲内に存在するか確認
 }
 
 // 汎用機能系

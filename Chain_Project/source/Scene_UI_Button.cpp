@@ -40,18 +40,20 @@ void Scene_UI_Button::Update()
 {
 	/* マウスカーソルがボタンの範囲内にあるか判定 */
 	// ボタンの範囲を定義
-	Struct_2D::POSITION ButtonTopLeft = {
+	Struct_2D::RANGE Range = {
 		this->CenterPos.iX - GetDrawStringWidthToHandle(this->ButtonText.c_str(), static_cast<int>(strlenDx(this->ButtonText.c_str())), this->iFontHandle) / 2 - FRAME_THICKNESS,
-		this->CenterPos.iY - GetFontSizeToHandle(this->iFontHandle) / 2 - FRAME_THICKNESS
-	};
-
-	Struct_2D::POSITION ButtonBottomRight = {
 		this->CenterPos.iX + GetDrawStringWidthToHandle(this->ButtonText.c_str(), static_cast<int>(strlenDx(this->ButtonText.c_str())), this->iFontHandle) / 2 + FRAME_THICKNESS,
+		this->CenterPos.iY - GetFontSizeToHandle(this->iFontHandle) / 2 - FRAME_THICKNESS,
 		this->CenterPos.iY + GetFontSizeToHandle(this->iFontHandle) / 2 + FRAME_THICKNESS
 	};
-	// マウスカーソルの位置と比較
-	if ((ButtonTopLeft.iX <= gstKeyboardInputData.iMouseX && gstKeyboardInputData.iMouseX <= ButtonBottomRight.iX) &&
-		(ButtonTopLeft.iY <= gstKeyboardInputData.iMouseY && gstKeyboardInputData.iMouseY <= ButtonBottomRight.iY))
+	// マウスの位置を定義
+	Struct_2D::POSITION MousePosition = {
+		gstKeyboardInputData.iMouseX,
+		gstKeyboardInputData.iMouseY
+	};
+
+	/* ボタンの範囲内にマウスがあるか確認 */
+	if (PUBLIC_PROCESS::bPositionIn2DRangeCheck(MousePosition, Range))
 	{
 		// マウスカーソルがボタンの範囲内にある場合
 		this->bMouseOverFlg = true;
@@ -63,7 +65,6 @@ void Scene_UI_Button::Update()
 	}
 }
 
-
 // 描画
 void Scene_UI_Button::Draw()
 {
@@ -71,8 +72,7 @@ void Scene_UI_Button::Draw()
 	int iImageIndex = this->bMouseOverFlg ? 1 : 0;
 
 	/* 文字列の高さ、幅を取得 */
-	int iSizeX = GetDrawStringWidthToHandle(this->ButtonText.c_str(), static_cast<int>(strlenDx(this->ButtonText.c_str())
-		), this->iFontHandle);
+	int iSizeX = GetDrawStringWidthToHandle(this->ButtonText.c_str(), static_cast<int>(strlenDx(this->ButtonText.c_str())), this->iFontHandle);
 	int iSizeY = GetFontSizeToHandle(this->iFontHandle);
 
 	/* 枠を描写 */

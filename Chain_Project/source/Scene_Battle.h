@@ -6,6 +6,9 @@
 // 共通定義
 #include "AppFrame.h"
 
+/* 前方宣言 */
+class DataList_Battle;
+
 // シーン"バトル画面"
 class Scene_Battle : public Scene_Base
 {
@@ -17,5 +20,38 @@ class Scene_Battle : public Scene_Base
 		virtual void	Update()			override;	// 更新
 		virtual void	Draw()				override;	// 描画
 
+		/* 定数 */
+		// バトルフェーズ
+		static const int	BATTLE_PHASE_EFFECT_TRUN_START		= 0;	// "ターン開始時"の効果発動
+		static const int	BATTLE_PHASE_DRAW_CARD				= 1;	// カードドロー
+		static const int	BATTLE_PHASE_ENEMY_ACTION_DECISION	= 2;	// 敵の行動決定
+		static const int	BATTLE_PHASE_PLAYER_ACTION_DECISION	= 3;	// プレイヤーの行動決定
+		static const int	BATTLE_PHASE_CARD_CHAIN_CHECK		= 4;	// カードのチェイン数確認
+		static const int	BATTLE_PHASE_EFFECT_ACTION_START	= 5;	// "行動開始時"の効果発動
+		static const int	BATTLE_PHASE_BATTLE_ACTION			= 6;	// 戦闘行動
+		static const int	BATTLE_PHASE_EFFECT_TRUN_END		= 7;	// "ターン終了時"の効果発動
+		static const int	BATTLE_PHASE_STATUS_EFFECT_ADVANCE	= 8;	// 状態変化のターン進行
+		static const int	BATTLE_PHASE_MAX					= 9;	// バトルフェーズ総数
+
 	private:
+		/* 変数 */
+		// データリスト
+		std::shared_ptr<DataList_Battle> pDataList_Battle;		// バトル用データリスト
+		// その他
+		int iBattlePhase;										// バトルフェーズ
+
+		/* 関数 */
+		// 各フェーズごとの更新処理
+		void Update_EffectTurnStart();		// "ターン開始時"の効果発動
+		void Update_DrawCard();				// カードドロー
+		void Update_EnemyActionDecision();	// 敵の行動決定
+		void Update_PlayerActionDecision();	// プレイヤーの行動決定
+		void Update_CardChainCheck();		// カードのチェイン数確認
+		void Update_EffectActionStart();	// "行動開始時"の効果発動
+		void Update_BattleAction();			// 戦闘行動
+		void Update_EffectTurnEnd();		// "ターン終了時"の効果発動
+		void Update_StatusEffectAdvance();	// 状態変化のターン進行
+		// その他
+		std::shared_ptr<Card_Base>	GetMouseInCard();		// マウスが重なっているカードを取得
+		int							GetMouseInBattleArea();	// マウスが重なっているバトルエリアを取得
 };
