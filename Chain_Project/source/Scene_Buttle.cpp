@@ -4,7 +4,9 @@
 // ヘッダファイル
 #include "Scene_Battle.h"
 // 関連クラス
+#include "Card_Base.h"
 #include "DataList_Battle.h"
+#include "DataList_Image.h"
 
 // コンストラクタ
 Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 0, false, false)
@@ -15,6 +17,18 @@ Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 0, false, false)
 	/* データリスト"バトル用データ管理"を作成 */
 	this->pDataList_Battle = std::make_shared<DataList_Battle>();
 	gpDataListServer->AddDataList(this->pDataList_Battle);
+
+	/* 画像読み込み */
+	{
+		// 画像管理データリスト
+		std::shared_ptr<DataList_Image> pDataList_Image = std::dynamic_pointer_cast<DataList_Image>(gpDataListServer->GetDataList("DataList_Image"));
+
+		// バトルエリア
+		std::string ImageFilePath = "UI/Battle/UI_BattleArea";
+		this->Image_BattleArea[0] = pDataList_Image->iGetImageHandle(ImageFilePath);
+		ImageFilePath = "UI/Battle/UI_BattleArea_Over";
+		this->Image_BattleArea[1] = pDataList_Image->iGetImageHandle(ImageFilePath);
+	}
 }
 
 // デストラクタ
@@ -75,11 +89,23 @@ void Scene_Battle::Update()
 			Update_StatusEffectAdvance();
 			break;
 	}
+
+	/* カードの座標補間 */
+	CardPosition_Interpolation();
 }
 
 // 描画
 void Scene_Battle::Draw()
 {
-	DrawString(16, 16, "Battle", GetColor(255, 255, 255));
-	DrawBox(0, 0, 120, 170, GetColor(0, 0, 255), TRUE);
+	/* 背景描写 */
+	Draw_BackGround();
+
+	/* バトルエリア描写 */
+	Draw_BattleArea();
+
+	/* 手札の描写 */
+	Draw_HandCard();
+
+	/* ホールド中のカードを描写 */
+	Draw_HoldCard();
 }

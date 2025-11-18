@@ -21,5 +21,29 @@ Card_Base::Card_Base()
 void Card_Base::Draw()
 {
 	/* ”wŒi•`ŽÊ */
-	DrawBox(Now_Position.iX - (CARD_WIDTH / 2), Now_Position.iY - (CARD_HEIGHT / 2), Now_Position.iX + (CARD_WIDTH / 2), Now_Position.iY + (CARD_HEIGHT / 2), GetColor(0, 0, 0), TRUE);
+	DrawBox(Now_Position.iX - (CARD_WIDTH / 2), Now_Position.iY - (CARD_HEIGHT / 2), Now_Position.iX + (CARD_WIDTH / 2), Now_Position.iY + (CARD_HEIGHT / 2), GetColor(255, 255, 255), TRUE);
+}
+
+// ˆÊ’uÀ•W•âŠÔˆ—
+void Card_Base::Position_Interpolation()
+{
+	/* XÀ•W•âŠÔ */
+	if (std::abs(this->Setting_Position.iX - this->Now_Position.iX) < INTERPOLATION_SPEED)
+	{
+		this->Now_Position.iX = this->Setting_Position.iX;
+	}
+	else
+	{
+		this->Now_Position.iX += (this->Setting_Position.iX - this->Now_Position.iX) / INTERPOLATION_SPEED;
+	}
+
+	/* YÀ•W•âŠÔ */
+	if (std::abs(this->Setting_Position.iY - this->Now_Position.iY) < INTERPOLATION_SPEED)
+	{
+		this->Now_Position.iY = this->Setting_Position.iY;
+	}
+	else
+	{
+		this->Now_Position.iY += (this->Setting_Position.iY - this->Now_Position.iY) / INTERPOLATION_SPEED;
+	}
 }

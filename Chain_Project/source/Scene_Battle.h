@@ -8,6 +8,7 @@
 
 /* 前方宣言 */
 class DataList_Battle;
+class Card_Base;
 
 // シーン"バトル画面"
 class Scene_Battle : public Scene_Base
@@ -32,6 +33,8 @@ class Scene_Battle : public Scene_Base
 		static const int	BATTLE_PHASE_EFFECT_TRUN_END		= 7;	// "ターン終了時"の効果発動
 		static const int	BATTLE_PHASE_STATUS_EFFECT_ADVANCE	= 8;	// 状態変化のターン進行
 		static const int	BATTLE_PHASE_MAX					= 9;	// バトルフェーズ総数
+		// 座標関係
+		static const int	BATTLE_AREA_INTERVAL				= 250;	// バトルエリアの間隔
 
 	private:
 		/* 変数 */
@@ -41,6 +44,8 @@ class Scene_Battle : public Scene_Base
 		int iBattlePhase;										// バトルフェーズ
 
 		/* 関数 */
+		// 画像
+		std::shared_ptr<int> Image_BattleArea[2];	// バトルエリア[0:通常時, 1:カーソル接触時]
 		// 各フェーズごとの更新処理
 		void Update_EffectTurnStart();		// "ターン開始時"の効果発動
 		void Update_DrawCard();				// カードドロー
@@ -51,7 +56,13 @@ class Scene_Battle : public Scene_Base
 		void Update_BattleAction();			// 戦闘行動
 		void Update_EffectTurnEnd();		// "ターン終了時"の効果発動
 		void Update_StatusEffectAdvance();	// 状態変化のターン進行
+		// 描写処理
+		void Draw_BackGround();				// 背景描写
+		void Draw_BattleArea();				// バトルエリア描写
+		void Draw_HandCard();				// 手札の描写
+		void Draw_HoldCard();				// ホールド中のカードを描写
 		// その他
+		void CardPosition_Interpolation();					// カードの座標補間
 		std::shared_ptr<Card_Base>	GetMouseInCard();		// マウスが重なっているカードを取得
 		int							GetMouseInBattleArea();	// マウスが重なっているバトルエリアを取得
 };

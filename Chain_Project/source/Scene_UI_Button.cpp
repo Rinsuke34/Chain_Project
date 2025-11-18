@@ -42,8 +42,8 @@ void Scene_UI_Button::Update()
 	// ボタンの範囲を定義
 	Struct_2D::RANGE Range = {
 		this->CenterPos.iX - GetDrawStringWidthToHandle(this->ButtonText.c_str(), static_cast<int>(strlenDx(this->ButtonText.c_str())), this->iFontHandle) / 2 - FRAME_THICKNESS,
-		this->CenterPos.iX + GetDrawStringWidthToHandle(this->ButtonText.c_str(), static_cast<int>(strlenDx(this->ButtonText.c_str())), this->iFontHandle) / 2 + FRAME_THICKNESS,
 		this->CenterPos.iY - GetFontSizeToHandle(this->iFontHandle) / 2 - FRAME_THICKNESS,
+		this->CenterPos.iX + GetDrawStringWidthToHandle(this->ButtonText.c_str(), static_cast<int>(strlenDx(this->ButtonText.c_str())), this->iFontHandle) / 2 + FRAME_THICKNESS,
 		this->CenterPos.iY + GetFontSizeToHandle(this->iFontHandle) / 2 + FRAME_THICKNESS
 	};
 	// マウスの位置を定義

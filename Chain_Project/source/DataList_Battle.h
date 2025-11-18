@@ -17,6 +17,13 @@ class DataList_Battle : public DataList_Base
 		virtual ~DataList_Battle()	{};	// デストラクタ
 
 		/* 関数 */
+		void AddDeckCard(const std::shared_ptr<Card_Base>& pCard);		// デッキにカードを追加
+		void AddHandCard(const std::shared_ptr<Card_Base>& pCard);		// 手札にカードを追加
+		void AddTrashCard(const std::shared_ptr<Card_Base>& pCard);		// 捨て札にカードを追加
+		void RemoveDeckCard(const std::shared_ptr<Card_Base>& pCard);	// デッキからカードを削除
+		void RemoveHandCard(const std::shared_ptr<Card_Base>& pCard);	// 手札からカードを削除
+		void RemoveTrashCard(const std::shared_ptr<Card_Base>& pCard);	// 捨て札からカードを削除
+		void RemoveBattleAreaCard(int AreaNo);							// バトルエリアからカードを削除
 		
 		/* ゲッター */
 		// カード関連
@@ -31,7 +38,7 @@ class DataList_Battle : public DataList_Base
 		void SetDeckCardList(const std::vector<std::shared_ptr<Card_Base>>& cardList)	{ DeckCardList					= cardList; }	// デッキのカード一覧を設定
 		void SetHandCardList(const std::vector<std::shared_ptr<Card_Base>>& cardList)	{ HandCardList					= cardList; }	// 手札のカード一覧を設定
 		void SetTrashCardList(const std::vector<std::shared_ptr<Card_Base>>& cardList)	{ TrashCardList					= cardList; }	// 捨て札のカード一覧を設定
-		void SetBattleAreaCardList(int areaNo, const std::shared_ptr<Card_Base>& card)	{ BattleAreaCardList[areaNo]	= card; }		// バトルエリアのカード一覧を設定
+		void SetBattleAreaCard(int areaNo, const std::shared_ptr<Card_Base>& card)		{ BattleAreaCardList[areaNo]	= card; }		// バトルエリアのカードを設定
 		void SetHoldCard(const std::shared_ptr<Card_Base>& card)						{ HoldCard						= card; }		// ホールド中のカードを設定
 
 		/* 定数 */

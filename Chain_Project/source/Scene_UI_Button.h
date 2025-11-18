@@ -35,8 +35,7 @@ class Scene_UI_Button : public Scene_Base
 		Struct_2D::POSITION	CenterPos;		// 位置座標
 		bool				bMouseOverFlg;	// カーソルが重なっている状態であるかのフラグ
 		// 画像
-		// ※ 0:通常時、1:カーソルが重なっている
-		std::shared_ptr<int>	Image_Frame_Corner[2];	// 角
-		std::shared_ptr<int>	Image_Frame_Line[2];	// 線
-		std::shared_ptr<int>	Image_Frame_Inside[2];	// 内側
+		std::shared_ptr<int>	Image_Frame_Corner[2];	// 角[0:通常時, 1:カーソル接触時]
+		std::shared_ptr<int>	Image_Frame_Line[2];	// 線[0:通常時, 1:カーソル接触時]
+		std::shared_ptr<int>	Image_Frame_Inside[2];	// 内側[0:通常時, 1:カーソル接触時]
 };

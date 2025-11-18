@@ -14,8 +14,8 @@ class Card_Base
 		virtual ~Card_Base() {};	// デストラクタ
 
 		/* 関数 */
-		virtual void Update();						// 更新
 		virtual void Draw();						// 描画
+		virtual void Position_Interpolation();		// 位置座標補間処理
 		virtual void Effect_StartTurn()		{};		// 効果発動:ターン開始時
 		virtual void Effect_StartAction()	{};		// 効果発動:行動開始時
 		virtual void Effect_Battle()		{};		// 効果発動:戦闘時
@@ -44,6 +44,8 @@ class Card_Base
 		Struct_2D::POSITION		GetSettingPos() { return Setting_Position; }	// 設定座標の取得
 
 		/* 定数 */
+		// 補間
+		static const int INTERPOLATION_SPEED	= 5;	// 補間速度
 		// サイズ
 		static const int CARD_WIDTH		= 120;	// カード幅
 		static const int CARD_HEIGHT	= 170;	// カード高さ

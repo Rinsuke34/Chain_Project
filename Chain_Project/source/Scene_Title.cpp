@@ -95,6 +95,11 @@ void Scene_Title::AdvanceImageLoad()
 	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
 	ImageFilePath = "UI/Button/Button_Frame_Inside_Over";
 	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
+	// UI(バトル-バトルエリア)
+	ImageFilePath = "UI/Battle/UI_BattleArea";
+	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
+	ImageFilePath = "UI/Battle/UI_BattleArea_Over";
+	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
 }
 
 // フォントリソースの先行ロード
