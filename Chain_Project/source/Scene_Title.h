@@ -13,8 +13,8 @@ class Scene_UI_Button;
 class Scene_Title : public Scene_Base
 {
 	public:
-		Scene_Title();				// コンストラクタ
-		virtual ~Scene_Title() {};	// デストラクタ
+		Scene_Title();			// コンストラクタ
+		virtual ~Scene_Title();	// デストラクタ
 
 		/* 関数 */
 		virtual void	Update()			override;	// 更新

@@ -7,6 +7,7 @@
 #include "AppFrame.h"
 
 /* 前方宣言 */
+class Scene_UI_Button;
 class DataList_Battle;
 class Card_Base;
 
@@ -35,9 +36,13 @@ class Scene_Battle : public Scene_Base
 		static const int	BATTLE_PHASE_MAX					= 9;	// バトルフェーズ総数
 		// 座標関係
 		static const int	BATTLE_AREA_INTERVAL				= 250;	// バトルエリアの間隔
-		static const int	BATTLE_AREA_HEIGHT					= 540;	// バトルエリアのY座標
+		static const int	BATTLE_AREA_POS_Y					= 540;	// バトルエリアのY座標
 		static const int	HANDCARD_INTERVAL					= 125;	// 手札のカード間隔
-		static const int	HANDCARD_HEIGHT						= 900;	// 手札のY座標
+		static const int	HANDCARD_POS_Y						= 900;	// 手札のY座標
+		static const int	DECISIONBUTTON_POS_X				= 1720;	// 決定ボタンのX座標
+		static const int	DECISIONBUTTON_POS_Y				= 640;	// 決定ボタンのY座標
+		static const int	CHARACTER_INTERVAL					= 200;	// キャラクターの間隔
+		static const int	CHARACTER_POS_Y						= 300;	// キャラクターのY座標
 
 	private:
 		/* 変数 */
@@ -61,12 +66,16 @@ class Scene_Battle : public Scene_Base
 		void Update_StatusEffectAdvance();	// 状態変化のターン進行
 		// 描写処理
 		void Draw_BackGround();				// 背景描写
+		void Draw_Character();				// キャラクター描写
 		void Draw_BattleArea();				// バトルエリア描写
 		void Draw_HandCard();				// 手札の描写
 		void Draw_HoldCard();				// ホールド中のカードを描写
+		// UIのハンドル
+		std::shared_ptr<Scene_UI_Button> UI_DecisionButton;	// 決定ボタン
 		// その他
 		void CardPosition_HandSetSettingPosting();			// 手札のカード設定座標の設定
 		void CardPosition_Interpolation();					// カードの座標補間
+		void CharacterPosition_Setup();						// キャラクターの座標の設定
 		std::shared_ptr<Card_Base>	GetMouseInCard();		// マウスが重なっているカードを取得
 		int							GetMouseInBattleArea();	// マウスが重なっているバトルエリアを取得
 };

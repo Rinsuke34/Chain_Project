@@ -14,12 +14,12 @@ class Card_Base
 		virtual ~Card_Base() {};	// デストラクタ
 
 		/* 関数 */
-		virtual void Draw();						// 描画
-		virtual void Position_Interpolation();		// 位置座標補間処理
+		virtual void Draw()					{};		// 描画
 		virtual void Effect_StartTurn()		{};		// 効果発動:ターン開始時
 		virtual void Effect_StartAction()	{};		// 効果発動:行動開始時
 		virtual void Effect_Battle()		{};		// 効果発動:戦闘時
 		virtual void Effect_EndTurn()		{};		// 効果発動:ターン終了時
+		void		 Position_Interpolation();		// 位置座標補間処理
 
 		/* セッター */
 		// カード情報

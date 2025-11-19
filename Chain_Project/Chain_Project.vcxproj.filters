@@ -91,6 +91,42 @@
     <Filter Include="ソース ファイル\データリスト\バトル用データ管理">
       <UniqueIdentifier>{8e282d7a-820d-4fab-bc01-ebce8391caa6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\カード\道具%28Item%29">
+      <UniqueIdentifier>{bad0763d-7f6e-4617-9dfe-b439306fcfb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\カード\魔法%28Spell%29">
+      <UniqueIdentifier>{4129747f-8cd5-4956-8f51-a34e593b0c9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\カード\武具%28Arms%29">
+      <UniqueIdentifier>{89a006e9-3f71-4daf-9777-3b61bc34f9d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\カード\武具%28Arms%29">
+      <UniqueIdentifier>{da5b1bdc-cabc-44c7-ada6-52600dd36758}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\カード\魔法%28Spell%29">
+      <UniqueIdentifier>{4f8303a9-4a05-4e99-af61-332410ae2873}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\カード\道具%28Item%29">
+      <UniqueIdentifier>{33034441-53c0-4b2e-bb5b-634ff386c5b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\キャラクター">
+      <UniqueIdentifier>{939d57b7-5f0b-4dd2-b7a8-e3e4fba8e696}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\キャラクター">
+      <UniqueIdentifier>{ed156994-c75c-47cc-ba4b-f11990b0dbf0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\キャラクター\プレイヤー">
+      <UniqueIdentifier>{2800a329-3a1a-4f3d-9731-7b18d6828747}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\キャラクター\プレイヤー">
+      <UniqueIdentifier>{21444775-1515-4493-b63d-7778c3031af5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\キャラクター\NPC">
+      <UniqueIdentifier>{85d6e819-61c9-4845-b4bc-f967cabb79bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\キャラクター\NPC">
+      <UniqueIdentifier>{bd054bd2-f4a0-4846-913f-2596546d61d2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Main.cpp">
@@ -138,6 +174,24 @@
     <ClCompile Include="source\Scene_Buttle_Draw.cpp">
       <Filter>ソース ファイル\シーン\バトル画面</Filter>
     </ClCompile>
+    <ClCompile Include="source\Card_Arms_Base.cpp">
+      <Filter>ソース ファイル\カード\武具%28Arms%29</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Card_Spell_Base.cpp">
+      <Filter>ソース ファイル\カード\魔法%28Spell%29</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Card_Item_Base.cpp">
+      <Filter>ソース ファイル\カード\道具%28Item%29</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Character_Base.cpp">
+      <Filter>ソース ファイル\キャラクター</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Character_Player.cpp">
+      <Filter>ソース ファイル\キャラクター\プレイヤー</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Character_Npc_Test.cpp">
+      <Filter>ソース ファイル\キャラクター\NPC</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Scene_Load_Checker.h">
@@ -175,6 +229,24 @@
     </ClInclude>
     <ClInclude Include="source\DataList_Battle.h">
       <Filter>ヘッダー ファイル\データリスト\バトル用データ管理</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Card_Arms_Base.h">
+      <Filter>ヘッダー ファイル\カード\武具%28Arms%29</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Card_Spell_Base.h">
+      <Filter>ヘッダー ファイル\カード\魔法%28Spell%29</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Card_Item_Base.h">
+      <Filter>ヘッダー ファイル\カード\道具%28Item%29</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Character_Base.h">
+      <Filter>ヘッダー ファイル\キャラクター</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Character_Player.h">
+      <Filter>ヘッダー ファイル\キャラクター\プレイヤー</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Character_Npc_Test.h">
+      <Filter>ヘッダー ファイル\キャラクター\NPC</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

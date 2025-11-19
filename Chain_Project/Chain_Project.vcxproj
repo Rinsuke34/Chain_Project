@@ -169,7 +169,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\Card_Arms_Base.cpp" />
     <ClCompile Include="source\Card_Base.cpp" />
+    <ClCompile Include="source\Card_Item_Base.cpp" />
+    <ClCompile Include="source\Card_Spell_Base.cpp" />
+    <ClCompile Include="source\Character_Base.cpp" />
+    <ClCompile Include="source\Character_Npc_Test.cpp" />
+    <ClCompile Include="source\Character_Player.cpp" />
     <ClCompile Include="source\DataList_Battle.cpp" />
     <ClCompile Include="source\DataList_Font.cpp" />
     <ClCompile Include="source\DataList_Image.cpp" />
@@ -191,7 +197,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\Card_Arms_Base.h" />
     <ClInclude Include="source\Card_Base.h" />
+    <ClInclude Include="source\Card_Item_Base.h" />
+    <ClInclude Include="source\Card_Spell_Base.h" />
+    <ClInclude Include="source\Character_Base.h" />
+    <ClInclude Include="source\Character_Npc_Test.h" />
+    <ClInclude Include="source\Character_Player.h" />
     <ClInclude Include="source\DataList_Battle.h" />
     <ClInclude Include="source\DataList_Font.h" />
     <ClInclude Include="source\DataList_Image.h" />

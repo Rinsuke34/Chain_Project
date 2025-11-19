@@ -6,11 +6,36 @@
 // 関連クラス
 #include "DataList_Battle.h"
 #include "Card_Base.h"
+#include "Character_Base.h"
 
 // 背景描写
 void Scene_Battle::Draw_BackGround()
 {
 
+}
+
+// キャラクター描写
+void Scene_Battle::Draw_Character()
+{
+	/* 仲間キャラクターを描写 */
+	for (int i = 0; i < 3; i++)
+	{
+		auto FriendCharacter = this->pDataList_Battle->GetFriendCharacter(i);
+		if (FriendCharacter != nullptr)
+		{
+			FriendCharacter->Draw();
+		}
+	}
+
+	/* 敵キャラクターを描写 */
+	for (int i = 0; i < 3; i++)
+	{
+		auto EnemyCharacter = this->pDataList_Battle->GetEnemyCharacter(i);
+		if (EnemyCharacter != nullptr)
+		{
+			EnemyCharacter->Draw();
+		}
+	}
 }
 
 // バトルエリア描写
@@ -28,9 +53,9 @@ void Scene_Battle::Draw_BattleArea()
 	{
 		DrawExtendGraph(
 			(SCREEN_SIZE_WIDE / 2)	- (SizeX / 2) - (BATTLE_AREA_INTERVAL * i),
-			BATTLE_AREA_HEIGHT		- (SizeY / 2),
+			BATTLE_AREA_POS_Y		- (SizeY / 2),
 			(SCREEN_SIZE_WIDE / 2)	+ (SizeX / 2) - (BATTLE_AREA_INTERVAL * i),
-			BATTLE_AREA_HEIGHT		+ (SizeY / 2),
+			BATTLE_AREA_POS_Y		+ (SizeY / 2),
 			*(this->Image_BattleArea[(iSelectAreaNo == i + 2) ? 1 : 0]), TRUE);
 	}
 

@@ -28,6 +28,17 @@ Scene_Title::Scene_Title() : Scene_Base("Scene_Title", 0, false, false)
 	AddButton();
 }
 
+// デストラクタ
+Scene_Title::~Scene_Title()
+{
+	/* 紐づいたUIを削除 */
+	for (int i = 0; i < 3; i++)
+	{
+		this->UI_Button[i]->SetDeleteFlg(true);
+		this->UI_Button[i] = nullptr;
+	}
+}
+
 // 更新
 void Scene_Title::Update()
 {
@@ -99,6 +110,11 @@ void Scene_Title::AdvanceImageLoad()
 	ImageFilePath = "UI/Battle/UI_BattleArea";
 	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
 	ImageFilePath = "UI/Battle/UI_BattleArea_Over";
+	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
+	// キャラクター(テスト)
+	ImageFilePath = "Character/Player/Test_Player";
+	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
+	ImageFilePath = "Character/Monster/Test";
 	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
 }
 

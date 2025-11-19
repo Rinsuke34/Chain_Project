@@ -4,8 +4,10 @@
 // ヘッダファイル
 #include "Scene_Battle.h"
 // 関連クラス
+#include "Scene_UI_Button.h"
 #include "Card_Base.h"
 #include "DataList_Battle.h"
+#include "Character_Base.h"
 
 /* 各フェーズごとの更新処理 */
 // "ターン開始時"の効果発動
@@ -17,6 +19,20 @@ void Scene_Battle::Update_EffectTurnStart()
 // カードドロー
 void Scene_Battle::Update_DrawCard()
 {
+	/* ドロー処理 */
+	for (int i = 0; i < 5; i++)
+	{
+		/* デッキにカードが存在するか確認 */
+		if (this->pDataList_Battle->GetDeckCardList().size() > 0)
+		{
+			// 存在する場合
+			/* デッキの先頭のカードを手札に移動 */
+			std::shared_ptr<Card_Base> pDrawCard = this->pDataList_Battle->GetDeckCardList().front();
+			this->pDataList_Battle->AddHandCard(pDrawCard);
+			this->pDataList_Battle->RemoveDeckCard(pDrawCard);
+		}
+	}
+
 	this->iBattlePhase = BATTLE_PHASE_ENEMY_ACTION_DECISION;
 }
 
@@ -115,7 +131,11 @@ void Scene_Battle::Update_PlayerActionDecision()
 		}
 	}
 
-//	this->iBattlePhase = BATTLE_PHASE_CARD_CHAIN_CHECK;
+	/* "決定"ボタンが入力されたならば */
+	if (this->UI_DecisionButton->GetMouseOverFlg() && (gstKeyboardInputData.igInput[INPUT_TRG] & MOUSE_INPUT_LEFT))
+	{
+		this->iBattlePhase = BATTLE_PHASE_CARD_CHAIN_CHECK;
+	}
 }
 
 // カードのチェイン数確認
@@ -133,6 +153,20 @@ void Scene_Battle::Update_EffectActionStart()
 // 戦闘行動
 void Scene_Battle::Update_BattleAction()
 {
+	/* バトルエリアのカードを捨て札リストに入れる */
+	for (int i = 0; i < DataList_Battle::BATTLE_AREA_MAX; i++)
+	{
+		/* バトルエリアにカードが設定されているか確認 */
+		if (this->pDataList_Battle->GetBattleAreaCardList(i) != nullptr)
+		{
+			// カードが設定されている場合
+			/* カードを捨て札リストに追加 */
+			this->pDataList_Battle->AddTrashCard(this->pDataList_Battle->GetBattleAreaCardList(i));
+
+			/* バトルエリアからカードを削除 */
+			this->pDataList_Battle->RemoveBattleAreaCard(i);
+		}
+	}
 	this->iBattlePhase = BATTLE_PHASE_EFFECT_TRUN_END;
 }
 
@@ -145,7 +179,7 @@ void Scene_Battle::Update_EffectTurnEnd()
 // 状態変化のターン進行
 void Scene_Battle::Update_StatusEffectAdvance()
 {
-
+	this->iBattlePhase = BATTLE_PHASE_EFFECT_TRUN_START;
 }
 
 /* その他 */
@@ -162,7 +196,7 @@ void Scene_Battle::CardPosition_HandSetSettingPosting()
 		Struct_2D::POSITION SettingPos =
 		{
 			(SCREEN_SIZE_WIDE / 2) - ((HANDCARD_INTERVAL * (HandCardCount - 1)) / 2) + (HANDCARD_INTERVAL * i),
-			HANDCARD_HEIGHT
+			HANDCARD_POS_Y
 		};
 
 		/* カードに設定座標を設定 */
@@ -187,6 +221,42 @@ void Scene_Battle::CardPosition_Interpolation()
 	for (const auto& HandCard : this->pDataList_Battle->GetHandCardList())
 	{
 		HandCard->Position_Interpolation();
+	}
+}
+
+// キャラクターの座標の設定
+void Scene_Battle::CharacterPosition_Setup()
+{
+	/* 仲間キャラクターの座標設定 */
+	for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
+	{
+		auto FriendCharacter = this->pDataList_Battle->GetFriendCharacter(i);
+		if (FriendCharacter != nullptr)
+		{
+			Struct_2D::POSITION Pos =
+			{
+				CHARACTER_INTERVAL * (DataList_Battle::POSITION_MAX - i),
+				CHARACTER_POS_Y
+			};
+
+			FriendCharacter->SetCenterPos(Pos);
+		}
+	}
+
+	/* 敵キャラクターの座標設定 */
+	for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
+	{
+		auto EnemyCharacter = this->pDataList_Battle->GetEnemyCharacter(i);
+		if (EnemyCharacter != nullptr)
+		{
+			Struct_2D::POSITION Pos =
+			{
+				SCREEN_SIZE_WIDE - (CHARACTER_INTERVAL * (DataList_Battle::POSITION_MAX - i)),
+				CHARACTER_POS_Y
+			};
+
+			EnemyCharacter->SetCenterPos(Pos);
+		}
 	}
 }
 
@@ -266,9 +336,9 @@ int Scene_Battle::GetMouseInBattleArea()
 		/* バトルエリアの範囲を定義 */
 		Struct_2D::RANGE BattleAreaRange = {
 			(SCREEN_SIZE_WIDE / 2)	- (SizeX / 2) - (BATTLE_AREA_INTERVAL * i),
-			BATTLE_AREA_HEIGHT		- (SizeY / 2),
+			BATTLE_AREA_POS_Y		- (SizeY / 2),
 			(SCREEN_SIZE_WIDE / 2)	+ (SizeX / 2) - (BATTLE_AREA_INTERVAL * i),
-			BATTLE_AREA_HEIGHT		+ (SizeY / 2)
+			BATTLE_AREA_POS_Y		+ (SizeY / 2)
 		};
 		/* マウスの位置を定義 */
 		Struct_2D::POSITION MousePosition = {

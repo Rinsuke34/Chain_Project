@@ -3,7 +3,10 @@
 /* 使用する要素のインクルード */
 // ヘッダファイル
 #include "Scene_Battle.h"
+// 共通定義
+#include "VariableDefine.h"
 // 関連クラス
+#include "Scene_UI_Button.h"
 #include "Card_Base.h"
 #include "DataList_Battle.h"
 #include "DataList_Image.h"
@@ -29,6 +32,16 @@ Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 0, false, false)
 		ImageFilePath = "UI/Battle/UI_BattleArea_Over";
 		this->Image_BattleArea[1] = pDataList_Image->iGetImageHandle(ImageFilePath);
 	}
+
+	/* UI作成 */
+	{
+		/* "決定"ボタンの作成 */
+		this->UI_DecisionButton = std::make_shared<Scene_UI_Button>("Battle_DecisionButton", 1);
+		this->UI_DecisionButton->SetButtonText("けってい");
+		this->UI_DecisionButton->SetCenterPos({ DECISIONBUTTON_POS_X, DECISIONBUTTON_POS_Y });
+		this->UI_DecisionButton->SetFontHandle(giFont_DonguriDuel_32);
+		gpSceneServer->AddSceneReservation(this->UI_DecisionButton);
+	}
 }
 
 // デストラクタ
@@ -36,6 +49,10 @@ Scene_Battle::~Scene_Battle()
 {
 	/* データリスト"バトル用データ管理"を削除 */
 	gpDataListServer->DeleteDataList("DataList_Battle");
+
+	/* 紐づいたUIを削除 */
+	this->UI_DecisionButton->SetDeleteFlg(true);
+	this->UI_DecisionButton = nullptr;
 }
 
 // 更新
@@ -95,6 +112,9 @@ void Scene_Battle::Update()
 
 	/* カードの座標補間 */
 	CardPosition_Interpolation();
+
+	// キャラクターの座標の設定
+	CharacterPosition_Setup();
 }
 
 // 描画
@@ -102,6 +122,9 @@ void Scene_Battle::Draw()
 {
 	/* 背景描写 */
 	Draw_BackGround();
+
+	/* キャラクター描写 */
+	Draw_Character();
 
 	/* バトルエリア描写 */
 	Draw_BattleArea();

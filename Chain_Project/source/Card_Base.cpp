@@ -13,15 +13,8 @@ Card_Base::Card_Base()
 	this->iCardType	= 0;		// カードの種類
 	this->Name		= "";		// カード名
 	// その他
-	this->Now_Position		= {0, 0};	// 現在座標
-	this->Setting_Position	= {0, 0};	// 設定座標(ホールドが解除された際に自動で補正される座標)
-}
-
-// 描画
-void Card_Base::Draw()
-{
-	/* 背景描写 */
-	DrawBox(Now_Position.iX - (CARD_WIDTH / 2), Now_Position.iY - (CARD_HEIGHT / 2), Now_Position.iX + (CARD_WIDTH / 2), Now_Position.iY + (CARD_HEIGHT / 2), GetColor(255, 255, 255), TRUE);
+	this->Now_Position		= { SCREEN_SIZE_WIDE, SCREEN_SIZE_HEIGHT / 2 };	// 現在座標(ドローしてる感を出すため山札の位置を初期値に設定)
+	this->Setting_Position	= { 0, 0 };	// 設定座標(ホールドが解除された際に自動で補正される座標)
 }
 
 // 位置座標補間処理
