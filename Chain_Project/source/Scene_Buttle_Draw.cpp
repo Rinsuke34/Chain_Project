@@ -27,10 +27,10 @@ void Scene_Battle::Draw_BattleArea()
 	for (int i = -2; i <= 2; i++)
 	{
 		DrawExtendGraph(
-			(SCREEN_SIZE_WIDE / 2) - (BATTLE_AREA_INTERVAL * i) - (SizeX / 2),
-			(SCREEN_SIZE_HEIGHT / 2) - (SizeY / 2),
-			(SCREEN_SIZE_WIDE / 2) - (BATTLE_AREA_INTERVAL * i) + (SizeX / 2),
-			(SCREEN_SIZE_HEIGHT / 2) + (SizeY / 2),
+			(SCREEN_SIZE_WIDE / 2)	- (SizeX / 2) - (BATTLE_AREA_INTERVAL * i),
+			BATTLE_AREA_HEIGHT		- (SizeY / 2),
+			(SCREEN_SIZE_WIDE / 2)	+ (SizeX / 2) - (BATTLE_AREA_INTERVAL * i),
+			BATTLE_AREA_HEIGHT		+ (SizeY / 2),
 			*(this->Image_BattleArea[(iSelectAreaNo == i + 2) ? 1 : 0]), TRUE);
 	}
 

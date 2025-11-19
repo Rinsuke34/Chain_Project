@@ -52,11 +52,25 @@ void Scene_Battle::Update_PlayerActionDecision()
 			if (iBattleAreaIndex != -1)
 			{
 				// 接触している場合
+				/* 対象のバトルエリアにカードが設定されているか確認 */
+				if (this->pDataList_Battle->GetBattleAreaCardList(iBattleAreaIndex) != nullptr)
+				{
+					// カードが設定されている場合
+					/* バトルエリアのカードを手札に戻す */
+					this->pDataList_Battle->AddHandCard(this->pDataList_Battle->GetBattleAreaCardList(iBattleAreaIndex));
+
+					/* 戻したカードの設定座標を手札の位置に設定 */
+					this->pDataList_Battle->GetBattleAreaCardList(iBattleAreaIndex)->SetSettingPos({ 0, 0 });
+
+					/* バトルエリアのカードを削除 */
+					this->pDataList_Battle->RemoveBattleAreaCard(iBattleAreaIndex);
+				}
+
 				/* ホールド中のカードをバトルエリアに配置 */
 				this->pDataList_Battle->SetBattleAreaCard(iBattleAreaIndex, this->pDataList_Battle->GetHoldCard());
 
 				/* 配置したカードの設定座標をバトルエリアの位置に設定 */
-				this->pDataList_Battle->GetHoldCard()->SetSettingPos({(SCREEN_SIZE_WIDE / 2) - (BATTLE_AREA_INTERVAL * (iBattleAreaIndex - 2)), (SCREEN_SIZE_HEIGHT / 2)});
+				this->pDataList_Battle->GetHoldCard()->SetSettingPos({ (SCREEN_SIZE_WIDE / 2) - (BATTLE_AREA_INTERVAL * (iBattleAreaIndex - 2)), (SCREEN_SIZE_HEIGHT / 2) });
 			}
 			else
 			{
@@ -135,6 +149,27 @@ void Scene_Battle::Update_StatusEffectAdvance()
 }
 
 /* その他 */
+// 手札のカード設定座標の設定
+void Scene_Battle::CardPosition_HandSetSettingPosting()
+{
+	/* 手札の総数を取得 */
+	int HandCardCount = static_cast<int>(this->pDataList_Battle->GetHandCardList().size());
+
+	/* 手札のカードの設定座標を算出し、設定する */
+	for (int i = 0; i < HandCardCount; i++)
+	{
+		/* 設定座標を算出 */
+		Struct_2D::POSITION SettingPos =
+		{
+			(SCREEN_SIZE_WIDE / 2) - ((HANDCARD_INTERVAL * (HandCardCount - 1)) / 2) + (HANDCARD_INTERVAL * i),
+			HANDCARD_HEIGHT
+		};
+
+		/* カードに設定座標を設定 */
+		this->pDataList_Battle->GetHandCardList()[i]->SetSettingPos(SettingPos);
+	}
+}
+
 // カードの座標補間
 void Scene_Battle::CardPosition_Interpolation()
 {
@@ -230,10 +265,10 @@ int Scene_Battle::GetMouseInBattleArea()
 	{
 		/* バトルエリアの範囲を定義 */
 		Struct_2D::RANGE BattleAreaRange = {
-			(SCREEN_SIZE_WIDE	/ 2) - (SizeX / 2) - (BATTLE_AREA_INTERVAL * i),
-			(SCREEN_SIZE_HEIGHT / 2) - (SizeY / 2),
-			(SCREEN_SIZE_WIDE	/ 2) + (SizeX / 2) - (BATTLE_AREA_INTERVAL * i),
-			(SCREEN_SIZE_HEIGHT	/ 2) + (SizeY / 2)
+			(SCREEN_SIZE_WIDE / 2)	- (SizeX / 2) - (BATTLE_AREA_INTERVAL * i),
+			BATTLE_AREA_HEIGHT		- (SizeY / 2),
+			(SCREEN_SIZE_WIDE / 2)	+ (SizeX / 2) - (BATTLE_AREA_INTERVAL * i),
+			BATTLE_AREA_HEIGHT		+ (SizeY / 2)
 		};
 		/* マウスの位置を定義 */
 		Struct_2D::POSITION MousePosition = {

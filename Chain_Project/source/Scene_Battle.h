@@ -35,6 +35,9 @@ class Scene_Battle : public Scene_Base
 		static const int	BATTLE_PHASE_MAX					= 9;	// バトルフェーズ総数
 		// 座標関係
 		static const int	BATTLE_AREA_INTERVAL				= 250;	// バトルエリアの間隔
+		static const int	BATTLE_AREA_HEIGHT					= 540;	// バトルエリアのY座標
+		static const int	HANDCARD_INTERVAL					= 125;	// 手札のカード間隔
+		static const int	HANDCARD_HEIGHT						= 900;	// 手札のY座標
 
 	private:
 		/* 変数 */
@@ -62,6 +65,7 @@ class Scene_Battle : public Scene_Base
 		void Draw_HandCard();				// 手札の描写
 		void Draw_HoldCard();				// ホールド中のカードを描写
 		// その他
+		void CardPosition_HandSetSettingPosting();			// 手札のカード設定座標の設定
 		void CardPosition_Interpolation();					// カードの座標補間
 		std::shared_ptr<Card_Base>	GetMouseInCard();		// マウスが重なっているカードを取得
 		int							GetMouseInBattleArea();	// マウスが重なっているバトルエリアを取得

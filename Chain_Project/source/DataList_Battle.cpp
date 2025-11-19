@@ -12,6 +12,10 @@ DataList_Battle::DataList_Battle() : DataList_Base("DataList_Battle")
 	/* テスト用 */
 	// 手札にカードを追加
 	this->HandCardList.push_back(std::make_shared<Card_Base>());
+	this->HandCardList.push_back(std::make_shared<Card_Base>());
+	this->HandCardList.push_back(std::make_shared<Card_Base>());
+	this->HandCardList.push_back(std::make_shared<Card_Base>());
+	this->HandCardList.push_back(std::make_shared<Card_Base>());
 }
 
 // デッキにカードを追加

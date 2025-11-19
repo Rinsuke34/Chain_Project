@@ -90,6 +90,9 @@ void Scene_Battle::Update()
 			break;
 	}
 
+	/* 手札のカードの設定座標の設定 */
+	CardPosition_HandSetSettingPosting();
+
 	/* カードの座標補間 */
 	CardPosition_Interpolation();
 }
