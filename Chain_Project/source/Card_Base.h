@@ -47,8 +47,8 @@ class Card_Base
 		// 補間
 		static const int INTERPOLATION_SPEED	= 5;	// 補間速度
 		// サイズ
-		static const int CARD_WIDTH		= 120;	// カード幅
-		static const int CARD_HEIGHT	= 170;	// カード高さ
+		static const int CARD_WIDTH		= 168;	// カード幅
+		static const int CARD_HEIGHT	= 238;	// カード高さ
 		// レアリティの種類
 		static const int RARITY_COMMON	= 0;	// コモン
 		static const int RARITY_RARE	= 1;	// レア

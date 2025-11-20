@@ -128,8 +128,12 @@ void Scene_Title::AdvanceFontLoad()
 	std::shared_ptr<DataList_Font> pDataList_Font = std::dynamic_pointer_cast<DataList_Font>(gpDataListServer->GetDataList("DataList_Font"));
 
 	/* フォントデータ読み込み */
+	// どんぐりデュエル(16px)
+	std::string FontFilePath = "DonguriDuel_16px";
+	pDataList_Font->LoadFontHandle_ASync(FontFilePath, 0);
+	giFont_DonguriDuel_16 = pDataList_Font->iGetFontHnadle(FontFilePath);
 	// どんぐりデュエル(32px)
-	std::string FontFilePath = "DonguriDuel_32px";
+	FontFilePath = "DonguriDuel_32px";
 	pDataList_Font->LoadFontHandle_ASync(FontFilePath, 0);
 	giFont_DonguriDuel_32 = pDataList_Font->iGetFontHnadle(FontFilePath);
 	// どんぐりデュエル(64px)

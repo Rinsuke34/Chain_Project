@@ -37,12 +37,12 @@ class Scene_Battle : public Scene_Base
 		// 座標関係
 		static const int	BATTLE_AREA_INTERVAL				= 250;	// バトルエリアの間隔
 		static const int	BATTLE_AREA_POS_Y					= 540;	// バトルエリアのY座標
-		static const int	HANDCARD_INTERVAL					= 125;	// 手札のカード間隔
+		static const int	HANDCARD_INTERVAL					= 170;	// 手札のカード間隔
 		static const int	HANDCARD_POS_Y						= 900;	// 手札のY座標
 		static const int	DECISIONBUTTON_POS_X				= 1720;	// 決定ボタンのX座標
 		static const int	DECISIONBUTTON_POS_Y				= 640;	// 決定ボタンのY座標
 		static const int	CHARACTER_INTERVAL					= 200;	// キャラクターの間隔
-		static const int	CHARACTER_POS_Y						= 300;	// キャラクターのY座標
+		static const int	CHARACTER_POS_Y						= 360;	// キャラクターのY座標
 
 	private:
 		/* 変数 */

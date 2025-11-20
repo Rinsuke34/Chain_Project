@@ -239,7 +239,7 @@ void Scene_Battle::CharacterPosition_Setup()
 				CHARACTER_POS_Y
 			};
 
-			FriendCharacter->SetCenterPos(Pos);
+			FriendCharacter->SetBasePos(Pos);
 		}
 	}
 
@@ -255,7 +255,7 @@ void Scene_Battle::CharacterPosition_Setup()
 				CHARACTER_POS_Y
 			};
 
-			EnemyCharacter->SetCenterPos(Pos);
+			EnemyCharacter->SetBasePos(Pos);
 		}
 	}
 }

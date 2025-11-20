@@ -11,7 +11,11 @@
 // îwåiï`é 
 void Scene_Battle::Draw_BackGround()
 {
+	/* âº */
+	DrawBox(0, 0, SCREEN_SIZE_WIDE, SCREEN_SIZE_HEIGHT, GetColor(0, 128, 0), TRUE);
 
+	DrawLine(0, 400, SCREEN_SIZE_WIDE, 400, GetColor(255, 255, 255), 5);
+	DrawLine(0, 300, SCREEN_SIZE_WIDE, 300, GetColor(255, 255, 255), 5);
 }
 
 // ÉLÉÉÉâÉNÉ^Å[ï`é 

@@ -14,7 +14,7 @@ Card_Base::Card_Base()
 	this->Name		= "";		// カード名
 	// その他
 	this->Now_Position		= { SCREEN_SIZE_WIDE, SCREEN_SIZE_HEIGHT / 2 };	// 現在座標(ドローしてる感を出すため山札の位置を初期値に設定)
-	this->Setting_Position	= { 0, 0 };	// 設定座標(ホールドが解除された際に自動で補正される座標)
+	this->Setting_Position	= { 0, 0 };										// 設定座標(ホールドが解除された際に自動で補正される座標)
 }
 
 // 位置座標補間処理

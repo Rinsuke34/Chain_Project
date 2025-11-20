@@ -19,23 +19,28 @@ class Character_Base
 		virtual void Action()		{};	// 行動
 
 		/* ゲッター */
-		int 					GetHP_Max()		{ return iHP_Max; }			// 体力(最大値)の取得
-		int 					GetHP_Now()		{ return iHP_Now; }			// 体力(現在値)の取得
-		Struct_2D::POSITION		GetCenterPos()	{ return Center_Position; }	// 中心座標の取得
+		int 					GetHP_Max()		{ return iHP_Max; }		// 体力(最大値)の取得
+		int 					GetHP_Now()		{ return iHP_Now; }		// 体力(現在値)の取得
+		Struct_2D::POSITION		GetBasePos()	{ return BasePos; }		// 基準座標の取得
 
 		/* セッター */
 		void	SetHp_Max(int MaxHP)					{ this->iHP_Max			= MaxHP; }	// 体力(最大値)の設定
 		void	SetHp_Now(int NowHP)					{ this->iHP_Now			= NowHP; }	// 体力(現在地)の設定
-		void	SetCenterPos(Struct_2D::POSITION Pos)	{ this->Center_Position	= Pos; }	// 中心座標の設定
+		void	SetBasePos(Struct_2D::POSITION Pos)		{ this->BasePos			= Pos; }	// 基準座標の設定
+
+		/* 定数 */
+		static const int	HPBAR_WIDE		= 128;	// HPバーの幅
+		static const int	HPBAR_HEIGHT	= 20;	// HPバーの高さ
+		static const int	HPBAR_UPPER		= 20;	// HPバーの上端位置補正値
 
 	protected:
 		/* 変数 */
 		// キャラクター情報
-		int						iHP_Max;			// 体力(最大値)
-		int						iHP_Now;			// 体力(現在値)
-		std::shared_ptr<int>	Image;				// 画像
+		int						iHP_Max;	// 体力(最大値)
+		int						iHP_Now;	// 体力(現在値)
+		std::shared_ptr<int>	Image;		// 画像
 		// その他
-		Struct_2D::POSITION		Center_Position;	// 中心座標
+		Struct_2D::POSITION		BasePos;	// 基準座標(足元)
 
 		/* 関数 */
 		void SetUpImage(std::string ImageName);		// 指定の名称の画像を設定する
