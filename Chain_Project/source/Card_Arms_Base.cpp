@@ -19,9 +19,3 @@ Card_Arms_Base::~Card_Arms_Base()
 
 }
 
-// •`‰æ
-void Card_Arms_Base::Draw()
-{
-	/* ”wŒi•`ŽÊ */
-	DrawBox(Now_Position.iX - (CARD_WIDTH / 2), Now_Position.iY - (CARD_HEIGHT / 2), Now_Position.iX + (CARD_WIDTH / 2), Now_Position.iY + (CARD_HEIGHT / 2), GetColor(255, 0, 0), TRUE);
-}

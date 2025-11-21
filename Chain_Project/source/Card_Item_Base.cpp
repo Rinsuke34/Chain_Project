@@ -18,10 +18,3 @@ Card_Item_Base::~Card_Item_Base()
 {
 
 }
-
-// •`‰æ
-void Card_Item_Base::Draw()
-{
-	/* ”wŒi•`ŽÊ */
-	DrawBox(Now_Position.iX - (CARD_WIDTH / 2), Now_Position.iY - (CARD_HEIGHT / 2), Now_Position.iX + (CARD_WIDTH / 2), Now_Position.iY + (CARD_HEIGHT / 2), GetColor(0, 0, 255), TRUE);
-}

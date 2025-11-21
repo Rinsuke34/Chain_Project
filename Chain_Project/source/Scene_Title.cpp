@@ -116,6 +116,15 @@ void Scene_Title::AdvanceImageLoad()
 	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
 	ImageFilePath = "Character/Monster/Test";
 	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
+	// カード(フレーム)
+	ImageFilePath = "Card_Commoon/Frame_Test";
+	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
+	// カード(背景)
+	ImageFilePath = "Card_Commoon/BackGround_Test";
+	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
+	// カード(イラスト)
+	ImageFilePath = "Card_Ilust/Test_Image";
+	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
 }
 
 // フォントリソースの先行ロード

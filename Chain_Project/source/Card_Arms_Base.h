@@ -14,10 +14,8 @@ class Card_Arms_Base : public Card_Base
 		virtual ~Card_Arms_Base();	// デストラクタ
 
 		/* 関数 */
-		virtual void Draw()	override;	// 描画
 
-	private:
+	protected:
 		/* 変数 */
-
 		/* 関数 */
 };
