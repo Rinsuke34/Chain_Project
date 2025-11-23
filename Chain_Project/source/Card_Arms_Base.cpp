@@ -10,12 +10,5 @@
 Card_Arms_Base::Card_Arms_Base() : Card_Base()
 {
 	/* カード情報の設定 */
-	SetCardType(Card_Base::TYPE_ARMS);	// カード種類:武具
+	this->iCardType = Card_Base::TYPE_ARMS;	// カード種類:武具
 }
-
-// デストラクタ
-Card_Arms_Base::~Card_Arms_Base()
-{
-
-}
-

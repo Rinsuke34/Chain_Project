@@ -149,6 +149,14 @@ void Scene_Title::AdvanceFontLoad()
 	FontFilePath = "DonguriDuel_64px";
 	pDataList_Font->LoadFontHandle_ASync(FontFilePath, 0);
 	giFont_DonguriDuel_64 = pDataList_Font->iGetFontHnadle(FontFilePath);
+	// チェックポイント・ピリオド(16px)
+	FontFilePath = "Cp_Period_16px";
+	pDataList_Font->LoadFontHandle_ASync(FontFilePath, 0);
+	giFont_Cp_Period_16 = pDataList_Font->iGetFontHnadle(FontFilePath);
+	// チェックポイント・ピリオド(32px)
+	FontFilePath = "Cp_Period_32px";
+	pDataList_Font->LoadFontHandle_ASync(FontFilePath, 0);
+	giFont_Cp_Period_32 = pDataList_Font->iGetFontHnadle(FontFilePath);
 }
 
 // UI(ボタン)の作成

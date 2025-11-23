@@ -10,11 +10,5 @@
 Card_Spell_Base::Card_Spell_Base() : Card_Base()
 {
 	/* カード情報の設定 */
-	SetCardType(Card_Base::TYPE_SPELL);	// カード種類:魔法
-}
-
-// デストラクタ
-Card_Spell_Base::~Card_Spell_Base()
-{
-
+	this->iCardType = Card_Base::TYPE_SPELL;	// カード種類:魔法
 }

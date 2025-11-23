@@ -22,16 +22,23 @@ class Character_Base
 		int 					GetHP_Max()		{ return iHP_Max; }		// 体力(最大値)の取得
 		int 					GetHP_Now()		{ return iHP_Now; }		// 体力(現在値)の取得
 		Struct_2D::POSITION		GetBasePos()	{ return BasePos; }		// 基準座標の取得
+		int						GetCamp()		{ return Camp; }		// 陣営の取得
 
 		/* セッター */
 		void	SetHp_Max(int MaxHP)					{ this->iHP_Max			= MaxHP; }	// 体力(最大値)の設定
 		void	SetHp_Now(int NowHP)					{ this->iHP_Now			= NowHP; }	// 体力(現在地)の設定
 		void	SetBasePos(Struct_2D::POSITION Pos)		{ this->BasePos			= Pos; }	// 基準座標の設定
+		void	SetCamp(int camp)						{ this->Camp			= camp; }	// 陣営の設定
 
 		/* 定数 */
+		// 描写系
 		static const int	HPBAR_WIDE		= 128;	// HPバーの幅
 		static const int	HPBAR_HEIGHT	= 20;	// HPバーの高さ
 		static const int	HPBAR_UPPER		= 20;	// HPバーの上端位置補正値
+		// 陣営
+		static const int	CAMP_PLAYER		= 0;	// プレイヤー
+		static const int	CAMP_FRIEND		= 1;	// 仲間陣営
+		static const int	CAMP_ENEMY		= 2;	// 敵陣営
 
 	protected:
 		/* 変数 */
@@ -39,6 +46,7 @@ class Character_Base
 		int						iHP_Max;	// 体力(最大値)
 		int						iHP_Now;	// 体力(現在値)
 		std::shared_ptr<int>	Image;		// 画像
+		int						Camp;		// 陣営
 		// その他
 		Struct_2D::POSITION		BasePos;	// 基準座標(足元)
 

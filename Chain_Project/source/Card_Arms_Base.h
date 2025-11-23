@@ -10,12 +10,6 @@
 class Card_Arms_Base : public Card_Base
 {
 	public:
-		Card_Arms_Base();			// コンストラクタ
-		virtual ~Card_Arms_Base();	// デストラクタ
-
-		/* 関数 */
-
-	protected:
-		/* 変数 */
-		/* 関数 */
+		Card_Arms_Base();				// コンストラクタ
+		virtual ~Card_Arms_Base() {};	// デストラクタ
 };

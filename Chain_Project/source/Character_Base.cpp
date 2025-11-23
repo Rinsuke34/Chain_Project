@@ -16,6 +16,7 @@ Character_Base::Character_Base()
 	this->iHP_Now			= 0;			// ‘Ì—Í(Œ»İ’l)
 	this->Image				= nullptr;		// ‰æ‘œ
 	this->BasePos			= { 0, 0 };		// Šî€À•W
+	this->Camp				= -1;			// w‰c
 }
 
 // •`‰æ

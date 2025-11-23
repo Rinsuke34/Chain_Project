@@ -127,6 +127,18 @@
     <Filter Include="ヘッダー ファイル\キャラクター\NPC">
       <UniqueIdentifier>{bd054bd2-f4a0-4846-913f-2596546d61d2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\カード\武具%28Arms%29\木の剣">
+      <UniqueIdentifier>{a20f63c9-eba8-4373-b230-b607030356e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\カード\武具%28Arms%29\木の剣">
+      <UniqueIdentifier>{45855fae-1417-4afe-942f-aa3319605aab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\カード\武具%28Arms%29\木の盾">
+      <UniqueIdentifier>{10684a3a-95f1-4659-8eba-d6a0bd60aa36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\カード\武具%28Arms%29\木の盾">
+      <UniqueIdentifier>{28357b41-4f13-4d35-8c1b-25f66ad04487}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Main.cpp">
@@ -192,6 +204,12 @@
     <ClCompile Include="source\Character_Npc_Test.cpp">
       <Filter>ソース ファイル\キャラクター\NPC</Filter>
     </ClCompile>
+    <ClCompile Include="source\Card_Arms_WoodenSword.cpp">
+      <Filter>ソース ファイル\カード\武具%28Arms%29\木の剣</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Card_Arms_WoodenShield.cpp">
+      <Filter>ソース ファイル\カード\武具%28Arms%29\木の盾</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Scene_Load_Checker.h">
@@ -247,6 +265,15 @@
     </ClInclude>
     <ClInclude Include="source\Character_Npc_Test.h">
       <Filter>ヘッダー ファイル\キャラクター\NPC</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Card_Arms_WoodenSword.h">
+      <Filter>ヘッダー ファイル\カード\武具%28Arms%29\木の剣</Filter>
+    </ClInclude>
+    <ClInclude Include="source\StructDefine.h">
+      <Filter>ヘッダー ファイル\定義</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Card_Arms_WoodenShield.h">
+      <Filter>ヘッダー ファイル\カード\武具%28Arms%29\木の盾</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

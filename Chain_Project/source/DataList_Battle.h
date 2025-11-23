@@ -5,6 +5,7 @@
 /* 使用する要素のインクルード */
 // 共通定義
 #include "AppFrame.h"
+#include "StructDefine.h"
 
 // 前方宣言
 class Character_Base;
@@ -26,6 +27,8 @@ class DataList_Battle : public DataList_Base
 		void RemoveHandCard(const std::shared_ptr<Card_Base>& pCard);	// 手札からカードを削除
 		void RemoveTrashCard(const std::shared_ptr<Card_Base>& pCard);	// 捨て札からカードを削除
 		void RemoveBattleAreaCard(int AreaNo);							// バトルエリアからカードを削除
+		// 与効果関係
+		void AddEffect(const Card_Effect_Base& effect);					// 与効果を追加
 		
 		/* ゲッター */
 		// カード関連
@@ -37,6 +40,8 @@ class DataList_Battle : public DataList_Base
 		// キャラクター関連
 		std::shared_ptr<Character_Base>			GetFriendCharacter(int positionNo)	{ return Friend_CharacterList[positionNo]; }	// 仲間キャラクターを取得
 		std::shared_ptr<Character_Base>			GetEnemyCharacter(int positionNo)	{ return Enemy_CharacterList[positionNo]; }		// 敵キャラクターを取得
+		// 与効果関連
+		std::vector<Card_Effect_Base>			GetEffectList()						{ return EffectList; }							// 与効果一覧を取得
 
 		/* セッター */
 		// カード関連
@@ -48,6 +53,9 @@ class DataList_Battle : public DataList_Base
 		// キャラクター関連
 		void SetFriendCharacter(int positionNo, const std::shared_ptr<Character_Base>& character)	{ Friend_CharacterList[positionNo]	= character; }	// 仲間キャラクターを設定
 		void SetEnemyCharacter(int positionNo, const std::shared_ptr<Character_Base>& character)	{ Enemy_CharacterList[positionNo]	= character; }	// 敵キャラクターを設定
+		// 与効果関連
+		void SetEffectList(const std::vector<Card_Effect_Base>& effectList) { EffectList = effectList; }	// 与効果一覧を設定
+
 
 		/* 定数 */
 		// バトルエリア番号
@@ -74,6 +82,8 @@ class DataList_Battle : public DataList_Base
 		// キャラクター関係
 		std::shared_ptr<Character_Base>			Friend_CharacterList[POSITION_MAX];		// 仲間キャラクター一覧
 		std::shared_ptr<Character_Base>			Enemy_CharacterList[POSITION_MAX];		// 敵キャラクター一覧
+		// 与効果関連
+		std::vector<Card_Effect_Base>			EffectList;								// 与効果一覧(プレイヤーやNPCの攻撃などの処理がここに入る)
 
 		/* 関数 */
 };

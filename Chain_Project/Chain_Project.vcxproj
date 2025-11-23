@@ -170,6 +170,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="source\Card_Arms_Base.cpp" />
+    <ClCompile Include="source\Card_Arms_WoodenShield.cpp" />
+    <ClCompile Include="source\Card_Arms_WoodenSword.cpp" />
     <ClCompile Include="source\Card_Base.cpp" />
     <ClCompile Include="source\Card_Item_Base.cpp" />
     <ClCompile Include="source\Card_Spell_Base.cpp" />
@@ -198,6 +200,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Card_Arms_Base.h" />
+    <ClInclude Include="source\Card_Arms_WoodenShield.h" />
+    <ClInclude Include="source\Card_Arms_WoodenSword.h" />
     <ClInclude Include="source\Card_Base.h" />
     <ClInclude Include="source\Card_Item_Base.h" />
     <ClInclude Include="source\Card_Spell_Base.h" />
@@ -214,6 +218,7 @@
     <ClInclude Include="source\Scene_Load_Draw.h" />
     <ClInclude Include="source\Scene_Title.h" />
     <ClInclude Include="source\Scene_UI_Button.h" />
+    <ClInclude Include="source\StructDefine.h" />
     <ClInclude Include="source\VariableDefine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

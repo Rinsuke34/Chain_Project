@@ -11,30 +11,30 @@
 #include "Card_Item_Base.h"
 #include "Character_Player.h"
 #include "Character_Npc_Test.h"
+#include "Card_Arms_WoodenSword.h"
+#include "Card_Arms_WoodenShield.h"
 
 // コンストラクタ
 DataList_Battle::DataList_Battle() : DataList_Base("DataList_Battle")
 {
 	/* テスト用 */
 	// 手札にカードを追加
-	this->DeckCardList.push_back(std::make_shared<Card_Arms_Base>());
-	this->DeckCardList.push_back(std::make_shared<Card_Arms_Base>());
-	this->DeckCardList.push_back(std::make_shared<Card_Arms_Base>());
-	this->DeckCardList.push_back(std::make_shared<Card_Arms_Base>());
-	this->DeckCardList.push_back(std::make_shared<Card_Arms_Base>());
-	this->DeckCardList.push_back(std::make_shared<Card_Arms_Base>());
-	this->DeckCardList.push_back(std::make_shared<Card_Spell_Base>());
-	this->DeckCardList.push_back(std::make_shared<Card_Spell_Base>());
-	this->DeckCardList.push_back(std::make_shared<Card_Spell_Base>());
-	this->DeckCardList.push_back(std::make_shared<Card_Spell_Base>());
-	this->DeckCardList.push_back(std::make_shared<Card_Spell_Base>());
-	this->DeckCardList.push_back(std::make_shared<Card_Spell_Base>());
-	this->DeckCardList.push_back(std::make_shared<Card_Item_Base>());
-	this->DeckCardList.push_back(std::make_shared<Card_Item_Base>());
-	this->DeckCardList.push_back(std::make_shared<Card_Item_Base>());
-	this->DeckCardList.push_back(std::make_shared<Card_Item_Base>());
-	this->DeckCardList.push_back(std::make_shared<Card_Item_Base>());
-	this->DeckCardList.push_back(std::make_shared<Card_Item_Base>());
+	this->DeckCardList.push_back(std::make_shared<Card_Arms_WoodenSword>());
+	this->DeckCardList.push_back(std::make_shared<Card_Arms_WoodenShield>());
+	this->DeckCardList.push_back(std::make_shared<Card_Arms_WoodenSword>());
+	this->DeckCardList.push_back(std::make_shared<Card_Arms_WoodenShield>());
+	this->DeckCardList.push_back(std::make_shared<Card_Arms_WoodenSword>());
+	this->DeckCardList.push_back(std::make_shared<Card_Arms_WoodenShield>());
+	this->DeckCardList.push_back(std::make_shared<Card_Arms_WoodenSword>());
+	this->DeckCardList.push_back(std::make_shared<Card_Arms_WoodenShield>());
+	this->DeckCardList.push_back(std::make_shared<Card_Arms_WoodenSword>());
+	this->DeckCardList.push_back(std::make_shared<Card_Arms_WoodenShield>());
+
+	// 画像更新
+	for (auto& Deck : DeckCardList)
+	{
+		Deck->UpdateImage();
+	}
 
 	/* テスト用 */
 	// キャラクターを追加
@@ -101,4 +101,13 @@ void DataList_Battle::RemoveBattleAreaCard(int AreaNo)
 	// 引数
 	// AreaNo <- バトルエリア番号
 	this->BattleAreaCardList[AreaNo] = nullptr;
+}
+
+// 与効果を追加
+void DataList_Battle::AddEffect(const Card_Effect_Base& effect)
+{
+	// 引数
+	// effect <- 追加する与効果
+
+	this->EffectList.push_back(effect);
 }

@@ -10,11 +10,5 @@
 Card_Item_Base::Card_Item_Base() : Card_Base()
 {
 	/* カード情報の設定 */
-	SetCardType(Card_Base::TYPE_ITEM);	// カード種類:道具
-}
-
-// デストラクタ
-Card_Item_Base::~Card_Item_Base()
-{
-
+	this->iCardType	=	Card_Base::TYPE_ITEM;	// カード種類:道具
 }

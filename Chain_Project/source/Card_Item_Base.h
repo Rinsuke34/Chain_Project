@@ -10,12 +10,11 @@
 class Card_Item_Base : public Card_Base
 {
 	public:
-		Card_Item_Base();			// コンストラクタ
-		virtual ~Card_Item_Base();	// デストラクタ
+		Card_Item_Base();				// コンストラクタ
+		virtual ~Card_Item_Base() {};	// デストラクタ
 
 		/* 関数 */
 
 	protected:
-		/* 変数 */
 		/* 関数 */
 };

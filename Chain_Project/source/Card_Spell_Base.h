@@ -10,8 +10,8 @@
 class Card_Spell_Base : public Card_Base
 {
 	public:
-		Card_Spell_Base();			// コンストラクタ
-		virtual ~Card_Spell_Base();	// デストラクタ
+		Card_Spell_Base();				// コンストラクタ
+		virtual ~Card_Spell_Base() {};	// デストラクタ
 
 		/* 関数 */
 
