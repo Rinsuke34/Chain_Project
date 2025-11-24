@@ -13,6 +13,42 @@
 // "ターン開始時"の効果発動
 void Scene_Battle::Update_EffectTurnStart()
 {
+	/* 各カードの"ターン開始時"効果を実行 */
+	// バトルエリア
+	for (int i = 0; i < DataList_Battle::BATTLE_AREA_MAX; i++)
+	{
+		auto BattleAreaCard = this->pDataList_Battle->GetBattleAreaCardList(i);
+		if (BattleAreaCard != nullptr)
+		{
+			BattleAreaCard->Effect_StartAction();
+		}
+	}
+	// 山札
+	for (auto& BattleAreaCard : this->pDataList_Battle->GetDeckCardList())
+	{
+		if (BattleAreaCard != nullptr)
+		{
+			BattleAreaCard->Effect_StartTurn();
+		}
+	}
+	// 手札
+	for (auto& BattleAreaCard : this->pDataList_Battle->GetHandCardList())
+	{
+		if (BattleAreaCard != nullptr)
+		{
+			BattleAreaCard->Effect_StartTurn();
+		}
+	}
+	// 捨て札
+	for (auto& BattleAreaCard : this->pDataList_Battle->GetTrashCardList())
+	{
+		if (BattleAreaCard != nullptr)
+		{
+			BattleAreaCard->Effect_StartTurn();
+		}
+	}
+
+	/* "カードドロー"フェイズへ遷移 */
 	this->iBattlePhase = BATTLE_PHASE_DRAW_CARD;
 }
 
@@ -33,12 +69,31 @@ void Scene_Battle::Update_DrawCard()
 		}
 	}
 
+	/* "敵の行動決定"フェイズへ遷移 */
 	this->iBattlePhase = BATTLE_PHASE_ENEMY_ACTION_DECISION;
 }
 
 // 敵の行動決定
 void Scene_Battle::Update_EnemyActionDecision()
 {
+	/* 全てのキャラクターの行動決定処理を行う */
+	for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
+	{
+		// 仲間キャラクター
+		auto FriendCharacter = this->pDataList_Battle->GetFriendCharacter(i);
+		if (FriendCharacter != nullptr)
+		{
+			FriendCharacter->Action();
+		}
+		// 敵キャラクター
+		auto EnemyCharacter = this->pDataList_Battle->GetEnemyCharacter(i);
+		if (EnemyCharacter != nullptr)
+		{
+			EnemyCharacter->Action();
+		}
+	}
+
+	/* "プレイヤーの行動決定"フェイズへ遷移 */
 	this->iBattlePhase = BATTLE_PHASE_PLAYER_ACTION_DECISION;
 }
 
@@ -134,6 +189,7 @@ void Scene_Battle::Update_PlayerActionDecision()
 	/* "決定"ボタンが入力されたならば */
 	if (this->UI_DecisionButton->GetMouseOverFlg() && (gstKeyboardInputData.igInput[INPUT_TRG] & MOUSE_INPUT_LEFT))
 	{
+		/* "カードチェイン数確認"フェイズへ遷移 */
 		this->iBattlePhase = BATTLE_PHASE_CARD_CHAIN_CHECK;
 	}
 }
@@ -141,44 +197,181 @@ void Scene_Battle::Update_PlayerActionDecision()
 // カードのチェイン数確認
 void Scene_Battle::Update_CardChainCheck()
 {
+	/* "行動開始時の効果発動"フェイズへ遷移 */
 	this->iBattlePhase = BATTLE_PHASE_EFFECT_ACTION_START;
 }
 
 // "行動開始時"の効果発動
 void Scene_Battle::Update_EffectActionStart()
 {
+	/* 各カードの"行動開始時"効果を実行 */
+	// バトルエリア
+	for (int i = 0; i < DataList_Battle::BATTLE_AREA_MAX; i++)
+	{
+		auto BattleAreaCard = this->pDataList_Battle->GetBattleAreaCardList(i);
+		if (BattleAreaCard != nullptr)
+		{
+			BattleAreaCard->Effect_StartAction();
+		}
+	}
+	// 山札
+	for (auto& BattleAreaCard : this->pDataList_Battle->GetDeckCardList())
+	{
+		if (BattleAreaCard != nullptr)
+		{
+			BattleAreaCard->Effect_StartAction();
+		}
+	}
+	// 手札
+	for (auto& BattleAreaCard : this->pDataList_Battle->GetHandCardList())
+	{
+		if (BattleAreaCard != nullptr)
+		{
+			BattleAreaCard->Effect_StartAction();
+		}
+	}
+	// 捨て札
+	for (auto& BattleAreaCard : this->pDataList_Battle->GetTrashCardList())
+	{
+		if (BattleAreaCard != nullptr)
+		{
+			BattleAreaCard->Effect_StartAction();
+		}
+	}
+
+	/* "戦闘行動"フェイズへ遷移 */
+	// ※バトルエリア1から順に処理を行うため、最初にバトルエリア1を設定しておく
 	this->iBattlePhase = BATTLE_PHASE_BATTLE_ACTION;
+	this->iBattlePhase_NowBattleAreaNo = DataList_Battle::BATTLE_AREA_1;
 }
 
 // 戦闘行動
 void Scene_Battle::Update_BattleAction()
 {
-	/* バトルエリアのカードを捨て札リストに入れる */
-	for (int i = 0; i < DataList_Battle::BATTLE_AREA_MAX; i++)
-	{
-		/* バトルエリアにカードが設定されているか確認 */
-		if (this->pDataList_Battle->GetBattleAreaCardList(i) != nullptr)
-		{
-			// カードが設定されている場合
-			/* カードを捨て札リストに追加 */
-			this->pDataList_Battle->AddTrashCard(this->pDataList_Battle->GetBattleAreaCardList(i));
+	///* バトルエリア1～5の順で処理を行う */
+	//switch (this->iBattlePhase_NowBattleAreaNo)
+	//{
+	//	case DataList_Battle::BATTLE_AREA_1:
+	//		this->iBattlePhase_NowBattleAreaNo = DataList_Battle::BATTLE_AREA_2;
+	//		break;
 
-			/* バトルエリアからカードを削除 */
-			this->pDataList_Battle->RemoveBattleAreaCard(i);
-		}
+	//	case DataList_Battle::BATTLE_AREA_2:
+	//		this->iBattlePhase_NowBattleAreaNo = DataList_Battle::BATTLE_AREA_2;
+	//		break;
+
+	//	case DataList_Battle::BATTLE_AREA_3:
+	//		this->iBattlePhase_NowBattleAreaNo = DataList_Battle::BATTLE_AREA_2;
+	//		break;
+
+	//	case DataList_Battle::BATTLE_AREA_4:
+	//		this->iBattlePhase_NowBattleAreaNo = DataList_Battle::BATTLE_AREA_2;
+	//		break;
+
+	//	case DataList_Battle::BATTLE_AREA_5:
+	//		this->iBattlePhase_NowBattleAreaNo = DataList_Battle::BATTLE_AREA_2;
+	//		break;
+	//}
+
+	///* バトルエリアの1～5の順で処理を行う */
+	//for (int i = 0; i < DataList_Battle::BATTLE_AREA_MAX; i++)
+	//{
+	//	/* バトルエリアにカードが設定されているか確認 */
+	//	if (this->pDataList_Battle->GetBattleAreaCardList(i) != nullptr)
+	//	{
+	//		// カードが設定されている場合
+	//		/* カードの戦闘行動を実行 */
+	//		this->pDataList_Battle->GetBattleAreaCardList(i)->BattleAction();
+
+	//		/* カードを捨て札リストに追加 */
+	//		this->pDataList_Battle->AddTrashCard(this->pDataList_Battle->GetBattleAreaCardList(i));
+
+	//		/* バトルエリアからカードを削除 */
+	//		this->pDataList_Battle->RemoveBattleAreaCard(i);
+	//	}
+	//}
+
+	/* 次のバトルエリアの処理を実施 */
+	if (this->iBattlePhase_NowBattleAreaNo < DataList_Battle::BATTLE_AREA_5)
+	{
+		// 次のバトルエリアが存在する場合
+		this->iBattlePhase_NowBattleAreaNo++;
 	}
-	this->iBattlePhase = BATTLE_PHASE_EFFECT_TRUN_END;
+	else
+	{
+		// 次のバトルエリアが存在しない場合
+		this->iBattlePhase_NowBattleAreaNo = DataList_Battle::BATTLE_AREA_1;
+
+		/* 全てのバトルエリアの処理が終了したため、"ターン終了時"の効果発動フェイズへ遷移 */
+		this->iBattlePhase = BATTLE_PHASE_EFFECT_TRUN_END;
+		return;
+	}
 }
 
 // "ターン終了時"の効果発動
 void Scene_Battle::Update_EffectTurnEnd()
 {
+	/* 各カードの"ターン終了時"効果を実行 */
+	// バトルエリア
+	for (int i = 0; i < DataList_Battle::BATTLE_AREA_MAX; i++)
+	{
+		auto BattleAreaCard = this->pDataList_Battle->GetBattleAreaCardList(i);
+		if (BattleAreaCard != nullptr)
+		{
+			BattleAreaCard->Effect_EndTurn();
+		}
+	}
+	// 山札
+	for (auto& BattleAreaCard : this->pDataList_Battle->GetDeckCardList())
+	{
+		if (BattleAreaCard != nullptr)
+		{
+			BattleAreaCard->Effect_EndTurn();
+		}
+	}
+	// 手札
+	for (auto& BattleAreaCard : this->pDataList_Battle->GetHandCardList())
+	{
+		if (BattleAreaCard != nullptr)
+		{
+			BattleAreaCard->Effect_EndTurn();
+		}
+	}
+	// 捨て札
+	for (auto& BattleAreaCard : this->pDataList_Battle->GetTrashCardList())
+	{
+		if (BattleAreaCard != nullptr)
+		{
+			BattleAreaCard->Effect_EndTurn();
+		}
+	}
+
+	/* "状態変化のターン進行"フェイズへ遷移 */
 	this->iBattlePhase = BATTLE_PHASE_STATUS_EFFECT_ADVANCE;
 }
 
 // 状態変化のターン進行
 void Scene_Battle::Update_StatusEffectAdvance()
 {
+	/* 各キャラクターの状態変化のターンを進行 */
+
+	/* 全キャラクターのシールドをリセット */
+	for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
+	{
+		// 仲間
+		auto FriendCharacter = this->pDataList_Battle->GetFriendCharacter(i);
+		if (FriendCharacter != nullptr)
+		{
+			FriendCharacter->ShieldReset_EndTurn();
+		}
+		// 敵
+		auto EnemyCharacter = this->pDataList_Battle->GetEnemyCharacter(i);
+		if (EnemyCharacter != nullptr)
+		{
+			EnemyCharacter->ShieldReset_EndTurn();
+		}
+	}
+
+	/* "ターン開始時の効果効果発動"フェイズへ遷移 */
 	this->iBattlePhase = BATTLE_PHASE_EFFECT_TRUN_START;
 }
 

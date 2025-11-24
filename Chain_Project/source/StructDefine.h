@@ -3,13 +3,17 @@
 
 #pragma once
 
+/* 前方宣言 */
+class Character_Base;
+
 /* カード効果 */
 // ベース
 class Card_Effect_Base
 {
 	public:
-		int Target_Camp;		// 効果対象の陣営
-		int Target_Position;	// 効果対象の立ち位置
+		int								Target_Camp;		// 効果対象の陣営
+		int								Target_Position;	// 効果対象の立ち位置
+		std::shared_ptr<Character_Base>	EffectUser;			// 効果の使用者
 };
 
 // 攻撃

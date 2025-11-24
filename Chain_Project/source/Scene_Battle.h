@@ -50,6 +50,7 @@ class Scene_Battle : public Scene_Base
 		std::shared_ptr<DataList_Battle> pDataList_Battle;		// バトル用データリスト
 		// その他
 		int iBattlePhase;										// バトルフェーズ
+		int iBattlePhase_NowBattleAreaNo;						// 現在処理の実行中のバトルエリア
 
 		/* 関数 */
 		// 画像
