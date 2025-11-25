@@ -69,7 +69,7 @@ void Card_Base::BattleAction()
 						{
 							/* 存在するなら */
 							// 攻撃行動を設定する
-							std::shared_ptr<Card_Effect_Attack> addEffect;
+							std::shared_ptr<Card_Effect_Attack> addEffect = std::make_shared<Card_Effect_Attack>();
 							addEffect->Target_Camp		= Character_Base::CAMP_ENEMY;	// 効果対象の陣営:敵
 							addEffect->Target_Position	= i;							// 効果対象の立ち位置:確認した敵キャラクターの位置
 							addEffect->Damage			= this->Strength;				// ダメージ量:カードの攻撃力
@@ -95,7 +95,7 @@ void Card_Base::BattleAction()
 						{
 							/* 存在するなら */
 							// 攻撃行動を設定する
-							std::shared_ptr<Card_Effect_Attack> addEffect;
+							std::shared_ptr<Card_Effect_Attack> addEffect = std::make_shared<Card_Effect_Attack>();
 							addEffect->Target_Camp		= Character_Base::CAMP_ENEMY;	// 効果対象の陣営:敵
 							addEffect->Target_Position	= positionNo;					// 効果対象の立ち位置:確認した敵キャラクターの位置
 							addEffect->Damage			= this->Strength;				// ダメージ量:カードの攻撃力
@@ -118,10 +118,10 @@ void Card_Base::BattleAction()
 						{
 							/* 存在するなら */
 							// 攻撃行動を設定する
-							std::shared_ptr<Card_Effect_Attack> addEffect;
-							addEffect->Target_Camp = Character_Base::CAMP_ENEMY;	// 効果対象の陣営:敵
-							addEffect->Target_Position = i;							// 効果対象の立ち位置:確認した敵キャラクターの位置
-							addEffect->Damage = this->Strength;						// ダメージ量:カードの攻撃力
+							std::shared_ptr<Card_Effect_Attack> addEffect = std::make_shared<Card_Effect_Attack>();
+							addEffect->Target_Camp		= Character_Base::CAMP_ENEMY;	// 効果対象の陣営:敵
+							addEffect->Target_Position	= i;							// 効果対象の立ち位置:確認した敵キャラクターの位置
+							addEffect->Damage			= this->Strength;				// ダメージ量:カードの攻撃力
 							this->pDataList_Battle->AddEffect(addEffect, GetMyAreaNo());
 						}
 					}
@@ -142,7 +142,7 @@ void Card_Base::BattleAction()
 			{
 				/* 存在するなら */
 				// シールド付与を設定する
-				std::shared_ptr<Card_Effect_Defence> addEffect;
+				std::shared_ptr<Card_Effect_Defence> addEffect = std::make_shared<Card_Effect_Defence>();
 				addEffect->Target_Camp		= Character_Base::CAMP_FRIEND;	// 効果対象の陣営:仲間
 				addEffect->Target_Position	= i;							// 効果対象の立ち位置:確認した仲間キャラクターの位置
 				addEffect->Shield			= this->Diffence;				// シールド付与量:カードの防御力

@@ -9,7 +9,6 @@ Character_Npc_Test::Character_Npc_Test()
 {
 	/* ‰Šú‰» */
 	this->iHP_Max = 100;			// ‘Ì—Í(Å‘å’l)
-	this->iHP_Now = 80;				// ‘Ì—Í(Œ»İ’l)
-
+	this->iHP_Now = 100;			// ‘Ì—Í(Œ»İ’l)
 	SetUpImage("Character_Ilust/Monster/Test");
 }

@@ -5,6 +5,7 @@
 /* 使用する要素のインクルード */
 // 共通定義
 #include "AppFrame.h"
+#include "StructDefine.h"
 
 /* 前方宣言 */
 class Scene_UI_Button;
@@ -76,9 +77,10 @@ class Scene_Battle : public Scene_Base
 		// UIのハンドル
 		std::shared_ptr<Scene_UI_Button> UI_DecisionButton;	// 決定ボタン
 		// その他
-		void CardPosition_HandSetSettingPosting();			// 手札のカード設定座標の設定
-		void CardPosition_Interpolation();					// カードの座標補間
-		void CharacterPosition_Setup();						// キャラクターの座標の設定
-		std::shared_ptr<Card_Base>	GetMouseInCard();		// マウスが重なっているカードを取得
-		int							GetMouseInBattleArea();	// マウスが重なっているバトルエリアを取得
+		void CardPosition_HandSetSettingPosting();									// 手札のカード設定座標の設定
+		void CardPosition_Interpolation();											// カードの座標補間
+		void CharacterPosition_Setup();												// キャラクターの座標の設定
+		std::shared_ptr<Card_Base>	GetMouseInCard();								// マウスが重なっているカードを取得
+		int	 GetMouseInBattleArea();												// マウスが重なっているバトルエリアを取得
+		void UseCardEffect(std::shared_ptr<Card_Effect_Base> Effect, int AreaNo);	// カード効果の使用
 };

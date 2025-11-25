@@ -139,6 +139,16 @@ void Character_Base::Damage(int DamageAmount)
 	}
 }
 
+// シールド追加処理
+void Character_Base::AddShield(int Shield)
+{
+	// 引数
+	// Shield : 追加するシールド量
+
+	/* シールドを追加 */
+	this->iShield_Now += Shield;
+}
+
 // シールドリセット(行動終了時)
 void Character_Base::ShieldReset_EndAction()
 {

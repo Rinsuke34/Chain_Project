@@ -18,6 +18,7 @@ class Character_Base
 		virtual void Draw_HPBar();				// 体力バー描画
 		virtual void Action()		{};			// 行動
 		virtual void Damage(int DamageAmount);	// ダメージ処理
+		virtual void AddShield(int Shield);		// シールド追加処理
 		virtual void ShieldReset_EndAction();	// シールドリセット(行動終了時)
 		virtual void ShieldReset_EndTurn();		// シールドリセット(ターン終了時)
 
@@ -41,9 +42,8 @@ class Character_Base
 		static const int	HPBAR_HEIGHT	= 20;	// HPバーの高さ
 		static const int	HPBAR_UPPER		= 20;	// HPバーの上端位置補正値
 		// 陣営
-		static const int	CAMP_PLAYER		= 0;	// プレイヤー
-		static const int	CAMP_FRIEND		= 1;	// 仲間陣営
-		static const int	CAMP_ENEMY		= 2;	// 敵陣営
+		static const int	CAMP_FRIEND		= 0;	// 仲間陣営
+		static const int	CAMP_ENEMY		= 1;	// 敵陣営
 
 	protected:
 		/* 変数 */

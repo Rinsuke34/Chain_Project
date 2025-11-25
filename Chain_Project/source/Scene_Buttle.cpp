@@ -127,6 +127,11 @@ void Scene_Battle::Update()
 			Update_EffectActionStart();
 			break;
 
+		// í“¬s“®‚ÌŒˆ’è
+		case BATTLE_PHASE_BATTLE_ACTION_DECISION:
+			Update_BattleAction_Decision();
+			break;
+
 		// í“¬s“®
 		case BATTLE_PHASE_BATTLE_ACTION:
 			Update_BattleAction();

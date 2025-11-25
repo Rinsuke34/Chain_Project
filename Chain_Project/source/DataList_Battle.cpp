@@ -75,3 +75,13 @@ void DataList_Battle::AddEffect(const std::shared_ptr<Card_Effect_Base>& effect,
 
 	this->EffectList[AreaNo].push_back(effect);
 }
+
+// —^Œø‰Ê‚ğíœ
+void DataList_Battle::RemoveEffect(const std::shared_ptr<Card_Effect_Base>& effect, int AreaNo)
+{
+	// ˆø”
+	// effect	<- íœ‚·‚é—^Œø‰Ê
+	// AreaNo	<- —^Œø‰Ê‚ğíœ‚·‚éƒoƒgƒ‹ƒGƒŠƒA
+
+	this->EffectList[AreaNo].erase(std::remove(EffectList[AreaNo].begin(), EffectList[AreaNo].end(), effect), EffectList[AreaNo].end());
+}

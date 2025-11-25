@@ -29,6 +29,7 @@ class DataList_Battle : public DataList_Base
 		void RemoveBattleAreaCard(int AreaNo);							// バトルエリアからカードを削除
 		// 与効果関係
 		void AddEffect(const std::shared_ptr<Card_Effect_Base>& effect, int AreaNo);		// 与効果を追加
+		void RemoveEffect(const std::shared_ptr<Card_Effect_Base>& effect, int AreaNo);		// 与効果を削除
 		
 		/* ゲッター */
 		// カード関連

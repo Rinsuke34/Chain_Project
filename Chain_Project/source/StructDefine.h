@@ -11,6 +11,8 @@ class Character_Base;
 class Card_Effect_Base
 {
 	public:
+		virtual ~Card_Effect_Base() = default;				// デストラクタ
+
 		int								Target_Camp;		// 効果対象の陣営
 		int								Target_Position;	// 効果対象の立ち位置
 		std::shared_ptr<Character_Base>	EffectUser;			// 効果の使用者

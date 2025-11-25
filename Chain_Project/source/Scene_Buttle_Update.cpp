@@ -264,9 +264,10 @@ void Scene_Battle::Update_BattleAction_Decision()
 
 			/* 状態異常付与系の効果を抽出 */
 			std::vector<std::shared_ptr<Card_Effect_StatusAilment>> StatusEffectList_StatusAilment;
-			for (auto& effect : EffectList)
+			for (const auto& effect : EffectList)
 			{
-				if (auto statusAilmentEffect = std::dynamic_pointer_cast<Card_Effect_StatusAilment>(effect))
+				// 状態異常付与系の効果であるか確認
+				if (std::shared_ptr<Card_Effect_StatusAilment> statusAilmentEffect = std::dynamic_pointer_cast<Card_Effect_StatusAilment>(effect))
 				{
 					StatusEffectList_StatusAilment.push_back(statusAilmentEffect);
 				}
@@ -277,7 +278,7 @@ void Scene_Battle::Update_BattleAction_Decision()
 			for (auto& effect : EffectList)
 			{
 				// 回復系の効果であるか確認
-				if (auto healEffect = std::dynamic_pointer_cast<Card_Effect_Heal>(effect))
+				if (std::shared_ptr<Card_Effect_Heal> healEffect = std::dynamic_pointer_cast<Card_Effect_Heal>(effect))
 				{
 					EffectList_Heal.push_back(healEffect);
 				}
@@ -288,7 +289,7 @@ void Scene_Battle::Update_BattleAction_Decision()
 			for (auto& effect : EffectList)
 			{
 				// シールド付与系の効果であるか確認
-				if (auto shieldEffect = std::dynamic_pointer_cast<Card_Effect_Defence>(effect))
+				if (std::shared_ptr<Card_Effect_Defence> shieldEffect = std::dynamic_pointer_cast<Card_Effect_Defence>(effect))
 				{
 					EffectList_Shield.push_back(shieldEffect);
 				}
@@ -299,11 +300,19 @@ void Scene_Battle::Update_BattleAction_Decision()
 			for (auto& effect : EffectList)
 			{
 				// ダメージ系の効果であるか確認
-				if (auto damageEffect = std::dynamic_pointer_cast<Card_Effect_Attack>(effect))
+				if (std::shared_ptr<Card_Effect_Attack> damageEffect = std::dynamic_pointer_cast<Card_Effect_Attack>(effect))
 				{
 					EffectList_Damage.push_back(damageEffect);
 				}
 			}
+
+			/* 優先順位順に効果を再設定する */
+			EffectList.clear();
+			for (auto& effect : StatusEffectList_StatusAilment)	{ EffectList.push_back(effect); }
+			for (auto& effect : EffectList_Heal)				{ EffectList.push_back(effect); }
+			for (auto& effect : EffectList_Shield)				{ EffectList.push_back(effect); }
+			for (auto& effect : EffectList_Damage)				{ EffectList.push_back(effect); }
+			this->pDataList_Battle->SetEffectList(EffectList, i);
 		}
 	}
 
@@ -316,9 +325,11 @@ void Scene_Battle::Update_BattleAction_Decision()
 // 戦闘行動
 void Scene_Battle::Update_BattleAction()
 {
+	/* 現在のバトルエリアの与効果を取得 */
+	std::vector<std::shared_ptr<Card_Effect_Base>> EffectList = this->pDataList_Battle->GetEffectList(this->iBattlePhase_NowBattleAreaNo);
 
 	/* このバトルエリアの処理が完了しているか確認 */
-	if (true)
+	if (EffectList.size() == 0)
 	{
 		// 完了している場合
 		/* カードを捨て札リストに追加 */
@@ -332,6 +343,7 @@ void Scene_Battle::Update_BattleAction()
 		{
 			// 次のバトルエリアが存在する場合
 			this->iBattlePhase_NowBattleAreaNo++;
+			return;
 		}
 		else
 		{
@@ -341,6 +353,13 @@ void Scene_Battle::Update_BattleAction()
 			return;
 		}
 	}
+
+	/* 与効果の内容を取得＆リスト上からの削除 */
+	std::shared_ptr<Card_Effect_Base> pEffect = EffectList.front();
+	this->pDataList_Battle->RemoveEffect(pEffect, this->iBattlePhase_NowBattleAreaNo);
+
+	/* 効果の内容に応じた処理を実行 */
+	UseCardEffect(pEffect, this->iBattlePhase_NowBattleAreaNo);
 }
 
 // "ターン終了時"の効果発動
@@ -575,4 +594,74 @@ int Scene_Battle::GetMouseInBattleArea()
 
 	// マウスが重なっているバトルエリアがない場合、-1を返す
 	return -1;
+}
+
+// カード効果の使用
+void Scene_Battle::UseCardEffect(std::shared_ptr<Card_Effect_Base> Effect, int AreaNo)
+{
+	// 引数
+	// std::shared_ptr<Card_Effect_Base>	Effect	<- 使用するカード効果のポインタ
+	// int									AreaNo  <- 効果を使用するバトルエリアのインデックス
+
+	/* 与効果の種類に応じた処理を実行 */
+	// 攻撃系効果
+	if (std::shared_ptr<Card_Effect_Attack> AttackEffect = std::dynamic_pointer_cast<Card_Effect_Attack>(Effect))
+	{
+		/* 効果の対象キャラクターを取得 */
+		if (AttackEffect->Target_Camp == Character_Base::CAMP_ENEMY)
+		{
+			// 敵キャラクターが対象である場合
+			/* 対象の立ち位置の敵を取得 */
+			std::shared_ptr<Character_Base> TargetEnemyCharacter = this->pDataList_Battle->GetEnemyCharacter(AttackEffect->Target_Position);
+			if (TargetEnemyCharacter != nullptr)
+			{
+				// 対象の敵キャラクターが存在する場合
+				/* ダメージ処理を実行 */
+				TargetEnemyCharacter->Damage(AttackEffect->Damage);
+			}
+		}
+		else
+		{
+			// 仲間キャラクターが対象である場合
+			/* 対象の立ち位置の仲間を取得 */
+			std::shared_ptr<Character_Base> TargetFriendCharacter = this->pDataList_Battle->GetFriendCharacter(AttackEffect->Target_Position);
+			if (TargetFriendCharacter != nullptr)
+			{
+				// 対象の仲間キャラクターが存在する場合
+				/* ダメージ処理を実行 */
+				TargetFriendCharacter->Damage(AttackEffect->Damage);
+			}
+		}
+	}
+	// 防御系効果
+	else if (std::shared_ptr<Card_Effect_Defence> DefenceEffect = std::dynamic_pointer_cast<Card_Effect_Defence>(Effect))
+	{
+		/* 効果の対象キャラクターを取得 */
+		if (DefenceEffect->Target_Camp == Character_Base::CAMP_ENEMY)
+		{
+			// 敵キャラクターが対象である場合
+			/* 対象の立ち位置の敵を取得 */
+			std::shared_ptr<Character_Base> TargetEnemyCharacter = this->pDataList_Battle->GetEnemyCharacter(DefenceEffect->Target_Position);
+			if (TargetEnemyCharacter != nullptr)
+			{
+				// 対象の敵キャラクターが存在する場合
+				/* シールド付与処理を実行 */
+				TargetEnemyCharacter->AddShield(DefenceEffect->Shield);
+			}
+		}
+		else
+		{
+			// 仲間キャラクターが対象である場合
+			/* 対象の立ち位置の仲間を取得 */
+			std::shared_ptr<Character_Base> TargetFriendCharacter = this->pDataList_Battle->GetFriendCharacter(DefenceEffect->Target_Position);
+			if (TargetFriendCharacter != nullptr)
+			{
+				// 対象の仲間キャラクターが存在する場合
+				/* シールド付与処理を実行 */
+				TargetFriendCharacter->AddShield(DefenceEffect->Shield);
+			}
+		}
+	}
+	// 回復系効果
+	// 状態異常付与系処理
 }
