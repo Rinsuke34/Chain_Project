@@ -11,6 +11,12 @@
 #include "DataList_Battle.h"
 #include "DataList_Image.h"
 
+// テスト用クラス
+#include "Card_Arms_WoodenShield.h"
+#include "Card_Arms_WoodenSword.h"
+#include "Character_Player.h"
+#include "Character_Npc_Test.h"
+
 // コンストラクタ
 Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 0, false, false)
 {
@@ -43,6 +49,35 @@ Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 0, false, false)
 		this->UI_DecisionButton->SetFontHandle(giFont_DonguriDuel_32);
 		gpSceneServer->AddSceneReservation(this->UI_DecisionButton);
 	}
+
+	/* テスト用のカード、キャラクター生成処理 */
+	// ※ テスト用なので直打ち
+	// カード設定
+	std::vector<std::shared_ptr<Card_Base>> DeckCardList;
+	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenSword>());
+	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenShield>());
+	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenSword>());
+	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenShield>());
+	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenSword>());
+	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenShield>());
+	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenSword>());
+	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenShield>());
+	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenSword>());
+	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenShield>());
+	this->pDataList_Battle->SetDeckCardList(DeckCardList);
+	// 画像更新
+	for (auto& Deck : DeckCardList)
+	{
+		Deck->UpdateImage();
+	}
+	// キャラクター設定
+	this->pDataList_Battle->SetFriendCharacter(0, nullptr);
+	this->pDataList_Battle->SetFriendCharacter(1, std::make_shared<Character_Player>());
+	this->pDataList_Battle->SetFriendCharacter(2, nullptr);
+	this->pDataList_Battle->SetEnemyCharacter(0, std::make_shared<Character_Npc_Test>());
+	this->pDataList_Battle->SetEnemyCharacter(1, std::make_shared<Character_Npc_Test>());
+	this->pDataList_Battle->SetEnemyCharacter(2, std::make_shared<Character_Npc_Test>());
+
 }
 
 // デストラクタ

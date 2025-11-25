@@ -45,6 +45,12 @@ Card_Base::~Card_Base()
 // 戦闘行動
 void Card_Base::BattleAction()
 {
+	/* データリストが無効であるならば処理を行わない */
+	if (this->pDataList_Battle == nullptr)
+	{
+		return;
+	}
+
 	/* 攻撃力が1以上であるか確認 */
 	if (this->Strength > 0)
 	{
@@ -63,11 +69,11 @@ void Card_Base::BattleAction()
 						{
 							/* 存在するなら */
 							// 攻撃行動を設定する
-							Card_Effect_Attack addEffect;
-							addEffect.Target_Camp		= Character_Base::CAMP_ENEMY;	// 効果対象の陣営:敵
-							addEffect.Target_Position	= i;							// 効果対象の立ち位置:確認した敵キャラクターの位置
-							addEffect.Damage			= this->Strength;				// ダメージ量:カードの攻撃力
-							this->pDataList_Battle->AddEffect(addEffect);
+							std::shared_ptr<Card_Effect_Attack> addEffect;
+							addEffect->Target_Camp		= Character_Base::CAMP_ENEMY;	// 効果対象の陣営:敵
+							addEffect->Target_Position	= i;							// 効果対象の立ち位置:確認した敵キャラクターの位置
+							addEffect->Damage			= this->Strength;				// ダメージ量:カードの攻撃力
+							this->pDataList_Battle->AddEffect(addEffect, GetMyAreaNo());
 							break;
 						}
 					}
@@ -89,11 +95,11 @@ void Card_Base::BattleAction()
 						{
 							/* 存在するなら */
 							// 攻撃行動を設定する
-							Card_Effect_Attack addEffect;
-							addEffect.Target_Camp		= Character_Base::CAMP_ENEMY;	// 効果対象の陣営:敵
-							addEffect.Target_Position	= positionNo;					// 効果対象の立ち位置:確認した敵キャラクターの位置
-							addEffect.Damage			= this->Strength;				// ダメージ量:カードの攻撃力
-							this->pDataList_Battle->AddEffect(addEffect);
+							std::shared_ptr<Card_Effect_Attack> addEffect;
+							addEffect->Target_Camp		= Character_Base::CAMP_ENEMY;	// 効果対象の陣営:敵
+							addEffect->Target_Position	= positionNo;					// 効果対象の立ち位置:確認した敵キャラクターの位置
+							addEffect->Damage			= this->Strength;				// ダメージ量:カードの攻撃力
+							this->pDataList_Battle->AddEffect(addEffect, GetMyAreaNo());
 							break;
 						}
 					}
@@ -112,11 +118,11 @@ void Card_Base::BattleAction()
 						{
 							/* 存在するなら */
 							// 攻撃行動を設定する
-							Card_Effect_Attack addEffect;
-							addEffect.Target_Camp = Character_Base::CAMP_ENEMY;	// 効果対象の陣営:敵
-							addEffect.Target_Position = i;						// 効果対象の立ち位置:確認した敵キャラクターの位置
-							addEffect.Damage = this->Strength;					// ダメージ量:カードの攻撃力
-							this->pDataList_Battle->AddEffect(addEffect);
+							std::shared_ptr<Card_Effect_Attack> addEffect;
+							addEffect->Target_Camp = Character_Base::CAMP_ENEMY;	// 効果対象の陣営:敵
+							addEffect->Target_Position = i;							// 効果対象の立ち位置:確認した敵キャラクターの位置
+							addEffect->Damage = this->Strength;						// ダメージ量:カードの攻撃力
+							this->pDataList_Battle->AddEffect(addEffect, GetMyAreaNo());
 						}
 					}
 				}
@@ -136,11 +142,11 @@ void Card_Base::BattleAction()
 			{
 				/* 存在するなら */
 				// シールド付与を設定する
-				Card_Effect_Defence addEffect;
-				addEffect.Target_Camp		= Character_Base::CAMP_FRIEND;	// 効果対象の陣営:仲間
-				addEffect.Target_Position	= i;							// 効果対象の立ち位置:確認した仲間キャラクターの位置
-				addEffect.Shield			= this->Diffence;				// シールド付与量:カードの防御力
-				this->pDataList_Battle->AddEffect(addEffect);
+				std::shared_ptr<Card_Effect_Defence> addEffect;
+				addEffect->Target_Camp		= Character_Base::CAMP_FRIEND;	// 効果対象の陣営:仲間
+				addEffect->Target_Position	= i;							// 効果対象の立ち位置:確認した仲間キャラクターの位置
+				addEffect->Shield			= this->Diffence;				// シールド付与量:カードの防御力
+				this->pDataList_Battle->AddEffect(addEffect, GetMyAreaNo());
 			}
 		}		
 	}
@@ -283,4 +289,24 @@ void Card_Base::UpdateImage()
 
 	/* 描画先を裏画面に戻す */
 	SetDrawScreen(DX_SCREEN_BACK);
+}
+
+// 自身のバトルエリア番号を取得
+int Card_Base::GetMyAreaNo()
+{
+	// 戻り値
+	// int <- 自身のバトルエリア番号(ないなら-1)
+
+	/* バトルエリアを巡回し、自身と同一オブジェクトの shared_ptr を探す */
+	for (int i = 0; i < DataList_Battle::BATTLE_AREA_MAX; ++i)
+	{
+		std::shared_ptr<Card_Base> pAreaCard = this->pDataList_Battle->GetBattleAreaCardList(i);
+		if (pAreaCard != nullptr && pAreaCard.get() == this)
+		{
+			return i;
+		}
+	}
+
+	/* 見つからなければ -1 を返す */
+	return -1;
 }

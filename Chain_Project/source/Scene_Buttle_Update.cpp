@@ -141,7 +141,7 @@ void Scene_Battle::Update_PlayerActionDecision()
 				this->pDataList_Battle->SetBattleAreaCard(iBattleAreaIndex, this->pDataList_Battle->GetHoldCard());
 
 				/* 配置したカードの設定座標をバトルエリアの位置に設定 */
-				this->pDataList_Battle->GetHoldCard()->SetSettingPos({ (SCREEN_SIZE_WIDE / 2) - (BATTLE_AREA_INTERVAL * (iBattleAreaIndex - 2)), (SCREEN_SIZE_HEIGHT / 2) });
+				this->pDataList_Battle->GetHoldCard()->SetSettingPos({ (SCREEN_SIZE_WIDE / 2) + (BATTLE_AREA_INTERVAL * (iBattleAreaIndex - 2)), (SCREEN_SIZE_HEIGHT / 2) });
 			}
 			else
 			{
@@ -239,71 +239,107 @@ void Scene_Battle::Update_EffectActionStart()
 		}
 	}
 
+	/* "戦闘行動の決定"フェイズへ遷移 */
+	this->iBattlePhase = BATTLE_PHASE_BATTLE_ACTION_DECISION;
+}
+
+// 戦闘行動の決定
+void Scene_Battle::Update_BattleAction_Decision()
+{
+	/* バトルエリア1～5の順で処理を行う */
+	for (int i = DataList_Battle::BATTLE_AREA_1; i < DataList_Battle::BATTLE_AREA_MAX; i++)
+	{
+		/* バトルエリアにカードが設定されているか確認 */
+		if (this->pDataList_Battle->GetBattleAreaCardList(i) != nullptr)
+		{
+			// カードが設定されている場合
+			/* カードの戦闘行動を実行 */
+			this->pDataList_Battle->GetBattleAreaCardList(i)->BattleAction();
+		}
+
+		/* 効果を優先順位順に並び変える */
+		// 状態異常付与 > 回復 > シールド付与 > ダメージ
+		{
+			std::vector<std::shared_ptr<Card_Effect_Base>> EffectList = this->pDataList_Battle->GetEffectList(i);
+
+			/* 状態異常付与系の効果を抽出 */
+			std::vector<std::shared_ptr<Card_Effect_StatusAilment>> StatusEffectList_StatusAilment;
+			for (auto& effect : EffectList)
+			{
+				if (auto statusAilmentEffect = std::dynamic_pointer_cast<Card_Effect_StatusAilment>(effect))
+				{
+					StatusEffectList_StatusAilment.push_back(statusAilmentEffect);
+				}
+			}
+
+			/* 回復系の効果を抽出 */
+			std::vector<std::shared_ptr<Card_Effect_Heal>> EffectList_Heal;
+			for (auto& effect : EffectList)
+			{
+				// 回復系の効果であるか確認
+				if (auto healEffect = std::dynamic_pointer_cast<Card_Effect_Heal>(effect))
+				{
+					EffectList_Heal.push_back(healEffect);
+				}
+			}
+
+			/* シールド付与系の効果を抽出 */
+			std::vector<std::shared_ptr<Card_Effect_Defence>> EffectList_Shield;
+			for (auto& effect : EffectList)
+			{
+				// シールド付与系の効果であるか確認
+				if (auto shieldEffect = std::dynamic_pointer_cast<Card_Effect_Defence>(effect))
+				{
+					EffectList_Shield.push_back(shieldEffect);
+				}
+			}
+
+			/* ダメージ系の効果を抽出 */
+			std::vector<std::shared_ptr<Card_Effect_Attack>> EffectList_Damage;
+			for (auto& effect : EffectList)
+			{
+				// ダメージ系の効果であるか確認
+				if (auto damageEffect = std::dynamic_pointer_cast<Card_Effect_Attack>(effect))
+				{
+					EffectList_Damage.push_back(damageEffect);
+				}
+			}
+		}
+	}
+
 	/* "戦闘行動"フェイズへ遷移 */
 	// ※バトルエリア1から順に処理を行うため、最初にバトルエリア1を設定しておく
-	this->iBattlePhase = BATTLE_PHASE_BATTLE_ACTION;
 	this->iBattlePhase_NowBattleAreaNo = DataList_Battle::BATTLE_AREA_1;
+	this->iBattlePhase = BATTLE_PHASE_BATTLE_ACTION;
 }
 
 // 戦闘行動
 void Scene_Battle::Update_BattleAction()
 {
-	///* バトルエリア1～5の順で処理を行う */
-	//switch (this->iBattlePhase_NowBattleAreaNo)
-	//{
-	//	case DataList_Battle::BATTLE_AREA_1:
-	//		this->iBattlePhase_NowBattleAreaNo = DataList_Battle::BATTLE_AREA_2;
-	//		break;
 
-	//	case DataList_Battle::BATTLE_AREA_2:
-	//		this->iBattlePhase_NowBattleAreaNo = DataList_Battle::BATTLE_AREA_2;
-	//		break;
-
-	//	case DataList_Battle::BATTLE_AREA_3:
-	//		this->iBattlePhase_NowBattleAreaNo = DataList_Battle::BATTLE_AREA_2;
-	//		break;
-
-	//	case DataList_Battle::BATTLE_AREA_4:
-	//		this->iBattlePhase_NowBattleAreaNo = DataList_Battle::BATTLE_AREA_2;
-	//		break;
-
-	//	case DataList_Battle::BATTLE_AREA_5:
-	//		this->iBattlePhase_NowBattleAreaNo = DataList_Battle::BATTLE_AREA_2;
-	//		break;
-	//}
-
-	///* バトルエリアの1～5の順で処理を行う */
-	//for (int i = 0; i < DataList_Battle::BATTLE_AREA_MAX; i++)
-	//{
-	//	/* バトルエリアにカードが設定されているか確認 */
-	//	if (this->pDataList_Battle->GetBattleAreaCardList(i) != nullptr)
-	//	{
-	//		// カードが設定されている場合
-	//		/* カードの戦闘行動を実行 */
-	//		this->pDataList_Battle->GetBattleAreaCardList(i)->BattleAction();
-
-	//		/* カードを捨て札リストに追加 */
-	//		this->pDataList_Battle->AddTrashCard(this->pDataList_Battle->GetBattleAreaCardList(i));
-
-	//		/* バトルエリアからカードを削除 */
-	//		this->pDataList_Battle->RemoveBattleAreaCard(i);
-	//	}
-	//}
-
-	/* 次のバトルエリアの処理を実施 */
-	if (this->iBattlePhase_NowBattleAreaNo < DataList_Battle::BATTLE_AREA_5)
+	/* このバトルエリアの処理が完了しているか確認 */
+	if (true)
 	{
-		// 次のバトルエリアが存在する場合
-		this->iBattlePhase_NowBattleAreaNo++;
-	}
-	else
-	{
-		// 次のバトルエリアが存在しない場合
-		this->iBattlePhase_NowBattleAreaNo = DataList_Battle::BATTLE_AREA_1;
+		// 完了している場合
+		/* カードを捨て札リストに追加 */
+		this->pDataList_Battle->AddTrashCard(this->pDataList_Battle->GetBattleAreaCardList(this->iBattlePhase_NowBattleAreaNo));
 
-		/* 全てのバトルエリアの処理が終了したため、"ターン終了時"の効果発動フェイズへ遷移 */
-		this->iBattlePhase = BATTLE_PHASE_EFFECT_TRUN_END;
-		return;
+		/* バトルエリアからカードを削除 */
+		this->pDataList_Battle->RemoveBattleAreaCard(this->iBattlePhase_NowBattleAreaNo);
+
+		/* 次のバトルエリアの処理を実施 */
+		if (this->iBattlePhase_NowBattleAreaNo < DataList_Battle::BATTLE_AREA_5)
+		{
+			// 次のバトルエリアが存在する場合
+			this->iBattlePhase_NowBattleAreaNo++;
+		}
+		else
+		{
+			// 次のバトルエリアが存在しない場合
+			/* 全てのバトルエリアの処理が終了したため、"ターン終了時"の効果発動フェイズへ遷移 */
+			this->iBattlePhase = BATTLE_PHASE_EFFECT_TRUN_END;
+			return;
+		}
 	}
 }
 
@@ -311,15 +347,6 @@ void Scene_Battle::Update_BattleAction()
 void Scene_Battle::Update_EffectTurnEnd()
 {
 	/* 各カードの"ターン終了時"効果を実行 */
-	// バトルエリア
-	for (int i = 0; i < DataList_Battle::BATTLE_AREA_MAX; i++)
-	{
-		auto BattleAreaCard = this->pDataList_Battle->GetBattleAreaCardList(i);
-		if (BattleAreaCard != nullptr)
-		{
-			BattleAreaCard->Effect_EndTurn();
-		}
-	}
 	// 山札
 	for (auto& BattleAreaCard : this->pDataList_Battle->GetDeckCardList())
 	{
@@ -528,9 +555,9 @@ int Scene_Battle::GetMouseInBattleArea()
 	{
 		/* バトルエリアの範囲を定義 */
 		Struct_2D::RANGE BattleAreaRange = {
-			(SCREEN_SIZE_WIDE / 2)	- (SizeX / 2) - (BATTLE_AREA_INTERVAL * i),
+			(SCREEN_SIZE_WIDE / 2)	- (SizeX / 2) + (BATTLE_AREA_INTERVAL * i),
 			BATTLE_AREA_POS_Y		- (SizeY / 2),
-			(SCREEN_SIZE_WIDE / 2)	+ (SizeX / 2) - (BATTLE_AREA_INTERVAL * i),
+			(SCREEN_SIZE_WIDE / 2)	+ (SizeX / 2) + (BATTLE_AREA_INTERVAL * i),
 			BATTLE_AREA_POS_Y		+ (SizeY / 2)
 		};
 		/* マウスの位置を定義 */

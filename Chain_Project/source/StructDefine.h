@@ -37,7 +37,7 @@ class Card_Effect_Heal : public Card_Effect_Base
 		int Heal;				// ‰ñ•œ—Ê
 };
 
-// ó‘ÔˆÈã•t—^
+// ó‘ÔˆÙí•t—^
 class Card_Effect_StatusAilment : public Card_Effect_Base
 {
 	public:

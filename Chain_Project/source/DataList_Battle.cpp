@@ -4,47 +4,10 @@
 // ヘッダファイル
 #include "DataList_Battle.h"
 
-
-// テスト用
-#include "Card_Arms_Base.h"
-#include "Card_Spell_Base.h"
-#include "Card_Item_Base.h"
-#include "Character_Player.h"
-#include "Character_Npc_Test.h"
-#include "Card_Arms_WoodenSword.h"
-#include "Card_Arms_WoodenShield.h"
-
 // コンストラクタ
 DataList_Battle::DataList_Battle() : DataList_Base("DataList_Battle")
 {
-	/* テスト用 */
-	// 手札にカードを追加
-	this->DeckCardList.push_back(std::make_shared<Card_Arms_WoodenSword>());
-	this->DeckCardList.push_back(std::make_shared<Card_Arms_WoodenShield>());
-	this->DeckCardList.push_back(std::make_shared<Card_Arms_WoodenSword>());
-	this->DeckCardList.push_back(std::make_shared<Card_Arms_WoodenShield>());
-	this->DeckCardList.push_back(std::make_shared<Card_Arms_WoodenSword>());
-	this->DeckCardList.push_back(std::make_shared<Card_Arms_WoodenShield>());
-	this->DeckCardList.push_back(std::make_shared<Card_Arms_WoodenSword>());
-	this->DeckCardList.push_back(std::make_shared<Card_Arms_WoodenShield>());
-	this->DeckCardList.push_back(std::make_shared<Card_Arms_WoodenSword>());
-	this->DeckCardList.push_back(std::make_shared<Card_Arms_WoodenShield>());
-
-	// 画像更新
-	for (auto& Deck : DeckCardList)
-	{
-		Deck->UpdateImage();
-	}
-
-	/* テスト用 */
-	// キャラクターを追加
-	this->Friend_CharacterList[POSITION_FRONT]	= nullptr;
-	this->Friend_CharacterList[POSITION_MIDDLE]	= std::make_shared<Character_Player>();
-	this->Friend_CharacterList[POSITION_BACK]	= nullptr;
-
-	this->Enemy_CharacterList[POSITION_FRONT]	= std::make_shared<Character_Npc_Test>();
-	this->Enemy_CharacterList[POSITION_MIDDLE]	= std::make_shared<Character_Npc_Test>();
-	this->Enemy_CharacterList[POSITION_BACK]	= std::make_shared<Character_Npc_Test>();
+	
 }
 
 // デッキにカードを追加
@@ -104,10 +67,11 @@ void DataList_Battle::RemoveBattleAreaCard(int AreaNo)
 }
 
 // 与効果を追加
-void DataList_Battle::AddEffect(const Card_Effect_Base& effect)
+void DataList_Battle::AddEffect(const std::shared_ptr<Card_Effect_Base>& effect, int AreaNo)
 {
 	// 引数
-	// effect <- 追加する与効果
+	// effect	<- 追加する与効果
+	// AreaNo	<- 与効果を追加するバトルエリア
 
-	this->EffectList.push_back(effect);
+	this->EffectList[AreaNo].push_back(effect);
 }

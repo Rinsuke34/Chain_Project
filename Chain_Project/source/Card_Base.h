@@ -104,4 +104,7 @@ class Card_Base
 		Struct_2D::POSITION		Setting_Position;	// 設定座標(ホールドが解除された際に自動で補正される座標)
 		bool					bDeleteFlag;		// 削除フラグ
 		int						iNowChainCount;		// 現在のチェイン数(ターン開始時に設定)
+
+		/* 関数 */
+		int GetMyAreaNo();	// 自身のバトルエリア番号を取得
 };

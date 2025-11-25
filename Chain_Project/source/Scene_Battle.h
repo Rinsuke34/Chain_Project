@@ -30,10 +30,11 @@ class Scene_Battle : public Scene_Base
 		static const int	BATTLE_PHASE_PLAYER_ACTION_DECISION	= 3;	// プレイヤーの行動決定
 		static const int	BATTLE_PHASE_CARD_CHAIN_CHECK		= 4;	// カードのチェイン数確認
 		static const int	BATTLE_PHASE_EFFECT_ACTION_START	= 5;	// "行動開始時"の効果発動
-		static const int	BATTLE_PHASE_BATTLE_ACTION			= 6;	// 戦闘行動
-		static const int	BATTLE_PHASE_EFFECT_TRUN_END		= 7;	// "ターン終了時"の効果発動
-		static const int	BATTLE_PHASE_STATUS_EFFECT_ADVANCE	= 8;	// 状態変化のターン進行
-		static const int	BATTLE_PHASE_MAX					= 9;	// バトルフェーズ総数
+		static const int	BATTLE_PHASE_BATTLE_ACTION_DECISION = 6;	// 戦闘行動の決定
+		static const int	BATTLE_PHASE_BATTLE_ACTION			= 7;	// 戦闘行動
+		static const int	BATTLE_PHASE_EFFECT_TRUN_END		= 8;	// "ターン終了時"の効果発動
+		static const int	BATTLE_PHASE_STATUS_EFFECT_ADVANCE	= 9;	// 状態変化のターン進行
+		static const int	BATTLE_PHASE_MAX					= 10;	// バトルフェーズ総数
 		// 座標関係
 		static const int	BATTLE_AREA_INTERVAL				= 250;	// バトルエリアの間隔
 		static const int	BATTLE_AREA_POS_Y					= 540;	// バトルエリアのY座標
@@ -62,6 +63,7 @@ class Scene_Battle : public Scene_Base
 		void Update_PlayerActionDecision();	// プレイヤーの行動決定
 		void Update_CardChainCheck();		// カードのチェイン数確認
 		void Update_EffectActionStart();	// "行動開始時"の効果発動
+		void Update_BattleAction_Decision();// 戦闘行動の決定
 		void Update_BattleAction();			// 戦闘行動
 		void Update_EffectTurnEnd();		// "ターン終了時"の効果発動
 		void Update_StatusEffectAdvance();	// 状態変化のターン進行
