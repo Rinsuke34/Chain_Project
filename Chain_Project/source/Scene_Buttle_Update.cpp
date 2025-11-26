@@ -393,6 +393,9 @@ void Scene_Battle::Update_BattleAction()
 
 	/* 効果の内容に応じた処理を実行 */
 	UseCardEffect(pEffect, this->iBattlePhase_NowBattleAreaNo);
+
+	/* キャラクターが死亡しているか確認 */
+	Character_Death_Check();
 }
 
 // "ターン終了時"の効果発動
@@ -697,4 +700,39 @@ void Scene_Battle::UseCardEffect(std::shared_ptr<Card_Effect_Base> Effect, int A
 	}
 	// 回復系効果
 	// 状態異常付与系処理
+}
+
+// キャラクターが死亡しているか確認
+void Scene_Battle::Character_Death_Check()
+{
+	/* 仲間キャラクターの死亡確認 */
+	for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
+	{
+		auto FriendCharacter = this->pDataList_Battle->GetFriendCharacter(i);
+		if (FriendCharacter != nullptr)
+		{
+			if (FriendCharacter->GetHP_Now() <= 0)
+			{
+				// 死亡している場合
+				/* nullptrに設定する */
+				this->pDataList_Battle->SetFriendCharacter(i, nullptr);
+			}
+		}
+	}
+
+	/* 敵キャラクターの死亡確認 */
+	for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
+	{
+		auto EnemyCharacter = this->pDataList_Battle->GetEnemyCharacter(i);
+		if (EnemyCharacter != nullptr)
+		{
+			if (EnemyCharacter->GetHP_Now() <= 0)
+			{
+				// 死亡している場合
+				/* nullptrに設定する */
+				this->pDataList_Battle->SetEnemyCharacter(i, nullptr);
+			}
+		}
+	}
+
 }

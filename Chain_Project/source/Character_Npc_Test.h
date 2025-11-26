@@ -6,6 +6,9 @@
 // 親クラス
 #include "Character_Base.h"
 
+// 前方宣言
+class DataList_Battle;
+
 // キャラクター(テストNPC)のクラス
 class Character_Npc_Test : public Character_Base
 {
@@ -14,5 +17,10 @@ class Character_Npc_Test : public Character_Base
 		virtual ~Character_Npc_Test() {};	// デストラクタ
 
 		/* 関数 */
-//		virtual void Draw_HPBar() override;	// 体力バー描画
+		virtual void Action() override;		// 行動
+
+	protected:
+		/* 変数 */
+		// データリスト
+		std::shared_ptr<DataList_Battle> pDataList_Battle;		// バトル用データリスト
 };

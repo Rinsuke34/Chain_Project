@@ -16,7 +16,7 @@ Card_Arms_WoodenShield::Card_Arms_WoodenShield() : Card_Arms_Base()
 	this->Suite_List.push_back(SUITE_SHIELD);	// ‚
 	// ƒXƒe[ƒ^ƒX
 	this->Strength		= 0;					// UŒ‚—Í
-	this->Diffence		= 5;					// –hŒä—Í
+	this->Diffence		= 10;					// –hŒä—Í
 	this->AttackRange	= ATTACKRANGE_FRONT;	// UŒ‚”ÍˆÍ
 	// ‰æ‘œ‚Ì–¼‘O
 	this->ImageName		= "WoodenShield";		// ‰æ‘œ‚Ì–¼‘O
