@@ -43,6 +43,9 @@ void Character_Base::Draw()
 
 	/* 体力バー描画 */
 	Draw_HPBar();
+
+	/* シールドバー描写 */
+	Draw_ShieldBar();
 }
 
 // 体力バー描画
@@ -88,6 +91,26 @@ void Character_Base::Draw_HPBar()
 		HPText.c_str(),
 		GetColor(255, 255, 255),
 		giFont_Cp_Period_16
+	);
+}
+
+// シールドバー描写
+void Character_Base::Draw_ShieldBar()
+{
+	/* シールドバーの描写中心座標を設定 */
+	Struct_2D::POSITION HPBar_CenterPos = {
+		this->BasePos.iX,
+		this->BasePos.iY - this->SizeY - SHIELDBAR_UPPER
+	};
+
+	/* シールドバーの残量描写 */
+	DrawBox(
+		HPBar_CenterPos.iX - (HPBAR_WIDE / 2),
+		HPBar_CenterPos.iY - (SHIELDBAR_HEIGHT / 2),
+		HPBar_CenterPos.iX - (HPBAR_WIDE / 2) + (HPBAR_WIDE * this->iShield_Now / this->iHP_Max),
+		HPBar_CenterPos.iY + (SHIELDBAR_HEIGHT / 2),
+		GetColor(0, 0, 255),
+		TRUE
 	);
 }
 

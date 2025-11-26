@@ -14,8 +14,8 @@ void Scene_Battle::Draw_BackGround()
 	/* 仮 */
 	DrawBox(0, 0, SCREEN_SIZE_WIDE, SCREEN_SIZE_HEIGHT, GetColor(0, 128, 0), TRUE);
 
-	DrawLine(0, 400, SCREEN_SIZE_WIDE, 400, GetColor(255, 255, 255), 5);
 	DrawLine(0, 300, SCREEN_SIZE_WIDE, 300, GetColor(255, 255, 255), 5);
+	DrawLine(0, 200, SCREEN_SIZE_WIDE, 200, GetColor(255, 255, 255), 5);
 
 	DrawFormatString(50, 50, GetColor(0, 0, 0), "デッキ枚数 : %llu", static_cast<unsigned long long>(this->pDataList_Battle->GetDeckCardList().size()));
 	DrawFormatString(50, 100, GetColor(0, 0, 0), "トラッシュ枚数 : %llu", static_cast<unsigned long long>(this->pDataList_Battle->GetTrashCardList().size()));

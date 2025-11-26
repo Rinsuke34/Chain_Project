@@ -122,8 +122,10 @@ void Scene_Title::AdvanceImageLoad()
 	// カード(背景)
 	ImageFilePath = "Card_Commoon/BackGround_Test";
 	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
-	// カード(イラスト)
-	ImageFilePath = "Card_Ilust/Test_Image";
+	// カード(スート)
+	ImageFilePath = "Card_Suit/Suit_Sword";
+	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
+	ImageFilePath = "Card_Suit/Suit_Shield";
 	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
 }
 

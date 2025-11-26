@@ -16,6 +16,7 @@ class Character_Base
 		/* 関数 */
 		virtual void Draw();					// 描画
 		virtual void Draw_HPBar();				// 体力バー描画
+		virtual void Draw_ShieldBar();			// シールドバー描写
 		virtual void Action()		{};			// 行動
 		virtual void Damage(int DamageAmount);	// ダメージ処理
 		virtual void AddShield(int Shield);		// シールド追加処理
@@ -39,9 +40,11 @@ class Character_Base
 
 		/* 定数 */
 		// 描写系
-		static const int	HPBAR_WIDE		= 128;	// HPバーの幅
-		static const int	HPBAR_HEIGHT	= 20;	// HPバーの高さ
-		static const int	HPBAR_UPPER		= 20;	// HPバーの上端位置補正値
+		static const int	HPBAR_WIDE			= 128;	// HPバーの幅
+		static const int	HPBAR_HEIGHT		= 20;	// HPバーの高さ
+		static const int	HPBAR_UPPER			= 20;	// HPバーの上端位置補正値
+		static const int	SHIELDBAR_HEIGHT	= 10;	// シールドバーの高さ
+		static const int	SHIELDBAR_UPPER		= 10;	// シールドバーの上端位置補正値
 		// 陣営
 		static const int	CAMP_FRIEND		= 0;	// 仲間陣営
 		static const int	CAMP_ENEMY		= 1;	// 敵陣営
