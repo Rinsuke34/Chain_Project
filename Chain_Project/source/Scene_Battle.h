@@ -53,6 +53,7 @@ class Scene_Battle : public Scene_Base
 		// その他
 		int iBattlePhase;										// バトルフェーズ
 		int iBattlePhase_NowBattleAreaNo;						// 現在処理の実行中のバトルエリア
+		bool bReloadFlg;										// リロードフラグ
 
 		/* 関数 */
 		// 画像

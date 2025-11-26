@@ -56,6 +56,7 @@ void Scene_Battle::Update_EffectTurnStart()
 void Scene_Battle::Update_DrawCard()
 {
 	/* ドロー処理 */
+	this->bReloadFlg = false;
 	for (int i = 0; i < 5; i++)
 	{
 		/* デッキにカードが存在するか確認 */
@@ -66,6 +67,25 @@ void Scene_Battle::Update_DrawCard()
 			std::shared_ptr<Card_Base> pDrawCard = this->pDataList_Battle->GetDeckCardList().front();
 			this->pDataList_Battle->AddHandCard(pDrawCard);
 			this->pDataList_Battle->RemoveDeckCard(pDrawCard);
+		}
+		else if(this->pDataList_Battle->GetHandCardList().size() == 0)
+		{
+			// デッキにカード無しかつ、手札が0枚の場合
+			/* リロードフラグを有効化する */
+			this->bReloadFlg = true;			
+
+			/* 捨て札のカードを手札に戻す */
+			for (int i = 0; i < this->pDataList_Battle->GetTrashCardList().size(); i++)
+			{
+				std::vector<std::shared_ptr<Card_Base>> TrashCardList = this->pDataList_Battle->GetTrashCardList();
+				std::shared_ptr<Card_Base> pCard = TrashCardList[0];
+				if (pCard != nullptr)
+				{
+					this->pDataList_Battle->AddDeckCard(pCard);
+					this->pDataList_Battle->RemoveTrashCard(pCard);
+				}
+			}
+			break;
 		}
 	}
 
@@ -100,6 +120,14 @@ void Scene_Battle::Update_EnemyActionDecision()
 // プレイヤーの行動決定
 void Scene_Battle::Update_PlayerActionDecision()
 {
+	/* リロードフラグが有効ならばこのフェーズをスキップする */
+	if (this->bReloadFlg)
+	{
+		/* "カードチェイン数確認"フェイズへ遷移 */
+		this->iBattlePhase = BATTLE_PHASE_CARD_CHAIN_CHECK;
+		return;
+	}
+
 	/* カードをホールド中であるか確認 */
 	if (this->pDataList_Battle->GetHoldCard() != nullptr)
 	{
@@ -332,11 +360,16 @@ void Scene_Battle::Update_BattleAction()
 	if (EffectList.size() == 0)
 	{
 		// 完了している場合
-		/* カードを捨て札リストに追加 */
-		this->pDataList_Battle->AddTrashCard(this->pDataList_Battle->GetBattleAreaCardList(this->iBattlePhase_NowBattleAreaNo));
+		/* バトルエリアにカードが設定されているか確認 */
+		if (this->pDataList_Battle->GetBattleAreaCardList(this->iBattlePhase_NowBattleAreaNo) != nullptr)
+		{
+			// 設定されているなら
+			/* カードを捨て札リストに追加 */
+			this->pDataList_Battle->AddTrashCard(this->pDataList_Battle->GetBattleAreaCardList(this->iBattlePhase_NowBattleAreaNo));
 
-		/* バトルエリアからカードを削除 */
-		this->pDataList_Battle->RemoveBattleAreaCard(this->iBattlePhase_NowBattleAreaNo);
+			/* バトルエリアからカードを削除 */
+			this->pDataList_Battle->RemoveBattleAreaCard(this->iBattlePhase_NowBattleAreaNo);
+		}
 
 		/* 次のバトルエリアの処理を実施 */
 		if (this->iBattlePhase_NowBattleAreaNo < DataList_Battle::BATTLE_AREA_5)
