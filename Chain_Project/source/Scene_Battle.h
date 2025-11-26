@@ -54,7 +54,7 @@ class Scene_Battle : public Scene_Base
 		int iBattlePhase;										// バトルフェーズ
 		int iBattlePhase_NowBattleAreaNo;						// 現在処理の実行中のバトルエリア
 		bool bReloadFlg;										// リロードフラグ
-
+		int iBattleActionDelay;									// バトルアクション間のディレイ時間
 		/* 関数 */
 		// 画像
 		std::shared_ptr<int> Image_BattleArea[2];	// バトルエリア[0:通常時, 1:カーソル接触時]

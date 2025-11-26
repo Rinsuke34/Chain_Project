@@ -353,6 +353,15 @@ void Scene_Battle::Update_BattleAction_Decision()
 // 戦闘行動
 void Scene_Battle::Update_BattleAction()
 {
+	/* 戦闘行動間のディレイ時間が完了しているか確認 */
+	if (this->iBattleActionDelay > 0)
+	{
+		// 完了していない場合
+		/* ディレイ時間を減少 */
+		this->iBattleActionDelay--;
+		return;
+	}
+
 	/* 現在のバトルエリアの与効果を取得 */
 	std::vector<std::shared_ptr<Card_Effect_Base>> EffectList = this->pDataList_Battle->GetEffectList(this->iBattlePhase_NowBattleAreaNo);
 
@@ -396,6 +405,9 @@ void Scene_Battle::Update_BattleAction()
 
 	/* キャラクターが死亡しているか確認 */
 	Character_Death_Check();
+
+	/* 効果処理後のディレイ時間を設定 */
+	this->iBattleActionDelay = 30;
 }
 
 // "ターン終了時"の効果発動

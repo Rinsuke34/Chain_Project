@@ -23,7 +23,8 @@ Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 0, false, false)
 	/* 初期化 */
 	this->iBattlePhase					= 0;		// バトルフェーズ
 	this->iBattlePhase_NowBattleAreaNo	= 0;		// 現在処理の実行中のバトルエリア
-	this->bReloadFlg				= false;	// ドロー失敗フラグ
+	this->bReloadFlg					= false;	// ドロー失敗フラグ
+	this->iBattleActionDelay			= 0;		// バトルアクション間のディレイ時間
 
 	/* データリスト"バトル用データ管理"を作成 */
 	this->pDataList_Battle = std::make_shared<DataList_Battle>();
