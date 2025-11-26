@@ -21,6 +21,7 @@ class Character_Base
 		virtual void AddShield(int Shield);		// シールド追加処理
 		virtual void ShieldReset_EndAction();	// シールドリセット(行動終了時)
 		virtual void ShieldReset_EndTurn();		// シールドリセット(ターン終了時)
+		virtual void Heal(int Heal);			// 回復処理
 
 		/* ゲッター */
 		int 					GetHP_Max()		{ return iHP_Max; }		// 体力(最大値)の取得

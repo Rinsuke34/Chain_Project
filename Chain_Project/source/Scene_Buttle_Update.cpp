@@ -653,7 +653,7 @@ void Scene_Battle::UseCardEffect(std::shared_ptr<Card_Effect_Base> Effect, int A
 			{
 				// 対象の敵キャラクターが存在する場合
 				/* ダメージ処理を実行 */
-				TargetEnemyCharacter->Damage(AttackEffect->Damage);
+				TargetEnemyCharacter->Damage(AttackEffect->DamageAmount);
 			}
 		}
 		else
@@ -665,7 +665,7 @@ void Scene_Battle::UseCardEffect(std::shared_ptr<Card_Effect_Base> Effect, int A
 			{
 				// 対象の仲間キャラクターが存在する場合
 				/* ダメージ処理を実行 */
-				TargetFriendCharacter->Damage(AttackEffect->Damage);
+				TargetFriendCharacter->Damage(AttackEffect->DamageAmount);
 			}
 		}
 	}
@@ -682,7 +682,7 @@ void Scene_Battle::UseCardEffect(std::shared_ptr<Card_Effect_Base> Effect, int A
 			{
 				// 対象の敵キャラクターが存在する場合
 				/* シールド付与処理を実行 */
-				TargetEnemyCharacter->AddShield(DefenceEffect->Shield);
+				TargetEnemyCharacter->AddShield(DefenceEffect->ShieldAmount);
 			}
 		}
 		else
@@ -694,11 +694,39 @@ void Scene_Battle::UseCardEffect(std::shared_ptr<Card_Effect_Base> Effect, int A
 			{
 				// 対象の仲間キャラクターが存在する場合
 				/* シールド付与処理を実行 */
-				TargetFriendCharacter->AddShield(DefenceEffect->Shield);
+				TargetFriendCharacter->AddShield(DefenceEffect->ShieldAmount);
 			}
 		}
 	}
 	// 回復系効果
+	else if (std::shared_ptr<Card_Effect_Heal> HealEffect = std::dynamic_pointer_cast<Card_Effect_Heal>(Effect))
+	{
+		/* 効果の対象キャラクターを取得 */
+		if (HealEffect->Target_Camp == Character_Base::CAMP_ENEMY)
+		{
+			// 敵キャラクターが対象である場合
+			/* 対象の立ち位置の敵を取得 */
+			std::shared_ptr<Character_Base> TargetEnemyCharacter = this->pDataList_Battle->GetEnemyCharacter(HealEffect->Target_Position);
+			if (TargetEnemyCharacter != nullptr)
+			{
+				// 対象の敵キャラクターが存在する場合
+				/* 回復処理を実行 */
+				TargetEnemyCharacter->Heal(HealEffect->HealAmount);
+			}
+		}
+		else
+		{
+			// 仲間キャラクターが対象である場合
+			/* 対象の立ち位置の仲間を取得 */
+			std::shared_ptr<Character_Base> TargetFriendCharacter = this->pDataList_Battle->GetFriendCharacter(HealEffect->Target_Position);
+			if (TargetFriendCharacter != nullptr)
+			{
+				// 対象の仲間キャラクターが存在する場合
+				/* 回復処理を実行 */
+				TargetFriendCharacter->Heal(HealEffect->HealAmount);
+			}
+		}
+	}
 	// 状態異常付与系処理
 }
 
@@ -734,5 +762,4 @@ void Scene_Battle::Character_Death_Check()
 			}
 		}
 	}
-
 }

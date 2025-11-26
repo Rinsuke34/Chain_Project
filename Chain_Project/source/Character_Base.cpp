@@ -143,7 +143,7 @@ void Character_Base::Damage(int DamageAmount)
 void Character_Base::AddShield(int Shield)
 {
 	// 引数
-	// Shield : 追加するシールド量
+	// Shield	<-	追加するシールド量
 
 	/* シールドを追加 */
 	this->iShield_Now += Shield;
@@ -161,4 +161,20 @@ void Character_Base::ShieldReset_EndTurn()
 {
 	/* シールドを0に設定 */
 	this->iShield_Now = 0;
+}
+
+// 回復処理
+void Character_Base::Heal(int Heal)
+{
+	// 引数
+	// Heal	<-	回復量
+
+	/* 体力を回復 */
+	this->iHP_Now += Heal;
+
+	/* 体力が最大値を超えた場合、最大値に設定 */
+	if (this->iHP_Now > this->iHP_Max)
+	{
+		this->iHP_Now = this->iHP_Max;
+	}
 }

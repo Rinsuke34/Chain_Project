@@ -3,6 +3,8 @@
 /* 使用する要素のインクルード */
 // ヘッダファイル
 #include "DataList_Battle.h"
+// 関連クラス
+#include "Card_Base.h"
 
 // コンストラクタ
 DataList_Battle::DataList_Battle() : DataList_Base("DataList_Battle")
@@ -31,7 +33,12 @@ void DataList_Battle::AddTrashCard(const std::shared_ptr<Card_Base>& pCard)
 {
 	// 引数
 	// pCard <- 追加するカードのポインタ
-	this->TrashCardList.push_back(pCard);
+
+	/* 対象のカードのロストフラグが無効であるなら追加する */
+	if (pCard->GetLostFlg() == false)
+	{
+		this->TrashCardList.push_back(pCard);
+	}
 }
 
 // デッキからカードを削除

@@ -38,7 +38,7 @@ class Card_Base
 		// その他
 		void SetNowPos(Struct_2D::POSITION pos)		{ Now_Position		= pos; }		// 現在座標の設定
 		void SetSettingPos(Struct_2D::POSITION pos) { Setting_Position	= pos; }		// 設定座標の設定
-		void SetDeleteFlag(bool flag)				{ bDeleteFlag		= flag; }		// 削除フラグの設定
+		void SetLostFlag(bool flag)					{ bLostFlag			= flag; }		// ロストフラグの設定
 		void SetNowChainCount(int count)			{ iNowChainCount	= count; }		// 現在のチェイン数の設定
 
 		/* ゲッター */
@@ -53,6 +53,7 @@ class Card_Base
 		// その他
 		Struct_2D::POSITION		GetNowPos()		{ return Now_Position; }		// 現在座標の取得
 		Struct_2D::POSITION		GetSettingPos() { return Setting_Position; }	// 設定座標の取得
+		bool					GetLostFlg()	{ return bLostFlag; }			// ロストフラグの取得
 
 		/* 定数 */
 		// 補間
@@ -102,7 +103,7 @@ class Card_Base
 		// その他
 		Struct_2D::POSITION		Now_Position;		// 現在座標
 		Struct_2D::POSITION		Setting_Position;	// 設定座標(ホールドが解除された際に自動で補正される座標)
-		bool					bDeleteFlag;		// 削除フラグ
+		bool					bLostFlag;			// ロストフラグ(捨て札置き場におかれず完全に削除される)
 		int						iNowChainCount;		// 現在のチェイン数(ターン開始時に設定)
 
 		/* 関数 */

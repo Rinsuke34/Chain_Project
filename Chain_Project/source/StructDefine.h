@@ -22,21 +22,21 @@ class Card_Effect_Base
 class Card_Effect_Attack : public Card_Effect_Base
 {
 	public:
-		int Damage;				// ダメージ量
+		int DamageAmount;	// ダメージ量
 };
 
 // 防御
 class Card_Effect_Defence : public Card_Effect_Base
 {
 	public:
-		int Shield;				// シールド量
+		int ShieldAmount;	// シールド量
 };
 
 // 回復
 class Card_Effect_Heal : public Card_Effect_Base
 {
 	public:
-		int Heal;				// 回復量
+		int HealAmount;		// 回復量
 };
 
 // 状態異常付与
