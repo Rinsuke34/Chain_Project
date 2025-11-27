@@ -27,8 +27,9 @@ Card_Base::Card_Base()
 	// その他
 	this->Now_Position		= { SCREEN_SIZE_WIDE, SCREEN_SIZE_HEIGHT / 2 };	// 現在座標(ドローしてる感を出すため山札の位置を初期値に設定)
 	this->Setting_Position	= { 0, 0 };										// 設定座標(ホールドが解除された際に自動で補正される座標)
-	this->bLostFlag		= false;										// 削除フラグ
+	this->bLostFlag			= false;										// 削除フラグ
 	this->iNowChainCount	= 0;											// 現在のチェイン数(ターン開始時に設定)
+	this->pPlayer			= nullptr;										// プレイヤーキャラクターのポインタ
 
 	/* データリスト取得 */
 	// バトル用データリスト
@@ -49,6 +50,20 @@ void Card_Base::BattleAction()
 	if (this->pDataList_Battle == nullptr)
 	{
 		return;
+	}
+
+	/* プレイヤーを取得できていないならプレイヤーを取得する */
+	if (this->pPlayer == nullptr)
+	{
+		// バトル用データリストからプレイヤーキャラクターを取得する
+		for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
+		{
+			if (this->pDataList_Battle->GetFriendCharacter(i))
+			{
+				this->pPlayer = this->pDataList_Battle->GetFriendCharacter(i);
+				break;
+			}
+		}
 	}
 
 	/* 攻撃力が1以上であるか確認 */
@@ -72,7 +87,8 @@ void Card_Base::BattleAction()
 							std::shared_ptr<Card_Effect_Attack> addEffect = std::make_shared<Card_Effect_Attack>();
 							addEffect->Target_Camp		= Character_Base::CAMP_ENEMY;	// 効果対象の陣営:敵
 							addEffect->Target_Position	= i;							// 効果対象の立ち位置:確認した敵キャラクターの位置
-							addEffect->DamageAmount			= this->Strength;				// ダメージ量:カードの攻撃力
+							addEffect->DamageAmount		= this->Strength;				// ダメージ量:カードの攻撃力
+							addEffect->EffectUser		= this->pPlayer;				// 効果の使用者:プレイヤーキャラクター
 							this->pDataList_Battle->AddEffect(addEffect, GetMyAreaNo());
 							break;
 						}
@@ -98,7 +114,8 @@ void Card_Base::BattleAction()
 							std::shared_ptr<Card_Effect_Attack> addEffect = std::make_shared<Card_Effect_Attack>();
 							addEffect->Target_Camp		= Character_Base::CAMP_ENEMY;	// 効果対象の陣営:敵
 							addEffect->Target_Position	= positionNo;					// 効果対象の立ち位置:確認した敵キャラクターの位置
-							addEffect->DamageAmount			= this->Strength;				// ダメージ量:カードの攻撃力
+							addEffect->DamageAmount		= this->Strength;				// ダメージ量:カードの攻撃力
+							addEffect->EffectUser		= this->pPlayer;				// 効果の使用者:プレイヤーキャラクター
 							this->pDataList_Battle->AddEffect(addEffect, GetMyAreaNo());
 							break;
 						}
@@ -121,7 +138,8 @@ void Card_Base::BattleAction()
 							std::shared_ptr<Card_Effect_Attack> addEffect = std::make_shared<Card_Effect_Attack>();
 							addEffect->Target_Camp		= Character_Base::CAMP_ENEMY;	// 効果対象の陣営:敵
 							addEffect->Target_Position	= i;							// 効果対象の立ち位置:確認した敵キャラクターの位置
-							addEffect->DamageAmount			= this->Strength;				// ダメージ量:カードの攻撃力
+							addEffect->DamageAmount		= this->Strength;				// ダメージ量:カードの攻撃力
+							addEffect->EffectUser		= this->pPlayer;				// 効果の使用者:プレイヤーキャラクター
 							this->pDataList_Battle->AddEffect(addEffect, GetMyAreaNo());
 						}
 					}
@@ -145,7 +163,8 @@ void Card_Base::BattleAction()
 				std::shared_ptr<Card_Effect_Defence> addEffect = std::make_shared<Card_Effect_Defence>();
 				addEffect->Target_Camp		= Character_Base::CAMP_FRIEND;	// 効果対象の陣営:仲間
 				addEffect->Target_Position	= i;							// 効果対象の立ち位置:確認した仲間キャラクターの位置
-				addEffect->ShieldAmount			= this->Diffence;				// シールド付与量:カードの防御力
+				addEffect->ShieldAmount		= this->Diffence;				// シールド付与量:カードの防御力
+				addEffect->EffectUser		= this->pPlayer;				// 効果の使用者:プレイヤーキャラクター
 				this->pDataList_Battle->AddEffect(addEffect, GetMyAreaNo());
 			}
 		}		

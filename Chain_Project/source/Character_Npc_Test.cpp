@@ -36,7 +36,8 @@ void Character_Npc_Test::Action()
 				std::shared_ptr<Card_Effect_Attack> addEffect	= std::make_shared<Card_Effect_Attack>();
 				addEffect->Target_Camp		= Character_Base::CAMP_FRIEND;	// 効果対象の陣営:味方
 				addEffect->Target_Position	= i;							// 効果対象の立ち位置:確認した敵キャラクターの位置
-				addEffect->DamageAmount			= 5;							// ダメージ量
+				addEffect->DamageAmount		= 5;							// ダメージ量
+				addEffect->EffectUser		= shared_from_this();			// 効果の使用者:自分自身
 				this->pDataList_Battle->AddEffect(addEffect, DataList_Battle::BATTLE_AREA_1);
 				break;
 			}

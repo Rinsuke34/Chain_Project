@@ -666,6 +666,12 @@ void Scene_Battle::UseCardEffect(std::shared_ptr<Card_Effect_Base> Effect, int A
 				// 対象の敵キャラクターが存在する場合
 				/* ダメージ処理を実行 */
 				TargetEnemyCharacter->Damage(AttackEffect->DamageAmount);
+
+				/* 攻撃リアクションを設定 */
+				if (AttackEffect->EffectUser)
+				{
+					AttackEffect->EffectUser->Action_Attack();
+				}
 			}
 		}
 		else
@@ -678,6 +684,12 @@ void Scene_Battle::UseCardEffect(std::shared_ptr<Card_Effect_Base> Effect, int A
 				// 対象の仲間キャラクターが存在する場合
 				/* ダメージ処理を実行 */
 				TargetFriendCharacter->Damage(AttackEffect->DamageAmount);
+				
+				/* 攻撃リアクションを設定 */
+				if (AttackEffect->EffectUser)
+				{
+					AttackEffect->EffectUser->Action_Attack();
+				}
 			}
 		}
 	}
@@ -695,6 +707,12 @@ void Scene_Battle::UseCardEffect(std::shared_ptr<Card_Effect_Base> Effect, int A
 				// 対象の敵キャラクターが存在する場合
 				/* シールド付与処理を実行 */
 				TargetEnemyCharacter->AddShield(DefenceEffect->ShieldAmount);
+
+				/* バフ付与リアクションを設定 */
+				if (DefenceEffect->EffectUser)
+				{
+					DefenceEffect->EffectUser->Action_AddBuff();
+				}
 			}
 		}
 		else
@@ -707,6 +725,13 @@ void Scene_Battle::UseCardEffect(std::shared_ptr<Card_Effect_Base> Effect, int A
 				// 対象の仲間キャラクターが存在する場合
 				/* シールド付与処理を実行 */
 				TargetFriendCharacter->AddShield(DefenceEffect->ShieldAmount);
+				
+				/* バフ付与リアクションを設定 */
+				if (DefenceEffect->EffectUser)
+				{
+					DefenceEffect->EffectUser->Action_AddBuff();
+				}
+
 			}
 		}
 	}
@@ -724,6 +749,12 @@ void Scene_Battle::UseCardEffect(std::shared_ptr<Card_Effect_Base> Effect, int A
 				// 対象の敵キャラクターが存在する場合
 				/* 回復処理を実行 */
 				TargetEnemyCharacter->Heal(HealEffect->HealAmount);
+
+				/* バフ付与リアクションを設定 */
+				if (DefenceEffect->EffectUser)
+				{
+					DefenceEffect->EffectUser->Action_AddBuff();
+				}
 			}
 		}
 		else
@@ -736,6 +767,12 @@ void Scene_Battle::UseCardEffect(std::shared_ptr<Card_Effect_Base> Effect, int A
 				// 対象の仲間キャラクターが存在する場合
 				/* 回復処理を実行 */
 				TargetFriendCharacter->Heal(HealEffect->HealAmount);
+				
+				/* バフ付与リアクションを設定 */
+				if (DefenceEffect->EffectUser)
+				{
+					DefenceEffect->EffectUser->Action_AddBuff();
+				}
 			}
 		}
 	}

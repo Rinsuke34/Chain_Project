@@ -8,6 +8,7 @@
 
 // 前方宣言
 class DataList_Battle;
+class Character_Base;
 
 // カードのベースクラス
 class Card_Base
@@ -105,6 +106,7 @@ class Card_Base
 		Struct_2D::POSITION		Setting_Position;	// 設定座標(ホールドが解除された際に自動で補正される座標)
 		bool					bLostFlag;			// ロストフラグ(捨て札置き場におかれず完全に削除される)
 		int						iNowChainCount;		// 現在のチェイン数(ターン開始時に設定)
+		std::shared_ptr<Character_Base>	pPlayer;	// プレイヤーキャラクターのポインタ
 
 		/* 関数 */
 		int GetMyAreaNo();	// 自身のバトルエリア番号を取得

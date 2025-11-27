@@ -3,11 +3,13 @@
 #pragma once
 
 /* 使用する要素のインクルード */
+// 標準ライブラリ
+#include <memory>
 // 共通定義
 #include "AppFrame.h"
 
 // キャラクターのベースクラス
-class Character_Base
+class Character_Base : public std::enable_shared_from_this<Character_Base>
 {
 	public:
 		Character_Base();				// コンストラクタ
@@ -18,6 +20,8 @@ class Character_Base
 		virtual void Draw_HPBar();				// 体力バー描画
 		virtual void Draw_ShieldBar();			// シールドバー描写
 		virtual void Action()		{};			// 行動
+		virtual void Action_Attack();			// 攻撃アクション
+		virtual void Action_AddBuff();			// バフ付与アクション
 		virtual void Damage(int DamageAmount);	// ダメージ処理
 		virtual void AddShield(int Shield);		// シールド追加処理
 		virtual void ShieldReset_EndAction();	// シールドリセット(行動終了時)
@@ -58,10 +62,15 @@ class Character_Base
 		std::shared_ptr<int>	Image;			// 画像
 		int						Camp;			// 陣営
 		// その他
-		Struct_2D::POSITION		BasePos;	// 基準座標(足元)
-		int						SizeX;		// キャラクターの幅
-		int						SizeY;		// キャラクターの高さ
+		Struct_2D::POSITION		BasePos;			// 基準座標(足元)
+		int						SizeX;				// キャラクターの幅
+		int						SizeY;				// キャラクターの高さ
+		Struct_2D::POSITION		CorrectionPos;		// 補正座標
+		int						AddBuffReaction;	// バフ付与時のリアクション
+		int						DamageReaction;		// 被ダメージ時のリアクション
+		int						AttackReaction;		// 攻撃時のリアクション
 
 		/* 関数 */
 		void SetUpImage(std::string ImageName);		// 指定の名称の画像を設定する
+		void Correction_Reaction();					// 各リアクションによる座標補正
 };

@@ -20,11 +20,18 @@ Character_Base::Character_Base()
 	this->Camp				= -1;			// 陣営
 	this->SizeX				= -1;			// キャラクターの幅
 	this->SizeY				= -1;			// キャラクターの高さ
+	this->CorrectionPos		= { 0, 0 };		// 補正座標
+	this->AddBuffReaction	= 0;			// バフ付与時のリアクション
+	this->DamageReaction	= 0;			// 被ダメージ時のリアクション
+	this->AttackReaction	= 0;			// 攻撃時のリアクション
 }
 
 // 描画
 void Character_Base::Draw()
 {
+	/* 各リアクションによる座標補正 */
+	Correction_Reaction();
+
 	/* キャラクターのサイズが設定されていないなら画像サイズを算出 */
 	if (this->SizeX == -1 || this->SizeY == -1)
 	{
@@ -33,10 +40,10 @@ void Character_Base::Draw()
 
 	/* キャラクター画像の描画 */
 	DrawModiGraph(
-		this->BasePos.iX - (this->SizeX / 2), this->BasePos.iY - (this->SizeY),
-		this->BasePos.iX + (this->SizeX / 2), this->BasePos.iY - (this->SizeY),
-		this->BasePos.iX + (this->SizeX / 2), this->BasePos.iY,
-		this->BasePos.iX - (this->SizeX / 2), this->BasePos.iY,
+		this->BasePos.iX + CorrectionPos.iX - (this->SizeX / 2), this->BasePos.iY + CorrectionPos.iY - (this->SizeY),
+		this->BasePos.iX + CorrectionPos.iX + (this->SizeX / 2), this->BasePos.iY + CorrectionPos.iY - (this->SizeY),
+		this->BasePos.iX + CorrectionPos.iX + (this->SizeX / 2), this->BasePos.iY + CorrectionPos.iY,
+		this->BasePos.iX + CorrectionPos.iX - (this->SizeX / 2), this->BasePos.iY + CorrectionPos.iY,
 		*(this->Image),
 		TRUE
 	);
@@ -127,6 +134,20 @@ void Character_Base::SetUpImage(std::string ImageName)
 	this->Image = pDataList_Image->iGetImageHandle(ImageName);
 }
 
+// 攻撃アクション
+void Character_Base::Action_Attack()
+{
+	/* 攻撃時のリアクションを設定 */
+	this->AttackReaction	= 30;
+}
+
+// バフ付与アクション
+void Character_Base::Action_AddBuff()
+{
+	/* バフ取得時のリアクションを設定 */
+	this->AddBuffReaction = 30;
+}
+
 // ダメージ処理
 void Character_Base::Damage(int DamageAmount)
 {
@@ -160,6 +181,9 @@ void Character_Base::Damage(int DamageAmount)
 	{
 		this->iHP_Now = 0;
 	}
+
+	/* 被ダメージ時のリアクションを設定 */
+	this->DamageReaction = 30;
 }
 
 // シールド追加処理
@@ -199,5 +223,31 @@ void Character_Base::Heal(int Heal)
 	if (this->iHP_Now > this->iHP_Max)
 	{
 		this->iHP_Now = this->iHP_Max;
+	}
+}
+
+// 各リアクションによる座標補正
+void Character_Base::Correction_Reaction()
+{
+	/* 座標補正の初期化 */
+	this->CorrectionPos = { 0, 0 };
+
+	/* バフ付与時のリアクション補正 */
+	if (this->AddBuffReaction > 0)
+	{
+		this->CorrectionPos.iY -= (this->AddBuffReaction * 2);
+		this->AddBuffReaction--;
+	}
+	/* 被ダメージ時のリアクション補正 */
+	if (this->DamageReaction > 0)
+	{
+		this->CorrectionPos.iX -= (this->DamageReaction * 2);
+		this->DamageReaction--;
+	}
+	/* 攻撃時のリアクション補正 */
+	if (this->AttackReaction > 0)
+	{
+		this->CorrectionPos.iX += (this->AttackReaction * 2);
+		this->AttackReaction--;
 	}
 }
