@@ -232,6 +232,13 @@ void Character_Base::Correction_Reaction()
 	/* 座標補正の初期化 */
 	this->CorrectionPos = { 0, 0 };
 
+	/* 敵陣営であるなら平行方向への揺れの向きを変更 */
+	int iDirection = 1;
+	if (this->Camp == CAMP_ENEMY)
+	{
+		iDirection = -1;
+	}
+
 	/* バフ付与時のリアクション補正 */
 	if (this->AddBuffReaction > 0)
 	{
@@ -241,13 +248,13 @@ void Character_Base::Correction_Reaction()
 	/* 被ダメージ時のリアクション補正 */
 	if (this->DamageReaction > 0)
 	{
-		this->CorrectionPos.iX -= (this->DamageReaction * 2);
+		this->CorrectionPos.iX -= (this->DamageReaction * 2) * iDirection;
 		this->DamageReaction--;
 	}
 	/* 攻撃時のリアクション補正 */
 	if (this->AttackReaction > 0)
 	{
-		this->CorrectionPos.iX += (this->AttackReaction * 2);
+		this->CorrectionPos.iX += (this->AttackReaction * 2) * iDirection;
 		this->AttackReaction--;
 	}
 }
