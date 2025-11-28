@@ -304,22 +304,32 @@ void Card_Base::DrawSuite()
 	/* 画像管理データリストを取得 */
 	std::shared_ptr<DataList_Image> pDataList_Image = std::dynamic_pointer_cast<DataList_Image>(gpDataListServer->GetDataList("DataList_Image"));
 
+	// 画像[0:フレーム, 1:スート]
+	std::shared_ptr<int> Image[2];
+
+	/* スートのフレームの画像を取得 */
+	std::string ImageFilePath = "Card_Commoon/SuitFrame_Test";
+	Image[0] = pDataList_Image->iGetImageHandle(ImageFilePath);
+
 	/* スートの画像を取得し、描写する */
 	for (int i = 0; i < this->Suite_List.size(); i++)
 	{
 		/* スート画像を取得 */
-		std::string ImageFilePath = "Card_Suit/" + this->Suite_List[i];
-		std::shared_ptr<int> Image = pDataList_Image->iGetImageHandle(ImageFilePath);
+		ImageFilePath = "Card_Suit/" + this->Suite_List[i];
+		Image[1] = pDataList_Image->iGetImageHandle(ImageFilePath);
 
-		/* スート描写 */
-		DrawModiGraph(
-			(IMAGE_SIZE_WIDTH / 2) - (CARD_WIDTH / 2) + (i * SUTE_SIZE_WIDTH) + SUTE_START_POS_X,		(IMAGE_SIZE_HEIGHT / 2) - (CARD_HEIGHT / 2) + SUTE_POS_Y,
-			(IMAGE_SIZE_WIDTH / 2) - (CARD_WIDTH / 2) + ((i + 1) * SUTE_SIZE_WIDTH) + SUTE_START_POS_X,	(IMAGE_SIZE_HEIGHT / 2) - (CARD_HEIGHT / 2) + SUTE_POS_Y,
-			(IMAGE_SIZE_WIDTH / 2) - (CARD_WIDTH / 2) + ((i + 1) * SUTE_SIZE_WIDTH) + SUTE_START_POS_X,	(IMAGE_SIZE_HEIGHT / 2) - (CARD_HEIGHT / 2) + SUTE_POS_Y + SUTE_SIZE_HEIGHT,
-			(IMAGE_SIZE_WIDTH / 2) - (CARD_WIDTH / 2) + (i * SUTE_SIZE_WIDTH) + SUTE_START_POS_X,		(IMAGE_SIZE_HEIGHT / 2) - (CARD_HEIGHT / 2) + SUTE_POS_Y + SUTE_SIZE_HEIGHT,
-			*(Image),
-			TRUE
-		);
+		/* 描写 */
+		for (int x = 0; x < 2; x++)
+		{
+			DrawModiGraph(
+				(IMAGE_SIZE_WIDTH / 2) - (CARD_WIDTH / 2) + (i * SUTE_SIZE_WIDTH) + SUTE_START_POS_X,		(IMAGE_SIZE_HEIGHT / 2) - (CARD_HEIGHT / 2) + SUTE_POS_Y,
+				(IMAGE_SIZE_WIDTH / 2) - (CARD_WIDTH / 2) + ((i + 1) * SUTE_SIZE_WIDTH) + SUTE_START_POS_X,	(IMAGE_SIZE_HEIGHT / 2) - (CARD_HEIGHT / 2) + SUTE_POS_Y,
+				(IMAGE_SIZE_WIDTH / 2) - (CARD_WIDTH / 2) + ((i + 1) * SUTE_SIZE_WIDTH) + SUTE_START_POS_X,	(IMAGE_SIZE_HEIGHT / 2) - (CARD_HEIGHT / 2) + SUTE_POS_Y + SUTE_SIZE_HEIGHT,
+				(IMAGE_SIZE_WIDTH / 2) - (CARD_WIDTH / 2) + (i * SUTE_SIZE_WIDTH) + SUTE_START_POS_X,		(IMAGE_SIZE_HEIGHT / 2) - (CARD_HEIGHT / 2) + SUTE_POS_Y + SUTE_SIZE_HEIGHT,
+				*(Image[x]),
+				TRUE
+			);
+		}		
 	}
 }
 

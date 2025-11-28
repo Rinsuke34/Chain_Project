@@ -3,6 +3,8 @@
 /* 使用する要素のインクルード */
 // ヘッダファイル
 #include "Scene_Battle.h"
+// 共通定義
+#include "FunctionDefine.h"
 // 関連クラス
 #include "DataList_Battle.h"
 #include "Card_Base.h"
@@ -14,6 +16,7 @@ void Scene_Battle::Draw_BackGround()
 	/* 仮 */
 	DrawBox(0, 0, SCREEN_SIZE_WIDE, SCREEN_SIZE_HEIGHT, GetColor(0, 128, 0), TRUE);
 
+	/* テスト */
 	DrawLine(0, 300, SCREEN_SIZE_WIDE, 300, GetColor(255, 255, 255), 5);
 	DrawLine(0, 200, SCREEN_SIZE_WIDE, 200, GetColor(255, 255, 255), 5);
 
@@ -43,6 +46,12 @@ void Scene_Battle::Draw_Character()
 			EnemyCharacter->Draw();
 		}
 	}
+}
+
+// 鎖(チェイン時)描写
+void Scene_Battle::Draw_Chain()
+{
+	DRAW_FUNCTION::DrawChain({ (SCREEN_SIZE_WIDE / 2) + BATTLE_AREA_INTERVAL * -2, BATTLE_AREA_POS_Y }, { (SCREEN_SIZE_WIDE / 2) + BATTLE_AREA_INTERVAL * -1, BATTLE_AREA_POS_Y });
 }
 
 // バトルエリア描写

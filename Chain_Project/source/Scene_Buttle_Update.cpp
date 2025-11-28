@@ -183,6 +183,9 @@ void Scene_Battle::Update_PlayerActionDecision()
 
 			/* ホールド中のカードをホールド解除する */
 			this->pDataList_Battle->SetHoldCard(nullptr);
+
+			/* カードのチェイン状態を確認する */
+			this->pDataList_Battle->CheckChain();
 		}
 	}
 	else
@@ -464,6 +467,9 @@ void Scene_Battle::Update_StatusEffectAdvance()
 			EnemyCharacter->ShieldReset_EndTurn();
 		}
 	}
+
+	/* チェイン情報を初期化する */
+	this->pDataList_Battle->ResetChain();
 
 	/* "ターン開始時の効果効果発動"フェイズへ遷移 */
 	this->iBattlePhase = BATTLE_PHASE_EFFECT_TRUN_START;

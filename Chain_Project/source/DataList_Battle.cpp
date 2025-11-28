@@ -73,6 +73,53 @@ void DataList_Battle::RemoveBattleAreaCard(int AreaNo)
 	this->BattleAreaCardList[AreaNo] = nullptr;
 }
 
+// チェイン状態の確認
+void DataList_Battle::CheckChain()
+{
+	/* バトルエリアにセットされたカード同士で同じスートが連続しているか確認 */
+	for (int i = 0; i < CHAIN_SUTE_AREA_MAX; i++)
+	{
+		/* 現在登録されているスートリストを初期化する */
+		this->Chain_Suite_List[i].clear();
+
+		/* いずれかのバトルエリアにカードが設定されていないならスキップ */
+		if (this->BattleAreaCardList[i] == nullptr || this->BattleAreaCardList[i + 1] == nullptr)
+		{
+			continue;
+		}
+
+		/* 値が低い方のエリアにセットされたカードのスートリストを取得 */
+		std::vector<std::string> LowerNumberSuiteList = this->BattleAreaCardList[i]->GetSuiteList();
+
+		/* 値が高い方のエリアにセットされたカードのスートリストを取得 */
+		std::vector<std::string> HigherNumberSuiteList = this->BattleAreaCardList[i + 1]->GetSuiteList();
+	
+		/* スートリスト同士で共通するスートがあるか確認 */
+		for (const std::string& lowerSuite : LowerNumberSuiteList)
+		{
+			for (const std::string& higherSuite : HigherNumberSuiteList)
+			{
+				/* 同名のスートが設定されているなら登録する */
+				if (lowerSuite == higherSuite)
+				{
+					this->Chain_Suite_List[i].push_back(lowerSuite);
+					break;
+				}
+			}
+		}
+	}
+}
+
+// チェイン状態を初期化する
+void DataList_Battle::ResetChain()
+{
+	/* チェイン中のスートリストを初期化する */
+	for (int i = 0; i < CHAIN_SUTE_AREA_MAX; i++)
+	{
+		this->Chain_Suite_List[i].clear();
+	}
+}
+
 // 与効果を追加
 void DataList_Battle::AddEffect(const std::shared_ptr<Card_Effect_Base>& effect, int AreaNo)
 {

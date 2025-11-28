@@ -5,13 +5,15 @@
 /* 使用する要素のインクルード */
 // 共通定義
 #include "AppFrame.h"
-// 関連クラス
-#include "Scene_Load_Checker.h"
-#include "Scene_Load_Draw.h"
 
 // ロード関係
 namespace LOAD_FUNCTION
 {
-	// ロード画面シーンの追加
-	void	AddLoadScene();
+	void	AddLoadScene();	// ロード画面シーンの追加
+}
+
+// 描写関係
+namespace DRAW_FUNCTION
+{
+	void DrawChain(Struct_2D::POSITION StartPos, Struct_2D::POSITION EndPos);	// 鎖の描写
 }

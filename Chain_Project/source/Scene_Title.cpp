@@ -123,10 +123,18 @@ void Scene_Title::AdvanceImageLoad()
 	// カード(背景)
 	ImageFilePath = "Card_Commoon/BackGround_Test";
 	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
+	// カード(スートフレーム)
+	ImageFilePath = "Card_Commoon/SuitFrame_Test";
+	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
 	// カード(スート)
 	ImageFilePath = "Card_Suit/" + Card_Base::SUITE_SWORD;
 	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
 	ImageFilePath = "Card_Suit/" + Card_Base::SUITE_SHIELD;
+	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
+	// 鎖関係
+	ImageFilePath = "Card_Commoon/Chain";
+	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
+	ImageFilePath = "Card_Commoon/Chain_SuitFrame";
 	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
 }
 
