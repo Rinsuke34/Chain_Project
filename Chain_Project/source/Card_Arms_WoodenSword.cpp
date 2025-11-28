@@ -9,9 +9,9 @@ Card_Arms_WoodenSword::Card_Arms_WoodenSword() : Card_Arms_Base()
 {
 	/* カード情報の設定 */
 	// レアリティ
-	this->iRarity	= RARITY_COMMON;
+	this->iRarity		= RARITY_COMMON;
 	// カード名
-	this->Name		= "木の剣";
+	this->Name			= "木の剣";
 	// スートリスト
 	this->Suite_List.push_back(SUITE_SWORD);	// 剣
 	// ステータス

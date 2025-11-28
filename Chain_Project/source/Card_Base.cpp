@@ -211,25 +211,6 @@ void Card_Base::Draw()
 // ※ カードの要素に応じて画像を更新する
 void Card_Base::UpdateImage()
 {
-	/* 要素からカード画像を生成する */
-	// 0:背景, 1:イラスト, 2:フレーム
-	std::shared_ptr<int> Image[3];
-
-	/* 画像管理データリストを取得 */
-	std::shared_ptr<DataList_Image> pDataList_Image = std::dynamic_pointer_cast<DataList_Image>(gpDataListServer->GetDataList("DataList_Image"));
-
-	/* 背景の画像を取得 */
-	std::string ImageFilePath = "Card_Commoon/BackGround_Test";
-	Image[0] = pDataList_Image->iGetImageHandle(ImageFilePath);
-
-	/* イラストの画像を取得 */
-	ImageFilePath = "Card_Ilust/" + this->ImageName;
-	Image[1] = pDataList_Image->iGetImageHandle(ImageFilePath);
-
-	/* フレームの画像を取得 */
-	ImageFilePath = "Card_Commoon/Frame_Test";
-	Image[2] = pDataList_Image->iGetImageHandle(ImageFilePath);
-
 	/* 描画先をカード画像に設定 */
 	SetDrawScreen(this->Image);
 
@@ -237,77 +218,19 @@ void Card_Base::UpdateImage()
 	ClearDrawScreen();
 
 	/* 背景描写 */
-	{
-		/* 背景描写 */
-		DrawModiGraph(
-			(IMAGE_SIZE_WIDTH / 2) - (CARD_WIDTH / 2), (IMAGE_SIZE_HEIGHT / 2) - (CARD_HEIGHT / 2),
-			(IMAGE_SIZE_WIDTH / 2) + (CARD_WIDTH / 2), (IMAGE_SIZE_HEIGHT / 2) - (CARD_HEIGHT / 2),
-			(IMAGE_SIZE_WIDTH / 2) + (CARD_WIDTH / 2), (IMAGE_SIZE_HEIGHT / 2) + (CARD_HEIGHT / 2),
-			(IMAGE_SIZE_WIDTH / 2) - (CARD_WIDTH / 2), (IMAGE_SIZE_HEIGHT / 2) + (CARD_HEIGHT / 2),
-			*(Image[0]),
-			TRUE
-		);
-	}
-
+	DrawBackGround();
 
 	/* イラスト描写 */
-	{
-		/* イラスト描写 */
-		DrawModiGraph(
-			(IMAGE_SIZE_WIDTH / 2) - (CARD_WIDTH / 2), (IMAGE_SIZE_HEIGHT / 2) - (CARD_WIDTH / 2),
-			(IMAGE_SIZE_WIDTH / 2) + (CARD_WIDTH / 2), (IMAGE_SIZE_HEIGHT / 2) - (CARD_WIDTH / 2),
-			(IMAGE_SIZE_WIDTH / 2) + (CARD_WIDTH / 2), (IMAGE_SIZE_HEIGHT / 2) + (CARD_WIDTH / 2),
-			(IMAGE_SIZE_WIDTH / 2) - (CARD_WIDTH / 2), (IMAGE_SIZE_HEIGHT / 2) + (CARD_WIDTH / 2),
-			*(Image[1]),
-			TRUE
-		);
-	}
+	DrawImage();
 
 	/* フレーム描写 */
-	{
-		/* フレームサイズ取得 */
-		int SizeX, SizeY;
-		GetGraphSize(*(Image[0]), &SizeX, &SizeY);
-
-		/* フレーム描写 */
-		DrawModiGraph(
-			(IMAGE_SIZE_WIDTH / 2) - (CARD_WIDTH / 2), (IMAGE_SIZE_HEIGHT / 2) - (CARD_HEIGHT / 2),
-			(IMAGE_SIZE_WIDTH / 2) + (CARD_WIDTH / 2), (IMAGE_SIZE_HEIGHT / 2) - (CARD_HEIGHT / 2),
-			(IMAGE_SIZE_WIDTH / 2) + (CARD_WIDTH / 2), (IMAGE_SIZE_HEIGHT / 2) + (CARD_HEIGHT / 2),
-			(IMAGE_SIZE_WIDTH / 2) - (CARD_WIDTH / 2), (IMAGE_SIZE_HEIGHT / 2) + (CARD_HEIGHT / 2),
-			*(Image[2]),
-			TRUE
-		);
-	}
+	DrawFrame();
 
 	/* スート描写 */
-	// ※ スート描写はいったん省略
-
-	/* カード名のフレーム描写 */
-	DrawBox(
-		(IMAGE_SIZE_WIDTH / 2)	- (NAMEPLATE_WIDTH / 2),
-		(IMAGE_SIZE_HEIGHT / 2)	- (CARD_HEIGHT / 2) + NAMEPLATE_POSITION_Y + (NAMEPLATE_HEIGHT / 2),
-		(IMAGE_SIZE_WIDTH / 2)	+ (NAMEPLATE_WIDTH / 2),
-		(IMAGE_SIZE_HEIGHT / 2) - (CARD_HEIGHT / 2) + NAMEPLATE_POSITION_Y - (NAMEPLATE_HEIGHT / 2),
-		GetColor(255, 255, 255),
-		TRUE
-	);
+	DrawSuite();
 
 	/* カード名描写 */
-	{
-		// 文字列の高さ、幅を取得
-		int iSizeX = GetDrawStringWidthToHandle(this->Name.c_str(), static_cast<int>(strlenDx(this->Name.c_str())), giFont_Cp_Period_16);
-		int iSizeY = GetFontSizeToHandle(giFont_Cp_Period_16);
-
-		// 文字列描写
-		DrawStringToHandle(
-			(IMAGE_SIZE_WIDTH / 2) - (iSizeX / 2),
-			(IMAGE_SIZE_HEIGHT / 2) - (CARD_HEIGHT / 2) + NAMEPLATE_POSITION_Y - (iSizeY / 2),
-			this->Name.c_str(),
-			GetColor(0, 0, 0),
-			giFont_Cp_Period_16
-		);
-	}
+	DrawName();
 
 	/* 描画先を裏画面に戻す */
 	SetDrawScreen(DX_SCREEN_BACK);
@@ -331,4 +254,126 @@ int Card_Base::GetMyAreaNo()
 
 	/* 見つからなければ -1 を返す */
 	return -1;
+}
+
+// 背景を描写
+void Card_Base::DrawBackGround()
+{
+	/* 画像管理データリストを取得 */
+	std::shared_ptr<DataList_Image> pDataList_Image = std::dynamic_pointer_cast<DataList_Image>(gpDataListServer->GetDataList("DataList_Image"));
+
+	/* 背景の画像を取得 */
+	std::string ImageFilePath = "Card_Commoon/BackGround_Test";
+	std::shared_ptr<int> Image = pDataList_Image->iGetImageHandle(ImageFilePath);
+
+	/* 背景描写 */
+	DrawModiGraph(
+		(IMAGE_SIZE_WIDTH / 2) - (CARD_WIDTH / 2), (IMAGE_SIZE_HEIGHT / 2) - (CARD_HEIGHT / 2),
+		(IMAGE_SIZE_WIDTH / 2) + (CARD_WIDTH / 2), (IMAGE_SIZE_HEIGHT / 2) - (CARD_HEIGHT / 2),
+		(IMAGE_SIZE_WIDTH / 2) + (CARD_WIDTH / 2), (IMAGE_SIZE_HEIGHT / 2) + (CARD_HEIGHT / 2),
+		(IMAGE_SIZE_WIDTH / 2) - (CARD_WIDTH / 2), (IMAGE_SIZE_HEIGHT / 2) + (CARD_HEIGHT / 2),
+		*(Image),
+		TRUE
+	);
+}
+
+// イラストを描写
+void Card_Base::DrawImage()
+{
+	/* 画像管理データリストを取得 */
+	std::shared_ptr<DataList_Image> pDataList_Image = std::dynamic_pointer_cast<DataList_Image>(gpDataListServer->GetDataList("DataList_Image"));
+
+	/* イラストの画像を取得 */
+	std::string ImageFilePath = "Card_Ilust/" + this->ImageName;
+	std::shared_ptr<int> Image = pDataList_Image->iGetImageHandle(ImageFilePath);
+
+	/* イラスト描写 */
+	DrawModiGraph(
+		(IMAGE_SIZE_WIDTH / 2) - (CARD_WIDTH / 2), (IMAGE_SIZE_HEIGHT / 2) - (CARD_WIDTH / 2) + ILLUSTRATION_POS_Y,
+		(IMAGE_SIZE_WIDTH / 2) + (CARD_WIDTH / 2), (IMAGE_SIZE_HEIGHT / 2) - (CARD_WIDTH / 2) + ILLUSTRATION_POS_Y,
+		(IMAGE_SIZE_WIDTH / 2) + (CARD_WIDTH / 2), (IMAGE_SIZE_HEIGHT / 2) + (CARD_WIDTH / 2) + ILLUSTRATION_POS_Y,
+		(IMAGE_SIZE_WIDTH / 2) - (CARD_WIDTH / 2), (IMAGE_SIZE_HEIGHT / 2) + (CARD_WIDTH / 2) + ILLUSTRATION_POS_Y,
+		*(Image),
+		TRUE
+	);
+}
+
+// スートを描写
+void Card_Base::DrawSuite()
+{
+	/* 画像管理データリストを取得 */
+	std::shared_ptr<DataList_Image> pDataList_Image = std::dynamic_pointer_cast<DataList_Image>(gpDataListServer->GetDataList("DataList_Image"));
+
+	/* スートの画像を取得し、描写する */
+	for (int i = 0; i < this->Suite_List.size(); i++)
+	{
+		/* スート画像を取得 */
+		std::string ImageFilePath = "Card_Suit/" + this->Suite_List[i];
+		std::shared_ptr<int> Image = pDataList_Image->iGetImageHandle(ImageFilePath);
+
+		/* スート描写 */
+		DrawModiGraph(
+			(IMAGE_SIZE_WIDTH / 2) - (CARD_WIDTH / 2) + (i * SUTE_SIZE_WIDTH) + SUTE_START_POS_X,		(IMAGE_SIZE_HEIGHT / 2) - (CARD_HEIGHT / 2) + SUTE_POS_Y,
+			(IMAGE_SIZE_WIDTH / 2) - (CARD_WIDTH / 2) + ((i + 1) * SUTE_SIZE_WIDTH) + SUTE_START_POS_X,	(IMAGE_SIZE_HEIGHT / 2) - (CARD_HEIGHT / 2) + SUTE_POS_Y,
+			(IMAGE_SIZE_WIDTH / 2) - (CARD_WIDTH / 2) + ((i + 1) * SUTE_SIZE_WIDTH) + SUTE_START_POS_X,	(IMAGE_SIZE_HEIGHT / 2) - (CARD_HEIGHT / 2) + SUTE_POS_Y + SUTE_SIZE_HEIGHT,
+			(IMAGE_SIZE_WIDTH / 2) - (CARD_WIDTH / 2) + (i * SUTE_SIZE_WIDTH) + SUTE_START_POS_X,		(IMAGE_SIZE_HEIGHT / 2) - (CARD_HEIGHT / 2) + SUTE_POS_Y + SUTE_SIZE_HEIGHT,
+			*(Image),
+			TRUE
+		);
+	}
+}
+
+// フレームを描写
+void Card_Base::DrawFrame()
+{
+	/* 画像管理データリストを取得 */
+	std::shared_ptr<DataList_Image> pDataList_Image = std::dynamic_pointer_cast<DataList_Image>(gpDataListServer->GetDataList("DataList_Image"));
+
+	/* フレームの画像を取得 */
+	std::string ImageFilePath = "Card_Commoon/Frame_Test";
+	std::shared_ptr<int> Image = pDataList_Image->iGetImageHandle(ImageFilePath);
+
+	/* フレームサイズ取得 */
+	int SizeX, SizeY;
+	GetGraphSize(*(Image), &SizeX, &SizeY);
+
+	/* フレーム描写 */
+	DrawModiGraph(
+		(IMAGE_SIZE_WIDTH / 2) - (CARD_WIDTH / 2), (IMAGE_SIZE_HEIGHT / 2) - (CARD_HEIGHT / 2),
+		(IMAGE_SIZE_WIDTH / 2) + (CARD_WIDTH / 2), (IMAGE_SIZE_HEIGHT / 2) - (CARD_HEIGHT / 2),
+		(IMAGE_SIZE_WIDTH / 2) + (CARD_WIDTH / 2), (IMAGE_SIZE_HEIGHT / 2) + (CARD_HEIGHT / 2),
+		(IMAGE_SIZE_WIDTH / 2) - (CARD_WIDTH / 2), (IMAGE_SIZE_HEIGHT / 2) + (CARD_HEIGHT / 2),
+		*(Image),
+		TRUE
+	);
+}
+
+// 名前を描写
+void Card_Base::DrawName()
+{
+	/* カード名のフレーム描写 */
+	DrawBox(
+		(IMAGE_SIZE_WIDTH / 2) - (NAMEPLATE_WIDTH / 2),
+		(IMAGE_SIZE_HEIGHT / 2) - (CARD_HEIGHT / 2) + NAMEPLATE_POSITION_Y + (NAMEPLATE_HEIGHT / 2),
+		(IMAGE_SIZE_WIDTH / 2) + (NAMEPLATE_WIDTH / 2),
+		(IMAGE_SIZE_HEIGHT / 2) - (CARD_HEIGHT / 2) + NAMEPLATE_POSITION_Y - (NAMEPLATE_HEIGHT / 2),
+		GetColor(255, 255, 255),
+		TRUE
+	);
+
+	/* カード名描写 */
+	{
+		// 文字列の高さ、幅を取得
+		int iSizeX = GetDrawStringWidthToHandle(this->Name.c_str(), static_cast<int>(strlenDx(this->Name.c_str())), giFont_Cp_Period_16);
+		int iSizeY = GetFontSizeToHandle(giFont_Cp_Period_16);
+
+		// 文字列描写
+		DrawStringToHandle(
+			(IMAGE_SIZE_WIDTH / 2) - (iSizeX / 2),
+			(IMAGE_SIZE_HEIGHT / 2) - (CARD_HEIGHT / 2) + NAMEPLATE_POSITION_Y - (iSizeY / 2),
+			this->Name.c_str(),
+			GetColor(0, 0, 0),
+			giFont_Cp_Period_16
+		);
+	}
 }

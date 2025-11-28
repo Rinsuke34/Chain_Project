@@ -37,7 +37,7 @@ class Scene_Battle : public Scene_Base
 		static const int	BATTLE_PHASE_STATUS_EFFECT_ADVANCE	= 9;	// 状態変化のターン進行
 		static const int	BATTLE_PHASE_MAX					= 10;	// バトルフェーズ総数
 		// 座標関係
-		static const int	BATTLE_AREA_INTERVAL				= 250;	// バトルエリアの間隔
+		static const int	BATTLE_AREA_INTERVAL				= 300;	// バトルエリアの間隔
 		static const int	BATTLE_AREA_POS_Y					= 540;	// バトルエリアのY座標
 		static const int	HANDCARD_INTERVAL					= 170;	// 手札のカード間隔
 		static const int	HANDCARD_POS_Y						= 900;	// 手札のY座標

@@ -14,6 +14,7 @@
 #include "Scene_Battle.h"
 #include "DataList_Image.h"
 #include "DataList_Font.h"
+#include "Card_Base.h"
 
 // コンストラクタ
 Scene_Title::Scene_Title() : Scene_Base("Scene_Title", 0, false, false)
@@ -123,9 +124,9 @@ void Scene_Title::AdvanceImageLoad()
 	ImageFilePath = "Card_Commoon/BackGround_Test";
 	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
 	// カード(スート)
-	ImageFilePath = "Card_Suit/Suit_Sword";
+	ImageFilePath = "Card_Suit/" + Card_Base::SUITE_SWORD;
 	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
-	ImageFilePath = "Card_Suit/Suit_Shield";
+	ImageFilePath = "Card_Suit/" + Card_Base::SUITE_SHIELD;
 	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
 }
 
