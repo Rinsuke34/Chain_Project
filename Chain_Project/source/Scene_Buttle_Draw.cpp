@@ -6,6 +6,7 @@
 // 共通定義
 #include "FunctionDefine.h"
 // 関連クラス
+#include "Datalist_Image.h"
 #include "DataList_Battle.h"
 #include "Card_Base.h"
 #include "Character_Base.h"
@@ -51,7 +52,62 @@ void Scene_Battle::Draw_Character()
 // 鎖(チェイン時)描写
 void Scene_Battle::Draw_Chain()
 {
-	DRAW_FUNCTION::DrawChain({ (SCREEN_SIZE_WIDE / 2) + BATTLE_AREA_INTERVAL * -2, BATTLE_AREA_POS_Y }, { (SCREEN_SIZE_WIDE / 2) + BATTLE_AREA_INTERVAL * -1, BATTLE_AREA_POS_Y });
+	/* 画像管理データリストを取得 */
+	std::shared_ptr<DataList_Image> pDataList_Image = std::dynamic_pointer_cast<DataList_Image>(gpDataListServer->GetDataList("DataList_Image"));
+
+	/* チェインが発生しているならそのスートを描写する */
+	for (int i = 0; i < DataList_Battle::CHAIN_SUTE_AREA_MAX; i++)
+	{
+		std::vector<std::string> ChainSuiteList = this->pDataList_Battle->GetChain_Suite_List(i);
+		if (ChainSuiteList.size() > 0)
+		{
+			// チェインが発生している場合
+			for (int j = 0; j < ChainSuiteList.size(); j++)
+			{
+				/* スート画像を取得 */
+				std::string ImageFilePath = "Card_Suit/" + ChainSuiteList[j];
+				std::shared_ptr<int> SuteImage = pDataList_Image->iGetImageHandle(ImageFilePath);
+				ImageFilePath = "Card_Commoon/Chain_SuitFrame";
+				std::shared_ptr<int> SuteFrame = pDataList_Image->iGetImageHandle(ImageFilePath);
+
+				/* 左右のバトルエリアの中心座標を取得 */
+				Struct_2D::POSITION BattleAreaPos_Left = {
+					(SCREEN_SIZE_WIDE / 2) + BATTLE_AREA_INTERVAL * ( i - 2 ),
+					BATTLE_AREA_POS_Y
+				};
+				Struct_2D::POSITION BattleAreaPos_Right = {
+					(SCREEN_SIZE_WIDE / 2) + BATTLE_AREA_INTERVAL * ( i - 1 ),
+					BATTLE_AREA_POS_Y
+				};
+
+				/* 鎖を描写 */
+				DRAW_FUNCTION::DrawChain(BattleAreaPos_Left, BattleAreaPos_Right);
+				
+				/* スート画像のサイズを取得 */
+				int SizeX, SizeY;
+				GetGraphSize(*(SuteFrame), &SizeX, &SizeY);
+
+				/* スートを描写 */
+				DrawModiGraph(
+					(BattleAreaPos_Right.iX + BattleAreaPos_Left.iX) / 2 - (SizeX / 2), (BattleAreaPos_Right.iY + BattleAreaPos_Left.iY) / 2 - (SizeY / 2),
+					(BattleAreaPos_Right.iX + BattleAreaPos_Left.iX) / 2 + (SizeX / 2), (BattleAreaPos_Right.iY + BattleAreaPos_Left.iY) / 2 - (SizeY / 2),
+					(BattleAreaPos_Right.iX + BattleAreaPos_Left.iX) / 2 + (SizeX / 2), (BattleAreaPos_Right.iY + BattleAreaPos_Left.iY) / 2 + (SizeY / 2),
+					(BattleAreaPos_Right.iX + BattleAreaPos_Left.iX) / 2 - (SizeX / 2), (BattleAreaPos_Right.iY + BattleAreaPos_Left.iY) / 2 + (SizeY / 2),
+					*(SuteFrame),
+					TRUE
+				);
+
+				DrawModiGraph(
+					(BattleAreaPos_Right.iX + BattleAreaPos_Left.iX) / 2 - (SizeX / 2), (BattleAreaPos_Right.iY + BattleAreaPos_Left.iY) / 2 - (SizeY / 2),
+					(BattleAreaPos_Right.iX + BattleAreaPos_Left.iX) / 2 + (SizeX / 2), (BattleAreaPos_Right.iY + BattleAreaPos_Left.iY) / 2 - (SizeY / 2),
+					(BattleAreaPos_Right.iX + BattleAreaPos_Left.iX) / 2 + (SizeX / 2), (BattleAreaPos_Right.iY + BattleAreaPos_Left.iY) / 2 + (SizeY / 2),
+					(BattleAreaPos_Right.iX + BattleAreaPos_Left.iX) / 2 - (SizeX / 2), (BattleAreaPos_Right.iY + BattleAreaPos_Left.iY) / 2 + (SizeY / 2),
+					*(SuteImage),
+					TRUE
+				);
+			}
+		}
+	}
 }
 
 // バトルエリア描写
