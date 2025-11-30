@@ -53,18 +53,7 @@ void Card_Base::BattleAction()
 	}
 
 	/* プレイヤーを取得できていないならプレイヤーを取得する */
-	if (this->pPlayer == nullptr)
-	{
-		// バトル用データリストからプレイヤーキャラクターを取得する
-		for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
-		{
-			if (this->pDataList_Battle->GetFriendCharacter(i))
-			{
-				this->pPlayer = this->pDataList_Battle->GetFriendCharacter(i);
-				break;
-			}
-		}
-	}
+	CheckHavePlayer();
 
 	/* 攻撃力が1以上であるか確認 */
 	if (this->Strength > 0)
@@ -361,13 +350,20 @@ void Card_Base::DrawFrame()
 // 名前を描写
 void Card_Base::DrawName()
 {
+	/* 画像管理データリストを取得 */
+	std::shared_ptr<DataList_Image> pDataList_Image = std::dynamic_pointer_cast<DataList_Image>(gpDataListServer->GetDataList("DataList_Image"));
+
+	/* ネームプレートの画像を取得 */
+	std::string ImageFilePath = "Card_Commoon/NamePlate";
+	std::shared_ptr<int> Image = pDataList_Image->iGetImageHandle(ImageFilePath);
+
 	/* カード名のフレーム描写 */
-	DrawBox(
-		(IMAGE_SIZE_WIDTH / 2) - (NAMEPLATE_WIDTH / 2),
-		(IMAGE_SIZE_HEIGHT / 2) - (CARD_HEIGHT / 2) + NAMEPLATE_POSITION_Y + (NAMEPLATE_HEIGHT / 2),
-		(IMAGE_SIZE_WIDTH / 2) + (NAMEPLATE_WIDTH / 2),
-		(IMAGE_SIZE_HEIGHT / 2) - (CARD_HEIGHT / 2) + NAMEPLATE_POSITION_Y - (NAMEPLATE_HEIGHT / 2),
-		GetColor(255, 255, 255),
+	DrawModiGraph(
+		(IMAGE_SIZE_WIDTH / 2) - (NAMEPLATE_WIDTH / 2),	(IMAGE_SIZE_HEIGHT / 2) - (CARD_HEIGHT / 2) + NAMEPLATE_POSITION_Y + (NAMEPLATE_HEIGHT / 2),
+		(IMAGE_SIZE_WIDTH / 2) + (NAMEPLATE_WIDTH / 2), (IMAGE_SIZE_HEIGHT / 2) - (CARD_HEIGHT / 2) + NAMEPLATE_POSITION_Y + (NAMEPLATE_HEIGHT / 2),
+		(IMAGE_SIZE_WIDTH / 2) + (NAMEPLATE_WIDTH / 2), (IMAGE_SIZE_HEIGHT / 2) - (CARD_HEIGHT / 2) + NAMEPLATE_POSITION_Y - (NAMEPLATE_HEIGHT / 2),
+		(IMAGE_SIZE_WIDTH / 2) - (NAMEPLATE_WIDTH / 2), (IMAGE_SIZE_HEIGHT / 2) - (CARD_HEIGHT / 2) + NAMEPLATE_POSITION_Y - (NAMEPLATE_HEIGHT / 2),
+		*(Image),
 		TRUE
 	);
 
@@ -382,8 +378,25 @@ void Card_Base::DrawName()
 			(IMAGE_SIZE_WIDTH / 2) - (iSizeX / 2),
 			(IMAGE_SIZE_HEIGHT / 2) - (CARD_HEIGHT / 2) + NAMEPLATE_POSITION_Y - (iSizeY / 2),
 			this->Name.c_str(),
-			GetColor(0, 0, 0),
+			GetColor(255, 255, 255),
 			giFont_Cp_Period_16
 		);
+	}
+}
+
+// プレイヤーを取得しているか確認
+void Card_Base::CheckHavePlayer()
+{
+	if (this->pPlayer == nullptr)
+	{
+		// バトル用データリストからプレイヤーキャラクターを取得する
+		for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
+		{
+			if (this->pDataList_Battle->GetFriendCharacter(i))
+			{
+				this->pPlayer = this->pDataList_Battle->GetFriendCharacter(i);
+				break;
+			}
+		}
 	}
 }

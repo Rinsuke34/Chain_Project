@@ -24,7 +24,6 @@ class Card_Base
 		virtual void UpdateImage();					// 画像更新
 		virtual void Effect_StartTurn()			{};	// 効果発動:ターン開始時
 		virtual void Effect_StartAction()		{};	// 効果発動:行動開始時
-		virtual void Effect_Battle()			{};	// 効果発動:戦闘時
 		virtual void BattleAction();				// 戦闘行動
 		virtual void Effect_EndTurn()			{};	// 効果発動:ターン終了時
 		virtual void Position_Interpolation();		// 位置座標補間処理
@@ -75,6 +74,7 @@ class Card_Base
 		// スートの種類
 		inline static const	std::string	SUITE_SWORD		= "Sword";	// 剣
 		inline static const	std::string	SUITE_SHIELD	= "Shield";	// 盾
+		inline static const	std::string	SUITE_POTION	= "Potion";	// 薬(ポーション)
 		// 画像のサイズ(実際のサイズより大きめにする)
 		static const int IMAGE_SIZE_WIDTH	= 256;	// 画像幅
 		static const int IMAGE_SIZE_HEIGHT	= 256;	// 画像高さ
@@ -87,9 +87,9 @@ class Card_Base
 		static const int ATTACKRANGE_RANDOM	= 1;	// ランダム
 		static const int ATTACKRANGE_ALL	= 2;	// 全体
 		// スート(描写)
-		static const int SUTE_SIZE_WIDTH	= 40;	// スート幅
-		static const int SUTE_SIZE_HEIGHT	= 40;	// スート高さ
-		static const int SUTE_START_POS_X	= 4;	// スート描写開始X座標
+		static const int SUTE_SIZE_WIDTH	= 36;	// スート幅
+		static const int SUTE_SIZE_HEIGHT	= 36;	// スート高さ
+		static const int SUTE_START_POS_X	= 12;	// スート描写開始X座標
 		static const int SUTE_POS_Y			= 35;	// スート描写Y座標
 		// イラスト(描写)
 		static const int ILLUSTRATION_POS_Y = 32;	// イラスト描写Y座標(中心から見たときの補正量)
@@ -123,4 +123,5 @@ class Card_Base
 		void	DrawSuite();		// スートを描写
 		void	DrawFrame();		// フレームを描写
 		void	DrawName();			// 名前を描写
+		void	CheckHavePlayer();	// プレイヤーを取得しているか確認
 };

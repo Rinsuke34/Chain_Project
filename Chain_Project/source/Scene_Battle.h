@@ -86,4 +86,5 @@ class Scene_Battle : public Scene_Base
 		int	 GetMouseInBattleArea();												// マウスが重なっているバトルエリアを取得
 		void UseCardEffect(std::shared_ptr<Card_Effect_Base> Effect, int AreaNo);	// カード効果の使用
 		void Character_Death_Check();												// キャラクターが死亡しているか確認
+		void CheckLostCard();														// ロスト対象のカードを確認し、ロストカード一覧に入れる
 };

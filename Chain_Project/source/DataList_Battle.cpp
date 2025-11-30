@@ -12,6 +12,40 @@ DataList_Battle::DataList_Battle() : DataList_Base("DataList_Battle")
 	
 }
 
+// カード関係(総括用)
+// カードリストにカードを追加
+void DataList_Battle::AddCard(const std::shared_ptr<Card_Base>& pCard)
+{
+	// 引数
+	// pCard <- 追加するカードのポインタ
+	this->AllDeckCardList.push_back(pCard);
+}
+
+// ロストカードリストにカードを追加
+void DataList_Battle::AddLostCard(const std::shared_ptr<Card_Base>& pCard)
+{
+	// 引数
+	// pCard <- 追加するカードのポインタ
+	this->AllLostCardList.push_back(pCard);
+}
+
+// 全カードリストからカードを削除
+void DataList_Battle::RemoveAllCard(const std::shared_ptr<Card_Base>& pCard)
+{
+	// 引数
+	// pCard <- 追加するカードのポインタ
+	this->AllDeckCardList.erase(std::remove(AllDeckCardList.begin(), AllDeckCardList.end(), pCard), AllDeckCardList.end());
+}
+
+// ロストカードリストからカードを削除
+void DataList_Battle::RemoveLostCard(const std::shared_ptr<Card_Base>& pCard)
+{
+	// 引数
+	// pCard <- 追加するカードのポインタ
+	this->AllLostCardList.erase(std::remove(AllLostCardList.begin(), AllLostCardList.end(), pCard), AllLostCardList.end());
+}
+
+// カード関連(戦闘用)
 // デッキにカードを追加
 void DataList_Battle::AddDeckCard(const std::shared_ptr<Card_Base>& pCard)
 {

@@ -16,6 +16,7 @@
 #include "Card_Arms_WoodenSword.h"
 #include "Character_Player.h"
 #include "Character_Npc_Test.h"
+#include "Card_Item_HealingPotion.h"
 
 // コンストラクタ
 Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 0, false, false)
@@ -57,15 +58,15 @@ Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 0, false, false)
 	// カード設定
 	std::vector<std::shared_ptr<Card_Base>> DeckCardList;
 	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenSword>());
-	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenShield>());
+	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenSword>());
 	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenSword>());
 	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenShield>());
-	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenSword>());
 	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenShield>());
-	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenSword>());
 	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenShield>());
-	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenSword>());
-	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenShield>());
+	DeckCardList.push_back(std::make_shared<Card_Item_HealingPotion>());
+	DeckCardList.push_back(std::make_shared<Card_Item_HealingPotion>());
+	DeckCardList.push_back(std::make_shared<Card_Item_HealingPotion>());
+	this->pDataList_Battle->SetAllDeckCardList(DeckCardList);
 	this->pDataList_Battle->SetDeckCardList(DeckCardList);
 	// 画像更新
 	for (auto& Deck : DeckCardList)

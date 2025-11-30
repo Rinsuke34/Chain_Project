@@ -14,39 +14,39 @@
 void Scene_Battle::Update_EffectTurnStart()
 {
 	/* 各カードの"ターン開始時"効果を実行 */
-	// バトルエリア
-	for (int i = 0; i < DataList_Battle::BATTLE_AREA_MAX; i++)
+	// デッキ
+	for (int i = 0; i < this->pDataList_Battle->GetDeckCardList().size(); i++)
 	{
-		auto BattleAreaCard = this->pDataList_Battle->GetBattleAreaCardList(i);
-		if (BattleAreaCard != nullptr)
+		auto AllDeckCard = this->pDataList_Battle->GetDeckCardList()[i];
+		if (AllDeckCard != nullptr)
 		{
-			BattleAreaCard->Effect_StartAction();
-		}
-	}
-	// 山札
-	for (auto& BattleAreaCard : this->pDataList_Battle->GetDeckCardList())
-	{
-		if (BattleAreaCard != nullptr)
-		{
-			BattleAreaCard->Effect_StartTurn();
+			/* 効果発動:ターン開始時 */
+			AllDeckCard->Effect_StartTurn();
 		}
 	}
 	// 手札
-	for (auto& BattleAreaCard : this->pDataList_Battle->GetHandCardList())
+	for (int i = 0; i < this->pDataList_Battle->GetHandCardList().size(); i++)
 	{
-		if (BattleAreaCard != nullptr)
+		auto AllDeckCard = this->pDataList_Battle->GetHandCardList()[i];
+		if (AllDeckCard != nullptr)
 		{
-			BattleAreaCard->Effect_StartTurn();
+			/* 効果発動:ターン開始時 */
+			AllDeckCard->Effect_StartTurn();
 		}
 	}
 	// 捨て札
-	for (auto& BattleAreaCard : this->pDataList_Battle->GetTrashCardList())
+	for (int i = 0; i < this->pDataList_Battle->GetTrashCardList().size(); i++)
 	{
-		if (BattleAreaCard != nullptr)
+		auto AllDeckCard = this->pDataList_Battle->GetTrashCardList()[i];
+		if (AllDeckCard != nullptr)
 		{
-			BattleAreaCard->Effect_StartTurn();
+			/* 効果発動:ターン開始時 */
+			AllDeckCard->Effect_StartTurn();
 		}
 	}
+
+	/* ロストフラグが有効なカードをロストカードリストに設定 */
+	CheckLostCard();
 
 	/* "カードドロー"フェイズへ遷移 */
 	this->iBattlePhase = BATTLE_PHASE_DRAW_CARD;
@@ -75,7 +75,8 @@ void Scene_Battle::Update_DrawCard()
 			this->bReloadFlg = true;			
 
 			/* 捨て札のカードを手札に戻す */
-			for (int i = 0; i < this->pDataList_Battle->GetTrashCardList().size(); i++)
+			int TrashSize = this->pDataList_Battle->GetTrashCardList().size();
+			for (int i = 0; i < TrashSize; i++)
 			{
 				std::vector<std::shared_ptr<Card_Base>> TrashCardList = this->pDataList_Battle->GetTrashCardList();
 				std::shared_ptr<Card_Base> pCard = TrashCardList[0];
@@ -239,36 +240,16 @@ void Scene_Battle::Update_EffectActionStart()
 	// バトルエリア
 	for (int i = 0; i < DataList_Battle::BATTLE_AREA_MAX; i++)
 	{
-		auto BattleAreaCard = this->pDataList_Battle->GetBattleAreaCardList(i);
-		if (BattleAreaCard != nullptr)
+		auto AllDeckCard = this->pDataList_Battle->GetBattleAreaCardList(i);
+		if (AllDeckCard != nullptr)
 		{
-			BattleAreaCard->Effect_StartAction();
+			/* 効果発動:ターン開始時 */
+			AllDeckCard->Effect_StartAction();
 		}
 	}
-	// 山札
-	for (auto& BattleAreaCard : this->pDataList_Battle->GetDeckCardList())
-	{
-		if (BattleAreaCard != nullptr)
-		{
-			BattleAreaCard->Effect_StartAction();
-		}
-	}
-	// 手札
-	for (auto& BattleAreaCard : this->pDataList_Battle->GetHandCardList())
-	{
-		if (BattleAreaCard != nullptr)
-		{
-			BattleAreaCard->Effect_StartAction();
-		}
-	}
-	// 捨て札
-	for (auto& BattleAreaCard : this->pDataList_Battle->GetTrashCardList())
-	{
-		if (BattleAreaCard != nullptr)
-		{
-			BattleAreaCard->Effect_StartAction();
-		}
-	}
+
+	/* ロストフラグが有効なカードをロストカードリストに設定 */
+	CheckLostCard();
 
 	/* "戦闘行動の決定"フェイズへ遷移 */
 	this->iBattlePhase = BATTLE_PHASE_BATTLE_ACTION_DECISION;
@@ -417,30 +398,39 @@ void Scene_Battle::Update_BattleAction()
 void Scene_Battle::Update_EffectTurnEnd()
 {
 	/* 各カードの"ターン終了時"効果を実行 */
-	// 山札
-	for (auto& BattleAreaCard : this->pDataList_Battle->GetDeckCardList())
+	// デッキ
+	for (int i = 0; i < this->pDataList_Battle->GetDeckCardList().size(); i++)
 	{
-		if (BattleAreaCard != nullptr)
+		auto AllDeckCard = this->pDataList_Battle->GetDeckCardList()[i];
+		if (AllDeckCard != nullptr)
 		{
-			BattleAreaCard->Effect_EndTurn();
+			/* 効果発動:ターン開始時 */
+			AllDeckCard->Effect_EndTurn();
 		}
 	}
 	// 手札
-	for (auto& BattleAreaCard : this->pDataList_Battle->GetHandCardList())
+	for (int i = 0; i < this->pDataList_Battle->GetHandCardList().size(); i++)
 	{
-		if (BattleAreaCard != nullptr)
+		auto AllDeckCard = this->pDataList_Battle->GetHandCardList()[i];
+		if (AllDeckCard != nullptr)
 		{
-			BattleAreaCard->Effect_EndTurn();
+			/* 効果発動:ターン開始時 */
+			AllDeckCard->Effect_EndTurn();
 		}
 	}
 	// 捨て札
-	for (auto& BattleAreaCard : this->pDataList_Battle->GetTrashCardList())
+	for (int i = 0; i < this->pDataList_Battle->GetTrashCardList().size(); i++)
 	{
-		if (BattleAreaCard != nullptr)
+		auto AllDeckCard = this->pDataList_Battle->GetTrashCardList()[i];
+		if (AllDeckCard != nullptr)
 		{
-			BattleAreaCard->Effect_EndTurn();
+			/* 効果発動:ターン開始時 */
+			AllDeckCard->Effect_EndTurn();
 		}
 	}
+
+	/* ロストフラグが有効なカードをロストカードリストに設定 */
+	CheckLostCard();
 
 	/* "状態変化のターン進行"フェイズへ遷移 */
 	this->iBattlePhase = BATTLE_PHASE_STATUS_EFFECT_ADVANCE;
@@ -757,9 +747,9 @@ void Scene_Battle::UseCardEffect(std::shared_ptr<Card_Effect_Base> Effect, int A
 				TargetEnemyCharacter->Heal(HealEffect->HealAmount);
 
 				/* バフ付与リアクションを設定 */
-				if (DefenceEffect->EffectUser)
+				if (HealEffect->EffectUser)
 				{
-					DefenceEffect->EffectUser->Action_AddBuff();
+					HealEffect->EffectUser->Action_AddBuff();
 				}
 			}
 		}
@@ -775,9 +765,9 @@ void Scene_Battle::UseCardEffect(std::shared_ptr<Card_Effect_Base> Effect, int A
 				TargetFriendCharacter->Heal(HealEffect->HealAmount);
 				
 				/* バフ付与リアクションを設定 */
-				if (DefenceEffect->EffectUser)
+				if (HealEffect->EffectUser)
 				{
-					DefenceEffect->EffectUser->Action_AddBuff();
+					HealEffect->EffectUser->Action_AddBuff();
 				}
 			}
 		}
@@ -816,5 +806,37 @@ void Scene_Battle::Character_Death_Check()
 				this->pDataList_Battle->SetEnemyCharacter(i, nullptr);
 			}
 		}
+	}
+}
+
+// ロスト対象のカードを確認し、ロストカード一覧に入れる
+void Scene_Battle::CheckLostCard()
+{
+	/* ロストフラグが有効なカードをロストカードリストに移動する処理 */
+	std::vector<std::shared_ptr<Card_Base>> AllDeckCardList = this->pDataList_Battle->GetAllDeckCardList();
+	std::vector<std::shared_ptr<Card_Base>> LostCardList;
+
+	/* ロストフラグが有効なカードを洗い出す */
+	for (const auto& card : AllDeckCardList)
+	{
+		if (card && card->GetLostFlg())
+		{
+			LostCardList.push_back(card);
+		}
+	}
+
+	/* ロストフラグが有効なカードをリストに登録 */
+	for (const auto& card : LostCardList)
+	{
+		this->pDataList_Battle->AddLostCard(card);
+	}
+
+	/* 該当のカードをデッキ、手札、捨て札リストから削除 */
+	for (const auto& card : LostCardList)
+	{
+		this->pDataList_Battle->RemoveAllCard(card);      // AllDeckCardListから削除
+		this->pDataList_Battle->RemoveDeckCard(card);     // DeckCardListから削除
+		this->pDataList_Battle->RemoveHandCard(card);     // HandCardListから削除
+		this->pDataList_Battle->RemoveTrashCard(card);    // TrashCardListから削除
 	}
 }

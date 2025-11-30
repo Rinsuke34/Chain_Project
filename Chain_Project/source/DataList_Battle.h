@@ -19,7 +19,12 @@ class DataList_Battle : public DataList_Base
 		virtual ~DataList_Battle()	{};	// デストラクタ
 
 		/* 関数 */
-		// カード関係
+		// カード関係(総括用)
+		void AddCard(const std::shared_ptr<Card_Base>& pCard);			// カードリストにカードを追加
+		void AddLostCard(const std::shared_ptr<Card_Base>& pCard);		// ロストカードリストにカードを追加
+		void RemoveAllCard(const std::shared_ptr<Card_Base>& pCard);	// 全カードリストからカードを削除
+		void RemoveLostCard(const std::shared_ptr<Card_Base>& pCard);	// ロストカードリストからカードを削除
+		// カード関連(戦闘用)
 		void AddDeckCard(const std::shared_ptr<Card_Base>& pCard);		// デッキにカードを追加
 		void AddHandCard(const std::shared_ptr<Card_Base>& pCard);		// 手札にカードを追加
 		void AddTrashCard(const std::shared_ptr<Card_Base>& pCard);		// 捨て札にカードを追加
@@ -34,7 +39,10 @@ class DataList_Battle : public DataList_Base
 		void RemoveEffect(const std::shared_ptr<Card_Effect_Base>& effect, int AreaNo);		// 与効果を削除
 		
 		/* ゲッター */
-		// カード関連
+		// カード関係(総括用)
+		std::vector<std::shared_ptr<Card_Base>>			GetAllDeckCardList()				{ return AllDeckCardList; }						// カードリストを取得
+		std::vector<std::shared_ptr<Card_Base>>			GetLostCardList()					{ return AllLostCardList; }						// ロストカードリストを取得
+		// カード関連(戦闘用)
 		std::vector<std::shared_ptr<Card_Base>>			GetDeckCardList()					{ return DeckCardList; }						// デッキのカード一覧を取得
 		std::vector<std::shared_ptr<Card_Base>>			GetHandCardList()					{ return HandCardList; }						// 手札のカード一覧を取得
 		std::vector<std::shared_ptr<Card_Base>>			GetTrashCardList()					{ return TrashCardList; }						// 捨て札のカード一覧を取得
@@ -48,7 +56,10 @@ class DataList_Battle : public DataList_Base
 		std::vector<std::shared_ptr<Card_Effect_Base>>	GetEffectList(int AreaNo)			{ return EffectList[AreaNo]; }					// 与効果一覧を取得
 
 		/* セッター */
-		// カード関連
+		// カード関係(総括用)
+		void SetAllDeckCardList(const std::vector<std::shared_ptr<Card_Base>>& cardList)		{ AllDeckCardList	= cardList; }	// カードリストを設定
+		void SetAllLostCardList(const std::vector<std::shared_ptr<Card_Base>>& cardList)		{ AllLostCardList	= cardList; }	// ロストカードリストを設定
+		// カード関連(戦闘用)
 		void SetDeckCardList(const std::vector<std::shared_ptr<Card_Base>>& cardList)			{ DeckCardList					= cardList; }	// デッキのカード一覧を設定
 		void SetHandCardList(const std::vector<std::shared_ptr<Card_Base>>& cardList)			{ HandCardList					= cardList; }	// 手札のカード一覧を設定
 		void SetTrashCardList(const std::vector<std::shared_ptr<Card_Base>>& cardList)			{ TrashCardList					= cardList; }	// 捨て札のカード一覧を設定
@@ -84,7 +95,10 @@ class DataList_Battle : public DataList_Base
 
 	private:
 		/* 変数 */
-		// カード関連
+		// カード関係(総括用)
+		std::vector<std::shared_ptr<Card_Base>>			AllDeckCardList;						// 全てのデッキのカード一覧(ロスト予定のカードを除く)
+		std::vector<std::shared_ptr<Card_Base>>			AllLostCardList;						// 全てのロストとなるデッキのカード一覧
+		// カード関連(戦闘用)
 		std::vector<std::shared_ptr<Card_Base>>			DeckCardList;							// デッキのカード一覧
 		std::vector<std::shared_ptr<Card_Base>>			HandCardList;							// 手札のカード一覧
 		std::vector<std::shared_ptr<Card_Base>>			TrashCardList;							// 捨て札のカード一覧

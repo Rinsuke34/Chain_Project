@@ -139,6 +139,12 @@
     <Filter Include="ヘッダー ファイル\カード\武具%28Arms%29\木の盾">
       <UniqueIdentifier>{28357b41-4f13-4d35-8c1b-25f66ad04487}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\カード\道具%28Item%29\回復のポーション">
+      <UniqueIdentifier>{605f9ead-f7c7-426c-ad73-947c0b1e3319}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\カード\道具%28Item%29\回復のポーション">
+      <UniqueIdentifier>{c31b3c68-3bc0-4896-9368-a2abbdab0927}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Main.cpp">
@@ -210,6 +216,9 @@
     <ClCompile Include="source\Card_Arms_WoodenShield.cpp">
       <Filter>ソース ファイル\カード\武具%28Arms%29\木の盾</Filter>
     </ClCompile>
+    <ClCompile Include="source\Card_Item_HealingPotion.cpp">
+      <Filter>ソース ファイル\カード\道具%28Item%29\回復のポーション</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Scene_Load_Checker.h">
@@ -274,6 +283,9 @@
     </ClInclude>
     <ClInclude Include="source\Card_Arms_WoodenShield.h">
       <Filter>ヘッダー ファイル\カード\武具%28Arms%29\木の盾</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Card_Item_HealingPotion.h">
+      <Filter>ヘッダー ファイル\カード\道具%28Item%29\回復のポーション</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

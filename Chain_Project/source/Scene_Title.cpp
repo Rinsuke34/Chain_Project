@@ -123,6 +123,9 @@ void Scene_Title::AdvanceImageLoad()
 	// カード(背景)
 	ImageFilePath = "Card_Commoon/BackGround_Test";
 	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
+	// カード(ネームプレート)
+	ImageFilePath = "Card_Commoon/NamePlate";
+	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
 	// カード(スートフレーム)
 	ImageFilePath = "Card_Commoon/SuitFrame_Test";
 	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
