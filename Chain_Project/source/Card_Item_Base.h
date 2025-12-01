@@ -18,4 +18,9 @@ class Card_Item_Base : public Card_Base
 
 	protected:
 		/* ŠÖ” */
+		virtual void	DrawBackGround()	override;	// ”wŒi‚ğ•`Ê
+		virtual void	DrawImage()			override;	// ƒCƒ‰ƒXƒg‚ğ•`Ê
+		virtual void	DrawSuite()			override;	// ƒX[ƒg‚ğ•`Ê
+		virtual void	DrawFrame()			override;	// ƒtƒŒ[ƒ€‚ğ•`Ê
+		virtual void	DrawName()			override;	// –¼‘O‚ğ•`Ê
 };

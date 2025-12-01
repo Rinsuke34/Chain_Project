@@ -117,11 +117,11 @@ class Card_Base
 		std::shared_ptr<Character_Base>	pPlayer;			// プレイヤーキャラクターのポインタ
 
 		/* 関数 */
-		int		GetMyAreaNo();		// 自身のバトルエリア番号を取得
-		void	DrawBackGround();	// 背景を描写
-		void	DrawImage();		// イラストを描写
-		void	DrawSuite();		// スートを描写
-		void	DrawFrame();		// フレームを描写
-		void	DrawName();			// 名前を描写
-		void	CheckHavePlayer();	// プレイヤーを取得しているか確認
+		virtual int		GetMyAreaNo();			// 自身のバトルエリア番号を取得
+		virtual void	DrawBackGround()	{};	// 背景を描写
+		virtual void	DrawImage()			{};	// イラストを描写
+		virtual void	DrawSuite()			{};	// スートを描写
+		virtual void	DrawFrame()			{};	// フレームを描写
+		virtual void	DrawName()			{};	// 名前を描写
+		virtual void	CheckHavePlayer();		// プレイヤーを取得しているか確認
 };

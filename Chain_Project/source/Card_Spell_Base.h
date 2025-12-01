@@ -13,10 +13,11 @@ class Card_Spell_Base : public Card_Base
 		Card_Spell_Base();				// コンストラクタ
 		virtual ~Card_Spell_Base() {};	// デストラクタ
 
-		/* 関数 */
-
-
 	protected:
-		/* 変数 */
 		/* 関数 */
+		virtual void	DrawBackGround()	override;	// 背景を描写
+		virtual void	DrawImage()			override;	// イラストを描写
+		virtual void	DrawSuite()			override;	// スートを描写
+		virtual void	DrawFrame()			override;	// フレームを描写
+		virtual void	DrawName()			override;	// 名前を描写
 };
