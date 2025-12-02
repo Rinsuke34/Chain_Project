@@ -175,6 +175,7 @@
     <ClCompile Include="source\Card_Base.cpp" />
     <ClCompile Include="source\Card_Item_Base.cpp" />
     <ClCompile Include="source\Card_Item_HealingPotion.cpp" />
+    <ClCompile Include="source\Card_Spell_ArmsEnhancement.cpp" />
     <ClCompile Include="source\Card_Spell_Base.cpp" />
     <ClCompile Include="source\Character_Base.cpp" />
     <ClCompile Include="source\Character_Npc_Test.cpp" />
@@ -206,6 +207,7 @@
     <ClInclude Include="source\Card_Base.h" />
     <ClInclude Include="source\Card_Item_Base.h" />
     <ClInclude Include="source\Card_Item_HealingPotion.h" />
+    <ClInclude Include="source\Card_Spell_ArmsEnhancement.h" />
     <ClInclude Include="source\Card_Spell_Base.h" />
     <ClInclude Include="source\Character_Base.h" />
     <ClInclude Include="source\Character_Npc_Test.h" />

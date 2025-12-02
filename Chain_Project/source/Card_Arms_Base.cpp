@@ -59,34 +59,33 @@ void Card_Arms_Base::DrawImage()
 	);
 
 	/* UŒ‚—Í‚ð•`ŽÊ */
-	std::string Attack		= std::to_string(this->Strength);
+	std::string strAttack		= std::to_string(this->Strength + this->Strength_Buff);
 	
 	// •¶Žš—ñ‚Ì‚‚³A•‚ðŽæ“¾
-	int iSizeX = GetDrawStringWidthToHandle(this->Name.c_str(), static_cast<int>(strlenDx(Attack.c_str())), giFont_Cp_Period_16);
+	int iSizeX = GetDrawStringWidthToHandle(this->Name.c_str(), static_cast<int>(strlenDx(strAttack.c_str())), giFont_Cp_Period_16);
 	int iSizeY = GetFontSizeToHandle(giFont_Cp_Period_16);
 
 	// •¶Žš—ñ•`ŽÊ
 	DrawStringToHandle(
 		(IMAGE_SIZE_WIDTH / 2) - (iSizeX / 2) + ARMS_ATTACK_X_POS,
 		(IMAGE_SIZE_HEIGHT / 2) - (CARD_HEIGHT / 2) + ARMS_STATUS_Y_POS - (iSizeY / 2),
-		Attack.c_str(),
-		GetColor(255, 255, 255),
+		strAttack.c_str(),
+		this->Strength_Buff == 0 ? GetColor(255, 255, 255) : GetColor(255, 255, 0),
 		giFont_Cp_Period_16
 	);
 
-
 	/* –hŒä—Í‚ð•`ŽÊ */
-	std::string Diffence = std::to_string(this->Diffence);
+	std::string strDiffence = std::to_string(this->Diffence + this->Diffence_Buff);
 
 	// •¶Žš—ñ‚Ì‚‚³A•‚ðŽæ“¾
-	iSizeX = GetDrawStringWidthToHandle(this->Name.c_str(), static_cast<int>(strlenDx(Diffence.c_str())), giFont_Cp_Period_16);
+	iSizeX = GetDrawStringWidthToHandle(this->Name.c_str(), static_cast<int>(strlenDx(strDiffence.c_str())), giFont_Cp_Period_16);
 
 	// •¶Žš—ñ•`ŽÊ
 	DrawStringToHandle(
 		(IMAGE_SIZE_WIDTH / 2) - (iSizeX / 2) + ARMS_DIFFENSE_X_POS,
 		(IMAGE_SIZE_HEIGHT / 2) - (CARD_HEIGHT / 2) + ARMS_STATUS_Y_POS - (iSizeY / 2),
-		Diffence.c_str(),
-		GetColor(255, 255, 255),
+		strDiffence.c_str(),
+		this->Diffence_Buff == 0 ? GetColor(255, 255, 255) : GetColor(255, 255, 0),
 		giFont_Cp_Period_16
 	);
 }

@@ -27,6 +27,8 @@ class Card_Base
 		virtual void BattleAction();				// 戦闘行動
 		virtual void Effect_EndTurn()			{};	// 効果発動:ターン終了時
 		virtual void Position_Interpolation();		// 位置座標補間処理
+		virtual void Add_Strength_Buff(int amount);	// 攻撃力バフ追加
+		virtual void Add_Diffence_Buff(int amount);	// 防御力バフ追加
 		
 		/* セッター */
 		// カード情報
@@ -36,6 +38,8 @@ class Card_Base
 		void AddSuite(std::string suite)			{ Suite_List.push_back(suite); }	// スートの追加
 		void SetStrength(int strength)				{ Strength			= strength; }	// 攻撃力の設定
 		void SetDiffence(int diffence)				{ Diffence			= diffence; }	// 防御力の設定
+		void SetStrength_Buff(int strength)			{ Strength_Buff		= strength; }	// 攻撃力(バフ)の設定
+		void SetDiffence_Buff(int diffence)			{ Diffence_Buff		= diffence; }	// 防御力(バフ)の設定
 		void SetAttackRange(int range)				{ AttackRange		= range; }		// 攻撃範囲の設定
 		// その他
 		void SetNowPos(Struct_2D::POSITION pos)		{ Now_Position		= pos; }		// 現在座標の設定
@@ -51,11 +55,14 @@ class Card_Base
 		std::vector<std::string>	GetSuiteList()		{ return Suite_List; }		// スートリストの取得
 		int							GetStrength()		{ return Strength; }		// 攻撃力の取得
 		int							GetDiffence()		{ return Diffence; }		// 防御力の取得
+		int							GetStrength_Buff()	{ return Strength; }		// 攻撃力(バフ)の取得
+		int							GetDiffence_Buff()	{ return Diffence; }		// 防御力(バフ)の取得
 		int							GetAttackRange()	{ return AttackRange; }		// 攻撃範囲の取得
 		// その他
-		Struct_2D::POSITION			GetNowPos()		{ return Now_Position; }		// 現在座標の取得
-		Struct_2D::POSITION			GetSettingPos() { return Setting_Position; }	// 設定座標の取得
-		bool						GetLostFlg()	{ return bLostFlag; }			// ロストフラグの取得
+		Struct_2D::POSITION			GetNowPos()			{ return Now_Position; }		// 現在座標の取得
+		Struct_2D::POSITION			GetSettingPos()		{ return Setting_Position; }	// 設定座標の取得
+		bool						GetLostFlg()		{ return bLostFlag; }			// ロストフラグの取得
+		int							GetNowChainCount()	{ return iNowChainCount; }		// 現在のチェイン数の取得
 
 		/* 定数 */
 		// 補間
@@ -105,6 +112,8 @@ class Card_Base
 		std::vector<std::string>		Suite_List;			// スートリスト
 		int 							Strength;			// 攻撃力
 		int								Diffence;			// 防御力
+		int								Strength_Buff;		// 攻撃力バフ
+		int								Diffence_Buff;		// 防御力バフ
 		int								AttackRange;		// 攻撃範囲
 		std::string						ImageName;			// 画像の名前
 		// 画像

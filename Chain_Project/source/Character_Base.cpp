@@ -196,13 +196,6 @@ void Character_Base::AddShield(int Shield)
 	this->iShield_Now += Shield;
 }
 
-// シールドリセット(行動終了時)
-void Character_Base::ShieldReset_EndAction()
-{
-	/* シールドを0に設定 */
-	this->iShield_Now = 0;
-}
-
 // シールドリセット(ターン終了時)
 void Character_Base::ShieldReset_EndTurn()
 {

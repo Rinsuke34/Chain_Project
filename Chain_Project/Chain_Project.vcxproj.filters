@@ -145,6 +145,12 @@
     <Filter Include="ヘッダー ファイル\カード\道具%28Item%29\回復のポーション">
       <UniqueIdentifier>{c31b3c68-3bc0-4896-9368-a2abbdab0927}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\カード\魔法%28Spell%29\武具強化">
+      <UniqueIdentifier>{aa705eb6-61f2-4890-af99-443f4d974103}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\カード\魔法%28Spell%29\武具強化">
+      <UniqueIdentifier>{8751139a-183c-4ea5-b2dd-61855a39233d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Main.cpp">
@@ -219,6 +225,9 @@
     <ClCompile Include="source\Card_Item_HealingPotion.cpp">
       <Filter>ソース ファイル\カード\道具%28Item%29\回復のポーション</Filter>
     </ClCompile>
+    <ClCompile Include="source\Card_Spell_ArmsEnhancement.cpp">
+      <Filter>ソース ファイル\カード\魔法%28Spell%29\武具強化</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Scene_Load_Checker.h">
@@ -286,6 +295,9 @@
     </ClInclude>
     <ClInclude Include="source\Card_Item_HealingPotion.h">
       <Filter>ヘッダー ファイル\カード\道具%28Item%29\回復のポーション</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Card_Spell_ArmsEnhancement.h">
+      <Filter>ヘッダー ファイル\カード\魔法%28Spell%29\武具強化</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

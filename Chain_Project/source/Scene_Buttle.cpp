@@ -14,9 +14,10 @@
 // テスト用クラス
 #include "Card_Arms_WoodenShield.h"
 #include "Card_Arms_WoodenSword.h"
+#include "Card_Item_HealingPotion.h"
+#include "Card_Spell_ArmsEnhancement.h"
 #include "Character_Player.h"
 #include "Character_Npc_Test.h"
-#include "Card_Item_HealingPotion.h"
 
 // コンストラクタ
 Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 0, false, false)
@@ -57,6 +58,9 @@ Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 0, false, false)
 	// ※ テスト用なので直打ち
 	// カード設定
 	std::vector<std::shared_ptr<Card_Base>> DeckCardList;
+	DeckCardList.push_back(std::make_shared<Card_Spell_ArmsEnhancement>());
+	DeckCardList.push_back(std::make_shared<Card_Spell_ArmsEnhancement>());
+	DeckCardList.push_back(std::make_shared<Card_Spell_ArmsEnhancement>());
 	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenSword>());
 	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenSword>());
 	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenSword>());

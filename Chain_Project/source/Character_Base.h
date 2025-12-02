@@ -24,7 +24,6 @@ class Character_Base : public std::enable_shared_from_this<Character_Base>
 		virtual void Action_AddBuff();			// バフ付与アクション
 		virtual void Damage(int DamageAmount);	// ダメージ処理
 		virtual void AddShield(int Shield);		// シールド追加処理
-		virtual void ShieldReset_EndAction();	// シールドリセット(行動終了時)
 		virtual void ShieldReset_EndTurn();		// シールドリセット(ターン終了時)
 		virtual void Heal(int Heal);			// 回復処理
 

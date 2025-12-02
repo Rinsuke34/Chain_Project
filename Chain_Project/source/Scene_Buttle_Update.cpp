@@ -75,7 +75,7 @@ void Scene_Battle::Update_DrawCard()
 			this->bReloadFlg = true;			
 
 			/* 捨て札のカードを手札に戻す */
-			int TrashSize = this->pDataList_Battle->GetTrashCardList().size();
+			int TrashSize = static_cast<int>(this->pDataList_Battle->GetTrashCardList().size());
 			for (int i = 0; i < TrashSize; i++)
 			{
 				std::vector<std::shared_ptr<Card_Base>> TrashCardList = this->pDataList_Battle->GetTrashCardList();
@@ -229,6 +229,63 @@ void Scene_Battle::Update_PlayerActionDecision()
 // カードのチェイン数確認
 void Scene_Battle::Update_CardChainCheck()
 {
+	/* 各バトルエリアにチェイン数を設定する */
+	int CheckStartAreaNo	= -1;
+	int CheinCount			= 0;
+	for (int BattleAreaNo = 0; BattleAreaNo < DataList_Battle::BATTLE_AREA_MAX; BattleAreaNo++)
+	{
+		/* 確認開始エリア番号が無効であるか */
+		if (CheckStartAreaNo == -1)
+		{
+			// 無効である場合
+			/* カードが設定されているならその地点を確認開始箇所とする */
+			if (this->pDataList_Battle->GetBattleAreaCardList(BattleAreaNo))
+			{
+				CheckStartAreaNo	= BattleAreaNo;
+				CheinCount			= 0;
+			}
+		}
+		else
+		{
+			// 有効である場合
+			/* 前のバトルエリアのカードとチェインがつながっているか確認 */
+			if (this->pDataList_Battle->GetChain_Suite_List(BattleAreaNo - 1).size() > 0)
+			{
+				// つながっている場合
+				/* チェインカウントを加算する */
+				CheinCount++;
+
+				/* 確認中のバトルエリアが5番(最後)であるか確認 */
+				if (BattleAreaNo == DataList_Battle::BATTLE_AREA_5)
+				{
+					// 5番である場合
+					/* チェインカウントを各バトルエリアに設定する */
+					for (int SetAreaNo = CheckStartAreaNo; SetAreaNo <= BattleAreaNo; SetAreaNo++)
+					{
+						this->pDataList_Battle->GetBattleAreaCardList(SetAreaNo)->SetNowChainCount(CheinCount);
+					}
+				}
+			}
+			else
+			{
+				// つながっていない場合
+				/* チェインカウントを各バトルエリアに設定する */
+				for (int SetAreaNo = CheckStartAreaNo; SetAreaNo < BattleAreaNo; SetAreaNo++)
+				{
+					this->pDataList_Battle->GetBattleAreaCardList(SetAreaNo)->SetNowChainCount(CheinCount);
+				}
+
+				/* カードが設定されているならその地点を確認開始箇所とする */
+				CheckStartAreaNo	= -1;
+				CheinCount			= 0;
+				if (this->pDataList_Battle->GetBattleAreaCardList(BattleAreaNo))
+				{
+					CheckStartAreaNo = BattleAreaNo;
+				}
+			}
+		}
+	}
+
 	/* "行動開始時の効果発動"フェイズへ遷移 */
 	this->iBattlePhase = BATTLE_PHASE_EFFECT_ACTION_START;
 }
@@ -431,6 +488,9 @@ void Scene_Battle::Update_EffectTurnEnd()
 
 	/* ロストフラグが有効なカードをロストカードリストに設定 */
 	CheckLostCard();
+
+	/* チェイン数をリセット */
+	ResetChain();
 
 	/* "状態変化のターン進行"フェイズへ遷移 */
 	this->iBattlePhase = BATTLE_PHASE_STATUS_EFFECT_ADVANCE;
@@ -655,13 +715,21 @@ void Scene_Battle::UseCardEffect(std::shared_ptr<Card_Effect_Base> Effect, int A
 		if (AttackEffect->Target_Camp == Character_Base::CAMP_ENEMY)
 		{
 			// 敵キャラクターが対象である場合
-			/* 対象の立ち位置の敵を取得 */
-			std::shared_ptr<Character_Base> TargetEnemyCharacter = this->pDataList_Battle->GetEnemyCharacter(AttackEffect->Target_Position);
-			if (TargetEnemyCharacter != nullptr)
+			/* 全体攻撃であるか確認 */
+			if (AttackEffect->AllRange)
 			{
-				// 対象の敵キャラクターが存在する場合
-				/* ダメージ処理を実行 */
-				TargetEnemyCharacter->Damage(AttackEffect->DamageAmount);
+				// 全体攻撃である場合
+				/* 全ての敵キャラクターにダメージ処理を実行 */
+				for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
+				{
+					std::shared_ptr<Character_Base> TargetEnemyCharacter = this->pDataList_Battle->GetEnemyCharacter(i);
+					if (TargetEnemyCharacter != nullptr)
+					{
+						// 対象の敵キャラクターが存在する場合
+						/* ダメージ処理を実行 */
+						TargetEnemyCharacter->Damage(AttackEffect->DamageAmount);
+					}
+				}
 
 				/* 攻撃リアクションを設定 */
 				if (AttackEffect->EffectUser)
@@ -669,22 +737,66 @@ void Scene_Battle::UseCardEffect(std::shared_ptr<Card_Effect_Base> Effect, int A
 					AttackEffect->EffectUser->Action_Attack();
 				}
 			}
+			else
+			{
+				// 単体攻撃である場合
+				/* 対象の立ち位置の敵を取得 */
+				std::shared_ptr<Character_Base> TargetEnemyCharacter = this->pDataList_Battle->GetEnemyCharacter(AttackEffect->Target_Position);
+				if (TargetEnemyCharacter != nullptr)
+				{
+					// 対象の敵キャラクターが存在する場合
+					/* ダメージ処理を実行 */
+					TargetEnemyCharacter->Damage(AttackEffect->DamageAmount);
+
+					/* 攻撃リアクションを設定 */
+					if (AttackEffect->EffectUser)
+					{
+						AttackEffect->EffectUser->Action_Attack();
+					}
+				}
+			}
 		}
 		else
 		{
 			// 仲間キャラクターが対象である場合
-			/* 対象の立ち位置の仲間を取得 */
-			std::shared_ptr<Character_Base> TargetFriendCharacter = this->pDataList_Battle->GetFriendCharacter(AttackEffect->Target_Position);
-			if (TargetFriendCharacter != nullptr)
+			/* 全体攻撃であるか確認 */
+			if (AttackEffect->AllRange)
 			{
-				// 対象の仲間キャラクターが存在する場合
-				/* ダメージ処理を実行 */
-				TargetFriendCharacter->Damage(AttackEffect->DamageAmount);
-				
+				// 全体攻撃である場合
+				/* 全ての仲間キャラクターにダメージ処理を実行 */
+				for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
+				{
+					std::shared_ptr<Character_Base> TargetFriendCharacter = this->pDataList_Battle->GetFriendCharacter(i);
+					if (TargetFriendCharacter != nullptr)
+					{
+						// 対象の仲間キャラクターが存在する場合
+						/* ダメージ処理を実行 */
+						TargetFriendCharacter->Damage(AttackEffect->DamageAmount);
+					}
+				}
+
 				/* 攻撃リアクションを設定 */
 				if (AttackEffect->EffectUser)
 				{
 					AttackEffect->EffectUser->Action_Attack();
+				}
+			}
+			else
+			{
+				// 単体攻撃である場合
+				/* 対象の立ち位置の仲間を取得 */
+				std::shared_ptr<Character_Base> TargetFriendCharacter = this->pDataList_Battle->GetFriendCharacter(AttackEffect->Target_Position);
+				if (TargetFriendCharacter != nullptr)
+				{
+					// 対象の仲間キャラクターが存在する場合
+					/* ダメージ処理を実行 */
+					TargetFriendCharacter->Damage(AttackEffect->DamageAmount);
+
+					/* 攻撃リアクションを設定 */
+					if (AttackEffect->EffectUser)
+					{
+						AttackEffect->EffectUser->Action_Attack();
+					}
 				}
 			}
 		}
@@ -696,13 +808,21 @@ void Scene_Battle::UseCardEffect(std::shared_ptr<Card_Effect_Base> Effect, int A
 		if (DefenceEffect->Target_Camp == Character_Base::CAMP_ENEMY)
 		{
 			// 敵キャラクターが対象である場合
-			/* 対象の立ち位置の敵を取得 */
-			std::shared_ptr<Character_Base> TargetEnemyCharacter = this->pDataList_Battle->GetEnemyCharacter(DefenceEffect->Target_Position);
-			if (TargetEnemyCharacter != nullptr)
+			/* 全体に付与されるか確認 */
+			if (DefenceEffect->AllRange)
 			{
-				// 対象の敵キャラクターが存在する場合
-				/* シールド付与処理を実行 */
-				TargetEnemyCharacter->AddShield(DefenceEffect->ShieldAmount);
+				// 全体に付与される場合
+				/* 全ての敵キャラクターにシールド付与処理を実行 */
+				for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
+				{
+					std::shared_ptr<Character_Base> TargetEnemyCharacter = this->pDataList_Battle->GetEnemyCharacter(i);
+					if (TargetEnemyCharacter != nullptr)
+					{
+						// 対象の敵キャラクターが存在する場合
+						/* シールド付与処理を実行 */
+						TargetEnemyCharacter->AddShield(DefenceEffect->ShieldAmount);
+					}
+				}
 
 				/* バフ付与リアクションを設定 */
 				if (DefenceEffect->EffectUser)
@@ -710,24 +830,68 @@ void Scene_Battle::UseCardEffect(std::shared_ptr<Card_Effect_Base> Effect, int A
 					DefenceEffect->EffectUser->Action_AddBuff();
 				}
 			}
+			else
+			{
+				// 単体に付与される場合
+				/* 対象の立ち位置の敵を取得 */
+				std::shared_ptr<Character_Base> TargetEnemyCharacter = this->pDataList_Battle->GetEnemyCharacter(DefenceEffect->Target_Position);
+				if (TargetEnemyCharacter != nullptr)
+				{
+					// 対象の敵キャラクターが存在する場合
+					/* シールド付与処理を実行 */
+					TargetEnemyCharacter->AddShield(DefenceEffect->ShieldAmount);
+
+					/* バフ付与リアクションを設定 */
+					if (DefenceEffect->EffectUser)
+					{
+						DefenceEffect->EffectUser->Action_AddBuff();
+					}
+				}
+			}
 		}
 		else
 		{
 			// 仲間キャラクターが対象である場合
-			/* 対象の立ち位置の仲間を取得 */
-			std::shared_ptr<Character_Base> TargetFriendCharacter = this->pDataList_Battle->GetFriendCharacter(DefenceEffect->Target_Position);
-			if (TargetFriendCharacter != nullptr)
+			/* 全体に付与されるか確認 */
+			if(DefenceEffect->AllRange)
 			{
-				// 対象の仲間キャラクターが存在する場合
-				/* シールド付与処理を実行 */
-				TargetFriendCharacter->AddShield(DefenceEffect->ShieldAmount);
-				
+				// 全体に付与される場合
+				/* 全ての仲間キャラクターにシールド付与処理を実行 */
+				for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
+				{
+					std::shared_ptr<Character_Base> TargetFriendCharacter = this->pDataList_Battle->GetFriendCharacter(i);
+					if (TargetFriendCharacter != nullptr)
+					{
+						// 対象の仲間キャラクターが存在する場合
+						/* シールド付与処理を実行 */
+						TargetFriendCharacter->AddShield(DefenceEffect->ShieldAmount);
+					}
+				}
+
 				/* バフ付与リアクションを設定 */
 				if (DefenceEffect->EffectUser)
 				{
 					DefenceEffect->EffectUser->Action_AddBuff();
 				}
+			}
+			else
+			{
+				// 単体に付与される場合
+				/* 対象の立ち位置の仲間を取得 */
+				std::shared_ptr<Character_Base> TargetFriendCharacter = this->pDataList_Battle->GetFriendCharacter(DefenceEffect->Target_Position);
+				if (TargetFriendCharacter != nullptr)
+				{
+					// 対象の仲間キャラクターが存在する場合
+					/* シールド付与処理を実行 */
+					TargetFriendCharacter->AddShield(DefenceEffect->ShieldAmount);
 
+					/* バフ付与リアクションを設定 */
+					if (DefenceEffect->EffectUser)
+					{
+						DefenceEffect->EffectUser->Action_AddBuff();
+					}
+
+				}
 			}
 		}
 	}
@@ -738,13 +902,21 @@ void Scene_Battle::UseCardEffect(std::shared_ptr<Card_Effect_Base> Effect, int A
 		if (HealEffect->Target_Camp == Character_Base::CAMP_ENEMY)
 		{
 			// 敵キャラクターが対象である場合
-			/* 対象の立ち位置の敵を取得 */
-			std::shared_ptr<Character_Base> TargetEnemyCharacter = this->pDataList_Battle->GetEnemyCharacter(HealEffect->Target_Position);
-			if (TargetEnemyCharacter != nullptr)
+			/* 全体回復であるか確認 */
+			if (HealEffect->AllRange)
 			{
-				// 対象の敵キャラクターが存在する場合
-				/* 回復処理を実行 */
-				TargetEnemyCharacter->Heal(HealEffect->HealAmount);
+				// 全体回復である場合
+				/* 全ての敵キャラクターに回復処理を実行 */
+				for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
+				{
+					std::shared_ptr<Character_Base> TargetEnemyCharacter = this->pDataList_Battle->GetEnemyCharacter(i);
+					if (TargetEnemyCharacter != nullptr)
+					{
+						// 対象の敵キャラクターが存在する場合
+						/* 回復処理を実行 */
+						TargetEnemyCharacter->Heal(HealEffect->HealAmount);
+					}
+				}
 
 				/* バフ付与リアクションを設定 */
 				if (HealEffect->EffectUser)
@@ -752,22 +924,65 @@ void Scene_Battle::UseCardEffect(std::shared_ptr<Card_Effect_Base> Effect, int A
 					HealEffect->EffectUser->Action_AddBuff();
 				}
 			}
+			else
+			{
+				// 単体回復である場合
+				/* 対象の立ち位置の敵を取得 */
+				std::shared_ptr<Character_Base> TargetEnemyCharacter = this->pDataList_Battle->GetEnemyCharacter(HealEffect->Target_Position);
+				if (TargetEnemyCharacter != nullptr)
+				{
+					// 対象の敵キャラクターが存在する場合
+					/* 回復処理を実行 */
+					TargetEnemyCharacter->Heal(HealEffect->HealAmount);
+
+					/* バフ付与リアクションを設定 */
+					if (HealEffect->EffectUser)
+					{
+						HealEffect->EffectUser->Action_AddBuff();
+					}
+				}
+			}
 		}
 		else
 		{
 			// 仲間キャラクターが対象である場合
-			/* 対象の立ち位置の仲間を取得 */
-			std::shared_ptr<Character_Base> TargetFriendCharacter = this->pDataList_Battle->GetFriendCharacter(HealEffect->Target_Position);
-			if (TargetFriendCharacter != nullptr)
+			/* 全体回復であるか確認 */
+			if (HealEffect->AllRange)
 			{
-				// 対象の仲間キャラクターが存在する場合
-				/* 回復処理を実行 */
-				TargetFriendCharacter->Heal(HealEffect->HealAmount);
-				
+				// 全体回復である場合
+				/* 全ての仲間キャラクターに回復処理を実行 */
+				for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
+				{
+					std::shared_ptr<Character_Base> TargetFriendCharacter = this->pDataList_Battle->GetFriendCharacter(i);
+					if (TargetFriendCharacter != nullptr)
+					{
+						// 対象の仲間キャラクターが存在する場合
+						/* 回復処理を実行 */
+						TargetFriendCharacter->Heal(HealEffect->HealAmount);
+					}
+				}
 				/* バフ付与リアクションを設定 */
 				if (HealEffect->EffectUser)
 				{
 					HealEffect->EffectUser->Action_AddBuff();
+				}
+			}
+			else
+			{
+				// 単体回復である場合
+				/* 対象の立ち位置の仲間を取得 */
+				std::shared_ptr<Character_Base> TargetFriendCharacter = this->pDataList_Battle->GetFriendCharacter(HealEffect->Target_Position);
+				if (TargetFriendCharacter != nullptr)
+				{
+					// 対象の仲間キャラクターが存在する場合
+					/* 回復処理を実行 */
+					TargetFriendCharacter->Heal(HealEffect->HealAmount);
+
+					/* バフ付与リアクションを設定 */
+					if (HealEffect->EffectUser)
+					{
+						HealEffect->EffectUser->Action_AddBuff();
+					}
 				}
 			}
 		}
@@ -838,5 +1053,19 @@ void Scene_Battle::CheckLostCard()
 		this->pDataList_Battle->RemoveDeckCard(card);     // DeckCardListから削除
 		this->pDataList_Battle->RemoveHandCard(card);     // HandCardListから削除
 		this->pDataList_Battle->RemoveTrashCard(card);    // TrashCardListから削除
+	}
+}
+
+// チェイン数をリセット
+void Scene_Battle::ResetChain()
+{
+	/* すべてのカードのチェイン数をリセット */
+	std::vector<std::shared_ptr<Card_Base>> AllDeckCardList = this->pDataList_Battle->GetAllDeckCardList();
+	for (const auto& card : AllDeckCardList)
+	{
+		if (card)
+		{
+			card->SetNowChainCount(0);
+		}
 	}
 }

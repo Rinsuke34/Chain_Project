@@ -41,7 +41,7 @@ class Scene_Battle : public Scene_Base
 		static const int	BATTLE_AREA_POS_Y					= 540;	// バトルエリアのY座標
 		static const int	HANDCARD_INTERVAL					= 170;	// 手札のカード間隔
 		static const int	HANDCARD_POS_Y						= 900;	// 手札のY座標
-		static const int	DECISIONBUTTON_POS_X				= 1720;	// 決定ボタンのX座標
+		static const int	DECISIONBUTTON_POS_X				= 1750;	// 決定ボタンのX座標
 		static const int	DECISIONBUTTON_POS_Y				= 640;	// 決定ボタンのY座標
 		static const int	CHARACTER_INTERVAL					= 200;	// キャラクターの間隔
 		static const int	CHARACTER_POS_Y						= 260;	// キャラクターのY座標
@@ -87,4 +87,5 @@ class Scene_Battle : public Scene_Base
 		void UseCardEffect(std::shared_ptr<Card_Effect_Base> Effect, int AreaNo);	// カード効果の使用
 		void Character_Death_Check();												// キャラクターが死亡しているか確認
 		void CheckLostCard();														// ロスト対象のカードを確認し、ロストカード一覧に入れる
+		void ResetChain();															// チェイン数をリセット
 };

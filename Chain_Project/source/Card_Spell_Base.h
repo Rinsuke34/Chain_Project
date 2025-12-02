@@ -13,6 +13,11 @@ class Card_Spell_Base : public Card_Base
 		Card_Spell_Base();				// コンストラクタ
 		virtual ~Card_Spell_Base() {};	// デストラクタ
 
+		/* 定数 */
+		static const int SPELL_CARD_IMAGE_WIDE		= 110;	// カード画像の幅
+		static const int SPELL_CARD_IMAGE_HEIGHT	= 110;	// カード画像の高さ
+		static const int SPELL_ILLUSTRATION_POS_Y	= 10;	// イラストのY位置
+
 	protected:
 		/* 関数 */
 		virtual void	DrawBackGround()	override;	// 背景を描写
