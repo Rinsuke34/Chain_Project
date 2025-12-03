@@ -159,7 +159,7 @@ void Scene_Battle::Draw_BattleArea()
 		std::vector<std::shared_ptr<Card_Effect_Base>> EffectList = this->pDataList_Battle->GetEffectList(i);
 		for (int x = 0; x < EffectList.size(); x++)
 		{
-			if (std::shared_ptr<Card_Effect_Attack> AttackEffect = std::dynamic_pointer_cast<Card_Effect_Attack>(EffectList[i]))
+			if (std::shared_ptr<Card_Effect_Attack> AttackEffect = std::dynamic_pointer_cast<Card_Effect_Attack>(EffectList[x]))
 			{
 				// UŒ‚ŒnŒø‰Ê‚Å‚ ‚éê‡
 				// ƒeƒXƒg•`Ê

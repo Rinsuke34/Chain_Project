@@ -171,7 +171,7 @@ void Scene_Battle::Update_PlayerActionDecision()
 				this->pDataList_Battle->SetBattleAreaCard(iBattleAreaIndex, this->pDataList_Battle->GetHoldCard());
 
 				/* 配置したカードの設定座標をバトルエリアの位置に設定 */
-				this->pDataList_Battle->GetHoldCard()->SetSettingPos({ (SCREEN_SIZE_WIDE / 2) + (BATTLE_AREA_INTERVAL * (iBattleAreaIndex - 2)), (SCREEN_SIZE_HEIGHT / 2) });
+				this->pDataList_Battle->GetHoldCard()->SetSettingPos({ (SCREEN_SIZE_WIDE / 2) + (BATTLE_AREA_INTERVAL * (iBattleAreaIndex - 2)), BATTLE_AREA_POS_Y });
 			}
 			else
 			{
@@ -314,15 +314,15 @@ void Scene_Battle::Update_BattleAction_Decision()
 		}
 
 		/* 効果を優先順位順に並び変える */
-		// スペル > 状態異常付与 > 回復 > シールド付与 > ダメージ
+		// 特殊効果 > 状態異常付与 > 回復 > シールド付与 > ダメージ
 		{
 			std::vector<std::shared_ptr<Card_Effect_Base>> EffectList = this->pDataList_Battle->GetEffectList(i);
 
-			/* スペルの効果を抽出 */
+			/* 特殊効果を抽出 */
 			std::vector<std::shared_ptr<Card_Effect_Extra>> EffectList_Spell;
 			for (auto& effect : EffectList)
 			{
-				// スペルの効果であるか確認
+				// 特殊効果であるか確認
 				if (std::shared_ptr<Card_Effect_Extra> spellEffect = std::dynamic_pointer_cast<Card_Effect_Extra>(effect))
 				{
 					EffectList_Spell.push_back(spellEffect);
@@ -410,15 +410,16 @@ void Scene_Battle::Update_BattleAction()
 	{
 		// 完了している場合
 		/* バトルエリアにカードが設定されているか確認 */
-		if (this->pDataList_Battle->GetBattleAreaCardList(this->iBattlePhase_NowBattleAreaNo) != nullptr)
-		{
-			// 設定されているなら
-			/* カードを捨て札リストに追加 */
-			this->pDataList_Battle->AddTrashCard(this->pDataList_Battle->GetBattleAreaCardList(this->iBattlePhase_NowBattleAreaNo));
 
-			/* バトルエリアからカードを削除 */
-			this->pDataList_Battle->RemoveBattleAreaCard(this->iBattlePhase_NowBattleAreaNo);
-		}
+			if (this->pDataList_Battle->GetBattleAreaCardList(this->iBattlePhase_NowBattleAreaNo))
+			{
+				// 設定されているなら
+				/* カードを捨て札リストに追加 */
+				this->pDataList_Battle->AddTrashCard(this->pDataList_Battle->GetBattleAreaCardList(this->iBattlePhase_NowBattleAreaNo));
+
+				/* バトルエリアからカードを削除 */
+				this->pDataList_Battle->RemoveBattleAreaCard(this->iBattlePhase_NowBattleAreaNo);
+			}
 
 		/* 次のバトルエリアの処理を実施 */
 		if (this->iBattlePhase_NowBattleAreaNo < DataList_Battle::BATTLE_AREA_5)
@@ -430,6 +431,20 @@ void Scene_Battle::Update_BattleAction()
 		else
 		{
 			// 次のバトルエリアが存在しない場合
+			///* バトルエリアにカードが設定されているか確認 */
+			//for (int i = 0; i < DataList_Battle::BATTLE_AREA_MAX; i++)
+			//{
+			//	if (this->pDataList_Battle->GetBattleAreaCardList(i))
+			//	{
+			//		// 設定されているなら
+			//		/* カードを捨て札リストに追加 */
+			//		this->pDataList_Battle->AddTrashCard(this->pDataList_Battle->GetBattleAreaCardList(i));
+
+			//		/* バトルエリアからカードを削除 */
+			//		this->pDataList_Battle->RemoveBattleAreaCard(i);
+			//	}
+			//}
+
 			/* 全てのバトルエリアの処理が終了したため、"ターン終了時"の効果発動フェイズへ遷移 */
 			this->iBattlePhase = BATTLE_PHASE_EFFECT_TRUN_END;
 			return;
