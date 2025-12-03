@@ -49,6 +49,7 @@ class Character_Base : public std::enable_shared_from_this<Character_Base>
 		static const int	SHIELDBAR_HEIGHT	= 10;	// シールドバーの高さ
 		static const int	SHIELDBAR_UPPER		= 10;	// シールドバーの上端位置補正値
 		// 陣営
+		static const int	CAMP_NONE		= -1;	// 陣営無し
 		static const int	CAMP_FRIEND		= 0;	// 仲間陣営
 		static const int	CAMP_ENEMY		= 1;	// 敵陣営
 

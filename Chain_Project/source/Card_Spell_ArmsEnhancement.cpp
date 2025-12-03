@@ -25,8 +25,8 @@ Card_Spell_ArmsEnhancement::Card_Spell_ArmsEnhancement() : Card_Spell_Base()
 	this->ImageName		= "ArmsEnhancement";	// 画像の名前
 }
 
-// 戦闘行動
-void Card_Spell_ArmsEnhancement::BattleAction()
+// カード効果(特殊効果)
+void Card_Spell_ArmsEnhancement::Card_Effect_Extra_Process()
 {
 	/* 手札と山札とバトルエリアの武具カードにチェイン数分の攻撃バフと防御バフを与える */
 	// 山札の武具カードにバフを与える

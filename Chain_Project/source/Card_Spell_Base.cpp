@@ -7,14 +7,30 @@
 #include "Card_Spell_Base.h"
 // 共通定義
 #include "VariableDefine.h"
+#include "StructDefine.h"
 // 関連クラス
+#include "Character_Base.h"
 #include "DataList_Image.h"
+#include "DataList_Battle.h"
 
 // コンストラクタ
 Card_Spell_Base::Card_Spell_Base() : Card_Base()
 {
 	/* カード情報の設定 */
 	this->iCardType = Card_Base::TYPE_SPELL;	// カード種類:魔法
+}
+
+// 戦闘行動
+void Card_Spell_Base::BattleAction()
+{
+	/* スペルの処理を設定する */
+	std::shared_ptr<Card_Effect_Extra> pSpellEffect = std::make_shared<Card_Effect_Extra>();
+	pSpellEffect->Target_Camp		= Character_Base::CAMP_NONE;		// 効果対象の陣営:無し
+	pSpellEffect->Target_Position	= 0;								// 効果対象の立ち位置:無し
+	pSpellEffect->EffectUser		= this->pPlayer;					// 効果の使用者:プレイヤーキャラクター
+	pSpellEffect->AllRange			= false;							// 全体効果でない
+	pSpellEffect->ExEffectCard		= std::dynamic_pointer_cast<Card_Spell_Base>(shared_from_this());
+	this->pDataList_Battle->AddEffect(pSpellEffect, GetMyAreaNo());
 }
 
 // 背景を描写

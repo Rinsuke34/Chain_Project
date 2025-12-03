@@ -6,6 +6,7 @@
 // 関連クラス
 #include "Scene_UI_Button.h"
 #include "Card_Base.h"
+#include "Card_Spell_Base.h"
 #include "DataList_Battle.h"
 #include "Character_Base.h"
 
@@ -255,26 +256,12 @@ void Scene_Battle::Update_CardChainCheck()
 				/* チェインカウントを加算する */
 				CheinCount++;
 
-				/* 確認中のバトルエリアが5番(最後)であるか確認 */
-				if (BattleAreaNo == DataList_Battle::BATTLE_AREA_5)
-				{
-					// 5番である場合
-					/* チェインカウントを各バトルエリアに設定する */
-					for (int SetAreaNo = CheckStartAreaNo; SetAreaNo <= BattleAreaNo; SetAreaNo++)
-					{
-						this->pDataList_Battle->GetBattleAreaCardList(SetAreaNo)->SetNowChainCount(CheinCount);
-					}
-				}
+				/* 現在のバトルエリアのカードにチェイン数を設定 */
+				this->pDataList_Battle->GetBattleAreaCardList(BattleAreaNo)->SetNowChainCount(CheinCount);
 			}
 			else
 			{
 				// つながっていない場合
-				/* チェインカウントを各バトルエリアに設定する */
-				for (int SetAreaNo = CheckStartAreaNo; SetAreaNo < BattleAreaNo; SetAreaNo++)
-				{
-					this->pDataList_Battle->GetBattleAreaCardList(SetAreaNo)->SetNowChainCount(CheinCount);
-				}
-
 				/* カードが設定されているならその地点を確認開始箇所とする */
 				CheckStartAreaNo	= -1;
 				CheinCount			= 0;
@@ -327,9 +314,20 @@ void Scene_Battle::Update_BattleAction_Decision()
 		}
 
 		/* 効果を優先順位順に並び変える */
-		// 状態異常付与 > 回復 > シールド付与 > ダメージ
+		// スペル > 状態異常付与 > 回復 > シールド付与 > ダメージ
 		{
 			std::vector<std::shared_ptr<Card_Effect_Base>> EffectList = this->pDataList_Battle->GetEffectList(i);
+
+			/* スペルの効果を抽出 */
+			std::vector<std::shared_ptr<Card_Effect_Extra>> EffectList_Spell;
+			for (auto& effect : EffectList)
+			{
+				// スペルの効果であるか確認
+				if (std::shared_ptr<Card_Effect_Extra> spellEffect = std::dynamic_pointer_cast<Card_Effect_Extra>(effect))
+				{
+					EffectList_Spell.push_back(spellEffect);
+				}
+			}
 
 			/* 状態異常付与系の効果を抽出 */
 			std::vector<std::shared_ptr<Card_Effect_StatusAilment>> StatusEffectList_StatusAilment;
@@ -377,6 +375,7 @@ void Scene_Battle::Update_BattleAction_Decision()
 
 			/* 優先順位順に効果を再設定する */
 			EffectList.clear();
+			for (auto& effect : EffectList_Spell)				{ EffectList.push_back(effect); }
 			for (auto& effect : StatusEffectList_StatusAilment)	{ EffectList.push_back(effect); }
 			for (auto& effect : EffectList_Heal)				{ EffectList.push_back(effect); }
 			for (auto& effect : EffectList_Shield)				{ EffectList.push_back(effect); }
@@ -986,6 +985,12 @@ void Scene_Battle::UseCardEffect(std::shared_ptr<Card_Effect_Base> Effect, int A
 				}
 			}
 		}
+	}
+	// カード効果(特殊効果)
+	else if (std::shared_ptr<Card_Effect_Extra> SpellEffect = std::dynamic_pointer_cast<Card_Effect_Extra>(Effect))
+	{
+		/* カード効果(特殊効果)を実行 */
+		SpellEffect->ExEffectCard->Card_Effect_Extra_Process();
 	}
 	// 状態異常付与系処理
 }

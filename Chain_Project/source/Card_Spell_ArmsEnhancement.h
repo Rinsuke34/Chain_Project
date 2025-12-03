@@ -14,5 +14,5 @@ class Card_Spell_ArmsEnhancement : public Card_Spell_Base
 		virtual ~Card_Spell_ArmsEnhancement() {};	// デストラクタ
 
 		/* 関数 */
-		virtual void BattleAction() override;		// 戦闘行動
+		virtual void Card_Effect_Extra_Process() override;		// カード効果(特殊効果)
 };

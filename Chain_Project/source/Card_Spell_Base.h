@@ -13,6 +13,9 @@ class Card_Spell_Base : public Card_Base
 		Card_Spell_Base();				// コンストラクタ
 		virtual ~Card_Spell_Base() {};	// デストラクタ
 
+		/* 関数 */
+		virtual void BattleAction() override;		// 戦闘行動
+
 		/* 定数 */
 		static const int SPELL_CARD_IMAGE_WIDE		= 110;	// カード画像の幅
 		static const int SPELL_CARD_IMAGE_HEIGHT	= 110;	// カード画像の高さ

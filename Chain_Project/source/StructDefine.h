@@ -5,6 +5,7 @@
 
 /* 前方宣言 */
 class Character_Base;
+class Card_Base;
 
 /* カード効果 */
 // ベース
@@ -46,4 +47,11 @@ class Card_Effect_StatusAilment : public Card_Effect_Base
 	public:
 		int StatusAilment_Type	= 0;	// 状態異常の種類
 		int StatusAilment_Level	= 0;	// 状態異常のレベル
+};
+
+// 特殊効果
+class Card_Effect_Extra : public Card_Effect_Base
+{
+	public:
+		std::shared_ptr<Card_Base> ExEffectCard = nullptr;	// 特殊効果を使用するカード
 };

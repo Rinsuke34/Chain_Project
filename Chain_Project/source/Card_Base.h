@@ -13,22 +13,23 @@ class DataList_Battle;
 class Character_Base;
 
 // カードのベースクラス
-class Card_Base
+class Card_Base : public std::enable_shared_from_this<Card_Base>
 {
 	public:
 		Card_Base();			// コンストラクタ
 		virtual ~Card_Base();	// デストラクタ
 
 		/* 関数 */
-		virtual void Draw();						// 描画
-		virtual void UpdateImage();					// 画像更新
-		virtual void Effect_StartTurn()			{};	// 効果発動:ターン開始時
-		virtual void Effect_StartAction()		{};	// 効果発動:行動開始時
-		virtual void BattleAction();				// 戦闘行動
-		virtual void Effect_EndTurn()			{};	// 効果発動:ターン終了時
-		virtual void Position_Interpolation();		// 位置座標補間処理
-		virtual void Add_Strength_Buff(int amount);	// 攻撃力バフ追加
-		virtual void Add_Diffence_Buff(int amount);	// 防御力バフ追加
+		virtual void Draw();							// 描画
+		virtual void UpdateImage();						// 画像更新
+		virtual void Effect_StartTurn()			{};		// 効果発動:ターン開始時
+		virtual void Effect_StartAction()		{};		// 効果発動:行動開始時
+		virtual void BattleAction();					// 戦闘行動
+		virtual void Effect_EndTurn()			{};		// 効果発動:ターン終了時
+		virtual void Position_Interpolation();			// 位置座標補間処理
+		virtual void Add_Strength_Buff(int amount);		// 攻撃力バフ追加
+		virtual void Add_Diffence_Buff(int amount);		// 防御力バフ追加
+		virtual void Card_Effect_Extra_Process()	{};	// カード効果(特殊効果)
 		
 		/* セッター */
 		// カード情報
