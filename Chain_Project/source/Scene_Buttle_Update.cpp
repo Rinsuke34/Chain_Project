@@ -254,7 +254,7 @@ void Scene_Battle::Update_CardChainCheck()
 			{
 				// つながっている場合
 				/* チェインカウントを加算する */
-				CheinCount++;
+				CheinCount += this->pDataList_Battle->GetChain_Suite_List(BattleAreaNo - 1).size();
 
 				/* 現在のバトルエリアのカードにチェイン数を設定 */
 				this->pDataList_Battle->GetBattleAreaCardList(BattleAreaNo)->SetNowChainCount(CheinCount);

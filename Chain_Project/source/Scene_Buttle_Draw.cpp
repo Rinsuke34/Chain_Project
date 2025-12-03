@@ -1,10 +1,13 @@
 /* シーン"バトル画面"の定義(描写部分) */
 
 /* 使用する要素のインクルード */
+// 標準ライブラリ
+#include <memory>
 // ヘッダファイル
 #include "Scene_Battle.h"
 // 共通定義
 #include "FunctionDefine.h"
+#include "VariableDefine.h"
 // 関連クラス
 #include "Datalist_Image.h"
 #include "DataList_Battle.h"
@@ -126,22 +129,62 @@ void Scene_Battle::Draw_Chain()
 // バトルエリア描写
 void Scene_Battle::Draw_BattleArea()
 {
+	// テスト
+	/* 画像管理データリストを取得 */
+	std::shared_ptr<DataList_Image> pDataList_Image = std::dynamic_pointer_cast<DataList_Image>(gpDataListServer->GetDataList("DataList_Image"));
+	std::string ImageFilePath = "UI/Battle/Test_Action_Notice";
+	std::shared_ptr<int> TestImage = pDataList_Image->iGetImageHandle(ImageFilePath);
+	int TestSize_X, TestSize_Y;
+	GetGraphSize(*(TestImage), &TestSize_X, &TestSize_Y);
+
 	/* バトルエリアのサイズを取得 */
 	int SizeX, SizeY;
 	GetGraphSize(*(this->Image_BattleArea[0]), &SizeX, &SizeY);
 
 	/* バトルエリアを描写 */
-	// ※-2～2までループさせて、中央から左右に2つずつ描写する
 	// ※カーソルが重なっているバトルエリアは別の画像を使用する
 	int iSelectAreaNo = GetMouseInBattleArea();
-	for (int i = -2; i <= 2; i++)
+	for (int i = 0; i < 5; i++)
 	{
+		/* フレーム */
 		DrawExtendGraph(
-			(SCREEN_SIZE_WIDE / 2)	- (SizeX / 2) + (BATTLE_AREA_INTERVAL * i),
+			(SCREEN_SIZE_WIDE / 2)	- (SizeX / 2) + (BATTLE_AREA_INTERVAL * (i - 2)),
 			BATTLE_AREA_POS_Y		- (SizeY / 2),
-			(SCREEN_SIZE_WIDE / 2)	+ (SizeX / 2) + (BATTLE_AREA_INTERVAL * i),
+			(SCREEN_SIZE_WIDE / 2)	+ (SizeX / 2) + (BATTLE_AREA_INTERVAL * (i - 2)),
 			BATTLE_AREA_POS_Y		+ (SizeY / 2),
-			*(this->Image_BattleArea[(iSelectAreaNo == i + 2) ? 1 : 0]), TRUE);
+			*(this->Image_BattleArea[(iSelectAreaNo == i) ? 1 : 0]), TRUE);
+
+		/* 行動予告 */
+		// 与効果一覧を取得
+		std::vector<std::shared_ptr<Card_Effect_Base>> EffectList = this->pDataList_Battle->GetEffectList(i);
+		for (int x = 0; x < EffectList.size(); x++)
+		{
+			if (std::shared_ptr<Card_Effect_Attack> AttackEffect = std::dynamic_pointer_cast<Card_Effect_Attack>(EffectList[i]))
+			{
+				// 攻撃系効果である場合
+				// テスト描写
+				DrawExtendGraph(
+					(SCREEN_SIZE_WIDE / 2) - (SizeX / 2) + (BATTLE_AREA_INTERVAL * (i - 2)),
+					BATTLE_AREA_POS_Y - (SizeY / 2) - ((x + 1) * TestSize_Y),
+					(SCREEN_SIZE_WIDE / 2) + (SizeX / 2) + (BATTLE_AREA_INTERVAL * (i - 2)),
+					BATTLE_AREA_POS_Y - (SizeY / 2) - (x * TestSize_Y),
+					*(TestImage), TRUE);
+
+				// 文字列の高さ、幅を取得
+				std::string strAttack = std::to_string(AttackEffect->DamageAmount);
+				int iStrSizeX = GetDrawStringWidthToHandle(strAttack.c_str(), static_cast<int>(strlenDx(strAttack.c_str())), giFont_Cp_Period_16);
+				int iStrSizeY = GetFontSizeToHandle(giFont_Cp_Period_16);
+
+				// 文字列描写
+				DrawStringToHandle(
+					(SCREEN_SIZE_WIDE / 2) +(BATTLE_AREA_INTERVAL * (i - 2)),
+					BATTLE_AREA_POS_Y - (SizeY / 2) - (TestSize_Y / 2) - (iStrSizeY / 2) - (x * TestSize_Y),
+					strAttack.c_str(),
+					GetColor(255, 0, 0),
+					giFont_Cp_Period_16
+				);
+			}
+		}
 	}
 
 	/* カードの描写 */
