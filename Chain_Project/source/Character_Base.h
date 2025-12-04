@@ -33,6 +33,10 @@ class Character_Base : public std::enable_shared_from_this<Character_Base>
 		int 					GetShield_Now() { return iShield_Now; }	// シールド(現在値)の取得
 		Struct_2D::POSITION		GetBasePos()	{ return BasePos; }		// 基準座標の取得
 		int						GetCamp()		{ return Camp; }		// 陣営の取得
+		std::shared_ptr<int>	GetImage()		{ return Image; }		// 画像取得
+		int						GetSizeX()		{ return SizeX; }		// キャラクターの幅
+		int						GetSizeY()		{ return SizeY; }		// キャラクターの高さ
+		int 					GetEyeHeight()	{ return EyeHeight; }	// 目線の高さ(行動内容アイコンの描写位置)
 
 		/* セッター */
 		void	SetHp_Max(int MaxHP)					{ this->iHP_Max			= MaxHP; }		// 体力(最大値)の設定
@@ -40,6 +44,7 @@ class Character_Base : public std::enable_shared_from_this<Character_Base>
 		void	SetShield_Now(int NowShield)			{ this->iShield_Now		= NowShield; }	// シールド(現在値)の設定
 		void	SetBasePos(Struct_2D::POSITION Pos)		{ this->BasePos			= Pos; }		// 基準座標の設定
 		void	SetCamp(int camp)						{ this->Camp			= camp; }		// 陣営の設定
+		void	SetEyeHeight(int height)				{ this->EyeHeight		= height; }		// 目線の高さ(行動内容アイコンの描写位置)の設定
 
 		/* 定数 */
 		// 描写系
@@ -65,6 +70,7 @@ class Character_Base : public std::enable_shared_from_this<Character_Base>
 		Struct_2D::POSITION		BasePos;			// 基準座標(足元)
 		int						SizeX;				// キャラクターの幅
 		int						SizeY;				// キャラクターの高さ
+		int						EyeHeight;			// 目線の高さ(行動内容アイコンの描写位置)
 		Struct_2D::POSITION		CorrectionPos;		// 補正座標
 		int						AddBuffReaction;	// バフ付与時のリアクション
 		int						DamageReaction;		// 被ダメージ時のリアクション

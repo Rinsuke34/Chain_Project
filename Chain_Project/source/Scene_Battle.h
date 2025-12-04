@@ -5,7 +5,8 @@
 /* 使用する要素のインクルード */
 // 共通定義
 #include "AppFrame.h"
-#include "StructDefine.h"
+// 関連クラス
+#include "Action_Effect.h"
 
 /* 前方宣言 */
 class Scene_UI_Button;
@@ -45,6 +46,8 @@ class Scene_Battle : public Scene_Base
 		static const int	DECISIONBUTTON_POS_Y				= 640;	// 決定ボタンのY座標
 		static const int	CHARACTER_INTERVAL					= 200;	// キャラクターの間隔
 		static const int	CHARACTER_POS_Y						= 260;	// キャラクターのY座標
+		static const int	BATTLE_AREA_HEIGHT					= 288;	// バトルエリアの高さ
+		static const int	BATTLE_AREA_WIDE					= 218;	// バトルエリアの幅
 
 	private:
 		/* 変数 */
@@ -79,13 +82,14 @@ class Scene_Battle : public Scene_Base
 		// UIのハンドル
 		std::shared_ptr<Scene_UI_Button> UI_DecisionButton;	// 決定ボタン
 		// その他
-		void CardPosition_HandSetSettingPosting();									// 手札のカード設定座標の設定
-		void CardPosition_Interpolation();											// カードの座標補間
-		void CharacterPosition_Setup();												// キャラクターの座標の設定
-		std::shared_ptr<Card_Base>	GetMouseInCard();								// マウスが重なっているカードを取得
-		int	 GetMouseInBattleArea();												// マウスが重なっているバトルエリアを取得
-		void UseCardEffect(std::shared_ptr<Card_Effect_Base> Effect, int AreaNo);	// カード効果の使用
-		void Character_Death_Check();												// キャラクターが死亡しているか確認
-		void CheckLostCard();														// ロスト対象のカードを確認し、ロストカード一覧に入れる
-		void ResetChain();															// チェイン数をリセット
+		void CardPosition_HandSetSettingPosting();		// 手札のカード設定座標の設定
+		void Action_Effect_SetSettingPositing();		// 行動内容の設定座標の設定
+		void Card_Update();								// カードの更新処理
+		void Action_Effect_Update();					// 行動内容の更新処理
+		void CharacterPosition_Setup();					// キャラクターの座標の設定
+		std::shared_ptr<Card_Base>	GetMouseInCard();	// マウスが重なっているカードを取得
+		int	 GetMouseInBattleArea();					// マウスが重なっているバトルエリアを取得
+		void Character_Death_Check();					// キャラクターが死亡しているか確認
+		void CheckLostCard();							// ロスト対象のカードを確認し、ロストカード一覧に入れる
+		void ResetChain();								// チェイン数をリセット
 };

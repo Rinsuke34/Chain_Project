@@ -7,11 +7,11 @@
 #include "Card_Spell_Base.h"
 // 共通定義
 #include "VariableDefine.h"
-#include "StructDefine.h"
 // 関連クラス
 #include "Character_Base.h"
 #include "DataList_Image.h"
 #include "DataList_Battle.h"
+#include "Action_Effect.h"
 
 // コンストラクタ
 Card_Spell_Base::Card_Spell_Base() : Card_Base()
@@ -24,7 +24,7 @@ Card_Spell_Base::Card_Spell_Base() : Card_Base()
 void Card_Spell_Base::BattleAction()
 {
 	/* スペルの処理を設定する */
-	std::shared_ptr<Card_Effect_Extra> pSpellEffect = std::make_shared<Card_Effect_Extra>();
+	std::shared_ptr<Action_Effect_Extra> pSpellEffect = std::make_shared<Action_Effect_Extra>();
 	pSpellEffect->Target_Camp		= Character_Base::CAMP_NONE;		// 効果対象の陣営:無し
 	pSpellEffect->Target_Position	= 0;								// 効果対象の立ち位置:無し
 	pSpellEffect->EffectUser		= this->pPlayer;					// 効果の使用者:プレイヤーキャラクター

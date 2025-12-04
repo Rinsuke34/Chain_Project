@@ -155,21 +155,21 @@ void DataList_Battle::ResetChain()
 }
 
 // —^Œø‰Ê‚ğ’Ç‰Á
-void DataList_Battle::AddEffect(const std::shared_ptr<Card_Effect_Base>& effect, int AreaNo)
+void DataList_Battle::AddEffect(const std::shared_ptr<Action_Effect_Base>& effect, int AreaNo)
 {
 	// ˆø”
 	// effect	<- ’Ç‰Á‚·‚é—^Œø‰Ê
 	// AreaNo	<- —^Œø‰Ê‚ğ’Ç‰Á‚·‚éƒoƒgƒ‹ƒGƒŠƒA
 
-	this->EffectList[AreaNo].push_back(effect);
+	this->ActionEffectList[AreaNo].push_back(effect);
 }
 
 // —^Œø‰Ê‚ğíœ
-void DataList_Battle::RemoveEffect(const std::shared_ptr<Card_Effect_Base>& effect, int AreaNo)
+void DataList_Battle::RemoveEffect(const std::shared_ptr<Action_Effect_Base>& effect, int AreaNo)
 {
 	// ˆø”
 	// effect	<- íœ‚·‚é—^Œø‰Ê
 	// AreaNo	<- —^Œø‰Ê‚ğíœ‚·‚éƒoƒgƒ‹ƒGƒŠƒA
 
-	this->EffectList[AreaNo].erase(std::remove(EffectList[AreaNo].begin(), EffectList[AreaNo].end(), effect), EffectList[AreaNo].end());
+	this->ActionEffectList[AreaNo].erase(std::remove(ActionEffectList[AreaNo].begin(), ActionEffectList[AreaNo].end(), effect), ActionEffectList[AreaNo].end());
 }

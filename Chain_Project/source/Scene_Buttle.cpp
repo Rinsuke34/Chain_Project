@@ -155,13 +155,13 @@ void Scene_Battle::Update()
 			break;
 	}
 
-	/* 手札のカードの設定座標の設定 */
+	/* カードやアクション内容等の設定座標の設定 */
 	CardPosition_HandSetSettingPosting();
+	Action_Effect_SetSettingPositing();
 
-	/* カードの座標補間 */
-	CardPosition_Interpolation();
-
-	// キャラクターの座標の設定
+	/* カードやアクション内容等の更新処理 */
+	Card_Update();
+	Action_Effect_Update();
 	CharacterPosition_Setup();
 }
 

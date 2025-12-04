@@ -10,8 +10,9 @@
 Character_Npc_Test::Character_Npc_Test()
 {
 	/* 初期化 */
-	this->iHP_Max = 100;			// 体力(最大値)
-	this->iHP_Now = 100;			// 体力(現在値)
+	this->iHP_Max	= 100;			// 体力(最大値)
+	this->iHP_Now	= 100;			// 体力(現在値)
+	this->Camp		= Character_Base::CAMP_ENEMY;	// 陣営:敵陣営
 	SetUpImage("Character_Ilust/Monster/Test");
 
 	/* データリスト取得 */
@@ -33,7 +34,7 @@ void Character_Npc_Test::Action()
 			if (pTargetCharacter != nullptr)
 			{
 				// 攻撃行動を設定する
-				std::shared_ptr<Card_Effect_Attack> addEffect	= std::make_shared<Card_Effect_Attack>();
+				std::shared_ptr<Action_Effect_Attack> addEffect	= std::make_shared<Action_Effect_Attack>();
 				addEffect->Target_Camp		= Character_Base::CAMP_FRIEND;	// 効果対象の陣営:味方
 				addEffect->Target_Position	= i;							// 効果対象の立ち位置:確認した敵キャラクターの位置
 				addEffect->DamageAmount		= 5;							// ダメージ量

@@ -151,6 +151,12 @@
     <Filter Include="ソース ファイル\カード\魔法%28Spell%29\武具強化">
       <UniqueIdentifier>{8751139a-183c-4ea5-b2dd-61855a39233d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\行動内容">
+      <UniqueIdentifier>{b8ccef21-d3a2-469f-bb9d-c7901eb36d8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\行動内容">
+      <UniqueIdentifier>{ae3931cd-25ad-44c2-913c-3ca096e67a0d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Main.cpp">
@@ -228,6 +234,9 @@
     <ClCompile Include="source\Card_Spell_ArmsEnhancement.cpp">
       <Filter>ソース ファイル\カード\魔法%28Spell%29\武具強化</Filter>
     </ClCompile>
+    <ClCompile Include="source\Action_Effect.cpp">
+      <Filter>ソース ファイル\行動内容</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Scene_Load_Checker.h">
@@ -287,9 +296,6 @@
     <ClInclude Include="source\Card_Arms_WoodenSword.h">
       <Filter>ヘッダー ファイル\カード\武具%28Arms%29\木の剣</Filter>
     </ClInclude>
-    <ClInclude Include="source\StructDefine.h">
-      <Filter>ヘッダー ファイル\定義</Filter>
-    </ClInclude>
     <ClInclude Include="source\Card_Arms_WoodenShield.h">
       <Filter>ヘッダー ファイル\カード\武具%28Arms%29\木の盾</Filter>
     </ClInclude>
@@ -298,6 +304,9 @@
     </ClInclude>
     <ClInclude Include="source\Card_Spell_ArmsEnhancement.h">
       <Filter>ヘッダー ファイル\カード\魔法%28Spell%29\武具強化</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Action_Effect.h">
+      <Filter>ヘッダー ファイル\行動内容</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

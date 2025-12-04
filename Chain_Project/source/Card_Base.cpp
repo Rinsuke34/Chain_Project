@@ -9,7 +9,7 @@
 #include "Character_Base.h"
 // 共通定義
 #include "VariableDefine.h"
-#include "StructDefine.h"
+#include "Action_Effect.h"
 
 // コンストラクタ
 Card_Base::Card_Base()
@@ -75,7 +75,7 @@ void Card_Base::BattleAction()
 						{
 							/* 存在するなら */
 							// 攻撃行動を設定する
-							std::shared_ptr<Card_Effect_Attack> addEffect = std::make_shared<Card_Effect_Attack>();
+							std::shared_ptr<Action_Effect_Attack> addEffect = std::make_shared<Action_Effect_Attack>();
 							addEffect->Target_Camp		= Character_Base::CAMP_ENEMY;			// 効果対象の陣営:敵
 							addEffect->Target_Position	= i;									// 効果対象の立ち位置:確認した敵キャラクターの位置
 							addEffect->DamageAmount		= this->Strength + this->Strength_Buff;	// ダメージ量:カードの攻撃力
@@ -103,7 +103,7 @@ void Card_Base::BattleAction()
 						{
 							/* 存在するなら */
 							// 攻撃行動を設定する
-							std::shared_ptr<Card_Effect_Attack> addEffect = std::make_shared<Card_Effect_Attack>();
+							std::shared_ptr<Action_Effect_Attack> addEffect = std::make_shared<Action_Effect_Attack>();
 							addEffect->Target_Camp		= Character_Base::CAMP_ENEMY;			// 効果対象の陣営:敵
 							addEffect->Target_Position	= positionNo;							// 効果対象の立ち位置:確認した敵キャラクターの位置
 							addEffect->DamageAmount		= this->Strength + this->Strength_Buff;	// ダメージ量:カードの攻撃力
@@ -121,7 +121,7 @@ void Card_Base::BattleAction()
 				{
 					/* 全体攻撃を行う */
 					// 攻撃行動を設定する
-					std::shared_ptr<Card_Effect_Attack> addEffect = std::make_shared<Card_Effect_Attack>();
+					std::shared_ptr<Action_Effect_Attack> addEffect = std::make_shared<Action_Effect_Attack>();
 					addEffect->Target_Camp		= Character_Base::CAMP_ENEMY;			// 効果対象の陣営:敵
 					addEffect->Target_Position	= 0;									// 効果対象の立ち位置:無し
 					addEffect->DamageAmount		= this->Strength + this->Strength_Buff;	// ダメージ量:カードの攻撃力
@@ -138,7 +138,7 @@ void Card_Base::BattleAction()
 	{
 		/* 自陣営の全キャラクターに防御力分のシールドを付与する */
 		// シールド付与を設定する
-		std::shared_ptr<Card_Effect_Defence> addEffect = std::make_shared<Card_Effect_Defence>();
+		std::shared_ptr<Action_Effect_Defence> addEffect = std::make_shared<Action_Effect_Defence>();
 		addEffect->Target_Camp		= Character_Base::CAMP_FRIEND;			// 効果対象の陣営:仲間
 		addEffect->Target_Position	= 0;									// 効果対象の立ち位置:無し
 		addEffect->ShieldAmount		= this->Diffence + this->Diffence_Buff;	// シールド付与量:カードの防御力
@@ -148,8 +148,8 @@ void Card_Base::BattleAction()
 	}
 }
 
-// 位置座標補間処理
-void Card_Base::Position_Interpolation()
+// 更新処理
+void Card_Base::Update()
 {
 	/* X座標補間 */
 	if (std::abs(this->Setting_Position.iX - this->Now_Position.iX) < INTERPOLATION_SPEED)

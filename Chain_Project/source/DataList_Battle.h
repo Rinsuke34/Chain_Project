@@ -5,7 +5,8 @@
 /* 使用する要素のインクルード */
 // 共通定義
 #include "AppFrame.h"
-#include "StructDefine.h"
+// 関連クラス
+#include "Action_Effect.h"
 
 // 前方宣言
 class Character_Base;
@@ -35,8 +36,8 @@ class DataList_Battle : public DataList_Base
 		void CheckChain();												// チェイン状態の確認
 		void ResetChain();												// チェイン状態を初期化する
 		// 与効果関係
-		void AddEffect(const std::shared_ptr<Card_Effect_Base>& effect, int AreaNo);		// 与効果を追加
-		void RemoveEffect(const std::shared_ptr<Card_Effect_Base>& effect, int AreaNo);		// 与効果を削除
+		void AddEffect(const std::shared_ptr<Action_Effect_Base>& effect, int AreaNo);		// 与効果を追加
+		void RemoveEffect(const std::shared_ptr<Action_Effect_Base>& effect, int AreaNo);		// 与効果を削除
 		
 		/* ゲッター */
 		// カード関係(総括用)
@@ -52,8 +53,8 @@ class DataList_Battle : public DataList_Base
 		// キャラクター関連
 		std::shared_ptr<Character_Base>					GetFriendCharacter(int positionNo)	{ return Friend_CharacterList[positionNo]; }	// 仲間キャラクターを取得
 		std::shared_ptr<Character_Base>					GetEnemyCharacter(int positionNo)	{ return Enemy_CharacterList[positionNo]; }		// 敵キャラクターを取得
-		// 与効果関連
-		std::vector<std::shared_ptr<Card_Effect_Base>>	GetEffectList(int AreaNo)			{ return EffectList[AreaNo]; }					// 与効果一覧を取得
+		// 行動内容関連
+		std::vector<std::shared_ptr<Action_Effect_Base>>	GetActionEffectList(int AreaNo)	{ return ActionEffectList[AreaNo]; }					// 行動内容一覧を取得
 
 		/* セッター */
 		// カード関係(総括用)
@@ -70,7 +71,7 @@ class DataList_Battle : public DataList_Base
 		void SetFriendCharacter(int positionNo, const std::shared_ptr<Character_Base>& character)	{ Friend_CharacterList[positionNo]	= character; }	// 仲間キャラクターを設定
 		void SetEnemyCharacter(int positionNo, const std::shared_ptr<Character_Base>& character)	{ Enemy_CharacterList[positionNo]	= character; }	// 敵キャラクターを設定
 		// 与効果関連
-		void SetEffectList(const std::vector<std::shared_ptr<Card_Effect_Base>>& effectList, int AreaNo)	{ EffectList[AreaNo] = effectList; }	// 与効果一覧を設定
+		void SetActionEffectList(const std::vector<std::shared_ptr<Action_Effect_Base>>& effectList, int AreaNo)	{ ActionEffectList[AreaNo] = effectList; }	// 行動内容一覧を設定
 
 
 		/* 定数 */
@@ -96,18 +97,18 @@ class DataList_Battle : public DataList_Base
 	private:
 		/* 変数 */
 		// カード関係(総括用)
-		std::vector<std::shared_ptr<Card_Base>>			AllDeckCardList;						// 全てのデッキのカード一覧(ロスト予定のカードを除く)
-		std::vector<std::shared_ptr<Card_Base>>			AllLostCardList;						// 全てのロストとなるデッキのカード一覧
+		std::vector<std::shared_ptr<Card_Base>>				AllDeckCardList;						// 全てのデッキのカード一覧(ロスト予定のカードを除く)
+		std::vector<std::shared_ptr<Card_Base>>				AllLostCardList;						// 全てのロストとなるデッキのカード一覧
 		// カード関連(戦闘用)
-		std::vector<std::shared_ptr<Card_Base>>			DeckCardList;							// デッキのカード一覧
-		std::vector<std::shared_ptr<Card_Base>>			HandCardList;							// 手札のカード一覧
-		std::vector<std::shared_ptr<Card_Base>>			TrashCardList;							// 捨て札のカード一覧
-		std::shared_ptr<Card_Base>						BattleAreaCardList[BATTLE_AREA_MAX];	// バトルエリアのカード一覧
-		std::shared_ptr<Card_Base>						HoldCard;								// ホールド中のカード
-		std::vector<std::string>						Chain_Suite_List[CHAIN_SUTE_AREA_MAX];	// チェイン中のスート一覧
+		std::vector<std::shared_ptr<Card_Base>>				DeckCardList;							// デッキのカード一覧
+		std::vector<std::shared_ptr<Card_Base>>				HandCardList;							// 手札のカード一覧
+		std::vector<std::shared_ptr<Card_Base>>				TrashCardList;							// 捨て札のカード一覧
+		std::shared_ptr<Card_Base>							BattleAreaCardList[BATTLE_AREA_MAX];	// バトルエリアのカード一覧
+		std::shared_ptr<Card_Base>							HoldCard;								// ホールド中のカード
+		std::vector<std::string>							Chain_Suite_List[CHAIN_SUTE_AREA_MAX];	// チェイン中のスート一覧
 		// キャラクター関係
-		std::shared_ptr<Character_Base>					Friend_CharacterList[POSITION_MAX];		// 仲間キャラクター一覧
-		std::shared_ptr<Character_Base>					Enemy_CharacterList[POSITION_MAX];		// 敵キャラクター一覧
-		// 与効果関連
-		std::vector<std::shared_ptr<Card_Effect_Base>>	EffectList[BATTLE_AREA_MAX];			// バトルエリア毎の与効果一覧(プレイヤーやNPCの攻撃などの処理がここに入る)
+		std::shared_ptr<Character_Base>						Friend_CharacterList[POSITION_MAX];		// 仲間キャラクター一覧
+		std::shared_ptr<Character_Base>						Enemy_CharacterList[POSITION_MAX];		// 敵キャラクター一覧
+		// 行動内容関連
+		std::vector<std::shared_ptr<Action_Effect_Base>>	ActionEffectList[BATTLE_AREA_MAX];		// バトルエリア毎の行動内容一覧(プレイヤーやNPCの攻撃などの処理がここに入る)
 };

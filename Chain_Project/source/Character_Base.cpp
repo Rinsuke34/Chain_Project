@@ -24,6 +24,7 @@ Character_Base::Character_Base()
 	this->AddBuffReaction	= 0;			// バフ付与時のリアクション
 	this->DamageReaction	= 0;			// 被ダメージ時のリアクション
 	this->AttackReaction	= 0;			// 攻撃時のリアクション
+	this->EyeHeight			= 0;			// 目線の高さ(行動内容アイコンの描写位置)
 }
 
 // 描画

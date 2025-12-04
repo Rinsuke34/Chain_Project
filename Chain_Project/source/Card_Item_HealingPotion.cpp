@@ -3,11 +3,10 @@
 /* 使用する要素のインクルード */
 // ヘッダファイル
 #include "Card_Item_HealingPotion.h"
-// 共通定義
-#include "StructDefine.h"
 // 関連クラス	
 #include "DataList_Battle.h"
 #include "Character_Base.h"
+#include "Action_Effect.h"
 
 // コンストラクタ
 Card_Item_HealingPotion::Card_Item_HealingPotion() : Card_Item_Base()
@@ -31,7 +30,7 @@ void Card_Item_HealingPotion::Effect_StartAction()
 
 	/* 自陣営の全キャラクターに回復を行う */
 	// 回復を設定する
-	std::shared_ptr<Card_Effect_Heal> addEffect	= std::make_shared<Card_Effect_Heal>();
+	std::shared_ptr<Action_Effect_Heal> addEffect	= std::make_shared<Action_Effect_Heal>();
 	addEffect->Target_Camp						= Character_Base::CAMP_FRIEND;		// 効果対象の陣営:仲間
 	addEffect->Target_Position					= 0;								// 効果対象の立ち位置:無効
 	addEffect->HealAmount						= 5 + this->iNowChainCount * 5;		// 回復量:5 + (チェイン数 * 5)

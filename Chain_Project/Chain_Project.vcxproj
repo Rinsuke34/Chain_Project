@@ -169,6 +169,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\Action_Effect.cpp" />
     <ClCompile Include="source\Card_Arms_Base.cpp" />
     <ClCompile Include="source\Card_Arms_WoodenShield.cpp" />
     <ClCompile Include="source\Card_Arms_WoodenSword.cpp" />
@@ -201,6 +202,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\Action_Effect.h" />
     <ClInclude Include="source\Card_Arms_Base.h" />
     <ClInclude Include="source\Card_Arms_WoodenShield.h" />
     <ClInclude Include="source\Card_Arms_WoodenSword.h" />
@@ -222,7 +224,6 @@
     <ClInclude Include="source\Scene_Load_Draw.h" />
     <ClInclude Include="source\Scene_Title.h" />
     <ClInclude Include="source\Scene_UI_Button.h" />
-    <ClInclude Include="source\StructDefine.h" />
     <ClInclude Include="source\VariableDefine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
