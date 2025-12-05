@@ -29,10 +29,8 @@ class Action_Effect_Base
 		int									Target_Position;	// 効果対象の立ち位置
 		std::shared_ptr<Character_Base>		EffectUser;			// 効果の使用者
 		bool								AllRange;			// 全体に効果を与えるか
-		Struct_2D::POSITION					Now_Position;		// 現在座標
 		Struct_2D::POSITION					Setting_Position;	// 設定座標(自動で補完される座標)
 		int									Priority;			// 優先順位(高いほど先に実行)
-		int									Image;				// 画像
 
 		/* 定数 */
 		static const int INTERPOLATION_SPEED	= 5;	// 補間速度
@@ -48,6 +46,8 @@ class Action_Effect_Base
 		virtual void Draw_Frame();			// フレーム作成
 
 		/* 変数 */
+		int									Image;				// 画像
+		Struct_2D::POSITION					Now_Position;		// 現在座標
 		std::shared_ptr<DataList_Battle>	pDataList_Battle;	// 戦闘用データリスト
 };
 

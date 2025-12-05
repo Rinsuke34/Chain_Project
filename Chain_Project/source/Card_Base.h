@@ -87,9 +87,9 @@ class Card_Base : public std::enable_shared_from_this<Card_Base>
 		static const int IMAGE_SIZE_WIDTH	= 256;	// 画像幅
 		static const int IMAGE_SIZE_HEIGHT	= 256;	// 画像高さ
 		// ネームプレート
-		static const int NAMEPLATE_WIDTH		= 150;	// ネームプレート幅
-		static const int NAMEPLATE_HEIGHT		= 24;	// ネームプレート高さ
-		static const int NAMEPLATE_POSITION_Y	= 20;	// カード名描写位置Y座標(カードの最上部から見て)
+		static const int NAMEPLATE_WIDTH		= 158;	// ネームプレート幅
+		static const int NAMEPLATE_HEIGHT		= 36;	// ネームプレート高さ
+		static const int NAMEPLATE_POSITION_Y	= 24;	// カード名描写位置Y座標(カードの最上部から見て)
 		// 攻撃範囲
 		static const int ATTACKRANGE_FRONT	= 0;	// 先頭から
 		static const int ATTACKRANGE_RANDOM	= 1;	// ランダム
@@ -98,7 +98,7 @@ class Card_Base : public std::enable_shared_from_this<Card_Base>
 		static const int SUTE_SIZE_WIDTH	= 36;	// スート幅
 		static const int SUTE_SIZE_HEIGHT	= 36;	// スート高さ
 		static const int SUTE_START_POS_X	= 12;	// スート描写開始X座標
-		static const int SUTE_POS_Y			= 35;	// スート描写Y座標
+		static const int SUTE_POS_Y			= 41;	// スート描写Y座標
 		// イラスト(描写)
 		static const int ILLUSTRATION_POS_Y = 32;	// イラスト描写Y座標(中心から見たときの補正量)
 

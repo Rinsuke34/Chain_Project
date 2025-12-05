@@ -526,22 +526,22 @@ void Scene_Battle::Update_StatusEffectAdvance()
 {
 	/* 各キャラクターの状態変化のターンを進行 */
 
-	/* 全キャラクターのシールドをリセット */
-	for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
-	{
-		// 仲間
-		auto FriendCharacter = this->pDataList_Battle->GetFriendCharacter(i);
-		if (FriendCharacter != nullptr)
-		{
-			FriendCharacter->ShieldReset_EndTurn();
-		}
-		// 敵
-		auto EnemyCharacter = this->pDataList_Battle->GetEnemyCharacter(i);
-		if (EnemyCharacter != nullptr)
-		{
-			EnemyCharacter->ShieldReset_EndTurn();
-		}
-	}
+	///* 全キャラクターのシールドをリセット */
+	//for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
+	//{
+	//	// 仲間
+	//	auto FriendCharacter = this->pDataList_Battle->GetFriendCharacter(i);
+	//	if (FriendCharacter != nullptr)
+	//	{
+	//		FriendCharacter->ShieldReset_EndTurn();
+	//	}
+	//	// 敵
+	//	auto EnemyCharacter = this->pDataList_Battle->GetEnemyCharacter(i);
+	//	if (EnemyCharacter != nullptr)
+	//	{
+	//		EnemyCharacter->ShieldReset_EndTurn();
+	//	}
+	//}
 
 	/* チェイン情報を初期化する */
 	this->pDataList_Battle->ResetChain();

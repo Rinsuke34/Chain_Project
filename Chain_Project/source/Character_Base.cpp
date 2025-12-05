@@ -49,77 +49,98 @@ void Character_Base::Draw()
 		TRUE
 	);
 
-	/* 体力バー描画 */
-	Draw_HPBar();
+	/* ステータスバーの描写 */
+	Draw_StatusBar();
 
-	/* シールドバー描写 */
-	Draw_ShieldBar();
+	///* 体力バー描画 */
+	//Draw_HPBar();
+
+	///* シールドバー描写 */
+	//Draw_ShieldBar();
 }
 
-// 体力バー描画
-void Character_Base::Draw_HPBar()
+// ステータスバーを描写
+void Character_Base::Draw_StatusBar()
 {
-	/* 体力バーの描写中心座標を設定 */
-	Struct_2D::POSITION HPBar_CenterPos = {
-		this->BasePos.iX,
-		this->BasePos.iY - this->SizeY - HPBAR_UPPER
-	};
+	/* 画像管理データリストを取得 */
+	std::shared_ptr<DataList_Image> pDataList_Image = std::dynamic_pointer_cast<DataList_Image>(gpDataListServer->GetDataList("DataList_Image"));
 
-	/* 体力バーの背景描写 */
-	DrawBox(
-		HPBar_CenterPos.iX - (HPBAR_WIDE / 2),
-		HPBar_CenterPos.iY - (HPBAR_HEIGHT / 2),
-		HPBar_CenterPos.iX + (HPBAR_WIDE / 2),
-		HPBar_CenterPos.iY + (HPBAR_HEIGHT / 2),
-		GetColor(0, 0, 0),
+	/* 画像を取得 */
+	// HPバー背景(シールド無し)
+	std::string StatusBar_BackGround_ImageName = "UI/StatusBar/StatusBar_BackGround";
+	std::shared_ptr<int> StatusBar_BackGround_Image = pDataList_Image->iGetImageHandle(StatusBar_BackGround_ImageName);
+	// HPバー背景(シールド有り)
+	StatusBar_BackGround_ImageName = "UI/StatusBar/StatusBar_BackGround_Shield";
+	std::shared_ptr<int> StartusBar_BackGround_Shield_Image = pDataList_Image->iGetImageHandle(StatusBar_BackGround_ImageName);
+	// シールドアイコン
+	std::string Shield_Icon_ImageName = "UI/StatusBar/Icon_Shield";
+	std::shared_ptr<int> Shield_Icon_Image = pDataList_Image->iGetImageHandle(Shield_Icon_ImageName);
+
+	/* 背景を描写 */
+	DrawGraph(
+		this->BasePos.iX - (HPBAR_WIDE / 2),
+		this->BasePos.iY - this->SizeY - HPBAR_UPPER,
+		this->iShield_Now > 0 ? *(StartusBar_BackGround_Shield_Image) : *(StatusBar_BackGround_Image),
 		TRUE
 	);
 
-	/* 体力バーの残り体力描写 */
+	/* HPを描写 */
 	DrawBox(
-		HPBar_CenterPos.iX - (HPBAR_WIDE / 2),
-		HPBar_CenterPos.iY - (HPBAR_HEIGHT / 2),
-		HPBar_CenterPos.iX - (HPBAR_WIDE / 2) + (HPBAR_WIDE * this->iHP_Now / this->iHP_Max),
-		HPBar_CenterPos.iY + (HPBAR_HEIGHT / 2),
+		this->BasePos.iX - (HPBAR_WIDE / 2) + HPBAR_FRAME_WIDE,
+		this->BasePos.iY - this->SizeY - HPBAR_UPPER + 2,
+		this->BasePos.iX - (HPBAR_WIDE / 2) + HPBAR_FRAME_WIDE + ((HPBAR_WIDE - (HPBAR_FRAME_WIDE * 2)) * this->iHP_Now) / this->iHP_Max,
+		this->BasePos.iY - this->SizeY - HPBAR_UPPER + 18,
 		GetColor(255, 0, 0),
 		TRUE
 	);
 
-	/* 残り体力を文字列に設定 */
-	std::string HPText = std::to_string(this->iHP_Now) + " / " + std::to_string(this->iHP_Max);
+	/* 残り体力を文字列で描写 */
+	std::string HPText = std::to_string(this->iHP_Now) + "/" + std::to_string(this->iHP_Max);
 
 	/* 文字列の高さ、幅を取得 */
-	int iSizeX = GetDrawStringWidthToHandle(HPText.c_str(), static_cast<int>(strlenDx(HPText.c_str())), giFont_Cp_Period_16);
-	int iSizeY = GetFontSizeToHandle(giFont_Cp_Period_16);
+	int iSizeX = GetDrawStringWidthToHandle(HPText.c_str(), static_cast<int>(strlenDx(HPText.c_str())), giFont_JF_Dot_MPlus10_20);
+	int iSizeY = GetFontSizeToHandle(giFont_JF_Dot_MPlus10_20);
 
 	/* 残り体力の文字列描写 */
 	DrawStringToHandle(
-		HPBar_CenterPos.iX - iSizeX / 2,
-		HPBar_CenterPos.iY - iSizeY / 2,
+		this->BasePos.iX - (iSizeX / 2),
+		this->BasePos.iY - this->SizeY - HPBAR_UPPER + ((HPBAR_HEIGHT - iSizeY) / 2),
 		HPText.c_str(),
 		GetColor(255, 255, 255),
-		giFont_Cp_Period_16
+		giFont_JF_Dot_MPlus10_20
 	);
-}
 
-// シールドバー描写
-void Character_Base::Draw_ShieldBar()
-{
-	/* シールドバーの描写中心座標を設定 */
-	Struct_2D::POSITION HPBar_CenterPos = {
-		this->BasePos.iX,
-		this->BasePos.iY - this->SizeY - SHIELDBAR_UPPER
-	};
+	/* シールドが付与されているならシールドのアイコンを描写 */
+	if (this->iShield_Now > 0)
+	{
+		/* シールドアイコンのサイズ取得 */
+		int Shield_Icon_SizeX, Shield_Icon_SizeY;
+		GetGraphSize(*(Shield_Icon_Image), &Shield_Icon_SizeX, &Shield_Icon_SizeY);
 
-	/* シールドバーの残量描写 */
-	DrawBox(
-		HPBar_CenterPos.iX - (HPBAR_WIDE / 2),
-		HPBar_CenterPos.iY - (SHIELDBAR_HEIGHT / 2),
-		HPBar_CenterPos.iX - (HPBAR_WIDE / 2) + (HPBAR_WIDE * this->iShield_Now / this->iHP_Max),
-		HPBar_CenterPos.iY + (SHIELDBAR_HEIGHT / 2),
-		GetColor(0, 0, 255),
-		TRUE
-	);
+		/* シールドアイコン描写 */
+		DrawGraph(
+			(this->BasePos.iX - (HPBAR_WIDE / 2)) - (Shield_Icon_SizeX / 2),
+			(this->BasePos.iY - this->SizeY - HPBAR_UPPER) + (HPBAR_HEIGHT / 2) - (Shield_Icon_SizeY / 2),
+			*(Shield_Icon_Image),
+			TRUE
+		);
+
+		/* 残りシールドを文字列で描写 */
+		std::string ShieldText = std::to_string(this->iShield_Now);
+
+		/* 文字列の高さ、幅を取得 */
+		int iShield_Text_SizeX = GetDrawStringWidthToHandle(ShieldText.c_str(), static_cast<int>(strlenDx(ShieldText.c_str())), giFont_JF_Dot_MPlus10_16);
+		int iShield_Text_SizeY = GetFontSizeToHandle(giFont_JF_Dot_MPlus10_16);
+
+		/* 残りシールドの文字列描写 */
+		DrawStringToHandle(
+			(this->BasePos.iX - (HPBAR_WIDE / 2)) - (iShield_Text_SizeX / 2),
+			(this->BasePos.iY - this->SizeY - HPBAR_UPPER) + (HPBAR_HEIGHT / 2) - (iShield_Text_SizeY / 2),
+			ShieldText.c_str(),
+			GetColor(255, 255, 255),
+			giFont_JF_Dot_MPlus10_16
+		);
+	}
 }
 
 // 指定の名称の画像を設定する

@@ -81,6 +81,7 @@ void Card_Base::BattleAction()
 							addEffect->DamageAmount		= this->Strength + this->Strength_Buff;	// ダメージ量:カードの攻撃力
 							addEffect->AllRange			= false;								// 全体攻撃でない
 							addEffect->EffectUser		= this->pPlayer;						// 効果の使用者:プレイヤーキャラクター
+							addEffect->Priority			= 5;									// 敵よりは高め
 							this->pDataList_Battle->AddEffect(addEffect, GetMyAreaNo());
 							break;
 						}
@@ -109,6 +110,7 @@ void Card_Base::BattleAction()
 							addEffect->DamageAmount		= this->Strength + this->Strength_Buff;	// ダメージ量:カードの攻撃力
 							addEffect->AllRange			= false;								// 全体攻撃でない
 							addEffect->EffectUser		= this->pPlayer;						// 効果の使用者:プレイヤーキャラクター
+							addEffect->Priority			= 5;									// 敵よりは高め
 							this->pDataList_Battle->AddEffect(addEffect, GetMyAreaNo());
 							break;
 						}
@@ -127,6 +129,7 @@ void Card_Base::BattleAction()
 					addEffect->DamageAmount		= this->Strength + this->Strength_Buff;	// ダメージ量:カードの攻撃力
 					addEffect->AllRange			= true;									// 全体攻撃である
 					addEffect->EffectUser		= this->pPlayer;						// 効果の使用者:プレイヤーキャラクター
+					addEffect->Priority			= 5;									// 敵よりは高め
 					this->pDataList_Battle->AddEffect(addEffect, GetMyAreaNo());
 				}
 				break;
@@ -144,6 +147,7 @@ void Card_Base::BattleAction()
 		addEffect->ShieldAmount		= this->Diffence + this->Diffence_Buff;	// シールド付与量:カードの防御力
 		addEffect->EffectUser		= this->pPlayer;						// 効果の使用者:プレイヤーキャラクター
 		addEffect->AllRange			= true;									// 全体付与である
+		addEffect->Priority			= 100;									// そうとう優先度高め
 		this->pDataList_Battle->AddEffect(addEffect, GetMyAreaNo());
 	}
 }

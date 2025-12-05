@@ -151,26 +151,22 @@ void Scene_Title::AdvanceFontLoad()
 	std::shared_ptr<DataList_Font> pDataList_Font = std::dynamic_pointer_cast<DataList_Font>(gpDataListServer->GetDataList("DataList_Font"));
 
 	/* フォントデータ読み込み */
-	// どんぐりデュエル(16px)
-	std::string FontFilePath = "DonguriDuel_16px";
-	pDataList_Font->LoadFontHandle_ASync(FontFilePath, 0);
-	giFont_DonguriDuel_16 = pDataList_Font->iGetFontHnadle(FontFilePath);
 	// どんぐりデュエル(32px)
-	FontFilePath = "DonguriDuel_32px";
+	std::string FontFilePath = "DonguriDuel_32px";
 	pDataList_Font->LoadFontHandle_ASync(FontFilePath, 0);
 	giFont_DonguriDuel_32 = pDataList_Font->iGetFontHnadle(FontFilePath);
-	// どんぐりデュエル(64px)
-	FontFilePath = "DonguriDuel_64px";
+	// JF-Dot-MPlus10(16px)
+	FontFilePath = "JF-Dot-MPlus10_16px";
 	pDataList_Font->LoadFontHandle_ASync(FontFilePath, 0);
-	giFont_DonguriDuel_64 = pDataList_Font->iGetFontHnadle(FontFilePath);
-	// チェックポイント・ピリオド(16px)
-	FontFilePath = "Cp_Period_16px";
+	giFont_JF_Dot_MPlus10_16 = pDataList_Font->iGetFontHnadle(FontFilePath);
+	// JF-Dot-MPlus10(20px)
+	FontFilePath = "JF-Dot-MPlus10_20px";
 	pDataList_Font->LoadFontHandle_ASync(FontFilePath, 0);
-	giFont_Cp_Period_16 = pDataList_Font->iGetFontHnadle(FontFilePath);
-	// チェックポイント・ピリオド(32px)
-	FontFilePath = "Cp_Period_32px";
+	giFont_JF_Dot_MPlus10_20 = pDataList_Font->iGetFontHnadle(FontFilePath);
+	// JF-Dot-MPlus10(24px)
+	FontFilePath = "JF-Dot-MPlus10_24px";
 	pDataList_Font->LoadFontHandle_ASync(FontFilePath, 0);
-	giFont_Cp_Period_32 = pDataList_Font->iGetFontHnadle(FontFilePath);
+	giFont_JF_Dot_MPlus10_24 = pDataList_Font->iGetFontHnadle(FontFilePath);
 }
 
 // UI(ボタン)の作成

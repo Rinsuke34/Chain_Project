@@ -323,7 +323,7 @@ void Action_Effect_Attack::Draw_Effect()
 		IMAGE_SIZE_HEIGHT / 2 - 8,
 		DamageText.c_str(),
 		GetColor(0, 0, 0),
-		giFont_Cp_Period_16
+		giFont_JF_Dot_MPlus10_24
 	);
 }
 
@@ -452,7 +452,7 @@ void Action_Effect_Defence::Draw_Effect()
 		IMAGE_SIZE_HEIGHT / 2 - 8,
 		DamageText.c_str(),
 		GetColor(0, 0, 0),
-		giFont_Cp_Period_16
+		giFont_JF_Dot_MPlus10_24
 	);
 }
 

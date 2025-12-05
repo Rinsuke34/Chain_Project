@@ -30,6 +30,7 @@ void Card_Spell_Base::BattleAction()
 	pSpellEffect->EffectUser		= this->pPlayer;					// 効果の使用者:プレイヤーキャラクター
 	pSpellEffect->AllRange			= false;							// 全体効果でない
 	pSpellEffect->ExEffectCard		= std::dynamic_pointer_cast<Card_Spell_Base>(shared_from_this());
+	pSpellEffect->Priority			= 40;								// ちょっと低め
 	this->pDataList_Battle->AddEffect(pSpellEffect, GetMyAreaNo());
 }
 
@@ -158,8 +159,8 @@ void Card_Spell_Base::DrawName()
 	/* カード名描写 */
 	{
 		// 文字列の高さ、幅を取得
-		int iSizeX = GetDrawStringWidthToHandle(this->Name.c_str(), static_cast<int>(strlenDx(this->Name.c_str())), giFont_Cp_Period_16);
-		int iSizeY = GetFontSizeToHandle(giFont_Cp_Period_16);
+		int iSizeX = GetDrawStringWidthToHandle(this->Name.c_str(), static_cast<int>(strlenDx(this->Name.c_str())), giFont_JF_Dot_MPlus10_20);
+		int iSizeY = GetFontSizeToHandle(giFont_JF_Dot_MPlus10_20);
 
 		// 文字列描写
 		DrawStringToHandle(
@@ -167,7 +168,7 @@ void Card_Spell_Base::DrawName()
 			(IMAGE_SIZE_HEIGHT / 2) - (CARD_HEIGHT / 2) + NAMEPLATE_POSITION_Y - (iSizeY / 2),
 			this->Name.c_str(),
 			GetColor(255, 255, 255),
-			giFont_Cp_Period_16
+			giFont_JF_Dot_MPlus10_20
 		);
 	}
 }

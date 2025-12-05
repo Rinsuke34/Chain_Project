@@ -36,6 +36,7 @@ void Card_Item_HealingPotion::Effect_StartAction()
 	addEffect->HealAmount						= 5 + this->iNowChainCount * 5;		// 回復量:5 + (チェイン数 * 5)
 	addEffect->EffectUser						= this->pPlayer;					// 効果の使用者:プレイヤーキャラクター
 	addEffect->AllRange							= true;								// 全体に効果を与える
+	addEffect->Priority							= 30;								// 低め
 	this->pDataList_Battle->AddEffect(addEffect, GetMyAreaNo());
 
 	/* ロストフラグを有効化 */

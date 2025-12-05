@@ -142,8 +142,8 @@ void Card_Item_Base::DrawName()
 	/* ƒJ[ƒh–¼•`ŽÊ */
 	{
 		// •¶Žš—ñ‚Ì‚‚³A•‚ðŽæ“¾
-		int iSizeX = GetDrawStringWidthToHandle(this->Name.c_str(), static_cast<int>(strlenDx(this->Name.c_str())), giFont_Cp_Period_16);
-		int iSizeY = GetFontSizeToHandle(giFont_Cp_Period_16);
+		int iSizeX = GetDrawStringWidthToHandle(this->Name.c_str(), static_cast<int>(strlenDx(this->Name.c_str())), giFont_JF_Dot_MPlus10_20);
+		int iSizeY = GetFontSizeToHandle(giFont_JF_Dot_MPlus10_20);
 
 		// •¶Žš—ñ•`ŽÊ
 		DrawStringToHandle(
@@ -151,7 +151,7 @@ void Card_Item_Base::DrawName()
 			(IMAGE_SIZE_HEIGHT / 2) - (CARD_HEIGHT / 2) + NAMEPLATE_POSITION_Y - (iSizeY / 2),
 			this->Name.c_str(),
 			GetColor(255, 255, 255),
-			giFont_Cp_Period_16
+			giFont_JF_Dot_MPlus10_20
 		);
 	}
 }

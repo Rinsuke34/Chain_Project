@@ -62,8 +62,8 @@ void Card_Arms_Base::DrawImage()
 	std::string strAttack		= std::to_string(this->Strength + this->Strength_Buff);
 	
 	// •¶Žš—ñ‚Ì‚‚³A•‚ðŽæ“¾
-	int iSizeX = GetDrawStringWidthToHandle(this->Name.c_str(), static_cast<int>(strlenDx(strAttack.c_str())), giFont_Cp_Period_16);
-	int iSizeY = GetFontSizeToHandle(giFont_Cp_Period_16);
+	int iSizeX = GetDrawStringWidthToHandle(this->Name.c_str(), static_cast<int>(strlenDx(strAttack.c_str())), giFont_JF_Dot_MPlus10_24);
+	int iSizeY = GetFontSizeToHandle(giFont_JF_Dot_MPlus10_24);
 
 	// •¶Žš—ñ•`ŽÊ
 	DrawStringToHandle(
@@ -71,14 +71,14 @@ void Card_Arms_Base::DrawImage()
 		(IMAGE_SIZE_HEIGHT / 2) - (CARD_HEIGHT / 2) + ARMS_STATUS_Y_POS - (iSizeY / 2),
 		strAttack.c_str(),
 		this->Strength_Buff == 0 ? GetColor(255, 255, 255) : GetColor(255, 255, 0),
-		giFont_Cp_Period_16
+		giFont_JF_Dot_MPlus10_24
 	);
 
 	/* –hŒä—Í‚ð•`ŽÊ */
 	std::string strDiffence = std::to_string(this->Diffence + this->Diffence_Buff);
 
 	// •¶Žš—ñ‚Ì‚‚³A•‚ðŽæ“¾
-	iSizeX = GetDrawStringWidthToHandle(this->Name.c_str(), static_cast<int>(strlenDx(strDiffence.c_str())), giFont_Cp_Period_16);
+	iSizeX = GetDrawStringWidthToHandle(this->Name.c_str(), static_cast<int>(strlenDx(strDiffence.c_str())), giFont_JF_Dot_MPlus10_24);
 
 	// •¶Žš—ñ•`ŽÊ
 	DrawStringToHandle(
@@ -86,7 +86,7 @@ void Card_Arms_Base::DrawImage()
 		(IMAGE_SIZE_HEIGHT / 2) - (CARD_HEIGHT / 2) + ARMS_STATUS_Y_POS - (iSizeY / 2),
 		strDiffence.c_str(),
 		this->Diffence_Buff == 0 ? GetColor(255, 255, 255) : GetColor(255, 255, 0),
-		giFont_Cp_Period_16
+		giFont_JF_Dot_MPlus10_24
 	);
 }
 
@@ -173,8 +173,8 @@ void Card_Arms_Base::DrawName()
 	/* ƒJ[ƒh–¼•`ŽÊ */
 	{
 		// •¶Žš—ñ‚Ì‚‚³A•‚ðŽæ“¾
-		int iSizeX = GetDrawStringWidthToHandle(this->Name.c_str(), static_cast<int>(strlenDx(this->Name.c_str())), giFont_Cp_Period_16);
-		int iSizeY = GetFontSizeToHandle(giFont_Cp_Period_16);
+		int iSizeX = GetDrawStringWidthToHandle(this->Name.c_str(), static_cast<int>(strlenDx(this->Name.c_str())), giFont_JF_Dot_MPlus10_20);
+		int iSizeY = GetFontSizeToHandle(giFont_JF_Dot_MPlus10_20);
 
 		// •¶Žš—ñ•`ŽÊ
 		DrawStringToHandle(
@@ -182,7 +182,7 @@ void Card_Arms_Base::DrawName()
 			(IMAGE_SIZE_HEIGHT / 2) - (CARD_HEIGHT / 2) + NAMEPLATE_POSITION_Y - (iSizeY / 2),
 			this->Name.c_str(),
 			GetColor(255, 255, 255),
-			giFont_Cp_Period_16
+			giFont_JF_Dot_MPlus10_20
 		);
 	}
 }

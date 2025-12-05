@@ -3,8 +3,7 @@
 #pragma once
 
 /* フォントデータ */
-extern int giFont_DonguriDuel_16;	// どんぐりデュエル(16px)
-extern int giFont_DonguriDuel_32;	// どんぐりデュエル(32px)
-extern int giFont_DonguriDuel_64;	// どんぐりデュエル(64px)
-extern int giFont_Cp_Period_16;		// チェックポイント・ピリオド(16px)
-extern int giFont_Cp_Period_32;		// チェックポイント・ピリオド(32px)
+extern int giFont_DonguriDuel_32;		// どんぐりデュエル(32px)
+extern int giFont_JF_Dot_MPlus10_16;	// JF-Dot-MPlus10(16px)
+extern int giFont_JF_Dot_MPlus10_20;	// JF-Dot-MPlus10(20px)
+extern int giFont_JF_Dot_MPlus10_24;	// JF-Dot-MPlus10(24px)

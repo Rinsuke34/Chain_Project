@@ -33,13 +33,18 @@ void Character_Npc_Test::Action()
 			pTargetCharacter = this->pDataList_Battle->GetFriendCharacter(i);
 			if (pTargetCharacter != nullptr)
 			{
+				// ランダムなバトルエリアを対象とする
+				int BattleAreaNo = GetRand(DataList_Battle::BATTLE_AREA_MAX - 1);
+
 				// 攻撃行動を設定する
 				std::shared_ptr<Action_Effect_Attack> addEffect	= std::make_shared<Action_Effect_Attack>();
 				addEffect->Target_Camp		= Character_Base::CAMP_FRIEND;	// 効果対象の陣営:味方
 				addEffect->Target_Position	= i;							// 効果対象の立ち位置:確認した敵キャラクターの位置
-				addEffect->DamageAmount		= 5;							// ダメージ量
+				addEffect->DamageAmount		= 10;							// ダメージ量
 				addEffect->EffectUser		= shared_from_this();			// 効果の使用者:自分自身
-				this->pDataList_Battle->AddEffect(addEffect, DataList_Battle::BATTLE_AREA_1);
+				addEffect->Setting_Position = this->BasePos;				// 設定座標:自分の座標
+				addEffect->Priority			= 50;							// 標準
+				this->pDataList_Battle->AddEffect(addEffect, BattleAreaNo);
 				break;
 			}
 		}
