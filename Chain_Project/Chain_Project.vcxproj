@@ -192,6 +192,7 @@
     <ClCompile Include="source\Scene_Buttle_Update.cpp" />
     <ClCompile Include="source\Scene_Load_Checker.cpp" />
     <ClCompile Include="source\Scene_Load_Draw.cpp" />
+    <ClCompile Include="source\Scene_Particles_Text.cpp" />
     <ClCompile Include="source\Scene_Title.cpp" />
     <ClCompile Include="source\Scene_UI_Button.cpp" />
     <ClCompile Include="source\VariableDefine.cpp" />
@@ -222,6 +223,7 @@
     <ClInclude Include="source\Scene_Build.h" />
     <ClInclude Include="source\Scene_Load_Checker.h" />
     <ClInclude Include="source\Scene_Load_Draw.h" />
+    <ClInclude Include="source\Scene_Particles_Text.h" />
     <ClInclude Include="source\Scene_Title.h" />
     <ClInclude Include="source\Scene_UI_Button.h" />
     <ClInclude Include="source\VariableDefine.h" />

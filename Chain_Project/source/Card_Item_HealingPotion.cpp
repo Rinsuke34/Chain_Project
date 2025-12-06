@@ -15,7 +15,7 @@ Card_Item_HealingPotion::Card_Item_HealingPotion() : Card_Item_Base()
 	// レアリティ
 	this->iRarity = RARITY_COMMON;
 	// カード名
-	this->Name = "回復のポーション";
+	this->Name = "回復薬";
 	// スートリスト
 	this->Suite_List.push_back(SUITE_POTION);	// 薬(ポーション)
 	// 画像の名前

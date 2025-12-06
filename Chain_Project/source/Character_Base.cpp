@@ -6,6 +6,7 @@
 // 共通定義
 #include "VariableDefine.h"
 // 関連クラス
+#include "Scene_Particles_Text.h"
 #include "DataList_Image.h"
 
 // コンストラクタ
@@ -51,12 +52,6 @@ void Character_Base::Draw()
 
 	/* ステータスバーの描写 */
 	Draw_StatusBar();
-
-	///* 体力バー描画 */
-	//Draw_HPBar();
-
-	///* シールドバー描写 */
-	//Draw_ShieldBar();
 }
 
 // ステータスバーを描写
@@ -160,14 +155,14 @@ void Character_Base::SetUpImage(std::string ImageName)
 void Character_Base::Action_Attack()
 {
 	/* 攻撃時のリアクションを設定 */
-	this->AttackReaction	= 30;
+	this->AttackReaction	= 15;
 }
 
 // バフ付与アクション
 void Character_Base::Action_AddBuff()
 {
 	/* バフ取得時のリアクションを設定 */
-	this->AddBuffReaction = 30;
+	this->AddBuffReaction = 15;
 }
 
 // ダメージ処理
@@ -175,6 +170,10 @@ void Character_Base::Damage(int DamageAmount)
 {
 	// 引数
 	// DamageAmount : ダメージ量
+
+	/* 計算前の体力、シールドを保存 */
+	int OldHP		= this->iHP_Now;
+	int OldShield	= this->iShield_Now;
 
 	/* シールドでダメージを軽減 */
 	if (this->iShield_Now > 0)
@@ -193,6 +192,17 @@ void Character_Base::Damage(int DamageAmount)
 			DamageAmount -= this->iShield_Now;
 			this->iShield_Now = 0;
 		}
+
+		/* シールド減少量分のテキストを描写 */
+		std::shared_ptr<Scene_Particles_Text> AddText = std::make_shared<Scene_Particles_Text>();
+		std::string DamageText = std::to_string(OldShield - this->iShield_Now);
+		AddText->SetText(DamageText);
+		AddText->SetPosition({ this->BasePos.iX - (HPBAR_WIDE / 2), this->BasePos.iY - this->SizeY - HPBAR_UPPER + (HPBAR_HEIGHT / 2) });
+		AddText->SetFontHandle(giFont_JF_Dot_MPlus10_16_Edge);
+		AddText->SetMove({ 0, -1 });
+		AddText->SetAlpha(0);
+		AddText->SetColor(GetColor(0, 191, 255));
+		gpSceneServer->AddSceneReservation(AddText);
 	}
 
 	/* 体力からダメージを減算 */
@@ -204,8 +214,22 @@ void Character_Base::Damage(int DamageAmount)
 		this->iHP_Now = 0;
 	}
 
+	/* 体力が1以上減少しているなら体力減少量分のテキストを描写 */
+	if ((OldHP - this->iHP_Now) > 0)
+	{
+		std::shared_ptr<Scene_Particles_Text> AddText = std::make_shared<Scene_Particles_Text>();
+		std::string DamageText = std::to_string(OldHP - this->iHP_Now);
+		AddText->SetText(DamageText);
+		AddText->SetPosition({ this->BasePos.iX, this->BasePos.iY - this->SizeY - HPBAR_UPPER + (HPBAR_HEIGHT / 2) });
+		AddText->SetFontHandle(giFont_JF_Dot_MPlus10_20_Edge);
+		AddText->SetMove({ 0, -1 });
+		AddText->SetAlpha(0);
+		AddText->SetColor(GetColor(255, 0, 0));
+		gpSceneServer->AddSceneReservation(AddText);
+	}
+
 	/* 被ダメージ時のリアクションを設定 */
-	this->DamageReaction = 30;
+	this->DamageReaction = 15;
 }
 
 // シールド追加処理

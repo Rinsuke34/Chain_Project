@@ -3,7 +3,9 @@
 #pragma once
 
 /* フォントデータ */
-extern int giFont_DonguriDuel_32;		// どんぐりデュエル(32px)
-extern int giFont_JF_Dot_MPlus10_16;	// JF-Dot-MPlus10(16px)
-extern int giFont_JF_Dot_MPlus10_20;	// JF-Dot-MPlus10(20px)
-extern int giFont_JF_Dot_MPlus10_24;	// JF-Dot-MPlus10(24px)
+extern int giFont_DonguriDuel_32;			// どんぐりデュエル(32px)
+extern int giFont_JF_Dot_MPlus10_16;		// JF-Dot-MPlus10(16px)
+extern int giFont_JF_Dot_MPlus10_20;		// JF-Dot-MPlus10(20px)
+extern int giFont_JF_Dot_MPlus10_24;		// JF-Dot-MPlus10(24px)
+extern int giFont_JF_Dot_MPlus10_16_Edge;	// JF-Dot-MPlus10(16px/エッジ付き)
+extern int giFont_JF_Dot_MPlus10_20_Edge;	// JF-Dot-MPlus10(20px/エッジ付き)

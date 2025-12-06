@@ -159,10 +159,18 @@ void Scene_Title::AdvanceFontLoad()
 	FontFilePath = "JF-Dot-MPlus10_16px";
 	pDataList_Font->LoadFontHandle_ASync(FontFilePath, 0);
 	giFont_JF_Dot_MPlus10_16 = pDataList_Font->iGetFontHnadle(FontFilePath);
+	// JF-Dot-MPlus10(16px/エッジ付き)
+	FontFilePath = "JF-Dot-MPlus10_16px";
+	pDataList_Font->LoadFontHandle_ASync(FontFilePath, 8);
+	giFont_JF_Dot_MPlus10_16_Edge = pDataList_Font->iGetFontHnadle(FontFilePath);
 	// JF-Dot-MPlus10(20px)
 	FontFilePath = "JF-Dot-MPlus10_20px";
 	pDataList_Font->LoadFontHandle_ASync(FontFilePath, 0);
 	giFont_JF_Dot_MPlus10_20 = pDataList_Font->iGetFontHnadle(FontFilePath);
+	// JF-Dot-MPlus10(20px/エッジ付き)
+	FontFilePath = "JF-Dot-MPlus10_20px";
+	pDataList_Font->LoadFontHandle_ASync(FontFilePath, 10);
+	giFont_JF_Dot_MPlus10_20_Edge = pDataList_Font->iGetFontHnadle(FontFilePath);
 	// JF-Dot-MPlus10(24px)
 	FontFilePath = "JF-Dot-MPlus10_24px";
 	pDataList_Font->LoadFontHandle_ASync(FontFilePath, 0);

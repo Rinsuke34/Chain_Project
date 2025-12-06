@@ -157,6 +157,12 @@
     <Filter Include="ソース ファイル\行動内容">
       <UniqueIdentifier>{ae3931cd-25ad-44c2-913c-3ca096e67a0d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\シーン\パーティクル%28文字%29">
+      <UniqueIdentifier>{e2410b03-7155-449f-8edf-0d6e3ff98604}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\シーン\パーティクル%28文字%29">
+      <UniqueIdentifier>{0cbc5560-0153-48f3-944d-0bbc1958ef20}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Main.cpp">
@@ -237,6 +243,9 @@
     <ClCompile Include="source\Action_Effect.cpp">
       <Filter>ソース ファイル\行動内容</Filter>
     </ClCompile>
+    <ClCompile Include="source\Scene_Particles_Text.cpp">
+      <Filter>ソース ファイル\シーン\パーティクル%28文字%29</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Scene_Load_Checker.h">
@@ -307,6 +316,9 @@
     </ClInclude>
     <ClInclude Include="source\Action_Effect.h">
       <Filter>ヘッダー ファイル\行動内容</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Scene_Particles_Text.h">
+      <Filter>ヘッダー ファイル\シーン\パーティクル%28文字%29</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
