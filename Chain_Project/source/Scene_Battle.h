@@ -45,7 +45,7 @@ class Scene_Battle : public Scene_Base
 		static const int	DECISIONBUTTON_POS_X				= 1750;	// 決定ボタンのX座標
 		static const int	DECISIONBUTTON_POS_Y				= 640;	// 決定ボタンのY座標
 		static const int	CHARACTER_INTERVAL					= 200;	// キャラクターの間隔
-		static const int	CHARACTER_POS_Y						= 260;	// キャラクターのY座標
+		static const int	CHARACTER_POS_Y						= 280;	// キャラクターのY座標
 		static const int	BATTLE_AREA_HEIGHT					= 288;	// バトルエリアの高さ
 		static const int	BATTLE_AREA_WIDE					= 218;	// バトルエリアの幅
 
@@ -61,6 +61,7 @@ class Scene_Battle : public Scene_Base
 		/* 関数 */
 		// 画像
 		std::shared_ptr<int> Image_BattleArea[2];	// バトルエリア[0:通常時, 1:カーソル接触時]
+		std::shared_ptr<int> Image_BackGround[3];	// 背景画像[0:キャラクター立ち位置の背景, 1:キャラクター立ち位置の足場, 2:カード置き場]
 		// 各フェーズごとの更新処理
 		void Update_EffectTurnStart();		// "ターン開始時"の効果発動
 		void Update_DrawCard();				// カードドロー

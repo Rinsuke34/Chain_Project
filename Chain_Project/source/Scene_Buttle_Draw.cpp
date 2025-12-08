@@ -20,9 +20,25 @@ void Scene_Battle::Draw_BackGround()
 	/* 仮 */
 	DrawBox(0, 0, SCREEN_SIZE_WIDE, SCREEN_SIZE_HEIGHT, GetColor(0, 128, 0), TRUE);
 
-	/* テスト */
-	DrawLine(0, 300, SCREEN_SIZE_WIDE, 300, GetColor(255, 255, 255), 5);
-	DrawLine(0, 200, SCREEN_SIZE_WIDE, 200, GetColor(255, 255, 255), 5);
+	/* 背景 */
+	DrawModiGraph(
+		0,					0,
+		SCREEN_SIZE_WIDE,	0,
+		SCREEN_SIZE_WIDE,	250,
+		0,					250,
+		*(this->Image_BackGround[0]),
+		TRUE
+	);
+
+	/* 背景 */
+	DrawModiGraph(
+		0, 250,
+		SCREEN_SIZE_WIDE, 250,
+		SCREEN_SIZE_WIDE, 300,
+		0, 300,
+		*(this->Image_BackGround[1]),
+		TRUE
+	);
 
 	DrawFormatString(50, 50, GetColor(0, 0, 0), "デッキ枚数 : %llu", static_cast<unsigned long long>(this->pDataList_Battle->GetDeckCardList().size()));
 	DrawFormatString(50, 70, GetColor(0, 0, 0), "トラッシュ枚数 : %llu", static_cast<unsigned long long>(this->pDataList_Battle->GetTrashCardList().size()));

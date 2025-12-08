@@ -43,6 +43,12 @@ Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 0, false, false)
 		this->Image_BattleArea[0] = pDataList_Image->iGetImageHandle(ImageFilePath);
 		ImageFilePath = "UI/Battle/UI_BattleArea_Over";
 		this->Image_BattleArea[1] = pDataList_Image->iGetImageHandle(ImageFilePath);
+
+		// 背景画像[0:キャラクター立ち位置の背景, 1:キャラクター立ち位置の足場, 2:カード置き場]
+		ImageFilePath = "BackGround/Battle_Cave_BackGround";
+		this->Image_BackGround[0] = pDataList_Image->iGetImageHandle(ImageFilePath);
+		ImageFilePath = "BackGround/Battle_Cave_Floor";
+		this->Image_BackGround[1] = pDataList_Image->iGetImageHandle(ImageFilePath);
 	}
 
 	/* UI作成 */
