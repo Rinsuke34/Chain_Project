@@ -17,7 +17,8 @@
 #include "Card_Item_HealingPotion.h"
 #include "Card_Spell_ArmsEnhancement.h"
 #include "Character_Player.h"
-#include "Character_Npc_Test.h"
+#include "Character_Npc_Slime_Green.h"
+#include "Character_Npc_Bat.h"
 
 // コンストラクタ
 Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 0, false, false)
@@ -81,9 +82,9 @@ Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 0, false, false)
 	this->pDataList_Battle->SetFriendCharacter(0, nullptr);
 	this->pDataList_Battle->SetFriendCharacter(1, std::make_shared<Character_Player>());
 	this->pDataList_Battle->SetFriendCharacter(2, nullptr);
-	this->pDataList_Battle->SetEnemyCharacter(0, std::make_shared<Character_Npc_Test>());
-	this->pDataList_Battle->SetEnemyCharacter(1, std::make_shared<Character_Npc_Test>());
-	this->pDataList_Battle->SetEnemyCharacter(2, std::make_shared<Character_Npc_Test>());
+	this->pDataList_Battle->SetEnemyCharacter(0, std::make_shared<Character_Slime_Green>());
+	this->pDataList_Battle->SetEnemyCharacter(1, std::make_shared<Character_Slime_Green>());
+	this->pDataList_Battle->SetEnemyCharacter(2, std::make_shared<Character_Bat>());
 
 }
 

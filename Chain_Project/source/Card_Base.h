@@ -133,5 +133,6 @@ class Card_Base : public std::enable_shared_from_this<Card_Base>
 		virtual void	DrawSuite()			{};	// スートを描写
 		virtual void	DrawFrame()			{};	// フレームを描写
 		virtual void	DrawName()			{};	// 名前を描写
+		virtual void	DrawExText()		{};	// 追加テキストの描写
 		virtual void	CheckHavePlayer();		// プレイヤーを取得しているか確認
 };

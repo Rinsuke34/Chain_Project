@@ -1,0 +1,53 @@
+/* キャラクター(コウモリ)の定義 */
+
+/* 使用する要素のインクルード */
+// ヘッダファイル
+#include "Character_Npc_Bat.h"
+// 関連クラス
+#include "DataList_Battle.h"
+
+// コンストラクタ
+Character_Bat::Character_Bat() : Character_Base()
+{
+	/* 初期化 */
+	this->iHP_Max	= 10;			// 体力(最大値)
+	this->iHP_Now	= 10;			// 体力(現在値)
+	this->Camp		= Character_Base::CAMP_ENEMY;	// 陣営:敵陣営
+	this->SizeX		= 150;			// キャラクターの幅
+	this->SizeY		= 150;			// キャラクターの高さ
+	this->ActionEffectSizeX = 75;	// 行動内容描写部分でのキャラクターの幅
+	this->ActionEffectSizeY = 75;	// 行動内容描写部分でのキャラクターの高さ
+	this->EyeHeight = -15;			// 目線の高さ(行動内容アイコンの描写位置)
+	SetUpImage("Character_Ilust/Npc/Bat");
+}
+
+// 行動
+void Character_Bat::Action()
+{
+	/* プレイヤー側の最も前のキャラクターに対して攻撃を作成する */
+	if (this->pDataList_Battle != nullptr)
+	{
+		// 最も前の仲間キャラクターを取得
+		std::shared_ptr<Character_Base> pTargetCharacter = nullptr;
+		for (int i = DataList_Battle::BATTLE_AREA_1; i < DataList_Battle::BATTLE_AREA_MAX; i++)
+		{
+			pTargetCharacter = this->pDataList_Battle->GetFriendCharacter(i);
+			if (pTargetCharacter != nullptr)
+			{
+				// ランダムなバトルエリアを対象とする
+				int BattleAreaNo = GetRand(DataList_Battle::BATTLE_AREA_MAX - 1);
+
+				// 攻撃行動を設定する
+				std::shared_ptr<Action_Effect_Attack> addEffect = std::make_shared<Action_Effect_Attack>();
+				addEffect->Target_Camp		= Character_Base::CAMP_FRIEND;	// 効果対象の陣営:味方
+				addEffect->Target_Position	= i;							// 効果対象の立ち位置:確認した敵キャラクターの位置
+				addEffect->DamageAmount		= 7;							// ダメージ量
+				addEffect->EffectUser		= shared_from_this();			// 効果の使用者:自分自身
+				addEffect->Setting_Position	= this->BasePos;				// 設定座標:自分の座標
+				addEffect->Priority			= 50;							// 標準
+				this->pDataList_Battle->AddEffect(addEffect, BattleAreaNo);
+				break;
+			}
+		}
+	}
+}

@@ -163,6 +163,18 @@
     <Filter Include="ソース ファイル\シーン\パーティクル%28文字%29">
       <UniqueIdentifier>{0cbc5560-0153-48f3-944d-0bbc1958ef20}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\キャラクター\NPC\スライム%28緑%29">
+      <UniqueIdentifier>{1726866d-b068-441a-b6bd-7fe0c2fe192e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\キャラクター\NPC\スライム%28緑%29">
+      <UniqueIdentifier>{1278876d-5433-4dcc-8439-94eebac6b402}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\キャラクター\NPC\コウモリ">
+      <UniqueIdentifier>{c46c00b7-b044-4a25-a30e-b9889d377ba7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\キャラクター\NPC\コウモリ">
+      <UniqueIdentifier>{bd921c52-cd40-4bd1-83c7-ba9f81616785}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Main.cpp">
@@ -225,9 +237,6 @@
     <ClCompile Include="source\Character_Player.cpp">
       <Filter>ソース ファイル\キャラクター\プレイヤー</Filter>
     </ClCompile>
-    <ClCompile Include="source\Character_Npc_Test.cpp">
-      <Filter>ソース ファイル\キャラクター\NPC</Filter>
-    </ClCompile>
     <ClCompile Include="source\Card_Arms_WoodenSword.cpp">
       <Filter>ソース ファイル\カード\武具%28Arms%29\木の剣</Filter>
     </ClCompile>
@@ -245,6 +254,12 @@
     </ClCompile>
     <ClCompile Include="source\Scene_Particles_Text.cpp">
       <Filter>ソース ファイル\シーン\パーティクル%28文字%29</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Character_Npc_Bat.cpp">
+      <Filter>ソース ファイル\キャラクター\NPC\コウモリ</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Character_Npc_Slime_Green.cpp">
+      <Filter>ソース ファイル\キャラクター\NPC\スライム%28緑%29</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -299,9 +314,6 @@
     <ClInclude Include="source\Character_Player.h">
       <Filter>ヘッダー ファイル\キャラクター\プレイヤー</Filter>
     </ClInclude>
-    <ClInclude Include="source\Character_Npc_Test.h">
-      <Filter>ヘッダー ファイル\キャラクター\NPC</Filter>
-    </ClInclude>
     <ClInclude Include="source\Card_Arms_WoodenSword.h">
       <Filter>ヘッダー ファイル\カード\武具%28Arms%29\木の剣</Filter>
     </ClInclude>
@@ -319,6 +331,12 @@
     </ClInclude>
     <ClInclude Include="source\Scene_Particles_Text.h">
       <Filter>ヘッダー ファイル\シーン\パーティクル%28文字%29</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Character_Npc_Bat.h">
+      <Filter>ヘッダー ファイル\キャラクター\NPC\コウモリ</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Character_Npc_Slime_Green.h">
+      <Filter>ヘッダー ファイル\キャラクター\NPC\スライム%28緑%29</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

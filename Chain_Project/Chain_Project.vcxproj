@@ -179,7 +179,8 @@
     <ClCompile Include="source\Card_Spell_ArmsEnhancement.cpp" />
     <ClCompile Include="source\Card_Spell_Base.cpp" />
     <ClCompile Include="source\Character_Base.cpp" />
-    <ClCompile Include="source\Character_Npc_Test.cpp" />
+    <ClCompile Include="source\Character_Npc_Bat.cpp" />
+    <ClCompile Include="source\Character_Npc_Slime_Green.cpp" />
     <ClCompile Include="source\Character_Player.cpp" />
     <ClCompile Include="source\DataList_Battle.cpp" />
     <ClCompile Include="source\DataList_Font.cpp" />
@@ -213,7 +214,8 @@
     <ClInclude Include="source\Card_Spell_ArmsEnhancement.h" />
     <ClInclude Include="source\Card_Spell_Base.h" />
     <ClInclude Include="source\Character_Base.h" />
-    <ClInclude Include="source\Character_Npc_Test.h" />
+    <ClInclude Include="source\Character_Npc_Bat.h" />
+    <ClInclude Include="source\Character_Npc_Slime_Green.h" />
     <ClInclude Include="source\Character_Player.h" />
     <ClInclude Include="source\DataList_Battle.h" />
     <ClInclude Include="source\DataList_Font.h" />

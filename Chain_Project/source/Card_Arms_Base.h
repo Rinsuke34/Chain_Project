@@ -13,13 +13,17 @@ class Card_Arms_Base : public Card_Base
 		Card_Arms_Base();				// コンストラクタ
 		virtual ~Card_Arms_Base() {};	// デストラクタ
 
+		/* 関数 */
+		virtual void Add_Strength_Buff(int amount) override;		// 攻撃力バフ追加
+		virtual void Add_Diffence_Buff(int amount) override;		// 防御力バフ追加
+
 		/* 定数 */
 		static const int ARMS_CARD_IMAGE_WIDE		= 110;	// カード画像の幅
 		static const int ARMS_CARD_IMAGE_HEIGHT		= 110;	// カード画像の高さ
 		static const int ARMS_ILLUSTRATION_POS_Y	= 10;	// イラストのY位置
-		static const int ARMS_ATTACK_X_POS			= -30;	// 攻撃力表示のX位置(中心から見て)
-		static const int ARMS_DIFFENSE_X_POS		= 45;	// 防御力表示のX位置(中心から見て)
-		static const int ARMS_STATUS_Y_POS			= 206;	// ステータス表示のY位置
+		static const int ARMS_ATTACK_X_POS			= -26;	// 攻撃力表示のX位置(中心から見て)
+		static const int ARMS_DIFFENSE_X_POS		= 48;	// 防御力表示のX位置(中心から見て)
+		static const int ARMS_STATUS_Y_POS			= 207;	// ステータス表示のY位置
 
 	protected:
 		/* 関数 */
@@ -28,4 +32,5 @@ class Card_Arms_Base : public Card_Base
 		virtual void	DrawSuite()			override;	// スートを描写
 		virtual void	DrawFrame()			override;	// フレームを描写
 		virtual void	DrawName()			override;	// 名前を描写
+		virtual void	DrawExText()		override;	// 追加テキストの描写
 };

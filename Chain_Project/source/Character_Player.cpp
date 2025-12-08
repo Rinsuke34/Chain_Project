@@ -14,5 +14,5 @@ Character_Player::Character_Player() : Character_Base()
 	this->SizeX		= PLAYER_WIDE;		// キャラクターの幅
 	this->SizeY		= PLAYER_HEIGHT;	// キャラクターの高さ
 	this->EyeHeight = -20;				// 目線の高さ(行動内容アイコンの描写位置)
-	SetUpImage("Character_Ilust/Player/Test_Player");
+	SetUpImage("Character_Ilust/Player/Player_Rogue");
 }

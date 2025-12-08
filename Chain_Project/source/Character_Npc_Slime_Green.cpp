@@ -1,27 +1,28 @@
-/* キャラクター(テストNPC)の定義 */
+/* キャラクター(スライム(緑))の定義 */
 
 /* 使用する要素のインクルード */
 // ヘッダファイル
-#include "Character_Npc_Test.h"
+#include "Character_Npc_Slime_Green.h"
 // 関連クラス
 #include "DataList_Battle.h"
 
 // コンストラクタ
-Character_Npc_Test::Character_Npc_Test()
+Character_Slime_Green::Character_Slime_Green() : Character_Base()
 {
 	/* 初期化 */
-	this->iHP_Max	= 100;			// 体力(最大値)
-	this->iHP_Now	= 100;			// 体力(現在値)
+	this->iHP_Max	= 15;			// 体力(最大値)
+	this->iHP_Now	= 15;			// 体力(現在値)
 	this->Camp		= Character_Base::CAMP_ENEMY;	// 陣営:敵陣営
-	SetUpImage("Character_Ilust/Monster/Test");
-
-	/* データリスト取得 */
-	// バトル用データリスト
-	this->pDataList_Battle = std::dynamic_pointer_cast<DataList_Battle>(gpDataListServer->GetDataList("DataList_Battle"));
+	this->SizeX		= 150;			// キャラクターの幅
+	this->SizeY		= 150;			// キャラクターの高さ
+	this->ActionEffectSizeX	= 75;	// 行動内容描写部分でのキャラクターの幅
+	this->ActionEffectSizeY	= 75;	// 行動内容描写部分でのキャラクターの高さ
+	this->EyeHeight = -35;			// 目線の高さ(行動内容アイコンの描写位置)
+	SetUpImage("Character_Ilust/Npc/Slime_Green");
 }
 
 // 行動
-void Character_Npc_Test::Action()
+void Character_Slime_Green::Action()
 {
 	/* プレイヤー側の最も前のキャラクターに対して攻撃を作成する */
 	if (this->pDataList_Battle != nullptr)
@@ -37,12 +38,12 @@ void Character_Npc_Test::Action()
 				int BattleAreaNo = GetRand(DataList_Battle::BATTLE_AREA_MAX - 1);
 
 				// 攻撃行動を設定する
-				std::shared_ptr<Action_Effect_Attack> addEffect	= std::make_shared<Action_Effect_Attack>();
+				std::shared_ptr<Action_Effect_Attack> addEffect = std::make_shared<Action_Effect_Attack>();
 				addEffect->Target_Camp		= Character_Base::CAMP_FRIEND;	// 効果対象の陣営:味方
 				addEffect->Target_Position	= i;							// 効果対象の立ち位置:確認した敵キャラクターの位置
-				addEffect->DamageAmount		= 10;							// ダメージ量
+				addEffect->DamageAmount		= 5;							// ダメージ量
 				addEffect->EffectUser		= shared_from_this();			// 効果の使用者:自分自身
-				addEffect->Setting_Position = this->BasePos;				// 設定座標:自分の座標
+				addEffect->Setting_Position	= this->BasePos;				// 設定座標:自分の座標
 				addEffect->Priority			= 50;							// 標準
 				this->pDataList_Battle->AddEffect(addEffect, BattleAreaNo);
 				break;

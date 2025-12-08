@@ -124,10 +124,10 @@ void Action_Effect_Base::Draw_BackGround()
 
 		/* キャラクター画像の描画 */
 		DrawModiGraph(
-			0,								this->EffectUser->GetEyeHeight(),
-			this->EffectUser->GetSizeX(),	this->EffectUser->GetEyeHeight(),
-			this->EffectUser->GetSizeX(),	this->EffectUser->GetSizeY() + this->EffectUser->GetEyeHeight(),
-			0,								this->EffectUser->GetSizeY() + this->EffectUser->GetEyeHeight(),
+			0,											this->EffectUser->GetEyeHeight(),
+			this->EffectUser->GetActionEffectSizeX(),	this->EffectUser->GetEyeHeight(),
+			this->EffectUser->GetActionEffectSizeX(),	this->EffectUser->GetActionEffectSizeY() + this->EffectUser->GetEyeHeight(),
+			0,											this->EffectUser->GetActionEffectSizeY() + this->EffectUser->GetEyeHeight(),
 			*(ExecutorImage),
 			TRUE
 		);
@@ -320,7 +320,7 @@ void Action_Effect_Attack::Draw_Effect()
 	std::string DamageText = std::to_string(this->DamageAmount);
 	DrawStringToHandle(
 		(IMAGE_SIZE_WIDE / 2) + 30,
-		IMAGE_SIZE_HEIGHT / 2 - 8,
+		IMAGE_SIZE_HEIGHT / 2 - 11,
 		DamageText.c_str(),
 		GetColor(0, 0, 0),
 		giFont_JF_Dot_MPlus10_24

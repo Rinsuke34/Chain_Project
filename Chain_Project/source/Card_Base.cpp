@@ -3,13 +3,14 @@
 /* 使用する要素のインクルード */
 // ヘッダファイル
 #include "Card_Base.h"
-// 関連クラス
-#include "DataList_Image.h"
-#include "DataList_Battle.h"
-#include "Character_Base.h"
 // 共通定義
 #include "VariableDefine.h"
 #include "Action_Effect.h"
+// 関連クラス
+#include "Scene_Particles_Text.h"
+#include "DataList_Image.h"
+#include "DataList_Battle.h"
+#include "Character_Base.h"
 
 // コンストラクタ
 Card_Base::Card_Base()
@@ -213,6 +214,9 @@ void Card_Base::UpdateImage()
 	/* カード名描写 */
 	DrawName();
 
+	/* 追加テキスト描写 */
+	DrawExText();
+
 	/* 描画先を裏画面に戻す */
 	SetDrawScreen(DX_SCREEN_BACK);
 }
@@ -260,6 +264,12 @@ void Card_Base::Add_Strength_Buff(int amount)
 	// 引数
 	// amount	<- 加算するバフ量
 
+	/* 攻撃力 + バフ量が100以上にならないように設定する */
+	if (this->Strength + this->Strength_Buff + amount > 99)
+	{
+		amount = 100 - (this->Strength + this->Strength_Buff);
+	}
+
 	/* バフ量を加算 */
 	this->Strength_Buff += amount;
 
@@ -272,6 +282,12 @@ void Card_Base::Add_Diffence_Buff(int amount)
 {
 	// 引数
 	// amount	<- 加算するバフ量
+
+	/* 防御力 + バフ量が100以上にならないように設定する */
+	if (this->Diffence + this->Diffence_Buff + amount > 99)
+	{
+		amount = 100 - (this->Diffence + this->Diffence_Buff);
+	}
 
 	/* バフ量を加算 */
 	this->Diffence_Buff += amount;

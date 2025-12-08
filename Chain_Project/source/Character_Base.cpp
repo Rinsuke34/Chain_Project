@@ -8,6 +8,7 @@
 // 関連クラス
 #include "Scene_Particles_Text.h"
 #include "DataList_Image.h"
+#include "DataList_Battle.h"
 
 // コンストラクタ
 Character_Base::Character_Base()
@@ -21,11 +22,17 @@ Character_Base::Character_Base()
 	this->Camp				= -1;			// 陣営
 	this->SizeX				= -1;			// キャラクターの幅
 	this->SizeY				= -1;			// キャラクターの高さ
+	this->ActionEffectSizeX	= -1;			// 行動内容描写部分でのキャラクターの幅
+	this->ActionEffectSizeY	= -1;			// 行動内容描写部分でのキャラクターの高さ
 	this->CorrectionPos		= { 0, 0 };		// 補正座標
 	this->AddBuffReaction	= 0;			// バフ付与時のリアクション
 	this->DamageReaction	= 0;			// 被ダメージ時のリアクション
 	this->AttackReaction	= 0;			// 攻撃時のリアクション
 	this->EyeHeight			= 0;			// 目線の高さ(行動内容アイコンの描写位置)
+
+	/* データリスト取得 */
+	// バトル用データリスト
+	this->pDataList_Battle = std::dynamic_pointer_cast<DataList_Battle>(gpDataListServer->GetDataList("DataList_Battle"));
 }
 
 // 描画
@@ -40,15 +47,38 @@ void Character_Base::Draw()
 		GetGraphSize(*(this->Image), &this->SizeX, &this->SizeY);
 	}
 
+	/* 行動内容描写部分用のサイズが設定されていないなら画像サイズを算出 */
+	if(this->ActionEffectSizeX == -1 || this->ActionEffectSizeY == -1)
+	{
+		this->ActionEffectSizeX = this->SizeX;
+		this->ActionEffectSizeY = this->SizeY;
+	}
+
 	/* キャラクター画像の描画 */
-	DrawModiGraph(
-		this->BasePos.iX + CorrectionPos.iX - (this->SizeX / 2), this->BasePos.iY + CorrectionPos.iY - (this->SizeY),
-		this->BasePos.iX + CorrectionPos.iX + (this->SizeX / 2), this->BasePos.iY + CorrectionPos.iY - (this->SizeY),
-		this->BasePos.iX + CorrectionPos.iX + (this->SizeX / 2), this->BasePos.iY + CorrectionPos.iY,
-		this->BasePos.iX + CorrectionPos.iX - (this->SizeX / 2), this->BasePos.iY + CorrectionPos.iY,
-		*(this->Image),
-		TRUE
-	);
+	if (this->Camp == CAMP_FRIEND)
+	{
+		// 味方陣営なら右向き(画像のまま)
+		DrawModiGraph(
+			this->BasePos.iX + CorrectionPos.iX - (this->SizeX / 2), this->BasePos.iY + CorrectionPos.iY - (this->SizeY),
+			this->BasePos.iX + CorrectionPos.iX + (this->SizeX / 2), this->BasePos.iY + CorrectionPos.iY - (this->SizeY),
+			this->BasePos.iX + CorrectionPos.iX + (this->SizeX / 2), this->BasePos.iY + CorrectionPos.iY,
+			this->BasePos.iX + CorrectionPos.iX - (this->SizeX / 2), this->BasePos.iY + CorrectionPos.iY,
+			*(this->Image),
+			TRUE
+		);
+	}
+	else
+	{
+		// 敵陣営なら左右反転
+		DrawModiGraph(
+			this->BasePos.iX + CorrectionPos.iX + (this->SizeX / 2), this->BasePos.iY + CorrectionPos.iY - (this->SizeY),
+			this->BasePos.iX + CorrectionPos.iX - (this->SizeX / 2), this->BasePos.iY + CorrectionPos.iY - (this->SizeY),
+			this->BasePos.iX + CorrectionPos.iX - (this->SizeX / 2), this->BasePos.iY + CorrectionPos.iY,
+			this->BasePos.iX + CorrectionPos.iX + (this->SizeX / 2), this->BasePos.iY + CorrectionPos.iY,
+			*(this->Image),
+			TRUE
+		);
+	}
 
 	/* ステータスバーの描写 */
 	Draw_StatusBar();
