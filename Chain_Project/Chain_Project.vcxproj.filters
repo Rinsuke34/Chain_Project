@@ -151,12 +151,6 @@
     <Filter Include="ソース ファイル\カード\魔法%28Spell%29\武具強化">
       <UniqueIdentifier>{8751139a-183c-4ea5-b2dd-61855a39233d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\行動内容">
-      <UniqueIdentifier>{b8ccef21-d3a2-469f-bb9d-c7901eb36d8f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\行動内容">
-      <UniqueIdentifier>{ae3931cd-25ad-44c2-913c-3ca096e67a0d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ヘッダー ファイル\シーン\パーティクル%28文字%29">
       <UniqueIdentifier>{e2410b03-7155-449f-8edf-0d6e3ff98604}</UniqueIdentifier>
     </Filter>
@@ -174,6 +168,18 @@
     </Filter>
     <Filter Include="ソース ファイル\キャラクター\NPC\コウモリ">
       <UniqueIdentifier>{bd921c52-cd40-4bd1-83c7-ba9f81616785}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\キャラクター\行動内容">
+      <UniqueIdentifier>{b8ccef21-d3a2-469f-bb9d-c7901eb36d8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\キャラクター\バフ、デバフ">
+      <UniqueIdentifier>{2af10e8c-c74f-47d7-a0cc-4e5d5c3010a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\キャラクター\行動内容">
+      <UniqueIdentifier>{ae3931cd-25ad-44c2-913c-3ca096e67a0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\キャラクター\バフ、デバフ">
+      <UniqueIdentifier>{2b6b3417-2d8d-4c52-a2a6-13ec55377001}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -250,7 +256,7 @@
       <Filter>ソース ファイル\カード\魔法%28Spell%29\武具強化</Filter>
     </ClCompile>
     <ClCompile Include="source\Action_Effect.cpp">
-      <Filter>ソース ファイル\行動内容</Filter>
+      <Filter>ソース ファイル\キャラクター\行動内容</Filter>
     </ClCompile>
     <ClCompile Include="source\Scene_Particles_Text.cpp">
       <Filter>ソース ファイル\シーン\パーティクル%28文字%29</Filter>
@@ -260,6 +266,9 @@
     </ClCompile>
     <ClCompile Include="source\Character_Npc_Slime_Green.cpp">
       <Filter>ソース ファイル\キャラクター\NPC\スライム%28緑%29</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Buff_Debuff.cpp">
+      <Filter>ソース ファイル\キャラクター\バフ、デバフ</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -327,7 +336,7 @@
       <Filter>ヘッダー ファイル\カード\魔法%28Spell%29\武具強化</Filter>
     </ClInclude>
     <ClInclude Include="source\Action_Effect.h">
-      <Filter>ヘッダー ファイル\行動内容</Filter>
+      <Filter>ヘッダー ファイル\キャラクター\行動内容</Filter>
     </ClInclude>
     <ClInclude Include="source\Scene_Particles_Text.h">
       <Filter>ヘッダー ファイル\シーン\パーティクル%28文字%29</Filter>
@@ -337,6 +346,12 @@
     </ClInclude>
     <ClInclude Include="source\Character_Npc_Slime_Green.h">
       <Filter>ヘッダー ファイル\キャラクター\NPC\スライム%28緑%29</Filter>
+    </ClInclude>
+    <ClInclude Include="source\StructDefine.h">
+      <Filter>ヘッダー ファイル\定義</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Buff_Debuff.h">
+      <Filter>ヘッダー ファイル\キャラクター\バフ、デバフ</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

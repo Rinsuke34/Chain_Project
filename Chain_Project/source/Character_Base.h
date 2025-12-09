@@ -10,6 +10,7 @@
 
 // 前方宣言
 class DataList_Battle;
+class Character_Buff_Debuff_Base;
 
 // キャラクターのベースクラス
 class Character_Base : public std::enable_shared_from_this<Character_Base>
@@ -28,6 +29,8 @@ class Character_Base : public std::enable_shared_from_this<Character_Base>
 		virtual void AddShield(int Shield);		// シールド追加処理
 		virtual void ShieldReset_EndTurn();		// シールドリセット(ターン終了時)
 		virtual void Heal(int Heal);			// 回復処理
+		virtual void Update_Buff_Debuff();		// バフ、デバフの更新
+		virtual void Add_Buff_Debuff(const std::shared_ptr<Character_Buff_Debuff_Base>& Buff_Debuff);	// バフ、デバフの追加
 
 		/* ゲッター */
 		int 					GetHP_Max()				{ return iHP_Max; }				// 体力(最大値)の取得
@@ -84,6 +87,8 @@ class Character_Base : public std::enable_shared_from_this<Character_Base>
 		int						AddBuffReaction;	// バフ付与時のリアクション
 		int						DamageReaction;		// 被ダメージ時のリアクション
 		int						AttackReaction;		// 攻撃時のリアクション
+		// バフ、デバフ情報
+		std::vector<std::shared_ptr<Character_Buff_Debuff_Base>> 	Buff_Debuff_List;	// バフ、デバフ一覧
 
 		/* 関数 */
 		void SetUpImage(std::string ImageName);		// 指定の名称の画像を設定する

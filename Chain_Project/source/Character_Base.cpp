@@ -9,6 +9,7 @@
 #include "Scene_Particles_Text.h"
 #include "DataList_Image.h"
 #include "DataList_Battle.h"
+#include "Buff_Debuff.h"
 
 // コンストラクタ
 Character_Base::Character_Base()
@@ -166,6 +167,20 @@ void Character_Base::Draw_StatusBar()
 			giFont_JF_Dot_MPlus10_16
 		);
 	}
+
+	/* バフ、デバフの描写 */
+	for (size_t i = 0; i < this->Buff_Debuff_List.size(); i++)
+	{
+		/* バフ、デバフの描写 */
+		DrawModiGraph(
+			this->BasePos.iX - (this->SizeX / 2) + (i * 32),		this->BasePos.iY - (this->SizeY) - 64,
+			this->BasePos.iX - (this->SizeX / 2) + ((i + 1) * 32),	this->BasePos.iY - (this->SizeY) - 64,
+			this->BasePos.iX - (this->SizeX / 2) + ((i + 1) * 32),	this->BasePos.iY - (this->SizeY) - 64 + 32,
+			this->BasePos.iX - (this->SizeX / 2) + (i * 32),		this->BasePos.iY - (this->SizeY) - 64 + 32,
+			*(this->Buff_Debuff_List[i]->Image),
+			TRUE
+		);
+	}
 }
 
 // 指定の名称の画像を設定する
@@ -293,6 +308,26 @@ void Character_Base::Heal(int Heal)
 	{
 		this->iHP_Now = this->iHP_Max;
 	}
+}
+
+// バフ、デバフの更新
+void Character_Base::Update_Buff_Debuff()
+{
+	/* すべてのバフ、デバフのカウントを進める */
+	for (auto& BuffDebuff : this->Buff_Debuff_List)
+	{
+		BuffDebuff->Update();
+	}
+}
+
+// バフ、デバフの追加
+void Character_Base::Add_Buff_Debuff(const std::shared_ptr<Character_Buff_Debuff_Base>& Buff_Debuff)
+{
+	// 引数
+	// Buff_Debuff : 追加するバフ、デバフ
+
+	/* バフ、デバフを追加 */
+	this->Buff_Debuff_List.push_back(Buff_Debuff);
 }
 
 // 各リアクションによる座標補正

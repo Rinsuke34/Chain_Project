@@ -323,75 +323,6 @@ void Scene_Battle::Update_BattleAction_Decision()
 				return pa > pb;
 			});
 		this->pDataList_Battle->SetActionEffectList(ActionEffectList, i);
-
-		//// 特殊効果 > 状態異常付与 > 回復 > シールド付与 > ダメージ
-		//{
-		//	std::vector<std::shared_ptr<Action_Effect_Base>> EffectList = this->pDataList_Battle->GetActionEffectList(i);
-
-		//	/* 特殊効果を抽出 */
-		//	std::vector<std::shared_ptr<Action_Effect_Extra>> EffectList_Spell;
-		//	for (auto& effect : EffectList)
-		//	{
-		//		// 特殊効果であるか確認
-		//		if (std::shared_ptr<Action_Effect_Extra> spellEffect = std::dynamic_pointer_cast<Action_Effect_Extra>(effect))
-		//		{
-		//			EffectList_Spell.push_back(spellEffect);
-		//		}
-		//	}
-
-		//	/* 状態異常付与系の効果を抽出 */
-		//	std::vector<std::shared_ptr<Action_Effect_StatusAliment>> StatusEffectList_StatusAilment;
-		//	for (const auto& effect : EffectList)
-		//	{
-		//		// 状態異常付与系の効果であるか確認
-		//		if (std::shared_ptr<Action_Effect_StatusAliment> statusAilmentEffect = std::dynamic_pointer_cast<Action_Effect_StatusAliment>(effect))
-		//		{
-		//			StatusEffectList_StatusAilment.push_back(statusAilmentEffect);
-		//		}
-		//	}
-
-		//	/* 回復系の効果を抽出 */
-		//	std::vector<std::shared_ptr<Action_Effect_Heal>> EffectList_Heal;
-		//	for (auto& effect : EffectList)
-		//	{
-		//		// 回復系の効果であるか確認
-		//		if (std::shared_ptr<Action_Effect_Heal> healEffect = std::dynamic_pointer_cast<Action_Effect_Heal>(effect))
-		//		{
-		//			EffectList_Heal.push_back(healEffect);
-		//		}
-		//	}
-
-		//	/* シールド付与系の効果を抽出 */
-		//	std::vector<std::shared_ptr<Action_Effect_Defence>> EffectList_Shield;
-		//	for (auto& effect : EffectList)
-		//	{
-		//		// シールド付与系の効果であるか確認
-		//		if (std::shared_ptr<Action_Effect_Defence> shieldEffect = std::dynamic_pointer_cast<Action_Effect_Defence>(effect))
-		//		{
-		//			EffectList_Shield.push_back(shieldEffect);
-		//		}
-		//	}
-
-		//	/* ダメージ系の効果を抽出 */
-		//	std::vector<std::shared_ptr<Action_Effect_Attack>> EffectList_Damage;
-		//	for (auto& effect : EffectList)
-		//	{
-		//		// ダメージ系の効果であるか確認
-		//		if (std::shared_ptr<Action_Effect_Attack> damageEffect = std::dynamic_pointer_cast<Action_Effect_Attack>(effect))
-		//		{
-		//			EffectList_Damage.push_back(damageEffect);
-		//		}
-		//	}
-
-		//	/* 優先順位順に効果を再設定する */
-		//	EffectList.clear();
-		//	for (auto& effect : EffectList_Spell)				{ EffectList.push_back(effect); }
-		//	for (auto& effect : StatusEffectList_StatusAilment)	{ EffectList.push_back(effect); }
-		//	for (auto& effect : EffectList_Heal)				{ EffectList.push_back(effect); }
-		//	for (auto& effect : EffectList_Shield)				{ EffectList.push_back(effect); }
-		//	for (auto& effect : EffectList_Damage)				{ EffectList.push_back(effect); }
-		//	this->pDataList_Battle->SetActionEffectList(EffectList, i);
-		//}
 	}
 
 	/* "戦闘行動"フェイズへ遷移 */
@@ -525,21 +456,19 @@ void Scene_Battle::Update_EffectTurnEnd()
 void Scene_Battle::Update_StatusEffectAdvance()
 {
 	/* 各キャラクターの状態変化のターンを進行 */
-
-	///* 全キャラクターのシールドをリセット */
 	//for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
 	//{
 	//	// 仲間
 	//	auto FriendCharacter = this->pDataList_Battle->GetFriendCharacter(i);
 	//	if (FriendCharacter != nullptr)
 	//	{
-	//		FriendCharacter->ShieldReset_EndTurn();
+	//		FriendCharacter->Update_Buff_Debuff();
 	//	}
 	//	// 敵
 	//	auto EnemyCharacter = this->pDataList_Battle->GetEnemyCharacter(i);
 	//	if (EnemyCharacter != nullptr)
 	//	{
-	//		EnemyCharacter->ShieldReset_EndTurn();
+	//		EnemyCharacter->Update_Buff_Debuff();
 	//	}
 	//}
 

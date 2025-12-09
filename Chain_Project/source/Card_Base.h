@@ -113,8 +113,8 @@ class Card_Base : public std::enable_shared_from_this<Card_Base>
 		std::vector<std::string>		Suite_List;			// スートリスト
 		int 							Strength;			// 攻撃力
 		int								Diffence;			// 防御力
-		int								Strength_Buff;		// 攻撃力バフ
-		int								Diffence_Buff;		// 防御力バフ
+		int								Strength_Buff;		// 攻撃力バフ(永続)
+		int								Diffence_Buff;		// 防御力バフ(永続)
 		int								AttackRange;		// 攻撃範囲
 		std::string						ImageName;			// 画像の名前
 		// 画像
