@@ -181,6 +181,18 @@
     <Filter Include="ソース ファイル\キャラクター\バフ、デバフ">
       <UniqueIdentifier>{2b6b3417-2d8d-4c52-a2a6-13ec55377001}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\カード\武具%28Arms%29\硝子の剣">
+      <UniqueIdentifier>{c8571f9e-8244-4007-a9a7-82f26df7adc5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\カード\武具%28Arms%29\硝子の剣">
+      <UniqueIdentifier>{6c4886b6-13ff-4b12-9139-a559f226a308}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\カード\武具%28Arms%29\旅人の剣">
+      <UniqueIdentifier>{ffb7338f-4589-4151-82c3-aa6385efab0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\カード\武具%28Arms%29\旅人の剣">
+      <UniqueIdentifier>{03763912-8693-4254-abce-99785a624716}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Main.cpp">
@@ -270,6 +282,12 @@
     <ClCompile Include="source\Buff_Debuff.cpp">
       <Filter>ソース ファイル\キャラクター\バフ、デバフ</Filter>
     </ClCompile>
+    <ClCompile Include="source\Card_Arms_GrassSword.cpp">
+      <Filter>ソース ファイル\カード\武具%28Arms%29\硝子の剣</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Card_Arms_TravelerSword.cpp">
+      <Filter>ソース ファイル\カード\武具%28Arms%29\旅人の剣</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Scene_Load_Checker.h">
@@ -352,6 +370,12 @@
     </ClInclude>
     <ClInclude Include="source\Buff_Debuff.h">
       <Filter>ヘッダー ファイル\キャラクター\バフ、デバフ</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Card_Arms_GrassSword.h">
+      <Filter>ヘッダー ファイル\カード\武具%28Arms%29\硝子の剣</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Card_Arms_TravelerSword.h">
+      <Filter>ヘッダー ファイル\カード\武具%28Arms%29\旅人の剣</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

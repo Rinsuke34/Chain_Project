@@ -80,9 +80,12 @@ class Card_Base : public std::enable_shared_from_this<Card_Base>
 		static const int TYPE_SPELL		= 1;	// 魔法
 		static const int TYPE_ITEM		= 2;	// アイテム
 		// スートの種類
-		inline static const	std::string	SUITE_SWORD		= "Sword";	// 剣
-		inline static const	std::string	SUITE_SHIELD	= "Shield";	// 盾
-		inline static const	std::string	SUITE_POTION	= "Potion";	// 薬(ポーション)
+		inline static const	std::string	SUITE_SWORD		= "Sword";		// 剣
+		inline static const	std::string	SUITE_SHIELD	= "Shield";		// 盾
+		inline static const	std::string	SUITE_POTION	= "Potion";		// 薬(ポーション)
+		inline static const std::string SUITE_TRAVELER	= "Traveler";	// 旅人
+		inline static const std::string SUITE_POISON	= "Poison";		// 毒
+		inline static const std::string SUITE_GRASS		= "Grass";		// ガラス
 		// 画像のサイズ(実際のサイズより大きめにする)
 		static const int IMAGE_SIZE_WIDTH	= 256;	// 画像幅
 		static const int IMAGE_SIZE_HEIGHT	= 256;	// 画像高さ

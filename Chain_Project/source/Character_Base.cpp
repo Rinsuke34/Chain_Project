@@ -169,6 +169,7 @@ void Character_Base::Draw_StatusBar()
 	}
 
 	/* バフ、デバフの描写 */
+	// 味方であるなら左側、敵であるなら右側に描写
 	for (size_t i = 0; i < this->Buff_Debuff_List.size(); i++)
 	{
 		/* バフ、デバフの描写 */

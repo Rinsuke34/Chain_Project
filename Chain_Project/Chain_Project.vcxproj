@@ -172,6 +172,8 @@
     <ClCompile Include="source\Action_Effect.cpp" />
     <ClCompile Include="source\Buff_Debuff.cpp" />
     <ClCompile Include="source\Card_Arms_Base.cpp" />
+    <ClCompile Include="source\Card_Arms_GrassSword.cpp" />
+    <ClCompile Include="source\Card_Arms_TravelerSword.cpp" />
     <ClCompile Include="source\Card_Arms_WoodenShield.cpp" />
     <ClCompile Include="source\Card_Arms_WoodenSword.cpp" />
     <ClCompile Include="source\Card_Base.cpp" />
@@ -208,6 +210,8 @@
     <ClInclude Include="source\Action_Effect.h" />
     <ClInclude Include="source\Buff_Debuff.h" />
     <ClInclude Include="source\Card_Arms_Base.h" />
+    <ClInclude Include="source\Card_Arms_GrassSword.h" />
+    <ClInclude Include="source\Card_Arms_TravelerSword.h" />
     <ClInclude Include="source\Card_Arms_WoodenShield.h" />
     <ClInclude Include="source\Card_Arms_WoodenSword.h" />
     <ClInclude Include="source\Card_Base.h" />
