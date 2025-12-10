@@ -14,5 +14,5 @@ class Card_Item_HealingPotion : public Card_Item_Base
 		virtual ~Card_Item_HealingPotion() {};	// デストラクタ
 
 		/* 関数 */
-		virtual void Effect_StartAction() override;	// 効果発動:行動開始時
+		virtual void BattleAction() override;		// 戦闘行動
 };

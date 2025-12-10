@@ -22,8 +22,8 @@ Card_Item_HealingPotion::Card_Item_HealingPotion() : Card_Item_Base()
 	this->ImageName = "HealingPotion";			// 画像の名前
 }
 
-// 効果発動:行動開始時
-void Card_Item_HealingPotion::Effect_StartAction()
+// 戦闘行動
+void Card_Item_HealingPotion::BattleAction()
 {
 	/* プレイヤーを取得できていないならプレイヤーを取得する */
 	CheckHavePlayer();
@@ -37,6 +37,7 @@ void Card_Item_HealingPotion::Effect_StartAction()
 	addEffect->EffectUser						= this->pPlayer;					// 効果の使用者:プレイヤーキャラクター
 	addEffect->AllRange							= true;								// 全体に効果を与える
 	addEffect->Priority							= 30;								// 低め
+	addEffect->EffectCard						= shared_from_this();				// 効果を使用するカード:このカード
 	this->pDataList_Battle->AddEffect(addEffect, GetMyAreaNo());
 
 	/* ロストフラグを有効化 */

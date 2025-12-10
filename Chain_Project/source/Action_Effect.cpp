@@ -23,6 +23,7 @@ Action_Effect_Base::Action_Effect_Base()
 	this->Now_Position		= { 0, 0 };	// 現在座標
 	this->Setting_Position	= { 0, 0 };	// 設定座標(自動で補完される座標)
 	this->Priority			= 0;		// 優先順位(高いほど先に実行)
+	this->EffectCard		= nullptr;	// 効果を使用するカード
 
 	/* 画像作成 */
 	this->Image = MakeScreen(IMAGE_SIZE_WIDE, IMAGE_SIZE_HEIGHT, TRUE);
@@ -226,6 +227,12 @@ void Action_Effect_Attack::ExecuteEffect()
 					// 対象の敵キャラクターが存在する場合
 					/* ダメージ処理を実行 */
 					TargetEnemyCharacter->Damage(this->DamageAmount);
+
+					/* 行動時効果を実行 */
+					if (this->EffectCard)
+					{
+						this->EffectCard->Effect_Action(TargetEnemyCharacter);
+					}
 				}
 			}
 
@@ -245,6 +252,12 @@ void Action_Effect_Attack::ExecuteEffect()
 				// 対象の敵キャラクターが存在する場合
 				/* ダメージ処理を実行 */
 				TargetEnemyCharacter->Damage(this->DamageAmount);
+
+				/* 行動時効果を実行 */
+				if (this->EffectCard)
+				{
+					this->EffectCard->Effect_Action(TargetEnemyCharacter);
+				}
 
 				/* 攻撃リアクションを設定 */
 				if (this->EffectUser)
@@ -270,6 +283,12 @@ void Action_Effect_Attack::ExecuteEffect()
 					// 対象の仲間キャラクターが存在する場合
 					/* ダメージ処理を実行 */
 					TargetFriendCharacter->Damage(this->DamageAmount);
+
+					/* 行動時効果を実行 */
+					if (this->EffectCard)
+					{
+						this->EffectCard->Effect_Action(TargetFriendCharacter);
+					}
 				}
 			}
 
@@ -289,6 +308,12 @@ void Action_Effect_Attack::ExecuteEffect()
 				// 対象の仲間キャラクターが存在する場合
 				/* ダメージ処理を実行 */
 				TargetFriendCharacter->Damage(this->DamageAmount);
+
+				/* 行動時効果を実行 */
+				if (this->EffectCard)
+				{
+					this->EffectCard->Effect_Action(TargetFriendCharacter);
+				}
 
 				/* 攻撃リアクションを設定 */
 				if (this->EffectUser)
@@ -589,14 +614,14 @@ void Action_Effect_StatusAliment::Draw_Effect()
 Action_Effect_Extra::Action_Effect_Extra()
 {
 	/* 初期化 */
-	this->ExEffectCard	= nullptr;	// 特殊効果を使用するカード
+	this->EffectCard	= nullptr;	// 特殊効果を使用するカード
 }
 
 // 効果実行
 void Action_Effect_Extra::ExecuteEffect()
 {
 	/* カード効果(特殊効果)を実行 */
-	this->ExEffectCard->Card_Effect_Extra_Process();
+	this->EffectCard->Card_Effect_Extra_Process();
 }
 
 // 効果部分作成

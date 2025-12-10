@@ -19,6 +19,10 @@
 #include "Character_Player.h"
 #include "Character_Npc_Slime_Green.h"
 #include "Character_Npc_Bat.h"
+#include "Card_Arms_GrassSword.h"
+#include "Card_Arms_PoisonDagger.h"
+#include "Card_Arms_TravelerSword.h"
+#include "Card_Item_PoisonPotion.h"
 
 // コンストラクタ
 Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 0, false, false)
@@ -65,18 +69,22 @@ Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 0, false, false)
 	// ※ テスト用なので直打ち
 	// カード設定
 	std::vector<std::shared_ptr<Card_Base>> DeckCardList;
-	DeckCardList.push_back(std::make_shared<Card_Spell_ArmsEnhancement>());
+	DeckCardList.push_back(std::make_shared<Card_Arms_PoisonDagger>());
+	DeckCardList.push_back(std::make_shared<Card_Arms_PoisonDagger>());
+	DeckCardList.push_back(std::make_shared<Card_Item_PoisonPotion>());
+	DeckCardList.push_back(std::make_shared<Card_Item_PoisonPotion>());
 	DeckCardList.push_back(std::make_shared<Card_Spell_ArmsEnhancement>());
 	DeckCardList.push_back(std::make_shared<Card_Spell_ArmsEnhancement>());
 	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenSword>());
 	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenSword>());
-	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenSword>());
-	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenShield>());
 	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenShield>());
 	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenShield>());
 	DeckCardList.push_back(std::make_shared<Card_Item_HealingPotion>());
 	DeckCardList.push_back(std::make_shared<Card_Item_HealingPotion>());
-	DeckCardList.push_back(std::make_shared<Card_Item_HealingPotion>());
+	DeckCardList.push_back(std::make_shared<Card_Arms_GrassSword>());
+	DeckCardList.push_back(std::make_shared<Card_Arms_GrassSword>());
+	DeckCardList.push_back(std::make_shared<Card_Arms_TravelerSword>());
+	DeckCardList.push_back(std::make_shared<Card_Arms_TravelerSword>());
 	this->pDataList_Battle->SetAllDeckCardList(DeckCardList);
 	this->pDataList_Battle->SetDeckCardList(DeckCardList);
 	// 画像更新

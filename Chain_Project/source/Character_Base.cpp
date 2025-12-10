@@ -181,6 +181,16 @@ void Character_Base::Draw_StatusBar()
 			*(this->Buff_Debuff_List[i]->Image),
 			TRUE
 		);
+
+		/* 残りターン数の描写 */
+		std::string TurnText = std::to_string(this->Buff_Debuff_List[i]->Buff_Debuff_Time);
+		DrawStringToHandle(
+			this->BasePos.iX - (this->SizeX / 2) + (i * 32) + 4,
+			this->BasePos.iY - (this->SizeY) - 64 + 16,
+			TurnText.c_str(),
+			GetColor(255, 255, 255),
+			giFont_JF_Dot_MPlus10_16
+		);
 	}
 }
 
@@ -314,11 +324,38 @@ void Character_Base::Heal(int Heal)
 // バフ、デバフの更新
 void Character_Base::Update_Buff_Debuff()
 {
+	/* 毒ダメージ処理 */
+	// 毒デバフを取得
+	std::vector<std::shared_ptr<Character_Buff_Debuff_Base>> Poison = this->CheckGet_Buff_Debuff("Debuff_Poison");
+	if (Poison.size() > 0)
+	{
+		// 所持しているなら
+		/* 残りターン数分のダメージを受ける */
+		for (auto& debuff : Poison)
+		{
+			Damage(debuff->Buff_Debuff_Time);
+		}
+	}
+
+
 	/* すべてのバフ、デバフのカウントを進める */
 	for (auto& BuffDebuff : this->Buff_Debuff_List)
 	{
 		BuffDebuff->Update();
 	}
+
+	/* 削除フラグが立っているバフ、デバフを削除 */
+	this->Buff_Debuff_List.erase(
+		std::remove_if(
+			this->Buff_Debuff_List.begin(),
+			this->Buff_Debuff_List.end(),
+			[](const std::shared_ptr<Character_Buff_Debuff_Base>& BuffDebuff)
+			{
+				return BuffDebuff->DeleteFlag;
+			}
+		),
+		this->Buff_Debuff_List.end()
+	);
 }
 
 // バフ、デバフの追加
@@ -329,6 +366,29 @@ void Character_Base::Add_Buff_Debuff(const std::shared_ptr<Character_Buff_Debuff
 
 	/* バフ、デバフを追加 */
 	this->Buff_Debuff_List.push_back(Buff_Debuff);
+}
+
+// 対象の名称のバフ、デバフを取得
+std::vector<std::shared_ptr<Character_Buff_Debuff_Base>> Character_Base::CheckGet_Buff_Debuff(std::string Buff_Debuff_Name)
+{
+	// 引数
+	// Buff_Debuff_Name : 対象の名称のバフ、デバフの名称
+
+	/* 取得用配列 */
+	std::vector<std::shared_ptr<Character_Buff_Debuff_Base>> ReturnList;
+
+	/* すべてのバフ、デバフを確認 */
+	for (auto& BuffDebuff : this->Buff_Debuff_List)
+	{
+		/* 対象の名称のバフ、デバフであるなら取得用配列に追加 */
+		if (BuffDebuff->Name == Buff_Debuff_Name)
+		{
+			ReturnList.push_back(BuffDebuff);
+		}
+	}
+
+	/* 取得用配列を返す */
+	return ReturnList;
 }
 
 // 各リアクションによる座標補正

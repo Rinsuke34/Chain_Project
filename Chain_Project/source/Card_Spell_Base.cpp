@@ -29,8 +29,9 @@ void Card_Spell_Base::BattleAction()
 	pSpellEffect->Target_Position	= 0;								// 効果対象の立ち位置:無し
 	pSpellEffect->EffectUser		= this->pPlayer;					// 効果の使用者:プレイヤーキャラクター
 	pSpellEffect->AllRange			= false;							// 全体効果でない
-	pSpellEffect->ExEffectCard		= std::dynamic_pointer_cast<Card_Spell_Base>(shared_from_this());
+	pSpellEffect->EffectCard		= std::dynamic_pointer_cast<Card_Spell_Base>(shared_from_this());
 	pSpellEffect->Priority			= 40;								// ちょっと低め
+	pSpellEffect->EffectCard		= shared_from_this();				// 効果を使用するカード:このカード
 	this->pDataList_Battle->AddEffect(pSpellEffect, GetMyAreaNo());
 }
 

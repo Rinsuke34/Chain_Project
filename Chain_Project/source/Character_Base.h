@@ -31,6 +31,7 @@ class Character_Base : public std::enable_shared_from_this<Character_Base>
 		virtual void Heal(int Heal);			// 回復処理
 		virtual void Update_Buff_Debuff();		// バフ、デバフの更新
 		virtual void Add_Buff_Debuff(const std::shared_ptr<Character_Buff_Debuff_Base>& Buff_Debuff);	// バフ、デバフの追加
+		virtual std::vector<std::shared_ptr<Character_Buff_Debuff_Base>> CheckGet_Buff_Debuff(std::string Buff_Debuff_Name);	// 対象の名称のバフ、デバフを取得
 
 		/* ゲッター */
 		int 					GetHP_Max()				{ return iHP_Max; }				// 体力(最大値)の取得

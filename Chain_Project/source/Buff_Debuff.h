@@ -18,6 +18,7 @@ class Character_Buff_Debuff_Base
 		virtual void Update();			// 更新処理
 
 		/* 変数 */
+		std::string				Name;					// バフ、デバフの名称
 		int						Buff_Debuff_Time;		// バフ、デバフの残りターン数
 		bool					DeleteFlag;				// 削除フラグ
 		std::shared_ptr<int>	Image;					// 画像
@@ -44,4 +45,12 @@ class Character_Buff_Diffence : public Character_Buff_Debuff_Base
 
 		/* 変数 */
 		int Diffence_Buff_Amount;	// 防御力バフ量
+};
+
+// 毒状態
+class Character_Debuff_Poison : public Character_Buff_Debuff_Base
+{
+	public:
+		Character_Debuff_Poison();				// コンストラクタ
+		virtual ~Character_Debuff_Poison() {};	// デストラクタ
 };

@@ -139,12 +139,6 @@
     <Filter Include="ヘッダー ファイル\カード\武具%28Arms%29\木の盾">
       <UniqueIdentifier>{28357b41-4f13-4d35-8c1b-25f66ad04487}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\カード\道具%28Item%29\回復のポーション">
-      <UniqueIdentifier>{605f9ead-f7c7-426c-ad73-947c0b1e3319}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\カード\道具%28Item%29\回復のポーション">
-      <UniqueIdentifier>{c31b3c68-3bc0-4896-9368-a2abbdab0927}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ヘッダー ファイル\カード\魔法%28Spell%29\武具強化">
       <UniqueIdentifier>{aa705eb6-61f2-4890-af99-443f4d974103}</UniqueIdentifier>
     </Filter>
@@ -192,6 +186,24 @@
     </Filter>
     <Filter Include="ヘッダー ファイル\カード\武具%28Arms%29\旅人の剣">
       <UniqueIdentifier>{03763912-8693-4254-abce-99785a624716}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\カード\武具%28Arms%29\毒の短剣">
+      <UniqueIdentifier>{329f451e-1252-4014-877a-0f4bf34d850c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\カード\武具%28Arms%29\毒の短剣">
+      <UniqueIdentifier>{8d341619-0a24-4dea-a8b1-4fa9a4e415c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\カード\道具%28Item%29\回復薬">
+      <UniqueIdentifier>{605f9ead-f7c7-426c-ad73-947c0b1e3319}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\カード\道具%28Item%29\回復薬">
+      <UniqueIdentifier>{c31b3c68-3bc0-4896-9368-a2abbdab0927}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\カード\道具%28Item%29\毒薬">
+      <UniqueIdentifier>{09be2162-23bc-46ca-9bd8-83826ef11eb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\カード\道具%28Item%29\毒薬">
+      <UniqueIdentifier>{a201afef-1ddf-4d9b-8d9f-c2dbf90b005f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -262,7 +274,7 @@
       <Filter>ソース ファイル\カード\武具%28Arms%29\木の盾</Filter>
     </ClCompile>
     <ClCompile Include="source\Card_Item_HealingPotion.cpp">
-      <Filter>ソース ファイル\カード\道具%28Item%29\回復のポーション</Filter>
+      <Filter>ソース ファイル\カード\道具%28Item%29\回復薬</Filter>
     </ClCompile>
     <ClCompile Include="source\Card_Spell_ArmsEnhancement.cpp">
       <Filter>ソース ファイル\カード\魔法%28Spell%29\武具強化</Filter>
@@ -287,6 +299,12 @@
     </ClCompile>
     <ClCompile Include="source\Card_Arms_TravelerSword.cpp">
       <Filter>ソース ファイル\カード\武具%28Arms%29\旅人の剣</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Card_Arms_PoisonDagger.cpp">
+      <Filter>ソース ファイル\カード\武具%28Arms%29\毒の短剣</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Card_Item_PoisonPotion.cpp">
+      <Filter>ソース ファイル\カード\道具%28Item%29\毒薬</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -348,7 +366,7 @@
       <Filter>ヘッダー ファイル\カード\武具%28Arms%29\木の盾</Filter>
     </ClInclude>
     <ClInclude Include="source\Card_Item_HealingPotion.h">
-      <Filter>ヘッダー ファイル\カード\道具%28Item%29\回復のポーション</Filter>
+      <Filter>ヘッダー ファイル\カード\道具%28Item%29\回復薬</Filter>
     </ClInclude>
     <ClInclude Include="source\Card_Spell_ArmsEnhancement.h">
       <Filter>ヘッダー ファイル\カード\魔法%28Spell%29\武具強化</Filter>
@@ -376,6 +394,12 @@
     </ClInclude>
     <ClInclude Include="source\Card_Arms_TravelerSword.h">
       <Filter>ヘッダー ファイル\カード\武具%28Arms%29\旅人の剣</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Card_Arms_PoisonDagger.h">
+      <Filter>ヘッダー ファイル\カード\武具%28Arms%29\毒の短剣</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Card_Item_PoisonPotion.h">
+      <Filter>ヘッダー ファイル\カード\道具%28Item%29\毒薬</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

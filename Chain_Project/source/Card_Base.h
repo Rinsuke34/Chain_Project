@@ -20,16 +20,17 @@ class Card_Base : public std::enable_shared_from_this<Card_Base>
 		virtual ~Card_Base();	// デストラクタ
 
 		/* 関数 */
-		virtual void Draw();							// 描画
-		virtual void UpdateImage();						// 画像更新
-		virtual void Effect_StartTurn()			{};		// 効果発動:ターン開始時
-		virtual void Effect_StartAction()		{};		// 効果発動:行動開始時
-		virtual void BattleAction();					// 戦闘行動
-		virtual void Effect_EndTurn()			{};		// 効果発動:ターン終了時
-		virtual void Update();							// 更新処理
-		virtual void Add_Strength_Buff(int amount);		// 攻撃力バフ追加
-		virtual void Add_Diffence_Buff(int amount);		// 防御力バフ追加
-		virtual void Card_Effect_Extra_Process()	{};	// カード効果(特殊効果)
+		virtual void Draw();													// 描画
+		virtual void UpdateImage();												// 画像更新
+		virtual void Effect_StartTurn() {};										// 効果発動:ターン開始時
+		virtual void Effect_StartAction() {};									// 効果発動:行動開始時
+		virtual void Effect_Action(std::shared_ptr<Character_Base> Target) {};	// 効果発動:行動時
+		virtual void BattleAction();											// 戦闘行動
+		virtual void Effect_EndTurn() {};										// 効果発動:ターン終了時
+		virtual void Update();													// 更新処理
+		virtual void Add_Strength_Buff(int amount);								// 攻撃力バフ追加
+		virtual void Add_Diffence_Buff(int amount);								// 防御力バフ追加
+		virtual void Card_Effect_Extra_Process() {};							// カード効果(特殊効果)
 		
 		/* セッター */
 		// カード情報
@@ -86,6 +87,7 @@ class Card_Base : public std::enable_shared_from_this<Card_Base>
 		inline static const std::string SUITE_TRAVELER	= "Traveler";	// 旅人
 		inline static const std::string SUITE_POISON	= "Poison";		// 毒
 		inline static const std::string SUITE_GRASS		= "Grass";		// ガラス
+		inline static const std::string SUITE_DAGGER	= "Dagger";		// 短剣
 		// 画像のサイズ(実際のサイズより大きめにする)
 		static const int IMAGE_SIZE_WIDTH	= 256;	// 画像幅
 		static const int IMAGE_SIZE_HEIGHT	= 256;	// 画像高さ

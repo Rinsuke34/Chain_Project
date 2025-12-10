@@ -31,6 +31,7 @@ class Action_Effect_Base
 		bool								AllRange;			// 全体に効果を与えるか
 		Struct_2D::POSITION					Setting_Position;	// 設定座標(自動で補完される座標)
 		int									Priority;			// 優先順位(高いほど先に実行)
+		std::shared_ptr<Card_Base>			EffectCard;			// 効果を使用するカード
 
 		/* 定数 */
 		static const int INTERPOLATION_SPEED	= 5;	// 補間速度
@@ -133,9 +134,6 @@ class Action_Effect_Extra : public Action_Effect_Base
 
 		/* 関数 */
 		void ExecuteEffect()	override;	// 効果実行
-
-		/* 変数 */
-		std::shared_ptr<Card_Base> ExEffectCard;	// 特殊効果を使用するカード
 
 	protected:
 		/* 関数 */
