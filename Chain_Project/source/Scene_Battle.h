@@ -46,8 +46,8 @@ class Scene_Battle : public Scene_Base
 		static const int	DECISIONBUTTON_POS_Y				= 640;	// 決定ボタンのY座標
 		static const int	CHARACTER_INTERVAL					= 200;	// キャラクターの間隔
 		static const int	CHARACTER_POS_Y						= 280;	// キャラクターのY座標
-		static const int	BATTLE_AREA_HEIGHT					= 288;	// バトルエリアの高さ
-		static const int	BATTLE_AREA_WIDE					= 218;	// バトルエリアの幅
+		static const int	BATTLE_AREA_HEIGHT					= 328;	// バトルエリアの高さ
+		static const int	BATTLE_AREA_WIDE					= 258;	// バトルエリアの幅
 
 	private:
 		/* 変数 */

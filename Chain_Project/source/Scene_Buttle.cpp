@@ -72,23 +72,14 @@ Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 0, false, false)
 	// ※ テスト用なので直打ち
 	// カード設定
 	std::vector<std::shared_ptr<Card_Base>> DeckCardList;
-	//DeckCardList.push_back(std::make_shared<Card_Spell_ArmsEnhancement>());
-	//DeckCardList.push_back(std::make_shared<Card_Spell_ArmsEnhancement>());
-	DeckCardList.push_back(std::make_shared<Card_Arms_TravelerSword>());
+	DeckCardList.push_back(std::make_shared<Card_Spell_ArmsEnhancement>());
 	DeckCardList.push_back(std::make_shared<Card_Arms_TravelerSword>());
 	DeckCardList.push_back(std::make_shared<Card_Arms_TravelerShield>());
-	DeckCardList.push_back(std::make_shared<Card_Arms_TravelerShield>());
-	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenSword>());
 	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenSword>());
 	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenShield>());
-	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenShield>());
-	DeckCardList.push_back(std::make_shared<Card_Item_HealingPotion>());
 	DeckCardList.push_back(std::make_shared<Card_Item_HealingPotion>());
 	DeckCardList.push_back(std::make_shared<Card_Arms_GrassSword>());
-	DeckCardList.push_back(std::make_shared<Card_Arms_GrassSword>());
 	DeckCardList.push_back(std::make_shared<Card_Arms_PoisonDagger>());
-	DeckCardList.push_back(std::make_shared<Card_Arms_PoisonDagger>());
-	DeckCardList.push_back(std::make_shared<Card_Item_PoisonPotion>());
 	DeckCardList.push_back(std::make_shared<Card_Item_PoisonPotion>());
 	this->pDataList_Battle->SetAllDeckCardList(DeckCardList);
 	this->pDataList_Battle->SetDeckCardList(DeckCardList);
