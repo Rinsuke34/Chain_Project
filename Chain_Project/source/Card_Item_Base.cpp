@@ -9,12 +9,34 @@
 #include "VariableDefine.h"
 // 関連クラス
 #include "DataList_Image.h"
+#include "DataList_Battle.h"
+#include "Action_Effect.h"
+#include "Character_Base.h"
 
 // コンストラクタ
 Card_Item_Base::Card_Item_Base() : Card_Base()
 {
 	/* カード情報の設定 */
 	this->iCardType	=	Card_Base::TYPE_ITEM;	// カード種類:道具
+}
+
+// 戦闘行動
+// ※回復や攻撃など標準の効果を行う場合は派生クラスでオーバーライドして実装する
+void Card_Item_Base::BattleAction()
+{
+	/* 道具の処理を設定する */
+	std::shared_ptr<Action_Effect_Extra> pItemEffect = std::make_shared<Action_Effect_Extra>();
+	pItemEffect->Target_Camp		= Character_Base::CAMP_NONE;	// 効果対象の陣営:無し
+	pItemEffect->Target_Position	= 0;							// 効果対象の立ち位置:無し
+	pItemEffect->EffectUser			= this->pPlayer;				// 効果の使用者:プレイヤーキャラクター
+	pItemEffect->AllRange			= false;						// 全体効果でない
+	pItemEffect->EffectCard			= std::dynamic_pointer_cast<Card_Item_Base>(shared_from_this());
+	pItemEffect->Priority			= 40;							// ちょっと低め
+	pItemEffect->EffectCard			= shared_from_this();			// 効果を使用するカード:このカード
+	this->pDataList_Battle->AddEffect(pItemEffect, GetMyAreaNo());
+
+	/* ロストフラグを有効化 */
+	this->bLostFlag = true;
 }
 
 // 背景を描写

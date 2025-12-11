@@ -14,7 +14,7 @@ class Card_Item_Base : public Card_Base
 		virtual ~Card_Item_Base() {};	// デストラクタ
 
 		/* 関数 */
-		virtual void BattleAction() override {};	// 戦闘行動(基本的にアイテムは戦闘行動処理は使わない)
+		virtual void BattleAction() override;		// 戦闘行動
 
 		/* 定数 */
 		static const int ITEM_CARD_IMAGE_WIDE		= 110;	// カード画像の幅

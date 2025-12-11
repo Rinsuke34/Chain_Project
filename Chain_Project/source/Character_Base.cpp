@@ -337,7 +337,6 @@ void Character_Base::Update_Buff_Debuff()
 		}
 	}
 
-
 	/* すべてのバフ、デバフのカウントを進める */
 	for (auto& BuffDebuff : this->Buff_Debuff_List)
 	{

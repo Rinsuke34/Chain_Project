@@ -106,25 +106,6 @@ class Action_Effect_Heal : public Action_Effect_Base
 		virtual void Draw_Effect()	override;	// 効果部分作成
 };
 
-// 状態異常付与
-class Action_Effect_StatusAliment : public Action_Effect_Base
-{
-	public:
-		Action_Effect_StatusAliment();				// コンストラクタ
-		virtual ~Action_Effect_StatusAliment()	{};	// デストラクタ
-
-		/* 関数 */
-		void ExecuteEffect()	override;	// 効果実行
-
-		/* 変数 */
-		int StatusAilment_Type;		// 状態異常の種類
-		int StatusAilment_Level;	// 状態異常のレベル
-
-	protected:
-		/* 関数 */
-		virtual void Draw_Effect()	override;	// 効果部分作成
-};
-
 // 特殊効果
 class Action_Effect_Extra : public Action_Effect_Base
 {

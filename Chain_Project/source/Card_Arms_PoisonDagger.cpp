@@ -27,7 +27,7 @@ Card_Arms_PoisonDagger::Card_Arms_PoisonDagger() : Card_Arms_Base()
 }
 
 // 効果発動:行動時
-void Card_Arms_PoisonDagger::Effect_Action(std::shared_ptr<Character_Base> Target)
+void Card_Arms_PoisonDagger::Effect_Action_After(std::shared_ptr<Character_Base> Target)
 {
 	// 引数
 	// Target : 効果対象のキャラクター

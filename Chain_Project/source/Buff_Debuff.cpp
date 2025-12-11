@@ -21,15 +21,12 @@ Character_Buff_Debuff_Base::Character_Buff_Debuff_Base()
 // 更新処理
 void Character_Buff_Debuff_Base::Update()
 {
-	/* 残りターン数を確認 */
-	if (this->Buff_Debuff_Time > 0)
+	/* 残りターン数を1減らす */
+	this->Buff_Debuff_Time--;
+
+	/* 残りターン数が0であるなら削除フラグを立てる */
+	if (this->Buff_Debuff_Time <= 0)
 	{
-		/* 残りターン数を1減らす */
-		this->Buff_Debuff_Time--;
-	}
-	else
-	{
-		/* 0であるなら削除フラグを立てる */
 		this->DeleteFlag = true;
 	}
 }

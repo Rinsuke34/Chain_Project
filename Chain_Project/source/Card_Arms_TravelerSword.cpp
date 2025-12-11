@@ -22,3 +22,13 @@ Card_Arms_TravelerSword::Card_Arms_TravelerSword() : Card_Arms_Base()
 	// 画像の名前
 	this->ImageName = "TravelerSword";		// 画像の名前
 }
+
+// 効果発動:行動直前
+void Card_Arms_TravelerSword::Effect_Action_Before(std::shared_ptr<Character_Base> Target)
+{
+	// 引数
+	// Target : 効果対象のキャラクター
+
+	/* 攻撃力を加算 */
+	this->Add_Strength_Buff(GetNowChainCount());	// 攻撃力バフ追加:チェイン数
+}

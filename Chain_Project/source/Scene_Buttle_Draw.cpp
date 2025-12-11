@@ -17,10 +17,7 @@
 // ”wŒi•`ŽÊ
 void Scene_Battle::Draw_BackGround()
 {
-	/* ‰¼ */
-	DrawBox(0, 0, SCREEN_SIZE_WIDE, SCREEN_SIZE_HEIGHT, GetColor(0, 128, 0), TRUE);
-
-	/* ”wŒi */
+	/* ƒLƒƒƒ‰ƒNƒ^[”wŒi */
 	DrawModiGraph(
 		0,					0,
 		SCREEN_SIZE_WIDE,	0,
@@ -30,13 +27,23 @@ void Scene_Battle::Draw_BackGround()
 		TRUE
 	);
 
-	/* ”wŒi */
+	/* ƒLƒƒƒ‰ƒNƒ^[‘«ê */
 	DrawModiGraph(
 		0, 250,
 		SCREEN_SIZE_WIDE, 250,
 		SCREEN_SIZE_WIDE, 300,
 		0, 300,
 		*(this->Image_BackGround[1]),
+		TRUE
+	);
+
+	/* ƒJ[ƒh’u‚«ê */
+	DrawModiGraph(
+		0, 300,
+		SCREEN_SIZE_WIDE, 300,
+		SCREEN_SIZE_WIDE, SCREEN_SIZE_HEIGHT,
+		0, SCREEN_SIZE_HEIGHT,
+		*(this->Image_BackGround[2]),
 		TRUE
 	);
 

@@ -205,6 +205,12 @@
     <Filter Include="ソース ファイル\カード\道具%28Item%29\毒薬">
       <UniqueIdentifier>{a201afef-1ddf-4d9b-8d9f-c2dbf90b005f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\カード\武具%28Arms%29\旅人の盾">
+      <UniqueIdentifier>{55a67c34-26bb-4ecf-8a55-91f1e9018005}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\カード\武具%28Arms%29\旅人の盾">
+      <UniqueIdentifier>{ac54c7b0-e9c9-4fda-8434-7df1c90c19c8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Main.cpp">
@@ -306,6 +312,9 @@
     <ClCompile Include="source\Card_Item_PoisonPotion.cpp">
       <Filter>ソース ファイル\カード\道具%28Item%29\毒薬</Filter>
     </ClCompile>
+    <ClCompile Include="source\Card_Arms_TravelerShield.cpp">
+      <Filter>ソース ファイル\カード\武具%28Arms%29\旅人の盾</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Scene_Load_Checker.h">
@@ -400,6 +409,9 @@
     </ClInclude>
     <ClInclude Include="source\Card_Item_PoisonPotion.h">
       <Filter>ヘッダー ファイル\カード\道具%28Item%29\毒薬</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Card_Arms_TravelerShield.h">
+      <Filter>ヘッダー ファイル\カード\武具%28Arms%29\旅人の盾</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

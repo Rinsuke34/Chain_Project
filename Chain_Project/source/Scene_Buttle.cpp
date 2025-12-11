@@ -23,6 +23,7 @@
 #include "Card_Arms_PoisonDagger.h"
 #include "Card_Arms_TravelerSword.h"
 #include "Card_Item_PoisonPotion.h"
+#include "Card_Arms_TravelerShield.h"
 
 // コンストラクタ
 Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 0, false, false)
@@ -53,6 +54,8 @@ Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 0, false, false)
 		this->Image_BackGround[0] = pDataList_Image->iGetImageHandle(ImageFilePath);
 		ImageFilePath = "BackGround/Battle_Cave_Floor";
 		this->Image_BackGround[1] = pDataList_Image->iGetImageHandle(ImageFilePath);
+		ImageFilePath = "BackGround/Table";
+		this->Image_BackGround[2] = pDataList_Image->iGetImageHandle(ImageFilePath);
 	}
 
 	/* UI作成 */
@@ -69,12 +72,12 @@ Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 0, false, false)
 	// ※ テスト用なので直打ち
 	// カード設定
 	std::vector<std::shared_ptr<Card_Base>> DeckCardList;
-	DeckCardList.push_back(std::make_shared<Card_Arms_PoisonDagger>());
-	DeckCardList.push_back(std::make_shared<Card_Arms_PoisonDagger>());
-	DeckCardList.push_back(std::make_shared<Card_Item_PoisonPotion>());
-	DeckCardList.push_back(std::make_shared<Card_Item_PoisonPotion>());
-	DeckCardList.push_back(std::make_shared<Card_Spell_ArmsEnhancement>());
-	DeckCardList.push_back(std::make_shared<Card_Spell_ArmsEnhancement>());
+	//DeckCardList.push_back(std::make_shared<Card_Spell_ArmsEnhancement>());
+	//DeckCardList.push_back(std::make_shared<Card_Spell_ArmsEnhancement>());
+	DeckCardList.push_back(std::make_shared<Card_Arms_TravelerSword>());
+	DeckCardList.push_back(std::make_shared<Card_Arms_TravelerSword>());
+	DeckCardList.push_back(std::make_shared<Card_Arms_TravelerShield>());
+	DeckCardList.push_back(std::make_shared<Card_Arms_TravelerShield>());
 	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenSword>());
 	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenSword>());
 	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenShield>());
@@ -83,8 +86,10 @@ Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 0, false, false)
 	DeckCardList.push_back(std::make_shared<Card_Item_HealingPotion>());
 	DeckCardList.push_back(std::make_shared<Card_Arms_GrassSword>());
 	DeckCardList.push_back(std::make_shared<Card_Arms_GrassSword>());
-	DeckCardList.push_back(std::make_shared<Card_Arms_TravelerSword>());
-	DeckCardList.push_back(std::make_shared<Card_Arms_TravelerSword>());
+	DeckCardList.push_back(std::make_shared<Card_Arms_PoisonDagger>());
+	DeckCardList.push_back(std::make_shared<Card_Arms_PoisonDagger>());
+	DeckCardList.push_back(std::make_shared<Card_Item_PoisonPotion>());
+	DeckCardList.push_back(std::make_shared<Card_Item_PoisonPotion>());
 	this->pDataList_Battle->SetAllDeckCardList(DeckCardList);
 	this->pDataList_Battle->SetDeckCardList(DeckCardList);
 	// 画像更新

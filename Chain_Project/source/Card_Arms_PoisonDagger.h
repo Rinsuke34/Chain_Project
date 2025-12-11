@@ -14,5 +14,5 @@ class Card_Arms_PoisonDagger : public Card_Arms_Base
 		virtual ~Card_Arms_PoisonDagger() {};	// デストラクタ
 
 		/* 関数 */
-		virtual void Effect_Action(std::shared_ptr<Character_Base> Target) override;		// 効果発動:行動時
+		virtual void Effect_Action_After(std::shared_ptr<Character_Base> Target) override;		// 効果発動:行動時
 };

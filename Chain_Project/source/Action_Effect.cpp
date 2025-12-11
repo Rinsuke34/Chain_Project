@@ -225,13 +225,19 @@ void Action_Effect_Attack::ExecuteEffect()
 				if (TargetEnemyCharacter != nullptr)
 				{
 					// 対象の敵キャラクターが存在する場合
+					/* 行動時効果(行動直前)を実行 */
+					if (this->EffectCard)
+					{
+						this->EffectCard->Effect_Action_Before(TargetEnemyCharacter);
+					}
+
 					/* ダメージ処理を実行 */
 					TargetEnemyCharacter->Damage(this->DamageAmount);
 
-					/* 行動時効果を実行 */
+					/* 行動時効果(行動直後)を実行 */
 					if (this->EffectCard)
 					{
-						this->EffectCard->Effect_Action(TargetEnemyCharacter);
+						this->EffectCard->Effect_Action_After(TargetEnemyCharacter);
 					}
 				}
 			}
@@ -250,13 +256,19 @@ void Action_Effect_Attack::ExecuteEffect()
 			if (TargetEnemyCharacter != nullptr)
 			{
 				// 対象の敵キャラクターが存在する場合
+				/* 行動時効果(行動直前)を実行 */
+				if (this->EffectCard)
+				{
+					this->EffectCard->Effect_Action_Before(TargetEnemyCharacter);
+				}
+
 				/* ダメージ処理を実行 */
 				TargetEnemyCharacter->Damage(this->DamageAmount);
 
 				/* 行動時効果を実行 */
 				if (this->EffectCard)
 				{
-					this->EffectCard->Effect_Action(TargetEnemyCharacter);
+					this->EffectCard->Effect_Action_After(TargetEnemyCharacter);
 				}
 
 				/* 攻撃リアクションを設定 */
@@ -281,13 +293,19 @@ void Action_Effect_Attack::ExecuteEffect()
 				if (TargetFriendCharacter != nullptr)
 				{
 					// 対象の仲間キャラクターが存在する場合
+					/* 行動時効果(行動直前)を実行 */
+					if (this->EffectCard)
+					{
+						this->EffectCard->Effect_Action_Before(TargetFriendCharacter);
+					}
+
 					/* ダメージ処理を実行 */
 					TargetFriendCharacter->Damage(this->DamageAmount);
 
 					/* 行動時効果を実行 */
 					if (this->EffectCard)
 					{
-						this->EffectCard->Effect_Action(TargetFriendCharacter);
+						this->EffectCard->Effect_Action_After(TargetFriendCharacter);
 					}
 				}
 			}
@@ -306,13 +324,19 @@ void Action_Effect_Attack::ExecuteEffect()
 			if (TargetFriendCharacter != nullptr)
 			{
 				// 対象の仲間キャラクターが存在する場合
+				/* 行動時効果(行動直前)を実行 */
+				if (this->EffectCard)
+				{
+					this->EffectCard->Effect_Action_Before(TargetFriendCharacter);
+				}
+
 				/* ダメージ処理を実行 */
 				TargetFriendCharacter->Damage(this->DamageAmount);
 
 				/* 行動時効果を実行 */
 				if (this->EffectCard)
 				{
-					this->EffectCard->Effect_Action(TargetFriendCharacter);
+					this->EffectCard->Effect_Action_After(TargetFriendCharacter);
 				}
 
 				/* 攻撃リアクションを設定 */
@@ -378,8 +402,20 @@ void Action_Effect_Defence::ExecuteEffect()
 				if (TargetEnemyCharacter != nullptr)
 				{
 					// 対象の敵キャラクターが存在する場合
+					/* 行動時効果(行動直前)を実行 */
+					if (this->EffectCard)
+					{
+						this->EffectCard->Effect_Action_Before(TargetEnemyCharacter);
+					}
+
 					/* シールド付与処理を実行 */
 					TargetEnemyCharacter->AddShield(this->ShieldAmount);
+
+					/* 行動時効果を実行 */
+					if (this->EffectCard)
+					{
+						this->EffectCard->Effect_Action_After(TargetEnemyCharacter);
+					}
 				}
 			}
 
@@ -397,8 +433,20 @@ void Action_Effect_Defence::ExecuteEffect()
 			if (TargetEnemyCharacter != nullptr)
 			{
 				// 対象の敵キャラクターが存在する場合
+				/* 行動時効果(行動直前)を実行 */
+				if (this->EffectCard)
+				{
+					this->EffectCard->Effect_Action_Before(TargetEnemyCharacter);
+				}
+
 				/* シールド付与処理を実行 */
 				TargetEnemyCharacter->AddShield(this->ShieldAmount);
+
+				/* 行動時効果を実行 */
+				if (this->EffectCard)
+				{
+					this->EffectCard->Effect_Action_After(TargetEnemyCharacter);
+				}
 
 				/* バフ付与リアクションを設定 */
 				if (this->EffectUser)
@@ -422,8 +470,20 @@ void Action_Effect_Defence::ExecuteEffect()
 				if (TargetFriendCharacter != nullptr)
 				{
 					// 対象の仲間キャラクターが存在する場合
+					/* 行動時効果(行動直前)を実行 */
+					if (this->EffectCard)
+					{
+						this->EffectCard->Effect_Action_Before(TargetFriendCharacter);
+					}
+
 					/* シールド付与処理を実行 */
 					TargetFriendCharacter->AddShield(this->ShieldAmount);
+
+					/* 行動時効果を実行 */
+					if (this->EffectCard)
+					{
+						this->EffectCard->Effect_Action_After(TargetFriendCharacter);
+					}
 				}
 			}
 
@@ -441,8 +501,20 @@ void Action_Effect_Defence::ExecuteEffect()
 			if (TargetFriendCharacter != nullptr)
 			{
 				// 対象の仲間キャラクターが存在する場合
+				/* 行動時効果(行動直前)を実行 */
+				if (this->EffectCard)
+				{
+					this->EffectCard->Effect_Action_Before(TargetFriendCharacter);
+				}
+
 				/* シールド付与処理を実行 */
 				TargetFriendCharacter->AddShield(this->ShieldAmount);
+
+				/* 行動時効果を実行 */
+				if (this->EffectCard)
+				{
+					this->EffectCard->Effect_Action_After(TargetFriendCharacter);
+				}
 
 				/* バフ付与リアクションを設定 */
 				if (this->EffectUser)
@@ -507,8 +579,20 @@ void Action_Effect_Heal::ExecuteEffect()
 				if (TargetEnemyCharacter != nullptr)
 				{
 					// 対象の敵キャラクターが存在する場合
+					/* 行動時効果(行動直前)を実行 */
+					if (this->EffectCard)
+					{
+						this->EffectCard->Effect_Action_Before(TargetEnemyCharacter);
+					}
+
 					/* 回復処理を実行 */
 					TargetEnemyCharacter->Heal(this->HealAmount);
+
+					/* 行動時効果を実行 */
+					if (this->EffectCard)
+					{
+						this->EffectCard->Effect_Action_After(TargetEnemyCharacter);
+					}
 				}
 			}
 
@@ -526,8 +610,20 @@ void Action_Effect_Heal::ExecuteEffect()
 			if (TargetEnemyCharacter != nullptr)
 			{
 				// 対象の敵キャラクターが存在する場合
+				/* 行動時効果(行動直前)を実行 */
+				if (this->EffectCard)
+				{
+					this->EffectCard->Effect_Action_Before(TargetEnemyCharacter);
+				}
+
 				/* 回復処理を実行 */
 				TargetEnemyCharacter->Heal(this->HealAmount);
+
+				/* 行動時効果を実行 */
+				if (this->EffectCard)
+				{
+					this->EffectCard->Effect_Action_After(TargetEnemyCharacter);
+				}
 
 				/* バフ付与リアクションを設定 */
 				if (this->EffectUser)
@@ -551,8 +647,20 @@ void Action_Effect_Heal::ExecuteEffect()
 				if (TargetFriendCharacter != nullptr)
 				{
 					// 対象の仲間キャラクターが存在する場合
+					/* 行動時効果(行動直前)を実行 */
+					if (this->EffectCard)
+					{
+						this->EffectCard->Effect_Action_Before(TargetFriendCharacter);
+					}
+
 					/* 回復処理を実行 */
 					TargetFriendCharacter->Heal(this->HealAmount);
+
+					/* 行動時効果を実行 */
+					if (this->EffectCard)
+					{
+						this->EffectCard->Effect_Action_After(TargetFriendCharacter);
+					}
 				}
 			}
 			/* バフ付与リアクションを設定 */
@@ -569,8 +677,20 @@ void Action_Effect_Heal::ExecuteEffect()
 			if (TargetFriendCharacter != nullptr)
 			{
 				// 対象の仲間キャラクターが存在する場合
+				/* 行動時効果(行動直前)を実行 */
+				if (this->EffectCard)
+				{
+					this->EffectCard->Effect_Action_Before(TargetFriendCharacter);
+				}
+
 				/* 回復処理を実行 */
 				TargetFriendCharacter->Heal(this->HealAmount);
+
+				/* 行動時効果を実行 */
+				if (this->EffectCard)
+				{
+					this->EffectCard->Effect_Action_After(TargetFriendCharacter);
+				}
 
 				/* バフ付与リアクションを設定 */
 				if (this->EffectUser)
@@ -586,27 +706,6 @@ void Action_Effect_Heal::ExecuteEffect()
 void Action_Effect_Heal::Draw_Effect()
 {
 
-}
-
-/* 状態異常付与 */
-// コンストラクタ
-Action_Effect_StatusAliment::Action_Effect_StatusAliment()
-{
-	/* 初期化 */
-	this->StatusAilment_Type	= 0;	// 状態異常の種類
-	this->StatusAilment_Level	= 0;	// 状態異常のレベル
-}
-
-// 効果実行
-void Action_Effect_StatusAliment::ExecuteEffect()
-{
-	
-}
-
-// 効果部分作成
-void Action_Effect_StatusAliment::Draw_Effect()
-{
-	
 }
 
 /* 特殊効果 */
