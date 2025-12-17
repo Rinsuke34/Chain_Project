@@ -211,6 +211,30 @@
     <Filter Include="ヘッダー ファイル\カード\武具%28Arms%29\旅人の盾">
       <UniqueIdentifier>{ac54c7b0-e9c9-4fda-8434-7df1c90c19c8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\シーン\ワールドマップ画面">
+      <UniqueIdentifier>{3374a3a0-848a-4a03-a3a7-8f46a02132ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\シーン\ワールドマップ画面">
+      <UniqueIdentifier>{fa2f9e93-e828-41f9-a2a6-8eacbae4690c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\ワールドマップノード">
+      <UniqueIdentifier>{2bedb2d9-01a4-4ed6-add5-4c9a4a786c81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\ワールドマップノード">
+      <UniqueIdentifier>{c77b09e1-5a78-4a38-8f2d-9eab9611cc46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\ワールドマップノード\敵">
+      <UniqueIdentifier>{3805b131-7509-4883-8ab9-5fdf1db0cc94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\ワールドマップノード\ショップ">
+      <UniqueIdentifier>{79c9a94c-f09b-4c07-a3ca-990d4592e66d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\ワールドマップノード\ショップ">
+      <UniqueIdentifier>{54fee5da-b4d2-47ad-b38d-8d8b4b63edec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\ワールドマップノード\敵">
+      <UniqueIdentifier>{fb7adbd5-c337-4de8-ab22-e51a3e3453f6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Main.cpp">
@@ -315,6 +339,18 @@
     <ClCompile Include="source\Card_Arms_TravelerShield.cpp">
       <Filter>ソース ファイル\カード\武具%28Arms%29\旅人の盾</Filter>
     </ClCompile>
+    <ClCompile Include="source\Scene_WoldMap.cpp">
+      <Filter>ソース ファイル\シーン\ワールドマップ画面</Filter>
+    </ClCompile>
+    <ClCompile Include="source\WoldMap_Node_Base.cpp">
+      <Filter>ソース ファイル\ワールドマップノード</Filter>
+    </ClCompile>
+    <ClCompile Include="source\WoldMap_Node_Shop.cpp">
+      <Filter>ソース ファイル\ワールドマップノード\ショップ</Filter>
+    </ClCompile>
+    <ClCompile Include="source\WoldMap_Node_Enemy.cpp">
+      <Filter>ソース ファイル\ワールドマップノード\敵</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Scene_Load_Checker.h">
@@ -412,6 +448,18 @@
     </ClInclude>
     <ClInclude Include="source\Card_Arms_TravelerShield.h">
       <Filter>ヘッダー ファイル\カード\武具%28Arms%29\旅人の盾</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Scene_WoldMap.h">
+      <Filter>ヘッダー ファイル\シーン\ワールドマップ画面</Filter>
+    </ClInclude>
+    <ClInclude Include="source\WoldMap_Node_Base.h">
+      <Filter>ヘッダー ファイル\ワールドマップノード</Filter>
+    </ClInclude>
+    <ClInclude Include="source\WoldMap_Node_Shop.h">
+      <Filter>ヘッダー ファイル\ワールドマップノード\ショップ</Filter>
+    </ClInclude>
+    <ClInclude Include="source\WoldMap_Node_Enemy.h">
+      <Filter>ヘッダー ファイル\ワールドマップノード\敵</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

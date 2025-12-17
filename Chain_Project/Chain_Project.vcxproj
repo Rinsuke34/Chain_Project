@@ -202,7 +202,11 @@
     <ClCompile Include="source\Scene_Particles_Text.cpp" />
     <ClCompile Include="source\Scene_Title.cpp" />
     <ClCompile Include="source\Scene_UI_Button.cpp" />
+    <ClCompile Include="source\Scene_WoldMap.cpp" />
     <ClCompile Include="source\VariableDefine.cpp" />
+    <ClCompile Include="source\WoldMap_Node_Base.cpp" />
+    <ClCompile Include="source\WoldMap_Node_Enemy.cpp" />
+    <ClCompile Include="source\WoldMap_Node_Shop.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AppFrame\AppFrame.vcxproj">
@@ -240,8 +244,12 @@
     <ClInclude Include="source\Scene_Particles_Text.h" />
     <ClInclude Include="source\Scene_Title.h" />
     <ClInclude Include="source\Scene_UI_Button.h" />
+    <ClInclude Include="source\Scene_WoldMap.h" />
     <ClInclude Include="source\StructDefine.h" />
     <ClInclude Include="source\VariableDefine.h" />
+    <ClInclude Include="source\WoldMap_Node_Base.h" />
+    <ClInclude Include="source\WoldMap_Node_Enemy.h" />
+    <ClInclude Include="source\WoldMap_Node_Shop.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
