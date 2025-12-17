@@ -13,7 +13,7 @@ WoldMap_Node_Base::WoldMap_Node_Base()
 	this->NodeType							= "";					// ノードの種類
 	this->Position_Map						= {0, 0};				// マップ上での座標
 	this->Position_Now						= {0, 0};				// 画面上での中心座標
-	this->Move_Position_List.clear();								// 移動可能座標リスト
+	this->Move_Node_List.clear();									// 移動可能ノードリスト
 	this->Image_Icon_Size					= WOLDMAP_ICON_SIZE;	// アイコン画像サイズ
 	this->Image_Icon[ICON_INDEX_NODE_ICON]	= nullptr;				// アイコン画像[1:固有のアイコン]
 

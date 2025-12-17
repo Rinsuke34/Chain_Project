@@ -21,26 +21,25 @@ Scene_WoldMap::Scene_WoldMap() : Scene_Base("Scene_WoldMap", 10, false, false)
 
 	/* ノードの仮作成 */
 	// エネミーノード
-	std::shared_ptr<WoldMap_Node_Enemy> pEnemyNode = std::make_shared<WoldMap_Node_Enemy>();
-	pEnemyNode->SetPosition_Map({ 5, 2 });
-	pEnemyNode->AddMovePosition({ 4, 3 });
-	pEnemyNode->AddMovePosition({ 6, 3 });
-	this->WoldMapNodeList.push_back(pEnemyNode);
-
-	pEnemyNode = std::make_shared<WoldMap_Node_Enemy>();
-	pEnemyNode->SetPosition_Map({ 4, 3 });
-	pEnemyNode->AddMovePosition({ 5, 4 });
-	this->WoldMapNodeList.push_back(pEnemyNode);
-
-	pEnemyNode = std::make_shared<WoldMap_Node_Enemy>();
-	pEnemyNode->SetPosition_Map({ 6, 3 });
-	pEnemyNode->AddMovePosition({ 5, 4 });
-	this->WoldMapNodeList.push_back(pEnemyNode);
+	std::shared_ptr<WoldMap_Node_Enemy> pEnemyNode1 = std::make_shared<WoldMap_Node_Enemy>();
+	pEnemyNode1->SetPosition_Map({ 5, 2 });
+	this->WoldMapNodeList.push_back(pEnemyNode1);
+	std::shared_ptr<WoldMap_Node_Enemy> pEnemyNode2 = std::make_shared<WoldMap_Node_Enemy>();
+	pEnemyNode2->SetPosition_Map({ 4, 3 });
+	this->WoldMapNodeList.push_back(pEnemyNode2);
+	std::shared_ptr<WoldMap_Node_Enemy> pEnemyNode3 = std::make_shared<WoldMap_Node_Enemy>();
+	pEnemyNode3->SetPosition_Map({ 6, 3 });
+	this->WoldMapNodeList.push_back(pEnemyNode3);
 
 	// ショップノード
 	std::shared_ptr<WoldMap_Node_Shop> pShopNode = std::make_shared<WoldMap_Node_Shop>();
 	pShopNode->SetPosition_Map({ 5, 4 });
 	this->WoldMapNodeList.push_back(pShopNode);
+
+	pEnemyNode1->AddMoveNode(pEnemyNode2);
+	pEnemyNode1->AddMoveNode(pEnemyNode3);
+	pEnemyNode2->AddMoveNode(pShopNode);
+	pEnemyNode3->AddMoveNode(pShopNode);
 }
 
 // デストラクタ
@@ -115,17 +114,17 @@ void Scene_WoldMap::Road_Draw()
 	/* 各ノードからつながる道を描写 */
 	for (auto& Node : this->WoldMapNodeList)
 	{
-		/* つながる道を取得 */
-		std::vector<Struct_2D::POSITION> MovePositionList = Node->GetMovePositionList();
+		/* 移動可能なノードを取得 */
+		std::vector<std::shared_ptr<WoldMap_Node_Base>> MoveNodeList = Node->GetMoveNodeList();
 
 		/* 道を描写 */
-		for (auto& MovePosition : MovePositionList)
+		for (auto& MoveNode : MoveNodeList)
 		{
 			/* 道の開始位置、終了位置を算出 */
 			Struct_2D::POSITION StartPos	= Node->GetPosition_Now();
 			Struct_2D::POSITION EndPos		= {
-				MovePosition.iX * 200,
-				MovePosition.iY * 200
+				MoveNode->GetPosition_Now().iX,
+				MoveNode->GetPosition_Now().iY
 			};
 
 			/* 道を描写 */
