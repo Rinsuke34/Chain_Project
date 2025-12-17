@@ -17,4 +17,5 @@ WoldMap_Node_Shop::WoldMap_Node_Shop() : WoldMap_Node_Base()
 
 	/* ‰æ‘œ‚ÌŽæ“¾ */
 	std::string ImageFilePath = "WoldMap_Node/Shop";
+	this->Image_Icon[ICON_INDEX_NODE_ICON] = pDataList_Image->iGetImageHandle(ImageFilePath);
 }

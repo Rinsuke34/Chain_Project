@@ -428,9 +428,6 @@
     <ClInclude Include="source\Character_Npc_Slime_Green.h">
       <Filter>ヘッダー ファイル\キャラクター\NPC\スライム%28緑%29</Filter>
     </ClInclude>
-    <ClInclude Include="source\StructDefine.h">
-      <Filter>ヘッダー ファイル\定義</Filter>
-    </ClInclude>
     <ClInclude Include="source\Buff_Debuff.h">
       <Filter>ヘッダー ファイル\キャラクター\バフ、デバフ</Filter>
     </ClInclude>

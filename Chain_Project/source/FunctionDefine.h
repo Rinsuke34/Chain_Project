@@ -16,4 +16,5 @@ namespace LOAD_FUNCTION
 namespace DRAW_FUNCTION
 {
 	void DrawChain(Struct_2D::POSITION StartPos, Struct_2D::POSITION EndPos);	// çΩÇÃï`é 
+	void DrawRoad(Struct_2D::POSITION StartPos, Struct_2D::POSITION EndPos);	// ìπÇÃï`é 
 }

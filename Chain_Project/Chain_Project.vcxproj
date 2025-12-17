@@ -245,7 +245,6 @@
     <ClInclude Include="source\Scene_Title.h" />
     <ClInclude Include="source\Scene_UI_Button.h" />
     <ClInclude Include="source\Scene_WoldMap.h" />
-    <ClInclude Include="source\StructDefine.h" />
     <ClInclude Include="source\VariableDefine.h" />
     <ClInclude Include="source\WoldMap_Node_Base.h" />
     <ClInclude Include="source\WoldMap_Node_Enemy.h" />
