@@ -24,18 +24,24 @@ class WoldMap_Node_Base : public std::enable_shared_from_this<WoldMap_Node_Base>
 		void SetPosition_Now(Struct_2D::POSITION Position)									{ this->Position_Now		= Position; }		// 画面上での座標
 		void SetMoveNodeList(std::vector<std::shared_ptr<WoldMap_Node_Base>> PositionList)	{ this->Move_Node_List		= PositionList; }	// 移動可能ノードリスト
 		void SetImageIconSize(int Size)														{ this->Image_Icon_Size		= Size; }			// アイコン画像サイズ
+		void SetNodeState(int State)														{ this->NodeState			= State; }			// ノード状態
 
 		/* ゲッター */
 		std::string										GetNodeType()		{ return this->NodeType; }			// ノードタイプ
 		Struct_2D::POSITION								GetPosition_Map()	{ return this->Position_Map; }		// マップ上での座標
 		Struct_2D::POSITION								GetPosition_Now()	{ return this->Position_Now; }		// 画面上での座標
 		std::vector<std::shared_ptr<WoldMap_Node_Base>>	GetMoveNodeList()	{ return this->Move_Node_List; }	// 移動可能座標リスト
+		int												GetImageIconSize()	{ return this->Image_Icon_Size; }	// アイコン画像サイズ
 
 		/* 定数 */
 		// ノードの種類
 		inline static const	std::string	NODE_TYPE_ENEMY	= "Enemy";		// 敵
 		inline static const	std::string	NODE_TYPE_SHOP	= "Shop";		// ショップ
 		inline static const	std::string	NODE_TYPE_BOSS	= "Boss";		// ボス
+		// ノード状態
+		static const int	NODE_STATE_NORMAL		= 0;	// 通常
+		static const int	NODE_STATE_CLEARED		= 1;	// クリア済み
+		static const int	NODE_STATE_PLAYER_POS	= 2;	// プレイヤー現在位置
 		// アイコン画像インデックス
 		static const int	ICON_INDEX_PLAYER_POS	= 0;	// プレイヤー現在位置
 		static const int	ICON_INDEX_NODE_ICON	= 1;	// 固有のアイコン
@@ -51,6 +57,7 @@ class WoldMap_Node_Base : public std::enable_shared_from_this<WoldMap_Node_Base>
 		Struct_2D::POSITION								Position_Now;		// 画面上での中心座標
 		std::vector<std::shared_ptr<WoldMap_Node_Base>>	Move_Node_List;		// 移動可能ノードリスト
 		int												Image_Icon_Size;	// アイコン画像サイズ
+		int												NodeState;			// ノード状態
 		// 画像
 		std::shared_ptr<int>	Image_Icon[2];		// アイコン画像[0:プレイヤー現在位置, 1:固有のアイコン]
 		std::shared_ptr<int>	Image_Frame_Corner;	// 角

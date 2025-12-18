@@ -5,10 +5,12 @@
 #include "Scene_Battle.h"
 // 関連クラス
 #include "Scene_UI_Button.h"
+#include "Scene_WoldMap.h"
 #include "Card_Base.h"
 #include "Card_Spell_Base.h"
 #include "DataList_Battle.h"
 #include "Character_Base.h"
+#include "Character_Player.h"
 #include "Action_Effect.h"
 
 /* 各フェーズごとの更新処理 */
@@ -769,5 +771,58 @@ void Scene_Battle::ResetChain()
 		{
 			card->SetNowChainCount(0);
 		}
+	}
+}
+
+// 戦闘が終了しているかの確認
+void Scene_Battle::CheckGameEnd()
+{
+	/* プレイヤーキャラクターが存在しているか確認 */
+	bool bPlayerCharacterExist = false;
+	for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
+	{
+		/* プレイヤーキャラクターであるかキャストして確認 */
+		auto FriendCharacter = this->pDataList_Battle->GetFriendCharacter(i);
+		if (FriendCharacter != nullptr)
+		{
+			auto CastedPlayerCharacter = std::dynamic_pointer_cast<Character_Player>(FriendCharacter);
+			if (CastedPlayerCharacter != nullptr)
+			{
+				// プレイヤーキャラクターが存在している場合、処理を抜ける
+				bPlayerCharacterExist = true;
+				break;
+			}
+		}
+	}
+	if (!bPlayerCharacterExist)
+	{
+		// プレイヤーキャラクターが存在していない場合
+		/* 戦闘終了(プレイヤー敗北)フェイズへ遷移 */
+		this->iBattlePhase = BATTLE_PHASE_BATTLE_END_GAMEOVER;
+		return;
+	}
+
+	/* 敵キャラクターが存在しているか確認 */
+	bool bEnemyCharacterExist = false;
+	for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
+	{
+		auto EnemyCharacter = this->pDataList_Battle->GetEnemyCharacter(i);
+		if (EnemyCharacter != nullptr)
+		{
+			// 敵キャラクターが存在している場合、処理を抜ける
+			bEnemyCharacterExist = true;
+			break;
+		}
+	}
+
+	if (!bEnemyCharacterExist)
+	{
+		// 敵キャラクターが存在していない場合
+		/* 戦闘終了(プレイヤー勝利)フェイズへ遷移 */
+		this->iBattlePhase = BATTLE_PHASE_BATTLE_END_WIN;
+
+		/* シーン(ワールドマップ)を作成 */
+		gpSceneServer->AddSceneReservation(std::make_shared<Scene_WoldMap>());
+		return;
 	}
 }

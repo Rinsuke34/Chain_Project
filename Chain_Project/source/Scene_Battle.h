@@ -36,7 +36,9 @@ class Scene_Battle : public Scene_Base
 		static const int	BATTLE_PHASE_BATTLE_ACTION			= 7;	// 戦闘行動
 		static const int	BATTLE_PHASE_EFFECT_TRUN_END		= 8;	// "ターン終了時"の効果発動
 		static const int	BATTLE_PHASE_STATUS_EFFECT_ADVANCE	= 9;	// 状態変化のターン進行
-		static const int	BATTLE_PHASE_MAX					= 10;	// バトルフェーズ総数
+		static const int	BATTLE_PHASE_BATTLE_END_WIN			= 10;	// 戦闘終了(プレイヤー勝利)
+		static const int	BATTLE_PHASE_BATTLE_END_GAMEOVER	= 11;	// 戦闘終了(プレイヤー敗北)
+		static const int	BATTLE_PHASE_MAX					= 12;	// バトルフェーズ総数
 		// 座標関係
 		static const int	BATTLE_AREA_INTERVAL				= 300;	// バトルエリアの間隔
 		static const int	BATTLE_AREA_POS_Y					= 600;	// バトルエリアのY座標
@@ -93,4 +95,5 @@ class Scene_Battle : public Scene_Base
 		void Character_Death_Check();					// キャラクターが死亡しているか確認
 		void CheckLostCard();							// ロスト対象のカードを確認し、ロストカード一覧に入れる
 		void ResetChain();								// チェイン数をリセット
+		void CheckGameEnd();							// 戦闘が終了しているかの確認
 };

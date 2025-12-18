@@ -112,6 +112,9 @@ Scene_Battle::~Scene_Battle()
 // 更新
 void Scene_Battle::Update()
 {
+	/* 戦闘終了確認 */
+	CheckGameEnd();
+
 	/* バトルフェーズに応じた更新処理を行う */
 	switch (this->iBattlePhase)
 	{
@@ -163,6 +166,12 @@ void Scene_Battle::Update()
 		// 状態変化のターン進行
 		case BATTLE_PHASE_STATUS_EFFECT_ADVANCE:
 			Update_StatusEffectAdvance();
+			break;
+
+		// 戦闘終了
+		case BATTLE_PHASE_BATTLE_END_WIN:
+		case BATTLE_PHASE_BATTLE_END_GAMEOVER:
+			// 処理無し
 			break;
 	}
 

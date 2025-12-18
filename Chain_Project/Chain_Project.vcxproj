@@ -205,6 +205,7 @@
     <ClCompile Include="source\Scene_WoldMap.cpp" />
     <ClCompile Include="source\VariableDefine.cpp" />
     <ClCompile Include="source\WoldMap_Node_Base.cpp" />
+    <ClCompile Include="source\WoldMap_Node_Boss.cpp" />
     <ClCompile Include="source\WoldMap_Node_Enemy.cpp" />
     <ClCompile Include="source\WoldMap_Node_Shop.cpp" />
   </ItemGroup>
@@ -247,6 +248,7 @@
     <ClInclude Include="source\Scene_WoldMap.h" />
     <ClInclude Include="source\VariableDefine.h" />
     <ClInclude Include="source\WoldMap_Node_Base.h" />
+    <ClInclude Include="source\WoldMap_Node_Boss.h" />
     <ClInclude Include="source\WoldMap_Node_Enemy.h" />
     <ClInclude Include="source\WoldMap_Node_Shop.h" />
   </ItemGroup>

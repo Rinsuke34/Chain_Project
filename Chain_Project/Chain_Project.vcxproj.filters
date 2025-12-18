@@ -235,6 +235,12 @@
     <Filter Include="ヘッダー ファイル\ワールドマップノード\敵">
       <UniqueIdentifier>{fb7adbd5-c337-4de8-ab22-e51a3e3453f6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\ワールドマップノード\ボス">
+      <UniqueIdentifier>{45e67f2b-14c9-4dcd-acb2-f360a00ddbb6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\ワールドマップノード\ボス">
+      <UniqueIdentifier>{1d13526b-081a-4297-b59b-960c8077c869}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Main.cpp">
@@ -351,6 +357,9 @@
     <ClCompile Include="source\WoldMap_Node_Enemy.cpp">
       <Filter>ソース ファイル\ワールドマップノード\敵</Filter>
     </ClCompile>
+    <ClCompile Include="source\WoldMap_Node_Boss.cpp">
+      <Filter>ソース ファイル\ワールドマップノード\ボス</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Scene_Load_Checker.h">
@@ -457,6 +466,9 @@
     </ClInclude>
     <ClInclude Include="source\WoldMap_Node_Enemy.h">
       <Filter>ヘッダー ファイル\ワールドマップノード\敵</Filter>
+    </ClInclude>
+    <ClInclude Include="source\WoldMap_Node_Boss.h">
+      <Filter>ヘッダー ファイル\ワールドマップノード\ボス</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

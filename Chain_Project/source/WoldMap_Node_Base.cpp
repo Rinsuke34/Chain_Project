@@ -16,6 +16,7 @@ WoldMap_Node_Base::WoldMap_Node_Base()
 	this->Move_Node_List.clear();									// 移動可能ノードリスト
 	this->Image_Icon_Size					= WOLDMAP_ICON_SIZE;	// アイコン画像サイズ
 	this->Image_Icon[ICON_INDEX_NODE_ICON]	= nullptr;				// アイコン画像[1:固有のアイコン]
+	this->NodeState							= NODE_STATE_NORMAL;	// ノード状態
 
 	/* 画像管理データリストを取得 */
 	std::shared_ptr<DataList_Image> pDataList_Image = std::dynamic_pointer_cast<DataList_Image>(gpDataListServer->GetDataList("DataList_Image"));
@@ -119,9 +120,30 @@ void WoldMap_Node_Base::Draw()
 		*(this->Image_Frame_Inside), TRUE
 	);
 
-	/* アイコンを描写 */
-	DrawExtendGraph(
-		this->Position_Now.iX - (this->Image_Icon_Size / 2), this->Position_Now.iY - (this->Image_Icon_Size / 2),
-		this->Position_Now.iX + (this->Image_Icon_Size / 2), this->Position_Now.iY + (this->Image_Icon_Size / 2),
-		*(this->Image_Icon[ICON_INDEX_NODE_ICON]), TRUE);
+	/* 状態に応じて描写を行う */
+	switch (this->NodeState)
+	{
+		// 通常
+		case NODE_STATE_NORMAL:
+			/* アイコンを描写 */
+			DrawExtendGraph(
+				this->Position_Now.iX - (this->Image_Icon_Size / 2), this->Position_Now.iY - (this->Image_Icon_Size / 2),
+				this->Position_Now.iX + (this->Image_Icon_Size / 2), this->Position_Now.iY + (this->Image_Icon_Size / 2),
+				*(this->Image_Icon[ICON_INDEX_NODE_ICON]), TRUE);
+			break;
+
+		// クリア済み
+		case NODE_STATE_CLEARED:
+			/* 何も描写しない */
+			break;
+
+		// プレイヤー現在位置
+		case NODE_STATE_PLAYER_POS:
+			/* プレイヤー現在位置アイコンを描写 */
+			DrawExtendGraph(
+				this->Position_Now.iX - (this->Image_Icon_Size / 2), this->Position_Now.iY - (this->Image_Icon_Size / 2),
+				this->Position_Now.iX + (this->Image_Icon_Size / 2), this->Position_Now.iY + (this->Image_Icon_Size / 2),
+				*(this->Image_Icon[ICON_INDEX_PLAYER_POS]), TRUE);
+			break;
+	}
 }
