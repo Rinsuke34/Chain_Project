@@ -81,6 +81,7 @@ class Card_Base : public std::enable_shared_from_this<Card_Base>
 		static const int TYPE_ARMS		= 0;	// 武具
 		static const int TYPE_SPELL		= 1;	// 魔法
 		static const int TYPE_ITEM		= 2;	// アイテム
+		static const int TYPE_NEXT_AREA = 3;	// 移動先エリア
 		// スートの種類
 		inline static const	std::string	SUITE_SWORD		= "Sword";		// 剣
 		inline static const	std::string	SUITE_SHIELD	= "Shield";		// 盾
@@ -141,4 +142,5 @@ class Card_Base : public std::enable_shared_from_this<Card_Base>
 		virtual void	DrawName()			{};	// 名前を描写
 		virtual void	DrawExText()		{};	// 追加テキストの描写
 		virtual void	CheckHavePlayer();		// プレイヤーを取得しているか確認
+		virtual bool	MouseInCard();			// マウスカーソルがカード上にあるか確認
 };

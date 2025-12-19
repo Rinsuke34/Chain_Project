@@ -241,6 +241,12 @@
     <Filter Include="ヘッダー ファイル\ワールドマップノード\ボス">
       <UniqueIdentifier>{1d13526b-081a-4297-b59b-960c8077c869}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\カード\移動先エリア">
+      <UniqueIdentifier>{44f0934b-b5c4-4f3d-b509-9ba9d038c8ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\カード\移動先エリア">
+      <UniqueIdentifier>{6029a5b2-97e3-427d-b834-7d3183447c20}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Main.cpp">
@@ -360,6 +366,9 @@
     <ClCompile Include="source\WoldMap_Node_Boss.cpp">
       <Filter>ソース ファイル\ワールドマップノード\ボス</Filter>
     </ClCompile>
+    <ClCompile Include="source\Card_NextArea.cpp">
+      <Filter>ソース ファイル\カード\移動先エリア</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Scene_Load_Checker.h">
@@ -469,6 +478,9 @@
     </ClInclude>
     <ClInclude Include="source\WoldMap_Node_Boss.h">
       <Filter>ヘッダー ファイル\ワールドマップノード\ボス</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Card_NextArea.h">
+      <Filter>ヘッダー ファイル\カード\移動先エリア</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

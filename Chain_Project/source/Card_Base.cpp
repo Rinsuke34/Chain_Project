@@ -299,3 +299,36 @@ void Card_Base::Add_Diffence_Buff(int amount)
 	/* 画像更新 */
 	UpdateImage();
 }
+
+// マウスカーソルがカード上にあるか確認
+bool Card_Base::MouseInCard()
+{
+	// 戻り値
+	// bool <- マウスカーソルがカード上にあるなら true、ないなら false
+
+	/* マウス座標を取得 */
+	Struct_2D::POSITION MousePosition = {
+		gstKeyboardInputData.iMouseX,
+		gstKeyboardInputData.iMouseY
+	};
+
+	/* カードの範囲を定義 */
+	Struct_2D::RANGE CardRange = {
+		this->Now_Position.iX - (CARD_WIDTH / 2),
+		this->Now_Position.iY - (CARD_HEIGHT / 2),
+		this->Now_Position.iX + (CARD_WIDTH / 2),
+		this->Now_Position.iY + (CARD_HEIGHT / 2)
+	};
+
+	/* 2D範囲内にマウス座標が存在するか確認 */
+	if (PUBLIC_PROCESS::bPositionIn2DRangeCheck(MousePosition, CardRange))
+	{
+		// 存在するならばtrueを返す
+		return true;
+	}
+	else
+	{
+		// 存在しないならばfalseを返す
+		return false;
+	}
+}

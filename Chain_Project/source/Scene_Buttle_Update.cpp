@@ -663,6 +663,13 @@ int Scene_Battle::GetMouseInBattleArea()
 	// 戻り値
 	// int <- マウスが重なっているバトルエリアのインデックス(ないなら-1)
 
+	/* 戦闘終了しているなら処理を行わない */
+	if (this->iBattlePhase == BATTLE_PHASE_BATTLE_END_WIN ||
+		this->iBattlePhase == BATTLE_PHASE_BATTLE_END_GAMEOVER)
+	{
+		return -1;
+	}
+
 	/* バトルエリアのサイズを取得 */
 	int SizeX, SizeY;
 	GetGraphSize(*(this->Image_BattleArea[0]), &SizeX, &SizeY);

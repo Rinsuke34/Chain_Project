@@ -3,14 +3,17 @@
 /* 使用する要素のインクルード */
 // ヘッダファイル
 #include "WoldMap_Node_Base.h"
+// 共通定義
+#include "FunctionDefine.h"
 // 関連クラス
 #include "DataList_Image.h"
+#include "Card_NextArea.h"
 
 // コンストラクタ
 WoldMap_Node_Base::WoldMap_Node_Base()
 {
 	/* 初期化 */
-	this->NodeType							= "";					// ノードの種類
+	this->NodeType							= -1;					// ノードの種類
 	this->Position_Map						= {0, 0};				// マップ上での座標
 	this->Position_Now						= {0, 0};				// 画面上での中心座標
 	this->Move_Node_List.clear();									// 移動可能ノードリスト
@@ -27,10 +30,10 @@ WoldMap_Node_Base::WoldMap_Node_Base()
 	this->Image_Icon[ICON_INDEX_PLAYER_POS]	= pDataList_Image->iGetImageHandle(ImageFilePath);
 	// 角
 	ImageFilePath = "UI/Button/Button_Frame_Corner_Over";
-	this->Image_Frame_Corner = pDataList_Image->iGetImageHandle(ImageFilePath);;
+	this->Image_Frame_Corner = pDataList_Image->iGetImageHandle(ImageFilePath);
 	// 線
 	ImageFilePath = "UI/Button/Button_Frame_Line_Over";
-	this->Image_Frame_Line = pDataList_Image->iGetImageHandle(ImageFilePath);;
+	this->Image_Frame_Line = pDataList_Image->iGetImageHandle(ImageFilePath);
 	// 内側
 	ImageFilePath = "UI/Button/Button_Frame_Inside_Over";
 	this->Image_Frame_Inside = pDataList_Image->iGetImageHandle(ImageFilePath);
@@ -39,85 +42,20 @@ WoldMap_Node_Base::WoldMap_Node_Base()
 // 更新処理
 void WoldMap_Node_Base::Update()
 {
-
+	
 }
 
 // 描画処理
 void WoldMap_Node_Base::Draw()
 {
 	/* 背景、フレームの描写 */
-	// ※ボタンUIのフレームを流用
-	// 角(左上)
-	DrawModiGraph(
-		this->Position_Now.iX - (this->Image_Icon_Size / 2) - FRAME_THICKNESS,	this->Position_Now.iY - (this->Image_Icon_Size / 2) - FRAME_THICKNESS,
-		this->Position_Now.iX - (this->Image_Icon_Size / 2),					this->Position_Now.iY - (this->Image_Icon_Size / 2) - FRAME_THICKNESS,
-		this->Position_Now.iX - (this->Image_Icon_Size / 2),					this->Position_Now.iY - (this->Image_Icon_Size / 2),
-		this->Position_Now.iX - (this->Image_Icon_Size / 2) - FRAME_THICKNESS,	this->Position_Now.iY - (this->Image_Icon_Size / 2),
-		*(this->Image_Frame_Corner), TRUE
-	);
-	// 角(右上)
-	DrawModiGraph(
-		this->Position_Now.iX + (this->Image_Icon_Size / 2) + FRAME_THICKNESS,	this->Position_Now.iY - (this->Image_Icon_Size / 2) - FRAME_THICKNESS,
-		this->Position_Now.iX + (this->Image_Icon_Size / 2) + FRAME_THICKNESS,	this->Position_Now.iY - (this->Image_Icon_Size / 2),
-		this->Position_Now.iX + (this->Image_Icon_Size / 2),					this->Position_Now.iY - (this->Image_Icon_Size / 2),
-		this->Position_Now.iX + (this->Image_Icon_Size / 2),					this->Position_Now.iY - (this->Image_Icon_Size / 2) - FRAME_THICKNESS,
-		*(this->Image_Frame_Corner), TRUE
-	);
-	// 角(右下)
-	DrawModiGraph(
-		this->Position_Now.iX + (this->Image_Icon_Size / 2) + FRAME_THICKNESS,	this->Position_Now.iY + (this->Image_Icon_Size / 2) + FRAME_THICKNESS,
-		this->Position_Now.iX + (this->Image_Icon_Size / 2),					this->Position_Now.iY + (this->Image_Icon_Size / 2) + FRAME_THICKNESS,
-		this->Position_Now.iX + (this->Image_Icon_Size / 2),					this->Position_Now.iY + (this->Image_Icon_Size / 2),
-		this->Position_Now.iX + (this->Image_Icon_Size / 2) + FRAME_THICKNESS,	this->Position_Now.iY + (this->Image_Icon_Size / 2),
-		*(this->Image_Frame_Corner), TRUE
-	);
-	// 角(左下)
-	DrawModiGraph(
-		this->Position_Now.iX - (this->Image_Icon_Size / 2) - FRAME_THICKNESS,	this->Position_Now.iY + (this->Image_Icon_Size / 2) + FRAME_THICKNESS,
-		this->Position_Now.iX - (this->Image_Icon_Size / 2) - FRAME_THICKNESS,	this->Position_Now.iY + (this->Image_Icon_Size / 2),
-		this->Position_Now.iX - (this->Image_Icon_Size / 2),					this->Position_Now.iY + (this->Image_Icon_Size / 2),
-		this->Position_Now.iX - (this->Image_Icon_Size / 2),					this->Position_Now.iY + (this->Image_Icon_Size / 2) + FRAME_THICKNESS,
-		*(this->Image_Frame_Corner), TRUE
-	);
-	// 線(上)
-	DrawModiGraph(
-		this->Position_Now.iX - (this->Image_Icon_Size / 2), this->Position_Now.iY - (this->Image_Icon_Size / 2) - FRAME_THICKNESS,
-		this->Position_Now.iX + (this->Image_Icon_Size / 2), this->Position_Now.iY - (this->Image_Icon_Size / 2) - FRAME_THICKNESS,
-		this->Position_Now.iX + (this->Image_Icon_Size / 2), this->Position_Now.iY - (this->Image_Icon_Size / 2),
-		this->Position_Now.iX - (this->Image_Icon_Size / 2), this->Position_Now.iY - (this->Image_Icon_Size / 2),
-		*(this->Image_Frame_Line), TRUE
-	);
-	// 線(右)
-	DrawModiGraph(
-		this->Position_Now.iX + (this->Image_Icon_Size / 2) + FRAME_THICKNESS,	this->Position_Now.iY + (this->Image_Icon_Size / 2),
-		this->Position_Now.iX + (this->Image_Icon_Size / 2) + FRAME_THICKNESS,	this->Position_Now.iY - (this->Image_Icon_Size / 2),
-		this->Position_Now.iX + (this->Image_Icon_Size / 2),					this->Position_Now.iY - (this->Image_Icon_Size / 2),
-		this->Position_Now.iX + (this->Image_Icon_Size / 2),					this->Position_Now.iY + (this->Image_Icon_Size / 2),
-		*(this->Image_Frame_Line), TRUE
-	);
-	// 線(下)
-	DrawModiGraph(
-		this->Position_Now.iX + (this->Image_Icon_Size / 2), this->Position_Now.iY + (this->Image_Icon_Size / 2) + FRAME_THICKNESS,
-		this->Position_Now.iX - (this->Image_Icon_Size / 2), this->Position_Now.iY + (this->Image_Icon_Size / 2) + FRAME_THICKNESS,
-		this->Position_Now.iX - (this->Image_Icon_Size / 2), this->Position_Now.iY + (this->Image_Icon_Size / 2),
-		this->Position_Now.iX + (this->Image_Icon_Size / 2), this->Position_Now.iY + (this->Image_Icon_Size / 2),
-		*(this->Image_Frame_Line), TRUE
-	);
-	// 線(左)
-	DrawModiGraph(
-		this->Position_Now.iX - (this->Image_Icon_Size / 2) - FRAME_THICKNESS,	this->Position_Now.iY - (this->Image_Icon_Size / 2),
-		this->Position_Now.iX - (this->Image_Icon_Size / 2) - FRAME_THICKNESS,	this->Position_Now.iY + (this->Image_Icon_Size / 2),
-		this->Position_Now.iX - (this->Image_Icon_Size / 2),					this->Position_Now.iY + (this->Image_Icon_Size / 2),
-		this->Position_Now.iX - (this->Image_Icon_Size / 2),					this->Position_Now.iY - (this->Image_Icon_Size / 2),
-		*(this->Image_Frame_Line), TRUE
-	);
-	// 内側
-	DrawModiGraph(
-		this->Position_Now.iX - (this->Image_Icon_Size / 2), this->Position_Now.iY - (this->Image_Icon_Size / 2),
-		this->Position_Now.iX + (this->Image_Icon_Size / 2), this->Position_Now.iY - (this->Image_Icon_Size / 2),
-		this->Position_Now.iX + (this->Image_Icon_Size / 2), this->Position_Now.iY + (this->Image_Icon_Size / 2),
-		this->Position_Now.iX - (this->Image_Icon_Size / 2), this->Position_Now.iY + (this->Image_Icon_Size / 2),
-		*(this->Image_Frame_Inside), TRUE
+	DRAW_FUNCTION::DrawFrame_Image(
+		this->Position_Now,
+		{ this->Image_Icon_Size, this->Image_Icon_Size },
+		FRAME_THICKNESS,
+		*(this->Image_Frame_Corner),
+		* (this->Image_Frame_Line),
+		*(this->Image_Frame_Inside)
 	);
 
 	/* 状態に応じて描写を行う */

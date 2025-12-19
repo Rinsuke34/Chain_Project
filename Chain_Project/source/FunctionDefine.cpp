@@ -181,4 +181,89 @@ namespace DRAW_FUNCTION
 			);
 		}
 	}
+
+	// 画像でのフレームの描写
+	void DrawFrame_Image(Struct_2D::POSITION CenterPos, Struct_2D::POSITION IconSize, int Frame_Thickness, int Image_Corner, int Image_Line, int Image_Inside)
+	{
+		// 引数
+		// CenterPos		<- フレームの中心位置
+		// IconSize			<- アイコンサイズ
+		// Frame_Thickness	<- フレームの太さ
+		// Image_Corner		<- 角の画像ハンドル
+		// Image_Line		<- 線の画像ハンドル
+		// Image_Inside		<- 内側の画像ハンドル
+
+		// 角(左上)
+		DrawModiGraph(
+			CenterPos.iX - (IconSize.iX / 2) - Frame_Thickness, CenterPos.iY - (IconSize.iY / 2) - Frame_Thickness,
+			CenterPos.iX - (IconSize.iX / 2),					CenterPos.iY - (IconSize.iY / 2) - Frame_Thickness,
+			CenterPos.iX - (IconSize.iX / 2),					CenterPos.iY - (IconSize.iY / 2),
+			CenterPos.iX - (IconSize.iX / 2) - Frame_Thickness, CenterPos.iY - (IconSize.iY / 2),
+			Image_Corner, TRUE
+		);
+		// 角(右上)
+		DrawModiGraph(
+			CenterPos.iX + (IconSize.iX / 2) + Frame_Thickness, CenterPos.iY - (IconSize.iY / 2) - Frame_Thickness,
+			CenterPos.iX + (IconSize.iX / 2) + Frame_Thickness, CenterPos.iY - (IconSize.iY / 2),
+			CenterPos.iX + (IconSize.iX / 2),					CenterPos.iY - (IconSize.iY / 2),
+			CenterPos.iX + (IconSize.iX / 2),					CenterPos.iY - (IconSize.iY / 2) - Frame_Thickness,
+			Image_Corner, TRUE
+		);
+		// 角(右下)
+		DrawModiGraph(
+			CenterPos.iX + (IconSize.iX / 2) + Frame_Thickness, CenterPos.iY + (IconSize.iY / 2) + Frame_Thickness,
+			CenterPos.iX + (IconSize.iX / 2),					CenterPos.iY + (IconSize.iY / 2) + Frame_Thickness,
+			CenterPos.iX + (IconSize.iX / 2),					CenterPos.iY + (IconSize.iY / 2),
+			CenterPos.iX + (IconSize.iX / 2) + Frame_Thickness, CenterPos.iY + (IconSize.iY / 2),
+			Image_Corner, TRUE
+		);
+		// 角(左下)
+		DrawModiGraph(
+			CenterPos.iX - (IconSize.iX / 2) - Frame_Thickness, CenterPos.iY + (IconSize.iY / 2) + Frame_Thickness,
+			CenterPos.iX - (IconSize.iX / 2) - Frame_Thickness, CenterPos.iY + (IconSize.iY / 2),
+			CenterPos.iX - (IconSize.iX / 2),					CenterPos.iY + (IconSize.iY / 2),
+			CenterPos.iX - (IconSize.iX / 2),					CenterPos.iY + (IconSize.iY / 2) + Frame_Thickness,
+			Image_Corner, TRUE
+		);
+		// 線(上)
+		DrawModiGraph(
+			CenterPos.iX - (IconSize.iX / 2), CenterPos.iY - (IconSize.iY / 2) - Frame_Thickness,
+			CenterPos.iX + (IconSize.iX / 2), CenterPos.iY - (IconSize.iY / 2) - Frame_Thickness,
+			CenterPos.iX + (IconSize.iX / 2), CenterPos.iY - (IconSize.iY / 2),
+			CenterPos.iX - (IconSize.iX / 2), CenterPos.iY - (IconSize.iY / 2),
+			Image_Line, TRUE
+		);
+		// 線(右)
+		DrawModiGraph(
+			CenterPos.iX + (IconSize.iX / 2) + Frame_Thickness,	CenterPos.iY + (IconSize.iY / 2),
+			CenterPos.iX + (IconSize.iX / 2) + Frame_Thickness,	CenterPos.iY - (IconSize.iY / 2),
+			CenterPos.iX + (IconSize.iX / 2),					CenterPos.iY - (IconSize.iY / 2),
+			CenterPos.iX + (IconSize.iX / 2),					CenterPos.iY + (IconSize.iY / 2),
+			Image_Line, TRUE
+		);
+		// 線(下)
+		DrawModiGraph(
+			CenterPos.iX + (IconSize.iX / 2), CenterPos.iY + (IconSize.iY / 2) + Frame_Thickness,
+			CenterPos.iX - (IconSize.iX / 2), CenterPos.iY + (IconSize.iY / 2) + Frame_Thickness,
+			CenterPos.iX - (IconSize.iX / 2), CenterPos.iY + (IconSize.iY / 2),
+			CenterPos.iX + (IconSize.iX / 2), CenterPos.iY + (IconSize.iY / 2),
+			Image_Line, TRUE
+		);
+		// 線(左)
+		DrawModiGraph(
+			CenterPos.iX - (IconSize.iX / 2) - Frame_Thickness,	CenterPos.iY - (IconSize.iY / 2),
+			CenterPos.iX - (IconSize.iX / 2) - Frame_Thickness,	CenterPos.iY + (IconSize.iY / 2),
+			CenterPos.iX - (IconSize.iX / 2),					CenterPos.iY + (IconSize.iY / 2),
+			CenterPos.iX - (IconSize.iX / 2),					CenterPos.iY - (IconSize.iY / 2),
+			Image_Line, TRUE
+		);
+		// 内側
+		DrawModiGraph(
+			CenterPos.iX - (IconSize.iX / 2), CenterPos.iY - (IconSize.iY / 2),
+			CenterPos.iX + (IconSize.iX / 2), CenterPos.iY - (IconSize.iY / 2),
+			CenterPos.iX + (IconSize.iX / 2), CenterPos.iY + (IconSize.iY / 2),
+			CenterPos.iX - (IconSize.iX / 2), CenterPos.iY + (IconSize.iY / 2),
+			Image_Inside, TRUE
+		);
+	}
 }

@@ -19,7 +19,7 @@ class WoldMap_Node_Base : public std::enable_shared_from_this<WoldMap_Node_Base>
 		virtual void AddMoveNode(std::shared_ptr<WoldMap_Node_Base> Node)	{ this->Move_Node_List.push_back(Node); };	// 移動可能座標を追加
 
 		/* セッター */
-		void SetNodeType(std::string NodeType)												{ this->NodeType			= NodeType; }		// ノードタイプ
+		void SetNodeType(int NodeType)														{ this->NodeType			= NodeType; }		// ノードタイプ
 		void SetPosition_Map(Struct_2D::POSITION Position)									{ this->Position_Map		= Position; }		// マップ上での座標
 		void SetPosition_Now(Struct_2D::POSITION Position)									{ this->Position_Now		= Position; }		// 画面上での座標
 		void SetMoveNodeList(std::vector<std::shared_ptr<WoldMap_Node_Base>> PositionList)	{ this->Move_Node_List		= PositionList; }	// 移動可能ノードリスト
@@ -27,17 +27,18 @@ class WoldMap_Node_Base : public std::enable_shared_from_this<WoldMap_Node_Base>
 		void SetNodeState(int State)														{ this->NodeState			= State; }			// ノード状態
 
 		/* ゲッター */
-		std::string										GetNodeType()		{ return this->NodeType; }			// ノードタイプ
+		int												GetNodeType()		{ return this->NodeType; }			// ノードタイプ
 		Struct_2D::POSITION								GetPosition_Map()	{ return this->Position_Map; }		// マップ上での座標
 		Struct_2D::POSITION								GetPosition_Now()	{ return this->Position_Now; }		// 画面上での座標
 		std::vector<std::shared_ptr<WoldMap_Node_Base>>	GetMoveNodeList()	{ return this->Move_Node_List; }	// 移動可能座標リスト
 		int												GetImageIconSize()	{ return this->Image_Icon_Size; }	// アイコン画像サイズ
+		int 											GetNodeState()		{ return this->NodeState; }			// ノード状態
 
 		/* 定数 */
 		// ノードの種類
-		inline static const	std::string	NODE_TYPE_ENEMY	= "Enemy";		// 敵
-		inline static const	std::string	NODE_TYPE_SHOP	= "Shop";		// ショップ
-		inline static const	std::string	NODE_TYPE_BOSS	= "Boss";		// ボス
+		static const int	NODE_TYPE_ENEMY			= 0;	// 敵
+		static const int	NODE_TYPE_SHOP			= 1;	// ショップ
+		static const int	NODE_TYPE_BOSS			= 2;	// ボス
 		// ノード状態
 		static const int	NODE_STATE_NORMAL		= 0;	// 通常
 		static const int	NODE_STATE_CLEARED		= 1;	// クリア済み
@@ -52,7 +53,7 @@ class WoldMap_Node_Base : public std::enable_shared_from_this<WoldMap_Node_Base>
 
 	protected:
 		/* 変数 */
-		std::string										NodeType;			// ノードの種類
+		int												NodeType;			// ノードの種類
 		Struct_2D::POSITION								Position_Map;		// マップ上での座標
 		Struct_2D::POSITION								Position_Now;		// 画面上での中心座標
 		std::vector<std::shared_ptr<WoldMap_Node_Base>>	Move_Node_List;		// 移動可能ノードリスト

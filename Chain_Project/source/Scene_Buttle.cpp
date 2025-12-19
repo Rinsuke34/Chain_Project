@@ -92,9 +92,9 @@ Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 0, false, false)
 	this->pDataList_Battle->SetFriendCharacter(0, nullptr);
 	this->pDataList_Battle->SetFriendCharacter(1, std::make_shared<Character_Player>());
 	this->pDataList_Battle->SetFriendCharacter(2, nullptr);
-	this->pDataList_Battle->SetEnemyCharacter(0, std::make_shared<Character_Slime_Green>());
-	this->pDataList_Battle->SetEnemyCharacter(1, std::make_shared<Character_Slime_Green>());
-	this->pDataList_Battle->SetEnemyCharacter(2, std::make_shared<Character_Bat>());
+	//this->pDataList_Battle->SetEnemyCharacter(0, std::make_shared<Character_Slime_Green>());
+	//this->pDataList_Battle->SetEnemyCharacter(1, std::make_shared<Character_Slime_Green>());
+	//this->pDataList_Battle->SetEnemyCharacter(2, std::make_shared<Character_Bat>());
 
 }
 
@@ -112,10 +112,8 @@ Scene_Battle::~Scene_Battle()
 // 更新
 void Scene_Battle::Update()
 {
-	/* 戦闘終了確認 */
-	CheckGameEnd();
-
 	/* バトルフェーズに応じた更新処理を行う */
+	bool BattleEndFlg = false;
 	switch (this->iBattlePhase)
 	{
 		// "ターン開始時"の効果発動
@@ -171,8 +169,14 @@ void Scene_Battle::Update()
 		// 戦闘終了
 		case BATTLE_PHASE_BATTLE_END_WIN:
 		case BATTLE_PHASE_BATTLE_END_GAMEOVER:
-			// 処理無し
+			BattleEndFlg = true;
 			break;
+	}
+
+	/* 戦闘終了確認 */
+	if (BattleEndFlg == false)
+	{
+		CheckGameEnd();
 	}
 
 	/* カードやアクション内容等の設定座標の設定 */

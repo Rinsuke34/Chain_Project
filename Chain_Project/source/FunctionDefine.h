@@ -17,4 +17,5 @@ namespace DRAW_FUNCTION
 {
 	void DrawChain(Struct_2D::POSITION StartPos, Struct_2D::POSITION EndPos);	// ½‚Ì•`Ê
 	void DrawRoad(Struct_2D::POSITION StartPos, Struct_2D::POSITION EndPos);	// “¹‚Ì•`Ê
+	void DrawFrame_Image(Struct_2D::POSITION CenterPos, Struct_2D::POSITION IconSize, int Frame_Thickness, int Image_Corner, int Image_Line, int Image_Inside);	// ‰æ‘œ‚Å‚ÌƒtƒŒ[ƒ€‚Ì•`Ê
 }
