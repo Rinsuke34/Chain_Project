@@ -6,12 +6,22 @@
 // 親クラス
 #include "Card_Base.h"
 
+// 前方宣言
+class WoldMap_Node_Base;
+
 // "移動先エリア"カードのベースクラス
 class Card_NextArea : public Card_Base
 {
 	public:
 		Card_NextArea(int NextAreaType);	// コンストラクタ
 		virtual ~Card_NextArea() {};		// デストラクタ
+
+		/* ゲッター */
+		int									GetNextAreaType() { return this->NextAreaType; }	// 移動先エリアの種類を取得
+		std::shared_ptr<WoldMap_Node_Base>	GetNextAreaNode() { return this->pNextAreaNode; }	// 移動先エリアのノードを取得
+
+		/* セッター */
+		void SetNextAreaNode(std::shared_ptr<WoldMap_Node_Base> Node) { this->pNextAreaNode = Node; }	// 移動先エリアのノードを設定
 
 		/* 定数 */
 		// 種類
@@ -31,5 +41,6 @@ class Card_NextArea : public Card_Base
 
 	private:
 		/* 変数 */
-		int	NextAreaType;		// 移動先エリアの種類
+		int										NextAreaType;		// 移動先エリアの種類
+		std::shared_ptr<WoldMap_Node_Base>		pNextAreaNode;		// 移動先エリアのノード
 };

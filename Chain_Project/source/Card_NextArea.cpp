@@ -17,6 +17,7 @@ Card_NextArea::Card_NextArea(int NextAreaType) : Card_Base()
 	/* 初期化 */
 	this->NextAreaType	= NextAreaType;					// 移動先エリアの種類
 	this->iCardType		= Card_Base::TYPE_NEXT_AREA;	// カード種類:移動先エリア
+	this->pNextAreaNode	= nullptr;						// 移動先エリアのノード
 
 	/* 移動先エリアに応じた初期化 */
 	switch (this->NextAreaType)

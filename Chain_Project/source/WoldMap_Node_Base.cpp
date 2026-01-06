@@ -20,6 +20,7 @@ WoldMap_Node_Base::WoldMap_Node_Base()
 	this->Image_Icon_Size					= WOLDMAP_ICON_SIZE;	// アイコン画像サイズ
 	this->Image_Icon[ICON_INDEX_NODE_ICON]	= nullptr;				// アイコン画像[1:固有のアイコン]
 	this->NodeState							= NODE_STATE_NORMAL;	// ノード状態
+	this->GoalFlg							= false;				// ゴールフラグ
 
 	/* 画像管理データリストを取得 */
 	std::shared_ptr<DataList_Image> pDataList_Image = std::dynamic_pointer_cast<DataList_Image>(gpDataListServer->GetDataList("DataList_Image"));
@@ -37,12 +38,6 @@ WoldMap_Node_Base::WoldMap_Node_Base()
 	// 内側
 	ImageFilePath = "UI/Button/Button_Frame_Inside_Over";
 	this->Image_Frame_Inside = pDataList_Image->iGetImageHandle(ImageFilePath);
-}
-
-// 更新処理
-void WoldMap_Node_Base::Update()
-{
-	
 }
 
 // 描画処理

@@ -14,25 +14,29 @@ class WoldMap_Node_Base : public std::enable_shared_from_this<WoldMap_Node_Base>
 		virtual ~WoldMap_Node_Base() {};	// デストラクタ
 
 		/* 関数 */
-		virtual void Update();		// 更新処理
+		virtual void Update() {};	// 更新処理
 		virtual void Draw();		// 描画処理
-		virtual void AddMoveNode(std::shared_ptr<WoldMap_Node_Base> Node)	{ this->Move_Node_List.push_back(Node); };	// 移動可能座標を追加
+		virtual void AddMoveNode(std::shared_ptr<WoldMap_Node_Base> Node)	{ this->Move_Node_List.push_back(Node); };	// 移動可能ノードを追加
 
 		/* セッター */
-		void SetNodeType(int NodeType)														{ this->NodeType			= NodeType; }		// ノードタイプ
-		void SetPosition_Map(Struct_2D::POSITION Position)									{ this->Position_Map		= Position; }		// マップ上での座標
-		void SetPosition_Now(Struct_2D::POSITION Position)									{ this->Position_Now		= Position; }		// 画面上での座標
-		void SetMoveNodeList(std::vector<std::shared_ptr<WoldMap_Node_Base>> PositionList)	{ this->Move_Node_List		= PositionList; }	// 移動可能ノードリスト
-		void SetImageIconSize(int Size)														{ this->Image_Icon_Size		= Size; }			// アイコン画像サイズ
-		void SetNodeState(int State)														{ this->NodeState			= State; }			// ノード状態
+		void SetNodeType(int NodeType)															{ this->NodeType			= NodeType; }		// ノードタイプ
+		void SetPosition_Map(Struct_2D::POSITION Position)										{ this->Position_Map		= Position; }		// マップ上での座標
+		void SetPosition_Now(Struct_2D::POSITION Position)										{ this->Position_Now		= Position; }		// 画面上での座標
+		void SetMoveNodeList(std::vector<std::shared_ptr<WoldMap_Node_Base>> PositionList)		{ this->Move_Node_List		= PositionList; }	// 移動可能ノードリスト
+		void SetMoveNodePosList(std::vector<Struct_2D::POSITION> PositionList)					{ this->Move_Node_Pos_List	= PositionList; }	// 移動可能ノード座標リスト
+		void SetImageIconSize(int Size)															{ this->Image_Icon_Size		= Size; }			// アイコン画像サイズ
+		void SetNodeState(int State)															{ this->NodeState			= State; }			// ノード状態
+		void SetGoalFlg(bool GoalFlg)															{ this->GoalFlg				= GoalFlg; }		// ゴールフラグ
 
 		/* ゲッター */
-		int												GetNodeType()		{ return this->NodeType; }			// ノードタイプ
-		Struct_2D::POSITION								GetPosition_Map()	{ return this->Position_Map; }		// マップ上での座標
-		Struct_2D::POSITION								GetPosition_Now()	{ return this->Position_Now; }		// 画面上での座標
-		std::vector<std::shared_ptr<WoldMap_Node_Base>>	GetMoveNodeList()	{ return this->Move_Node_List; }	// 移動可能座標リスト
-		int												GetImageIconSize()	{ return this->Image_Icon_Size; }	// アイコン画像サイズ
-		int 											GetNodeState()		{ return this->NodeState; }			// ノード状態
+		int													GetNodeType()			{ return this->NodeType; }				// ノードタイプ
+		Struct_2D::POSITION									GetPosition_Map()		{ return this->Position_Map; }			// マップ上での座標
+		Struct_2D::POSITION									GetPosition_Now()		{ return this->Position_Now; }			// 画面上での座標
+		std::vector<std::shared_ptr<WoldMap_Node_Base>>		GetMoveNodeList()		{ return this->Move_Node_List; }		// 移動可能ノードリスト
+		std::vector<Struct_2D::POSITION>					GetMoveNodePosList()	{ return this->Move_Node_Pos_List; }	// 移動可能ノード座標リスト
+		int													GetImageIconSize()		{ return this->Image_Icon_Size; }		// アイコン画像サイズ
+		int 												GetNodeState()			{ return this->NodeState; }				// ノード状態
+		bool												GetGoalFlg()			{ return this->GoalFlg; }				// ゴールフラグ
 
 		/* 定数 */
 		// ノードの種類
@@ -53,12 +57,14 @@ class WoldMap_Node_Base : public std::enable_shared_from_this<WoldMap_Node_Base>
 
 	protected:
 		/* 変数 */
-		int												NodeType;			// ノードの種類
-		Struct_2D::POSITION								Position_Map;		// マップ上での座標
-		Struct_2D::POSITION								Position_Now;		// 画面上での中心座標
-		std::vector<std::shared_ptr<WoldMap_Node_Base>>	Move_Node_List;		// 移動可能ノードリスト
-		int												Image_Icon_Size;	// アイコン画像サイズ
-		int												NodeState;			// ノード状態
+		int													NodeType;			// ノードの種類
+		Struct_2D::POSITION									Position_Map;		// マップ上での座標
+		Struct_2D::POSITION									Position_Now;		// 画面上での中心座標
+		std::vector<std::shared_ptr<WoldMap_Node_Base>>		Move_Node_List;		// 移動可能ノードリスト
+		std::vector<Struct_2D::POSITION>					Move_Node_Pos_List;	// 移動可能ノード座標リスト
+		int													Image_Icon_Size;	// アイコン画像サイズ
+		int													NodeState;			// ノード状態
+		bool												GoalFlg;			// ゴールフラグ(Trueならそのノード攻略時にクリア)
 		// 画像
 		std::shared_ptr<int>	Image_Icon[2];		// アイコン画像[0:プレイヤー現在位置, 1:固有のアイコン]
 		std::shared_ptr<int>	Image_Frame_Corner;	// 角

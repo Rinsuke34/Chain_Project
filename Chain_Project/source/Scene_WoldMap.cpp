@@ -3,11 +3,15 @@
 /* 使用する要素のインクルード */
 // ヘッダファイル
 #include "Scene_WoldMap.h"
+// 標準ライブラリ
+#include <iostream>
+#include <fstream>
 // 共通定義
 #include "FunctionDefine.h"
 // 関連クラス
 #include "DataList_Image.h"
 #include "WoldMap_Node_Base.h"
+#include "Card_Base.h"
 #include "Card_NextArea.h"
 #include "WoldMap_Node_Enemy.h"
 #include "WoldMap_Node_Shop.h"
@@ -23,39 +27,42 @@ Scene_WoldMap::Scene_WoldMap() : Scene_Base("Scene_WoldMap", 10, false, false)
 	// 画像
 	this->Image_WoldMap	= MakeScreen(WOLDMAP_IMAGE_WIDTH, WOLDMAP_IMAGE_HEIGHT, TRUE);	// ワールドマップの画像
 
-	/* ノードの仮作成 */
-	{
-		// エネミーノード
-		std::shared_ptr<WoldMap_Node_Enemy> pEnemyNode1 = std::make_shared<WoldMap_Node_Enemy>();
-		pEnemyNode1->SetPosition_Map({ 0, 1 });
-		this->WoldMapNodeList.push_back(pEnemyNode1);
-		std::shared_ptr<WoldMap_Node_Enemy> pEnemyNode2 = std::make_shared<WoldMap_Node_Enemy>();
-		pEnemyNode2->SetPosition_Map({ 1, 2 });
-		this->WoldMapNodeList.push_back(pEnemyNode2);
-		std::shared_ptr<WoldMap_Node_Enemy> pEnemyNode3 = std::make_shared<WoldMap_Node_Enemy>();
-		pEnemyNode3->SetPosition_Map({ -1, 2 });
-		this->WoldMapNodeList.push_back(pEnemyNode3);
+	/* マップデータの読み込み */
+	Load_MapData();
 
-		// ショップノード
-		std::shared_ptr<WoldMap_Node_Shop> pShopNode = std::make_shared<WoldMap_Node_Shop>();
-		pShopNode->SetPosition_Map({ 0, 3 });
-		this->WoldMapNodeList.push_back(pShopNode);
+	///* ノードの仮作成 */
+	//{
+	//	// エネミーノード
+	//	std::shared_ptr<WoldMap_Node_Enemy> pEnemyNode1 = std::make_shared<WoldMap_Node_Enemy>();
+	//	pEnemyNode1->SetPosition_Map({ 0, 1 });
+	//	this->WoldMapNodeList.push_back(pEnemyNode1);
+	//	std::shared_ptr<WoldMap_Node_Enemy> pEnemyNode2 = std::make_shared<WoldMap_Node_Enemy>();
+	//	pEnemyNode2->SetPosition_Map({ 1, 2 });
+	//	this->WoldMapNodeList.push_back(pEnemyNode2);
+	//	std::shared_ptr<WoldMap_Node_Enemy> pEnemyNode3 = std::make_shared<WoldMap_Node_Enemy>();
+	//	pEnemyNode3->SetPosition_Map({ -1, 2 });
+	//	this->WoldMapNodeList.push_back(pEnemyNode3);
 
-		// ボスノード
-		std::shared_ptr<WoldMap_Node_Boss> pBossNode = std::make_shared<WoldMap_Node_Boss>();
-		pBossNode->SetPosition_Map({ 0, 4 });
-		this->WoldMapNodeList.push_back(pBossNode);
+	//	// ショップノード
+	//	std::shared_ptr<WoldMap_Node_Shop> pShopNode = std::make_shared<WoldMap_Node_Shop>();
+	//	pShopNode->SetPosition_Map({ 0, 3 });
+	//	this->WoldMapNodeList.push_back(pShopNode);
 
-		// ルート設定
-		pEnemyNode1->AddMoveNode(pEnemyNode2);
-		pEnemyNode1->AddMoveNode(pEnemyNode3);
-		pEnemyNode2->AddMoveNode(pShopNode);
-		pEnemyNode3->AddMoveNode(pShopNode);
-		pShopNode->AddMoveNode(pBossNode);
+	//	// ボスノード
+	//	std::shared_ptr<WoldMap_Node_Boss> pBossNode = std::make_shared<WoldMap_Node_Boss>();
+	//	pBossNode->SetPosition_Map({ 0, 4 });
+	//	this->WoldMapNodeList.push_back(pBossNode);
 
-		// スタート地点の設定
-		pEnemyNode1->SetNodeState(WoldMap_Node_Base::NODE_STATE_PLAYER_POS);
-	}
+	//	// ルート設定
+	//	pEnemyNode1->AddMoveNode(pEnemyNode2);
+	//	pEnemyNode1->AddMoveNode(pEnemyNode3);
+	//	pEnemyNode2->AddMoveNode(pShopNode);
+	//	pEnemyNode3->AddMoveNode(pShopNode);
+	//	pShopNode->AddMoveNode(pBossNode);
+
+	//	// スタート地点の設定
+	//	pEnemyNode1->SetNodeState(WoldMap_Node_Base::NODE_STATE_PLAYER_POS);
+	//}
 
 	/* 現在の地点を取得 */
 	CheckNowNode();
@@ -88,6 +95,9 @@ void Scene_WoldMap::Update()
 
 	/* 移動先エリアカードの更新 */
 	NextAreaCard_Update();
+
+	/* カード選択 */
+	Select_Card();
 }
 
 // 描画
@@ -117,11 +127,15 @@ void Scene_WoldMap::CheckNowNode()
 // 移動先エリアカードの作成
 void Scene_WoldMap::NextAreaCard_Create()
 {
+	/* 移動先エリアカードリストをクリア */
+	this->NextAreaCardList.clear();
+
 	for(auto& MoveNode : this->NowNode->GetMoveNodeList())
 	{
 		/* 移動先エリアカードを作成 */
 		std::shared_ptr<Card_NextArea> NewCard = std::make_shared<Card_NextArea>(MoveNode->GetNodeType());
 		NewCard->UpdateImage();
+		NewCard->SetNextAreaNode(MoveNode);
 
 		/* 作成したカードをリストに追加 */
 		this->NextAreaCardList.push_back(NewCard);
@@ -293,4 +307,130 @@ void Scene_WoldMap::BackGround_Draw()
 		*(Image_Frame_Line),
 		*(Image_Frame_Inside)
 	);
+}
+
+// カード選択
+void Scene_WoldMap::Select_Card()
+{
+	/* 左クリックが行われたのかの確認 */
+	if (gstKeyboardInputData.igInput[INPUT_TRG] & MOUSE_INPUT_LEFT)
+	{
+		// 左クリックが行われた場合
+		for (auto& Card : this->NextAreaCardList)
+		{
+			if(Card->MouseInCard())
+			{
+				// カードにカーソルが重なっている場合
+				/* 現在のノードの状態を"クリア済み"に設定する */
+				this->NowNode->SetNodeState(WoldMap_Node_Base::NODE_STATE_CLEARED);
+
+				/* 移動先ノードの状態をプレイヤー現在位置に設定 */
+				std::shared_ptr<WoldMap_Node_Base> MoveNode = Card->GetNextAreaNode();
+
+				if (MoveNode != nullptr)
+				{
+					/* 現在のノードを更新 */
+					this->NowNode = MoveNode;
+
+					/* 変更後のノードを"プレイヤー現在位置"に設定する */
+					MoveNode->SetNodeState(WoldMap_Node_Base::NODE_STATE_PLAYER_POS);
+
+					/* 現在の地点を再取得 */
+					CheckNowNode();
+
+					/* 移動先エリアカードの再作成 */
+					NextAreaCard_Create();
+				}
+
+				/* 処理終了 */
+				break;
+			}
+		}
+	}
+}
+
+// マップデータの読み込み
+void Scene_WoldMap::Load_MapData()
+{
+	/* マップデータのJSONファイルを開く */
+	std::ifstream FileName("resource/SetupData/MapData.json");
+
+	nlohmann::json MapData;
+	FileName >> MapData;
+
+	for (const auto& item : MapData)
+	{
+		/* 概要の飲み込み */
+		int NodeType = item["Type"];
+		Struct_2D::POSITION MapPos = {
+			item["Position"][0],
+			item["Position"][1]
+		};
+		std::vector<Struct_2D::POSITION> MoveNodePosList;
+		if (item.contains("MovePosition"))
+		{
+			for (const auto& moveItem : item["MovePosition"])
+			{
+				Struct_2D::POSITION MovePos = {
+					moveItem[0],
+					moveItem[1]
+				};
+				MoveNodePosList.push_back(MovePos);
+			}
+		}
+		int State = item["State"];
+		bool GoalFlg = item["GoalFlg"];
+
+		/* ノードの作成 */
+		std::shared_ptr<WoldMap_Node_Base> NewNode = nullptr;
+		switch (NodeType)
+		{
+			// エネミーノード
+			case WoldMap_Node_Base::NODE_TYPE_ENEMY:
+				NewNode = std::make_shared<WoldMap_Node_Enemy>();
+				break;
+
+			// ショップノード
+			case WoldMap_Node_Base::NODE_TYPE_SHOP:
+				NewNode = std::make_shared<WoldMap_Node_Shop>();
+				break;
+
+			// ボスノード
+			case WoldMap_Node_Base::NODE_TYPE_BOSS:
+				NewNode = std::make_shared<WoldMap_Node_Boss>();
+				break;
+		}
+
+		/* ノードの各種設定 */
+		if (NewNode != nullptr)
+		{
+			NewNode->SetPosition_Map(MapPos);
+			NewNode->SetMoveNodePosList(MoveNodePosList);
+			NewNode->SetNodeState(State);
+			NewNode->SetGoalFlg(GoalFlg);
+			this->WoldMapNodeList.push_back(NewNode);
+		}
+	}
+
+	/* 各ノードの移動先ノードを設定 */
+	for (auto& Node : this->WoldMapNodeList)
+	{
+		/* ノードの移動先ノード座標リストを取得 */
+		std::vector<Struct_2D::POSITION> MoveNodePosList = Node->GetMoveNodePosList();
+
+		/* 移動先座標と一致しているノードを探し、発見できたら移動先ノードとして登録する */
+		for (const auto& MovePos : MoveNodePosList)
+		{
+			for (auto& TargetNode : this->WoldMapNodeList)
+			{
+				if (TargetNode->GetPosition_Map().iX == MovePos.iX &&
+					TargetNode->GetPosition_Map().iY == MovePos.iY)
+				{
+					// 移動先ノードを発見した場合
+					Node->AddMoveNode(TargetNode);
+					break;
+				}
+			}
+		}
+	}
 }

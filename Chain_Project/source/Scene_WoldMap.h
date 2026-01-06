@@ -63,4 +63,6 @@ class Scene_WoldMap : public Scene_Base
 		void NextAreaCard_Update();		// 移動先エリアカードの更新
 		void NextAreaCard_Draw();		// 移動先エリアカードの描画
 		void BackGround_Draw();			// 背景描写
+		void Select_Card();				// カード選択
+		void Load_MapData();			// マップデータの読み込み
 };
