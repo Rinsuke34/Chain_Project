@@ -54,7 +54,7 @@ class DataList_Battle : public DataList_Base
 		std::shared_ptr<Character_Base>					GetFriendCharacter(int positionNo)	{ return Friend_CharacterList[positionNo]; }	// 仲間キャラクターを取得
 		std::shared_ptr<Character_Base>					GetEnemyCharacter(int positionNo)	{ return Enemy_CharacterList[positionNo]; }		// 敵キャラクターを取得
 		// 行動内容関連
-		std::vector<std::shared_ptr<Action_Effect_Base>>	GetActionEffectList(int AreaNo)	{ return ActionEffectList[AreaNo]; }					// 行動内容一覧を取得
+		std::vector<std::shared_ptr<Action_Effect_Base>>	GetActionEffectList(int AreaNo)	{ return ActionEffectList[AreaNo]; }			// 行動内容一覧を取得
 
 		/* セッター */
 		// カード関係(総括用)

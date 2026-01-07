@@ -10,6 +10,7 @@
 #include "Card_Base.h"
 #include "DataList_Battle.h"
 #include "DataList_Image.h"
+#include "DataList_GameResource.h"
 
 // テスト用クラス
 #include "Card_Arms_WoodenShield.h"
@@ -37,6 +38,10 @@ Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 0, false, false)
 	/* データリスト"バトル用データ管理"を作成 */
 	this->pDataList_Battle = std::make_shared<DataList_Battle>();
 	gpDataListServer->AddDataList(this->pDataList_Battle);
+
+	/* データリスト取得 */
+	// ゲームリソース管理用データリスト
+	this->pDataList_GameResource = std::dynamic_pointer_cast<DataList_GameResource>(gpDataListServer->GetDataList("DataList_GameResource"));
 
 	/* 画像読み込み */
 	{
@@ -92,10 +97,9 @@ Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 0, false, false)
 	this->pDataList_Battle->SetFriendCharacter(0, nullptr);
 	this->pDataList_Battle->SetFriendCharacter(1, std::make_shared<Character_Player>());
 	this->pDataList_Battle->SetFriendCharacter(2, nullptr);
-	//this->pDataList_Battle->SetEnemyCharacter(0, std::make_shared<Character_Slime_Green>());
+	this->pDataList_Battle->SetEnemyCharacter(0, std::make_shared<Character_Slime_Green>());
 	//this->pDataList_Battle->SetEnemyCharacter(1, std::make_shared<Character_Slime_Green>());
 	//this->pDataList_Battle->SetEnemyCharacter(2, std::make_shared<Character_Bat>());
-
 }
 
 // デストラクタ
@@ -173,10 +177,25 @@ void Scene_Battle::Update()
 			break;
 	}
 
-	/* 戦闘終了確認 */
+	/* 戦闘中であるかにより処理を変更 */
 	if (BattleEndFlg == false)
 	{
+		// 戦闘中の場合
+		/* 戦闘終了確認 */
 		CheckGameEnd();
+	}
+	else
+	{
+		// 戦闘終了の場合
+		/* 次のステージの選択が完了しているならこのシーンを削除 */
+		if (this->pDataList_GameResource->GetNextStageSelectFlg())
+		{
+			/* このシーンの削除フラグを有効にする */
+			this->bDeleteFlg = true;
+
+			/* 次のステージ選択を未完了に戻す */
+			this->pDataList_GameResource->SetNextStageSelectedFlg(false);
+		}
 	}
 
 	/* カードやアクション内容等の設定座標の設定 */

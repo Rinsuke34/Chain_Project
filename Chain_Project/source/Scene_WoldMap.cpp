@@ -10,6 +10,7 @@
 #include "FunctionDefine.h"
 // 関連クラス
 #include "DataList_Image.h"
+#include "DataList_GameResource.h"
 #include "WoldMap_Node_Base.h"
 #include "Card_Base.h"
 #include "Card_NextArea.h"
@@ -27,42 +28,12 @@ Scene_WoldMap::Scene_WoldMap() : Scene_Base("Scene_WoldMap", 10, false, false)
 	// 画像
 	this->Image_WoldMap	= MakeScreen(WOLDMAP_IMAGE_WIDTH, WOLDMAP_IMAGE_HEIGHT, TRUE);	// ワールドマップの画像
 
+	/* データリスト取得 */
+	// ゲームリソース管理用データリスト
+	this->pDataList_GameResource = std::dynamic_pointer_cast<DataList_GameResource>(gpDataListServer->GetDataList("DataList_GameResource"));
+
 	/* マップデータの読み込み */
 	Load_MapData();
-
-	///* ノードの仮作成 */
-	//{
-	//	// エネミーノード
-	//	std::shared_ptr<WoldMap_Node_Enemy> pEnemyNode1 = std::make_shared<WoldMap_Node_Enemy>();
-	//	pEnemyNode1->SetPosition_Map({ 0, 1 });
-	//	this->WoldMapNodeList.push_back(pEnemyNode1);
-	//	std::shared_ptr<WoldMap_Node_Enemy> pEnemyNode2 = std::make_shared<WoldMap_Node_Enemy>();
-	//	pEnemyNode2->SetPosition_Map({ 1, 2 });
-	//	this->WoldMapNodeList.push_back(pEnemyNode2);
-	//	std::shared_ptr<WoldMap_Node_Enemy> pEnemyNode3 = std::make_shared<WoldMap_Node_Enemy>();
-	//	pEnemyNode3->SetPosition_Map({ -1, 2 });
-	//	this->WoldMapNodeList.push_back(pEnemyNode3);
-
-	//	// ショップノード
-	//	std::shared_ptr<WoldMap_Node_Shop> pShopNode = std::make_shared<WoldMap_Node_Shop>();
-	//	pShopNode->SetPosition_Map({ 0, 3 });
-	//	this->WoldMapNodeList.push_back(pShopNode);
-
-	//	// ボスノード
-	//	std::shared_ptr<WoldMap_Node_Boss> pBossNode = std::make_shared<WoldMap_Node_Boss>();
-	//	pBossNode->SetPosition_Map({ 0, 4 });
-	//	this->WoldMapNodeList.push_back(pBossNode);
-
-	//	// ルート設定
-	//	pEnemyNode1->AddMoveNode(pEnemyNode2);
-	//	pEnemyNode1->AddMoveNode(pEnemyNode3);
-	//	pEnemyNode2->AddMoveNode(pShopNode);
-	//	pEnemyNode3->AddMoveNode(pShopNode);
-	//	pShopNode->AddMoveNode(pBossNode);
-
-	//	// スタート地点の設定
-	//	pEnemyNode1->SetNodeState(WoldMap_Node_Base::NODE_STATE_PLAYER_POS);
-	//}
 
 	/* 現在の地点を取得 */
 	CheckNowNode();
@@ -118,7 +89,10 @@ void Scene_WoldMap::CheckNowNode()
 	{
 		if (Node->GetNodeState() == WoldMap_Node_Base::NODE_STATE_PLAYER_POS)
 		{
+			/* 現在地点のノードを設定 */
 			this->NowNode = Node;
+			Node_SetResource();
+
 			break;
 		}
 	}
@@ -229,18 +203,40 @@ void Scene_WoldMap::Update_Image()
 // 描写座標の更新
 void Scene_WoldMap::Update_DrawPos()
 {
-	/* 描写座標まで移動が完了しているか確認 */
-	if (this->WoldMapDrawPos.iX > WOLDMAP_DRAW_POS_X)
+	/* ワールドマップが有効であるか確認 */
+	if (this->pDataList_GameResource->GetWoldMapActiveFlg())
 	{
-		// 完了していない場合
-		/* 描写座標を移動量分移動させる */
-		this->WoldMapDrawPos.iX -= WOLDMAP_DRAW_POS_MOVE_SPEED;
+		// 有効である場合
+		/* 描写座標まで移動が完了しているか確認 */
+		if (this->WoldMapDrawPos.iX > WOLDMAP_DRAW_POS_X)
+		{
+			// 完了していない場合
+			/* 描写座標を移動量分移動させる */
+			this->WoldMapDrawPos.iX -= WOLDMAP_DRAW_POS_MOVE_SPEED;
+		}
+		else
+		{
+			// 完了している場合
+			/* 描写座標に固定する */
+			this->WoldMapDrawPos.iX = WOLDMAP_DRAW_POS_X;
+		}
 	}
 	else
 	{
-		// 完了している場合
-		/* 描写座標に固定する */
-		this->WoldMapDrawPos.iX = WOLDMAP_DRAW_POS_X;
+		// 無効である場合
+		/* 画面外まで移動が完了しているか確認 */
+		if (this->WoldMapDrawPos.iX < WOLDMAP_DRAW_POS_X + SCREEN_SIZE_WIDE)
+		{
+			// 完了していない場合
+			/* 描写座標を移動量分移動させる */
+			this->WoldMapDrawPos.iX += WOLDMAP_DRAW_POS_MOVE_SPEED;
+		}
+		else
+		{
+			// 完了している場合
+			/* 描写座標に固定する */
+			this->WoldMapDrawPos.iX = WOLDMAP_DRAW_POS_X + SCREEN_SIZE_WIDE;
+		}
 	}
 }
 
@@ -254,6 +250,12 @@ void Scene_WoldMap::WoldMap_Draw()
 // 移動先エリアカードの更新
 void Scene_WoldMap::NextAreaCard_Update()
 {
+	/* ワールドマップが無効であるなら処理を行わない */
+	if (!this->pDataList_GameResource->GetWoldMapActiveFlg())
+	{
+		return;
+	}
+
 	/* 移動先エリアカードの総数を取得 */
 	int NextAreaCardCount = static_cast<int>(this->NextAreaCardList.size());
 
@@ -277,6 +279,12 @@ void Scene_WoldMap::NextAreaCard_Update()
 // 移動先エリアカードの描画
 void Scene_WoldMap::NextAreaCard_Draw()
 {
+	/* ワールドマップが無効であるなら処理を行わない */
+	if (!this->pDataList_GameResource->GetWoldMapActiveFlg())
+	{
+		return;
+	}
+
 	/* カードの描写処理 */
 	for (auto& Card : this->NextAreaCardList)
 	{
@@ -287,6 +295,12 @@ void Scene_WoldMap::NextAreaCard_Draw()
 // 背景描写
 void Scene_WoldMap::BackGround_Draw()
 {
+	/* ワールドマップが無効であるなら処理を行わない */
+	if (!this->pDataList_GameResource->GetWoldMapActiveFlg())
+	{
+		return;
+	}
+
 	/* 画像管理データリストを取得 */
 	std::shared_ptr<DataList_Image> pDataList_Image = std::dynamic_pointer_cast<DataList_Image>(gpDataListServer->GetDataList("DataList_Image"));
 
@@ -312,6 +326,12 @@ void Scene_WoldMap::BackGround_Draw()
 // カード選択
 void Scene_WoldMap::Select_Card()
 {
+	/* ワールドマップが無効であるなら処理を行わない */
+	if (!this->pDataList_GameResource->GetWoldMapActiveFlg())
+	{
+		return;
+	}
+
 	/* 左クリックが行われたのかの確認 */
 	if (gstKeyboardInputData.igInput[INPUT_TRG] & MOUSE_INPUT_LEFT)
 	{
@@ -340,6 +360,18 @@ void Scene_WoldMap::Select_Card()
 
 					/* 移動先エリアカードの再作成 */
 					NextAreaCard_Create();
+
+					/* ゲームリソース管理に現在のノード情報を設定 */
+					Node_SetResource();
+
+					/* ワールドマップを無効状態に設定する */
+					this->pDataList_GameResource->SetWoldMapActiveFlg(false);
+
+					/* ステージ終了フラグを有効にする */
+					this->pDataList_GameResource->SetStageEndFlg(true);
+
+					/* 次のステージの選択を完了状態に設定する */
+					this->pDataList_GameResource->SetNextStageSelectedFlg(true);
 				}
 
 				/* 処理終了 */
@@ -380,6 +412,7 @@ void Scene_WoldMap::Load_MapData()
 		}
 		int State = item["State"];
 		bool GoalFlg = item["GoalFlg"];
+		int NodeLevel = item["NodeLevel"];
 
 		/* ノードの作成 */
 		std::shared_ptr<WoldMap_Node_Base> NewNode = nullptr;
@@ -408,6 +441,7 @@ void Scene_WoldMap::Load_MapData()
 			NewNode->SetMoveNodePosList(MoveNodePosList);
 			NewNode->SetNodeState(State);
 			NewNode->SetGoalFlg(GoalFlg);
+			NewNode->SetNodeLevel(NodeLevel);
 			this->WoldMapNodeList.push_back(NewNode);
 		}
 	}
@@ -433,4 +467,10 @@ void Scene_WoldMap::Load_MapData()
 			}
 		}
 	}
+}
+
+// ゲームリソース管理に現在のノード情報を設定
+void Scene_WoldMap::Node_SetResource()
+{
+	this->pDataList_GameResource->SetNowMapNode(this->NowNode);
 }

@@ -191,6 +191,7 @@
     <ClCompile Include="source\Character_Player.cpp" />
     <ClCompile Include="source\DataList_Battle.cpp" />
     <ClCompile Include="source\DataList_Font.cpp" />
+    <ClCompile Include="source\DataList_GameResource.cpp" />
     <ClCompile Include="source\DataList_Image.cpp" />
     <ClCompile Include="source\FunctionDefine.cpp" />
     <ClCompile Include="source\Main.cpp" />
@@ -198,6 +199,7 @@
     <ClCompile Include="source\Scene_Buttle.cpp" />
     <ClCompile Include="source\Scene_Buttle_Draw.cpp" />
     <ClCompile Include="source\Scene_Buttle_Update.cpp" />
+    <ClCompile Include="source\Scene_GameManager.cpp" />
     <ClCompile Include="source\Scene_Load_Checker.cpp" />
     <ClCompile Include="source\Scene_Load_Draw.cpp" />
     <ClCompile Include="source\Scene_Particles_Text.cpp" />
@@ -238,10 +240,12 @@
     <ClInclude Include="source\Character_Player.h" />
     <ClInclude Include="source\DataList_Battle.h" />
     <ClInclude Include="source\DataList_Font.h" />
+    <ClInclude Include="source\DataList_GameResource.h" />
     <ClInclude Include="source\DataList_Image.h" />
     <ClInclude Include="source\FunctionDefine.h" />
     <ClInclude Include="source\Scene_Battle.h" />
     <ClInclude Include="source\Scene_Build.h" />
+    <ClInclude Include="source\Scene_GameManager.h" />
     <ClInclude Include="source\Scene_Load_Checker.h" />
     <ClInclude Include="source\Scene_Load_Draw.h" />
     <ClInclude Include="source\Scene_Particles_Text.h" />

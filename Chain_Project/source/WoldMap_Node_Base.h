@@ -27,6 +27,7 @@ class WoldMap_Node_Base : public std::enable_shared_from_this<WoldMap_Node_Base>
 		void SetImageIconSize(int Size)															{ this->Image_Icon_Size		= Size; }			// アイコン画像サイズ
 		void SetNodeState(int State)															{ this->NodeState			= State; }			// ノード状態
 		void SetGoalFlg(bool GoalFlg)															{ this->GoalFlg				= GoalFlg; }		// ゴールフラグ
+		void SetNodeLevel(int NodeLevel)														{ this->NodeLevel			= NodeLevel; }		// ノードのレベル(内容に影響)
 
 		/* ゲッター */
 		int													GetNodeType()			{ return this->NodeType; }				// ノードタイプ
@@ -37,6 +38,7 @@ class WoldMap_Node_Base : public std::enable_shared_from_this<WoldMap_Node_Base>
 		int													GetImageIconSize()		{ return this->Image_Icon_Size; }		// アイコン画像サイズ
 		int 												GetNodeState()			{ return this->NodeState; }				// ノード状態
 		bool												GetGoalFlg()			{ return this->GoalFlg; }				// ゴールフラグ
+		int													GetNodeLevel()			{ return this->NodeLevel; }				// ノードのレベル(内容に影響)
 
 		/* 定数 */
 		// ノードの種類
@@ -65,6 +67,7 @@ class WoldMap_Node_Base : public std::enable_shared_from_this<WoldMap_Node_Base>
 		int													Image_Icon_Size;	// アイコン画像サイズ
 		int													NodeState;			// ノード状態
 		bool												GoalFlg;			// ゴールフラグ(Trueならそのノード攻略時にクリア)
+		int													NodeLevel;			// ノードのレベル(内容に影響)
 		// 画像
 		std::shared_ptr<int>	Image_Icon[2];		// アイコン画像[0:プレイヤー現在位置, 1:固有のアイコン]
 		std::shared_ptr<int>	Image_Frame_Corner;	// 角

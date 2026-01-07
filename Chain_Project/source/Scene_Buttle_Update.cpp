@@ -4,6 +4,7 @@
 // ヘッダファイル
 #include "Scene_Battle.h"
 // 関連クラス
+#include "DataList_GameResource.h"
 #include "Scene_UI_Button.h"
 #include "Scene_WoldMap.h"
 #include "Card_Base.h"
@@ -828,8 +829,9 @@ void Scene_Battle::CheckGameEnd()
 		/* 戦闘終了(プレイヤー勝利)フェイズへ遷移 */
 		this->iBattlePhase = BATTLE_PHASE_BATTLE_END_WIN;
 
-		/* シーン(ワールドマップ)を作成 */
-		gpSceneServer->AddSceneReservation(std::make_shared<Scene_WoldMap>());
+		/* ワールドマップを有効にする */
+		this->pDataList_GameResource->SetWoldMapActiveFlg(true);
+
 		return;
 	}
 }

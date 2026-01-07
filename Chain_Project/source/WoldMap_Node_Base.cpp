@@ -21,6 +21,7 @@ WoldMap_Node_Base::WoldMap_Node_Base()
 	this->Image_Icon[ICON_INDEX_NODE_ICON]	= nullptr;				// アイコン画像[1:固有のアイコン]
 	this->NodeState							= NODE_STATE_NORMAL;	// ノード状態
 	this->GoalFlg							= false;				// ゴールフラグ
+	this->NodeLevel							= 0;					// ノードのレベル(内容に影響)
 
 	/* 画像管理データリストを取得 */
 	std::shared_ptr<DataList_Image> pDataList_Image = std::dynamic_pointer_cast<DataList_Image>(gpDataListServer->GetDataList("DataList_Image"));

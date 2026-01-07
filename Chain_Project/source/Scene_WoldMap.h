@@ -9,6 +9,7 @@
 /* 前方宣言 */
 class WoldMap_Node_Base;
 class Card_NextArea;
+class DataList_GameResource;
 
 // シーン"ワールドマップ"
 class Scene_WoldMap : public Scene_Base
@@ -47,8 +48,9 @@ class Scene_WoldMap : public Scene_Base
 		// 画像
 		int Image_WoldMap;					// ワールドマップの画像
 		// その他
-		Struct_2D::POSITION					WoldMapDrawPos;	// ワールドマップの描写座標
-		std::shared_ptr<WoldMap_Node_Base>	NowNode;		// 現在地点のノード
+		Struct_2D::POSITION						WoldMapDrawPos;			// ワールドマップの描写座標
+		std::shared_ptr<WoldMap_Node_Base>		NowNode;				// 現在地点のノード
+		std::shared_ptr<DataList_GameResource>	pDataList_GameResource;	// ゲームリソース管理用データリスト
 
 		/* 関数 */
 		void CheckNowNode();			// 現在のノードを確認
@@ -65,4 +67,5 @@ class Scene_WoldMap : public Scene_Base
 		void BackGround_Draw();			// 背景描写
 		void Select_Card();				// カード選択
 		void Load_MapData();			// マップデータの読み込み
+		void Node_SetResource();		// ゲームリソース管理に現在のノード情報を設定
 };

@@ -11,7 +11,7 @@
 // ŠÖ˜AƒNƒ‰ƒX
 #include "Scene_Build.h"
 #include "Scene_UI_Button.h"
-#include "Scene_Battle.h"
+#include "Scene_GameManager.h"
 #include "DataList_Image.h"
 #include "DataList_Font.h"
 #include "Card_Base.h"
@@ -48,7 +48,7 @@ void Scene_Title::Update()
 	{
 		gpSceneServer->SetDeleteCurrentSceneFlg(true);
 		LOAD_FUNCTION::AddLoadScene();
-		gpSceneServer->AddSceneReservation(std::make_shared<Scene_Battle>());
+		gpSceneServer->AddSceneReservation(std::make_shared<Scene_GameManager>());
 		return;
 	}
 
