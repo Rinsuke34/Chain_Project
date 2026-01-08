@@ -73,12 +73,6 @@
     <Filter Include="ヘッダー ファイル\シーン\汎用UI\ボタン">
       <UniqueIdentifier>{095df6c8-90d0-4f5d-a8ae-7249565f259e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\シーン\バトル画面">
-      <UniqueIdentifier>{78727398-a4ea-4464-a9b4-42cb5a9de745}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\シーン\バトル画面">
-      <UniqueIdentifier>{a2975fa9-12d8-4199-b216-fe73069b83aa}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\カード">
       <UniqueIdentifier>{bb39d4a7-7ffb-494d-af54-ee575986ca1f}</UniqueIdentifier>
     </Filter>
@@ -259,17 +253,29 @@
     <Filter Include="ソース ファイル\データリスト\ゲームリソース管理">
       <UniqueIdentifier>{a51f6c15-7a76-4e5a-b9dc-76354d89eb0e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\シーン\ショップ">
-      <UniqueIdentifier>{6e229f99-a067-4840-82a2-e77374062bc8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\シーン\ショップ">
-      <UniqueIdentifier>{08cc4aad-05d3-48b9-bfcb-e86face20477}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ヘッダー ファイル\シーン\ゲーム終了">
       <UniqueIdentifier>{0bf679cc-188e-4532-abd3-e35a9e8d39af}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\シーン\ゲーム終了">
       <UniqueIdentifier>{ac4216b6-c9b9-41ef-a5a1-eaa7b87dbb4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\シーン\ステージシーン">
+      <UniqueIdentifier>{48063ad4-93f1-4f5f-8eee-69538006dc58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\シーン\ステージシーン">
+      <UniqueIdentifier>{680fe99b-c114-43e7-ae01-0af890df64ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\シーン\ステージシーン\バトル画面">
+      <UniqueIdentifier>{78727398-a4ea-4464-a9b4-42cb5a9de745}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\シーン\ステージシーン\ショップ">
+      <UniqueIdentifier>{08cc4aad-05d3-48b9-bfcb-e86face20477}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\シーン\ステージシーン\ショップ">
+      <UniqueIdentifier>{6e229f99-a067-4840-82a2-e77374062bc8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\シーン\ステージシーン\バトル画面">
+      <UniqueIdentifier>{a2975fa9-12d8-4199-b216-fe73069b83aa}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -304,7 +310,7 @@
       <Filter>ソース ファイル\シーン\汎用UI\ボタン</Filter>
     </ClCompile>
     <ClCompile Include="source\Scene_Battle.cpp">
-      <Filter>ソース ファイル\シーン\バトル画面</Filter>
+      <Filter>ソース ファイル\シーン\ステージシーン\バトル画面</Filter>
     </ClCompile>
     <ClCompile Include="source\Card_Base.cpp">
       <Filter>ソース ファイル\カード</Filter>
@@ -313,10 +319,10 @@
       <Filter>ソース ファイル\データリスト\バトル用データ管理</Filter>
     </ClCompile>
     <ClCompile Include="source\Scene_Battle_Update.cpp">
-      <Filter>ソース ファイル\シーン\バトル画面</Filter>
+      <Filter>ソース ファイル\シーン\ステージシーン\バトル画面</Filter>
     </ClCompile>
     <ClCompile Include="source\Scene_Battle_Draw.cpp">
-      <Filter>ソース ファイル\シーン\バトル画面</Filter>
+      <Filter>ソース ファイル\シーン\ステージシーン\バトル画面</Filter>
     </ClCompile>
     <ClCompile Include="source\Card_Arms_Base.cpp">
       <Filter>ソース ファイル\カード\武具%28Arms%29</Filter>
@@ -400,10 +406,10 @@
       <Filter>ソース ファイル\データリスト\ゲームリソース管理</Filter>
     </ClCompile>
     <ClCompile Include="source\Scene_Shop.cpp">
-      <Filter>ソース ファイル\シーン\ショップ</Filter>
+      <Filter>ソース ファイル\シーン\ステージシーン\ショップ</Filter>
     </ClCompile>
     <ClCompile Include="source\Scene_Battle_Setup.cpp">
-      <Filter>ソース ファイル\シーン\バトル画面</Filter>
+      <Filter>ソース ファイル\シーン\ステージシーン\バトル画面</Filter>
     </ClCompile>
     <ClCompile Include="source\Scene_GameOver.cpp">
       <Filter>ソース ファイル\シーン\ゲーム終了</Filter>
@@ -438,7 +444,7 @@
       <Filter>ヘッダー ファイル\シーン\汎用UI\ボタン</Filter>
     </ClInclude>
     <ClInclude Include="source\Scene_Battle.h">
-      <Filter>ヘッダー ファイル\シーン\バトル画面</Filter>
+      <Filter>ヘッダー ファイル\シーン\ステージシーン\バトル画面</Filter>
     </ClInclude>
     <ClInclude Include="source\Card_Base.h">
       <Filter>ヘッダー ファイル\カード</Filter>
@@ -528,7 +534,7 @@
       <Filter>ヘッダー ファイル\データリスト\ゲームリソース管理</Filter>
     </ClInclude>
     <ClInclude Include="source\Scene_Shop.h">
-      <Filter>ヘッダー ファイル\シーン\ショップ</Filter>
+      <Filter>ヘッダー ファイル\シーン\ステージシーン\ショップ</Filter>
     </ClInclude>
     <ClInclude Include="source\Scene_GameOver.h">
       <Filter>ヘッダー ファイル\シーン\ゲーム終了</Filter>
