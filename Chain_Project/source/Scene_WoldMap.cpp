@@ -9,6 +9,7 @@
 // 共通定義
 #include "FunctionDefine.h"
 // 関連クラス
+#include "Scene_GameOver.h"
 #include "DataList_Image.h"
 #include "DataList_GameResource.h"
 #include "WoldMap_Node_Base.h"
@@ -25,6 +26,7 @@ Scene_WoldMap::Scene_WoldMap() : Scene_Base("Scene_WoldMap", 10, false, false)
 	this->WoldMapNodeList.clear();												// ワールドマップノードリスト
 	this->WoldMapDrawPos	= { WOLDMAP_DRAW_START_POS_X, WOLDMAP_DRAW_POS_Y };	// ワールドマップの描写座標
 	this->NowNode			= nullptr;											// 現在のノード
+	this->GameOverCreateFlg	= false;											// ゲームオーバーシーン作成フラグ
 	// 画像
 	this->Image_WoldMap	= MakeScreen(WOLDMAP_IMAGE_WIDTH, WOLDMAP_IMAGE_HEIGHT, TRUE);	// ワールドマップの画像
 
@@ -52,6 +54,9 @@ Scene_WoldMap::~Scene_WoldMap()
 // 更新
 void Scene_WoldMap::Update()
 {
+	/* ステージクリアの確認 */
+	CheckStageEnd();
+
 	/* ワールドマップの描写座標更新 */
 	Update_DrawPos();
 
@@ -213,12 +218,24 @@ void Scene_WoldMap::Update_DrawPos()
 			// 完了していない場合
 			/* 描写座標を移動量分移動させる */
 			this->WoldMapDrawPos.iX -= WOLDMAP_DRAW_POS_MOVE_SPEED;
+
+			/* 全移動先カードのワールドマップの移動完了フラグを無効に設定する */
+			for (auto& Card : this->NextAreaCardList)
+			{
+				Card->SetWoldMapMoveEndFlg(false);
+			}
 		}
 		else
 		{
 			// 完了している場合
 			/* 描写座標に固定する */
 			this->WoldMapDrawPos.iX = WOLDMAP_DRAW_POS_X;
+
+			/* 全移動先カードのワールドマップの移動完了フラグを有効に設定する */
+			for (auto& Card : this->NextAreaCardList)
+			{
+				Card->SetWoldMapMoveEndFlg(true);
+			}
 		}
 	}
 	else
@@ -295,12 +312,6 @@ void Scene_WoldMap::NextAreaCard_Draw()
 // 背景描写
 void Scene_WoldMap::BackGround_Draw()
 {
-	/* ワールドマップが無効であるなら処理を行わない */
-	if (!this->pDataList_GameResource->GetWoldMapActiveFlg())
-	{
-		return;
-	}
-
 	/* 画像管理データリストを取得 */
 	std::shared_ptr<DataList_Image> pDataList_Image = std::dynamic_pointer_cast<DataList_Image>(gpDataListServer->GetDataList("DataList_Image"));
 
@@ -411,7 +422,6 @@ void Scene_WoldMap::Load_MapData()
 			}
 		}
 		int State = item["State"];
-		bool GoalFlg = item["GoalFlg"];
 		int NodeLevel = item["NodeLevel"];
 
 		/* ノードの作成 */
@@ -440,7 +450,6 @@ void Scene_WoldMap::Load_MapData()
 			NewNode->SetPosition_Map(MapPos);
 			NewNode->SetMoveNodePosList(MoveNodePosList);
 			NewNode->SetNodeState(State);
-			NewNode->SetGoalFlg(GoalFlg);
 			NewNode->SetNodeLevel(NodeLevel);
 			this->WoldMapNodeList.push_back(NewNode);
 		}
@@ -473,4 +482,22 @@ void Scene_WoldMap::Load_MapData()
 void Scene_WoldMap::Node_SetResource()
 {
 	this->pDataList_GameResource->SetNowMapNode(this->NowNode);
+}
+
+// ステージクリアの確認
+void Scene_WoldMap::CheckStageEnd()
+{
+	/* ワールドマップが無効、あるいはすでにゲームオーバーシーンが作成済みであるなら処理を行わない */
+	if (!this->pDataList_GameResource->GetWoldMapActiveFlg() || this->GameOverCreateFlg == true)
+	{
+		return;
+	}
+
+	/* 移動先がないならステージクリアとする */
+	if (this->NextAreaCardList.size() == 0)
+	{
+		/* シーン"ゲームオーバー"を作成 */
+		gpSceneServer->AddSceneReservation(std::make_shared<Scene_GameOver>());
+		this->GameOverCreateFlg = true;
+	}
 }

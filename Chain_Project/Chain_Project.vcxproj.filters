@@ -259,6 +259,18 @@
     <Filter Include="ソース ファイル\データリスト\ゲームリソース管理">
       <UniqueIdentifier>{a51f6c15-7a76-4e5a-b9dc-76354d89eb0e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\シーン\ショップ">
+      <UniqueIdentifier>{6e229f99-a067-4840-82a2-e77374062bc8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\シーン\ショップ">
+      <UniqueIdentifier>{08cc4aad-05d3-48b9-bfcb-e86face20477}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\シーン\ゲーム終了">
+      <UniqueIdentifier>{0bf679cc-188e-4532-abd3-e35a9e8d39af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\シーン\ゲーム終了">
+      <UniqueIdentifier>{ac4216b6-c9b9-41ef-a5a1-eaa7b87dbb4c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Main.cpp">
@@ -291,7 +303,7 @@
     <ClCompile Include="source\Scene_UI_Button.cpp">
       <Filter>ソース ファイル\シーン\汎用UI\ボタン</Filter>
     </ClCompile>
-    <ClCompile Include="source\Scene_Buttle.cpp">
+    <ClCompile Include="source\Scene_Battle.cpp">
       <Filter>ソース ファイル\シーン\バトル画面</Filter>
     </ClCompile>
     <ClCompile Include="source\Card_Base.cpp">
@@ -300,10 +312,10 @@
     <ClCompile Include="source\DataList_Battle.cpp">
       <Filter>ソース ファイル\データリスト\バトル用データ管理</Filter>
     </ClCompile>
-    <ClCompile Include="source\Scene_Buttle_Update.cpp">
+    <ClCompile Include="source\Scene_Battle_Update.cpp">
       <Filter>ソース ファイル\シーン\バトル画面</Filter>
     </ClCompile>
-    <ClCompile Include="source\Scene_Buttle_Draw.cpp">
+    <ClCompile Include="source\Scene_Battle_Draw.cpp">
       <Filter>ソース ファイル\シーン\バトル画面</Filter>
     </ClCompile>
     <ClCompile Include="source\Card_Arms_Base.cpp">
@@ -386,6 +398,15 @@
     </ClCompile>
     <ClCompile Include="source\DataList_GameResource.cpp">
       <Filter>ソース ファイル\データリスト\ゲームリソース管理</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Scene_Shop.cpp">
+      <Filter>ソース ファイル\シーン\ショップ</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Scene_Battle_Setup.cpp">
+      <Filter>ソース ファイル\シーン\バトル画面</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Scene_GameOver.cpp">
+      <Filter>ソース ファイル\シーン\ゲーム終了</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -505,6 +526,12 @@
     </ClInclude>
     <ClInclude Include="source\DataList_GameResource.h">
       <Filter>ヘッダー ファイル\データリスト\ゲームリソース管理</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Scene_Shop.h">
+      <Filter>ヘッダー ファイル\シーン\ショップ</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Scene_GameOver.h">
+      <Filter>ヘッダー ファイル\シーン\ゲーム終了</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

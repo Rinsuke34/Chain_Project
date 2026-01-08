@@ -51,6 +51,7 @@ class Scene_WoldMap : public Scene_Base
 		Struct_2D::POSITION						WoldMapDrawPos;			// ワールドマップの描写座標
 		std::shared_ptr<WoldMap_Node_Base>		NowNode;				// 現在地点のノード
 		std::shared_ptr<DataList_GameResource>	pDataList_GameResource;	// ゲームリソース管理用データリスト
+		bool									GameOverCreateFlg;		// ゲームオーバーシーン作成フラグ(作成済みならTrue)
 
 		/* 関数 */
 		void CheckNowNode();			// 現在のノードを確認
@@ -68,4 +69,5 @@ class Scene_WoldMap : public Scene_Base
 		void Select_Card();				// カード選択
 		void Load_MapData();			// マップデータの読み込み
 		void Node_SetResource();		// ゲームリソース管理に現在のノード情報を設定
+		void CheckStageEnd();			// ステージクリアの確認
 };

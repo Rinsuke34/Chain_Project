@@ -22,6 +22,7 @@ class DataList_GameResource : public DataList_Base
 		bool								GetWoldMapActiveFlg()	{ return WoldMapActiveFlg; }	// ワールドマップが有効であるかのフラグ
 		std::shared_ptr<WoldMap_Node_Base>	GetNowMapNode()			{ return NowMapNode; }			// 現在地点のノード
 		bool								GetNextStageSelectFlg() { return NextStageSelectFlg; }	// 次のステージの選択が完了したかのフラグ
+		bool								GetGameEndFlg()			{ return GameEndFlg; }			// ゲーム終了フラグ
 
 		/* セッター */
 		void SetGameState(int state)								{ GameState				= state; }	// ゲームの状態
@@ -29,6 +30,7 @@ class DataList_GameResource : public DataList_Base
 		void SetWoldMapActiveFlg(bool flg)							{ WoldMapActiveFlg		= flg; }	// ワールドマップが有効であるかのフラグ
 		void SetNowMapNode(std::shared_ptr<WoldMap_Node_Base> node)	{ NowMapNode			= node; }	// 現在地点のノード
 		void SetNextStageSelectedFlg(bool flg)						{ NextStageSelectFlg	= flg; }	// 次のステージの選択が完了したかのフラグ
+		void SetGameEndFlg(bool flg)								{ GameEndFlg			= flg; }	// ゲーム終了フラグ
 
 		/* 定数 */
 		// ゲームの状態
@@ -42,4 +44,5 @@ class DataList_GameResource : public DataList_Base
 		bool								WoldMapActiveFlg;	// ワールドマップが有効であるかのフラグ
 		std::shared_ptr<WoldMap_Node_Base>	NowMapNode;			// 現在地点のノード
 		bool								NextStageSelectFlg;	// 次のステージの選択が完了したかのフラグ
+		bool								GameEndFlg;			// ゲーム終了フラグ
 };

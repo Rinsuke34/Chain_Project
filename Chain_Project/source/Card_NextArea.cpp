@@ -15,9 +15,10 @@ Card_NextArea::Card_NextArea(int NextAreaType) : Card_Base()
 	// NextAreaType : 移動先エリアの種類
 
 	/* 初期化 */
-	this->NextAreaType	= NextAreaType;					// 移動先エリアの種類
-	this->iCardType		= Card_Base::TYPE_NEXT_AREA;	// カード種類:移動先エリア
-	this->pNextAreaNode	= nullptr;						// 移動先エリアのノード
+	this->NextAreaType		= NextAreaType;					// 移動先エリアの種類
+	this->iCardType			= Card_Base::TYPE_NEXT_AREA;	// カード種類:移動先エリア
+	this->pNextAreaNode		= nullptr;						// 移動先エリアのノード
+	this->WoldMapMoveEndFlg	= false;						// ワールドマップの移動完了フラグ
 
 	/* 移動先エリアに応じた初期化 */
 	switch (this->NextAreaType)
@@ -39,6 +40,26 @@ Card_NextArea::Card_NextArea(int NextAreaType) : Card_Base()
 			this->Name		= "BOSS";
 			this->ImageName	= "Boss";
 			break;
+	}
+}
+
+// 描画
+void Card_NextArea::Draw()
+{
+	/* マップの移動が完了しているなら親クラスの描画処理を実行 */
+	if (this->WoldMapMoveEndFlg)
+	{
+		Card_Base::Draw();
+	}
+}
+
+// 更新処理
+void Card_NextArea::Update()
+{
+	/* マップの移動が完了しているなら親クラスの更新処理を実行 */
+	if (this->WoldMapMoveEndFlg)
+	{
+		Card_Base::Update();
 	}
 }
 

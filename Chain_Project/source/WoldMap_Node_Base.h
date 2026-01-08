@@ -26,7 +26,6 @@ class WoldMap_Node_Base : public std::enable_shared_from_this<WoldMap_Node_Base>
 		void SetMoveNodePosList(std::vector<Struct_2D::POSITION> PositionList)					{ this->Move_Node_Pos_List	= PositionList; }	// 移動可能ノード座標リスト
 		void SetImageIconSize(int Size)															{ this->Image_Icon_Size		= Size; }			// アイコン画像サイズ
 		void SetNodeState(int State)															{ this->NodeState			= State; }			// ノード状態
-		void SetGoalFlg(bool GoalFlg)															{ this->GoalFlg				= GoalFlg; }		// ゴールフラグ
 		void SetNodeLevel(int NodeLevel)														{ this->NodeLevel			= NodeLevel; }		// ノードのレベル(内容に影響)
 
 		/* ゲッター */
@@ -37,7 +36,6 @@ class WoldMap_Node_Base : public std::enable_shared_from_this<WoldMap_Node_Base>
 		std::vector<Struct_2D::POSITION>					GetMoveNodePosList()	{ return this->Move_Node_Pos_List; }	// 移動可能ノード座標リスト
 		int													GetImageIconSize()		{ return this->Image_Icon_Size; }		// アイコン画像サイズ
 		int 												GetNodeState()			{ return this->NodeState; }				// ノード状態
-		bool												GetGoalFlg()			{ return this->GoalFlg; }				// ゴールフラグ
 		int													GetNodeLevel()			{ return this->NodeLevel; }				// ノードのレベル(内容に影響)
 
 		/* 定数 */
@@ -66,7 +64,6 @@ class WoldMap_Node_Base : public std::enable_shared_from_this<WoldMap_Node_Base>
 		std::vector<Struct_2D::POSITION>					Move_Node_Pos_List;	// 移動可能ノード座標リスト
 		int													Image_Icon_Size;	// アイコン画像サイズ
 		int													NodeState;			// ノード状態
-		bool												GoalFlg;			// ゴールフラグ(Trueならそのノード攻略時にクリア)
 		int													NodeLevel;			// ノードのレベル(内容に影響)
 		// 画像
 		std::shared_ptr<int>	Image_Icon[2];		// アイコン画像[0:プレイヤー現在位置, 1:固有のアイコン]

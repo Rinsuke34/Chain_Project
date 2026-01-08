@@ -17,9 +17,6 @@
 #include "Card_Arms_WoodenSword.h"
 #include "Card_Item_HealingPotion.h"
 #include "Card_Spell_ArmsEnhancement.h"
-#include "Character_Player.h"
-#include "Character_Npc_Slime_Green.h"
-#include "Character_Npc_Bat.h"
 #include "Card_Arms_GrassSword.h"
 #include "Card_Arms_PoisonDagger.h"
 #include "Card_Arms_TravelerSword.h"
@@ -73,10 +70,12 @@ Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 0, false, false)
 		gpSceneServer->AddSceneReservation(this->UI_DecisionButton);
 	}
 
-	/* テスト用のカード、キャラクター生成処理 */
+	/* テスト用のカード生成処理 */
 	// ※ テスト用なので直打ち
 	// カード設定
 	std::vector<std::shared_ptr<Card_Base>> DeckCardList;
+	DeckCardList.push_back(std::make_shared<Card_Arms_GrassSword>());
+	DeckCardList.push_back(std::make_shared<Card_Arms_GrassSword>());
 	DeckCardList.push_back(std::make_shared<Card_Spell_ArmsEnhancement>());
 	DeckCardList.push_back(std::make_shared<Card_Arms_TravelerSword>());
 	DeckCardList.push_back(std::make_shared<Card_Arms_TravelerShield>());
@@ -93,13 +92,6 @@ Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 0, false, false)
 	{
 		Deck->UpdateImage();
 	}
-	// キャラクター設定
-	this->pDataList_Battle->SetFriendCharacter(0, nullptr);
-	this->pDataList_Battle->SetFriendCharacter(1, std::make_shared<Character_Player>());
-	this->pDataList_Battle->SetFriendCharacter(2, nullptr);
-	this->pDataList_Battle->SetEnemyCharacter(0, std::make_shared<Character_Slime_Green>());
-	//this->pDataList_Battle->SetEnemyCharacter(1, std::make_shared<Character_Slime_Green>());
-	//this->pDataList_Battle->SetEnemyCharacter(2, std::make_shared<Character_Bat>());
 }
 
 // デストラクタ

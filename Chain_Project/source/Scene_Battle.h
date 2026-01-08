@@ -22,8 +22,9 @@ class Scene_Battle : public Scene_Base
 		virtual ~Scene_Battle();	// デストラクタ
 
 		/* 関数 */
-		virtual void	Update()			override;	// 更新
-		virtual void	Draw()				override;	// 描画
+		virtual void	Update()	override;						// 更新
+		virtual void	Draw()		override;						// 描画
+		virtual void	Character_Setup(int Level, bool BossFlg);	// キャラクターセットアップ
 
 		/* 定数 */
 		// バトルフェーズ

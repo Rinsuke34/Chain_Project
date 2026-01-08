@@ -16,12 +16,16 @@ class Card_NextArea : public Card_Base
 		Card_NextArea(int NextAreaType);	// コンストラクタ
 		virtual ~Card_NextArea() {};		// デストラクタ
 
+		virtual void	Draw()		override;	// 描画
+		virtual void	Update()	override;	// 更新処理
+
 		/* ゲッター */
 		int									GetNextAreaType() { return this->NextAreaType; }	// 移動先エリアの種類を取得
 		std::shared_ptr<WoldMap_Node_Base>	GetNextAreaNode() { return this->pNextAreaNode; }	// 移動先エリアのノードを取得
 
 		/* セッター */
-		void SetNextAreaNode(std::shared_ptr<WoldMap_Node_Base> Node) { this->pNextAreaNode = Node; }	// 移動先エリアのノードを設定
+		void SetNextAreaNode(std::shared_ptr<WoldMap_Node_Base> Node)	{ this->pNextAreaNode		= Node; }	// 移動先エリアのノードを設定
+		void SetWoldMapMoveEndFlg(bool flg)								{ this->WoldMapMoveEndFlg	= flg; }	// ワールドマップの移動完了フラグを設定
 
 		/* 定数 */
 		// 種類
@@ -43,4 +47,5 @@ class Card_NextArea : public Card_Base
 		/* 変数 */
 		int										NextAreaType;		// 移動先エリアの種類
 		std::shared_ptr<WoldMap_Node_Base>		pNextAreaNode;		// 移動先エリアのノード
+		bool									WoldMapMoveEndFlg;	// ワールドマップの移動完了フラグ
 };
