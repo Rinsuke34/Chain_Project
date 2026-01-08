@@ -8,7 +8,7 @@
 Character_Player::Character_Player() : Character_Base()
 {
 	/* 初期化 */
-	this->iHP_Max	= 100;				// 体力(最大値)
+	this->iHP_Max	= 10;				// 体力(最大値)
 	this->iHP_Now	= this->iHP_Max;	// 体力(現在値)
 	this->Camp		= Character_Base::CAMP_FRIEND;	// 陣営:仲間陣営
 	this->SizeX		= PLAYER_WIDE;		// キャラクターの幅

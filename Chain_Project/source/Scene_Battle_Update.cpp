@@ -7,6 +7,7 @@
 #include "DataList_GameResource.h"
 #include "Scene_UI_Button.h"
 #include "Scene_WoldMap.h"
+#include "Scene_GameOver.h"
 #include "Card_Base.h"
 #include "Card_Spell_Base.h"
 #include "DataList_Battle.h"
@@ -807,6 +808,10 @@ void Scene_Battle::CheckGameEnd()
 		// プレイヤーキャラクターが存在していない場合
 		/* 戦闘終了(プレイヤー敗北)フェイズへ遷移 */
 		this->iBattlePhase = BATTLE_PHASE_BATTLE_END_GAMEOVER;
+
+		/* シーン"ゲームオーバー"を作成 */
+		gpSceneServer->AddSceneReservation(std::make_shared<Scene_GameOver>());
+
 		return;
 	}
 

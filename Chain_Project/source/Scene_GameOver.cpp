@@ -23,7 +23,7 @@ Scene_GameOver::Scene_GameOver() : Scene_Base("Scene_GameOver", 10, false, false
 	{
 		/* "決定"ボタンの作成 */
 		this->UI_DecisionButton = std::make_shared<Scene_UI_Button>("Battle_DecisionButton", 1);
-		this->UI_DecisionButton->SetButtonText("しゅうりょう");
+		this->UI_DecisionButton->SetButtonText("ゲームオーバー");
 		this->UI_DecisionButton->SetCenterPos({ SCREEN_SIZE_WIDE / 2, SCREEN_SIZE_HEIGHT / 2 });
 		this->UI_DecisionButton->SetFontHandle(giFont_DonguriDuel_32);
 		gpSceneServer->AddSceneReservation(this->UI_DecisionButton);

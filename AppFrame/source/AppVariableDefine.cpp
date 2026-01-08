@@ -29,6 +29,6 @@ std::unique_ptr<DataListServer> gpDataListServer	= nullptr;	// ƒf[ƒ^ƒŠƒXƒgƒT[ƒ
 int	giNowFps	= 0;						// Œ»İ‚ÌƒtƒŒ[ƒ€ƒŒ[ƒg
 
 /* ƒfƒoƒbƒO—p•`ÊŠÇ—ƒtƒ‰ƒO */
-bool gbDrawSceneListFlg		= true;		// ƒV[ƒ“ƒŠƒXƒg‚Ì•`Ê
+bool gbDrawSceneListFlg		= false;		// ƒV[ƒ“ƒŠƒXƒg‚Ì•`Ê
 bool gbDrawDatalistFlg		= false;		// ƒf[ƒ^ƒŠƒXƒg‚Ì•`Ê
 bool gbDrawFpsFlg			= false;		// ƒtƒŒ[ƒ€ƒŒ[ƒg‚Ì•`Ê
