@@ -32,7 +32,7 @@ void Card_Spell_Base::BattleAction()
 	pSpellEffect->EffectCard		= std::dynamic_pointer_cast<Card_Spell_Base>(shared_from_this());
 	pSpellEffect->Priority			= 40;								// ちょっと低め
 	pSpellEffect->EffectCard		= shared_from_this();				// 効果を使用するカード:このカード
-	this->pDataList_Battle->AddEffect(pSpellEffect, GetMyAreaNo());
+	this->pDataList_Battle->AddEffect(pSpellEffect);
 }
 
 // 背景を描写

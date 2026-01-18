@@ -166,17 +166,6 @@ void Scene_Battle::Draw_BattleArea()
 			*(this->Image_BattleArea[(iSelectAreaNo == i) ? 1 : 0]), TRUE);
 	}
 
-	/* 行動内容の描写 */
-	for (int x = 0; x < DataList_Battle::BATTLE_AREA_MAX; x++)
-	{
-		/* 設定された行動内容を描写 */
-		auto ActionEffectList = this->pDataList_Battle->GetActionEffectList(x);
-		for (int y = 0; y < ActionEffectList.size(); y++)
-		{
-			ActionEffectList[y]->Draw();
-		}
-	}
-
 	/* カードの描写 */
 	for (int i = 0; i < DataList_Battle::BATTLE_AREA_MAX; i++)
 	{

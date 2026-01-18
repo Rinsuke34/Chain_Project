@@ -319,14 +319,14 @@ void Scene_Battle::Update_BattleAction_Decision()
 		}
 
 		/* 効果を優先順位に並び変える */
-		std::vector<std::shared_ptr<Action_Effect_Base>> ActionEffectList = this->pDataList_Battle->GetActionEffectList(i);
+		std::vector<std::shared_ptr<Action_Effect_Base>> ActionEffectList = this->pDataList_Battle->GetActionEffectList();
 		std::stable_sort(ActionEffectList.begin(), ActionEffectList.end(),
 			[](const std::shared_ptr<Action_Effect_Base>& a, const std::shared_ptr<Action_Effect_Base>& b) {
 				int pa = a ? a->Priority : INT_MIN;
 				int pb = b ? b->Priority : INT_MIN;
 				return pa > pb;
 			});
-		this->pDataList_Battle->SetActionEffectList(ActionEffectList, i);
+		this->pDataList_Battle->SetActionEffectList(ActionEffectList);
 	}
 
 	/* "戦闘行動"フェイズへ遷移 */
@@ -348,58 +348,25 @@ void Scene_Battle::Update_BattleAction()
 		return;
 	}
 
-	/* 現在のバトルエリアの与効果を取得 */
-	std::vector<std::shared_ptr<Action_Effect_Base>> EffectList = this->pDataList_Battle->GetActionEffectList(this->iBattlePhase_NowBattleAreaNo);
+	/* 行動内容を取得 */
+	std::vector<std::shared_ptr<Action_Effect_Base>> EffectList = this->pDataList_Battle->GetActionEffectList();
 
-	/* このバトルエリアの処理が完了しているか確認 */
+	/* 行動処理が完了しているか確認 */
 	if (EffectList.size() == 0)
 	{
 		// 完了している場合
-		/* バトルエリアにカードが設定されているか確認 */
+		/* "ターン終了時"の効果発動フェイズへ遷移 */
+		this->iBattlePhase = BATTLE_PHASE_EFFECT_TRUN_END;
 
-			if (this->pDataList_Battle->GetBattleAreaCardList(this->iBattlePhase_NowBattleAreaNo))
-			{
-				// 設定されているなら
-				/* カードを捨て札リストに追加 */
-				this->pDataList_Battle->AddTrashCard(this->pDataList_Battle->GetBattleAreaCardList(this->iBattlePhase_NowBattleAreaNo));
-
-				/* バトルエリアからカードを削除 */
-				this->pDataList_Battle->RemoveBattleAreaCard(this->iBattlePhase_NowBattleAreaNo);
-			}
-
-		/* 次のバトルエリアの処理を実施 */
-		if (this->iBattlePhase_NowBattleAreaNo < DataList_Battle::BATTLE_AREA_5)
-		{
-			// 次のバトルエリアが存在する場合
-			this->iBattlePhase_NowBattleAreaNo++;
-			return;
-		}
-		else
-		{
-			// 次のバトルエリアが存在しない場合
-			///* バトルエリアにカードが設定されているか確認 */
-			//for (int i = 0; i < DataList_Battle::BATTLE_AREA_MAX; i++)
-			//{
-			//	if (this->pDataList_Battle->GetBattleAreaCardList(i))
-			//	{
-			//		// 設定されているなら
-			//		/* カードを捨て札リストに追加 */
-			//		this->pDataList_Battle->AddTrashCard(this->pDataList_Battle->GetBattleAreaCardList(i));
-
-			//		/* バトルエリアからカードを削除 */
-			//		this->pDataList_Battle->RemoveBattleAreaCard(i);
-			//	}
-			//}
-
-			/* 全てのバトルエリアの処理が終了したため、"ターン終了時"の効果発動フェイズへ遷移 */
-			this->iBattlePhase = BATTLE_PHASE_EFFECT_TRUN_END;
-			return;
-		}
+		return;
 	}
 
 	/* 与効果の内容を取得＆リスト上からの削除 */
 	std::shared_ptr<Action_Effect_Base> pEffect = EffectList.front();
-	this->pDataList_Battle->RemoveEffect(pEffect, this->iBattlePhase_NowBattleAreaNo);
+	this->pDataList_Battle->RemoveEffect(pEffect);
+
+	/* 使用した効果に紐づいたカードをトラッシュ */
+	Trash_UseCard(pEffect);
 
 	/* 効果の内容に応じた処理を実行 */
 	pEffect->ExecuteEffect();
@@ -508,27 +475,6 @@ void Scene_Battle::CardPosition_HandSetSettingPosting()
 	}
 }
 
-// 行動内容の設定座標の設定
-void Scene_Battle::Action_Effect_SetSettingPositing()
-{
-	/* 各バトルエリアの行動内容の設定座標を設定 */
-	for (int x = 0; x < DataList_Battle::BATTLE_AREA_MAX; x++)
-	{
-		auto EffectList = this->pDataList_Battle->GetActionEffectList(x);
-		for (int y = 0; y < EffectList.size(); y++)
-		{
-
-			Struct_2D::POSITION SettingPos =
-			{
-				(SCREEN_SIZE_WIDE / 2) + (BATTLE_AREA_INTERVAL * (x - 2)),
-				BATTLE_AREA_POS_Y - (BATTLE_AREA_HEIGHT / 2) - (Action_Effect_Base::IMAGE_SIZE_HEIGHT / 2) - (Action_Effect_Base::IMAGE_SIZE_HEIGHT * y),
-			};
-
-			EffectList[y]->Setting_Position = SettingPos;
-		}
-	}
-}
-
 // カードの更新処理
 void Scene_Battle::Card_Update()
 {
@@ -546,20 +492,6 @@ void Scene_Battle::Card_Update()
 	for (const auto& HandCard : this->pDataList_Battle->GetHandCardList())
 	{
 		HandCard->Update();
-	}
-}
-
-// 行動内容の更新処理
-void Scene_Battle::Action_Effect_Update()
-{
-	/* 各バトルエリアの行動内容の更新処理 */
-	for (int i = 0; i < DataList_Battle::BATTLE_AREA_MAX; i++)
-	{
-		auto EffectList = this->pDataList_Battle->GetActionEffectList(i);
-		for (const auto& Effect : EffectList)
-		{
-			Effect->Update();
-		}
 	}
 }
 
@@ -839,4 +771,33 @@ void Scene_Battle::CheckGameEnd()
 
 		return;
 	}
+}
+
+// 効果を使用したカードのトラッシュ処理
+void Scene_Battle::Trash_UseCard(std::shared_ptr<Action_Effect_Base> pEffect)
+{
+	// 引数
+	// pEffect <- 効果の内容
+
+	/* カードが設定されているか確認 */
+	if (pEffect->EffectCard == nullptr)
+	{
+		// 設定されていない場合、処理を終了
+		return;
+	}
+
+	/* 効果の紐づいたカードをバトルエリア1～5から探す */
+	for (int i = 0; i < DataList_Battle::BATTLE_AREA_MAX; i++)
+	{
+		if (this->pDataList_Battle->GetBattleAreaCardList(i) == pEffect->EffectCard)
+		{
+			// 見つかった場合、バトルエリア番号を保存して処理を抜ける
+			this->iBattlePhase_NowBattleAreaNo = i;
+			break;
+		}
+	}
+
+	/* 紐づいたカードをトラッシュする */
+	this->pDataList_Battle->AddTrashCard(this->pDataList_Battle->GetBattleAreaCardList(this->iBattlePhase_NowBattleAreaNo));
+	this->pDataList_Battle->RemoveBattleAreaCard(this->iBattlePhase_NowBattleAreaNo);
 }

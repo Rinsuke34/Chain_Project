@@ -155,21 +155,19 @@ void DataList_Battle::ResetChain()
 }
 
 // —^Œø‰Ê‚ğ’Ç‰Á
-void DataList_Battle::AddEffect(const std::shared_ptr<Action_Effect_Base>& effect, int AreaNo)
+void DataList_Battle::AddEffect(const std::shared_ptr<Action_Effect_Base>& effect)
 {
 	// ˆø”
 	// effect	<- ’Ç‰Á‚·‚é—^Œø‰Ê
-	// AreaNo	<- —^Œø‰Ê‚ğ’Ç‰Á‚·‚éƒoƒgƒ‹ƒGƒŠƒA
 
-	this->ActionEffectList[AreaNo].push_back(effect);
+	this->ActionEffectList.push_back(effect);
 }
 
 // —^Œø‰Ê‚ğíœ
-void DataList_Battle::RemoveEffect(const std::shared_ptr<Action_Effect_Base>& effect, int AreaNo)
+void DataList_Battle::RemoveEffect(const std::shared_ptr<Action_Effect_Base>& effect)
 {
 	// ˆø”
 	// effect	<- íœ‚·‚é—^Œø‰Ê
-	// AreaNo	<- —^Œø‰Ê‚ğíœ‚·‚éƒoƒgƒ‹ƒGƒŠƒA
 
-	this->ActionEffectList[AreaNo].erase(std::remove(ActionEffectList[AreaNo].begin(), ActionEffectList[AreaNo].end(), effect), ActionEffectList[AreaNo].end());
+	this->ActionEffectList.erase(std::remove(ActionEffectList.begin(), ActionEffectList.end(), effect), ActionEffectList.end());
 }

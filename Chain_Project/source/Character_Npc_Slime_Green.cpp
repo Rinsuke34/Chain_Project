@@ -43,10 +43,9 @@ void Character_Slime_Green::Action()
 				addEffect->Target_Position	= i;							// 効果対象の立ち位置:確認した敵キャラクターの位置
 				addEffect->DamageAmount		= 5;							// ダメージ量
 				addEffect->EffectUser		= shared_from_this();			// 効果の使用者:自分自身
-				addEffect->Setting_Position	= this->BasePos;				// 設定座標:自分の座標
-				addEffect->Priority			= 50;							// 標準
+				addEffect->Priority			= 0;							// 優先順位：最遅
 				addEffect->EffectCard		= nullptr;						// 効果を使用するカード:無し
-				this->pDataList_Battle->AddEffect(addEffect, BattleAreaNo);
+				this->pDataList_Battle->AddEffect(addEffect);
 				break;
 			}
 		}

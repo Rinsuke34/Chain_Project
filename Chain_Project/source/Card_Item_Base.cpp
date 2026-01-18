@@ -33,7 +33,7 @@ void Card_Item_Base::BattleAction()
 	pItemEffect->EffectCard			= std::dynamic_pointer_cast<Card_Item_Base>(shared_from_this());
 	pItemEffect->Priority			= 40;							// ちょっと低め
 	pItemEffect->EffectCard			= shared_from_this();			// 効果を使用するカード:このカード
-	this->pDataList_Battle->AddEffect(pItemEffect, GetMyAreaNo());
+	this->pDataList_Battle->AddEffect(pItemEffect);
 
 	/* ロストフラグを有効化 */
 	this->bLostFlag = true;

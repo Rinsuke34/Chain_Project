@@ -84,7 +84,7 @@ void Card_Base::BattleAction()
 							addEffect->EffectUser		= this->pPlayer;						// 効果の使用者:プレイヤーキャラクター
 							addEffect->Priority			= 5;									// 敵よりは高め
 							addEffect->EffectCard		= shared_from_this();					// 効果を使用するカード:このカード
-							this->pDataList_Battle->AddEffect(addEffect, GetMyAreaNo());
+							this->pDataList_Battle->AddEffect(addEffect);
 							break;
 						}
 					}
@@ -114,7 +114,7 @@ void Card_Base::BattleAction()
 							addEffect->EffectUser		= this->pPlayer;						// 効果の使用者:プレイヤーキャラクター
 							addEffect->Priority			= 5;									// 敵よりは高め
 							addEffect->EffectCard		= shared_from_this();					// 効果を使用するカード:このカード
-							this->pDataList_Battle->AddEffect(addEffect, GetMyAreaNo());
+							this->pDataList_Battle->AddEffect(addEffect);
 							break;
 						}
 					}
@@ -134,7 +134,7 @@ void Card_Base::BattleAction()
 					addEffect->EffectUser		= this->pPlayer;						// 効果の使用者:プレイヤーキャラクター
 					addEffect->Priority			= 5;									// 敵よりは高め
 					addEffect->EffectCard		= shared_from_this();					// 効果を使用するカード:このカード
-					this->pDataList_Battle->AddEffect(addEffect, GetMyAreaNo());
+					this->pDataList_Battle->AddEffect(addEffect);
 				}
 				break;
 		}
@@ -153,7 +153,7 @@ void Card_Base::BattleAction()
 		addEffect->AllRange			= true;									// 全体付与である
 		addEffect->Priority			= 100;									// そうとう優先度高め
 		addEffect->EffectCard		= shared_from_this();					// 効果を使用するカード:このカード
-		this->pDataList_Battle->AddEffect(addEffect, GetMyAreaNo());
+		this->pDataList_Battle->AddEffect(addEffect);
 	}
 }
 

@@ -38,7 +38,7 @@ void Card_Item_HealingPotion::BattleAction()
 	addEffect->AllRange							= true;								// 全体に効果を与える
 	addEffect->Priority							= 30;								// 低め
 	addEffect->EffectCard						= shared_from_this();				// 効果を使用するカード:このカード
-	this->pDataList_Battle->AddEffect(addEffect, GetMyAreaNo());
+	this->pDataList_Battle->AddEffect(addEffect);
 
 	/* ロストフラグを有効化 */
 	this->bLostFlag = true;

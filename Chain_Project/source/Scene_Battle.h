@@ -88,15 +88,15 @@ class Scene_Battle : public Scene_Base
 		// UIのハンドル
 		std::shared_ptr<Scene_UI_Button> UI_DecisionButton;	// 決定ボタン
 		// その他
-		void CardPosition_HandSetSettingPosting();		// 手札のカード設定座標の設定
-		void Action_Effect_SetSettingPositing();		// 行動内容の設定座標の設定
-		void Card_Update();								// カードの更新処理
-		void Action_Effect_Update();					// 行動内容の更新処理
-		void CharacterPosition_Setup();					// キャラクターの座標の設定
-		std::shared_ptr<Card_Base>	GetMouseInCard();	// マウスが重なっているカードを取得
-		int	 GetMouseInBattleArea();					// マウスが重なっているバトルエリアを取得
-		void Character_Death_Check();					// キャラクターが死亡しているか確認
-		void CheckLostCard();							// ロスト対象のカードを確認し、ロストカード一覧に入れる
-		void ResetChain();								// チェイン数をリセット
-		void CheckGameEnd();							// 戦闘が終了しているかの確認
+		void CardPosition_HandSetSettingPosting();							// 手札のカード設定座標の設定
+		void Action_Effect_SetSettingPositing();							// 行動内容の設定座標の設定
+		void Card_Update();													// カードの更新処理
+		void CharacterPosition_Setup();										// キャラクターの座標の設定
+		std::shared_ptr<Card_Base>	GetMouseInCard();						// マウスが重なっているカードを取得
+		int	 GetMouseInBattleArea();										// マウスが重なっているバトルエリアを取得
+		void Character_Death_Check();										// キャラクターが死亡しているか確認
+		void CheckLostCard();												// ロスト対象のカードを確認し、ロストカード一覧に入れる
+		void ResetChain();													// チェイン数をリセット
+		void CheckGameEnd();												// 戦闘が終了しているかの確認
+		void Trash_UseCard(std::shared_ptr<Action_Effect_Base> pEffect);	// 効果を使用したカードのトラッシュ処理
 };
