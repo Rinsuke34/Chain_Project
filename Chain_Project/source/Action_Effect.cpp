@@ -87,7 +87,24 @@ void Action_Effect_Attack::ExecuteEffect()
 		{
 			// 単体攻撃である場合
 			/* 対象の立ち位置の敵を取得 */
-			std::shared_ptr<Character_Base> TargetEnemyCharacter = this->pDataList_Battle->GetEnemyCharacter(this->Target_Position);
+			std::shared_ptr<Character_Base> TargetEnemyCharacter = nullptr;
+
+			/* 対象の敵が存在していて、HPが残っているか確認 */
+			for(int i = 0; i < DataList_Battle::POSITION_MAX; i++)
+			{
+				/* ターゲットの設定 */
+				this->Target_Position = (this->Target_Position + i) % DataList_Battle::POSITION_MAX;
+
+				/* ターゲットの敵を取得 */
+				TargetEnemyCharacter = this->pDataList_Battle->GetEnemyCharacter(this->Target_Position);
+
+				/* ターゲットの敵が存在していて、HPが1以上であるならループを抜ける */
+				if (TargetEnemyCharacter != nullptr && TargetEnemyCharacter->GetHP_Now() > 0)
+				{
+					break;
+				}
+			}
+
 			if (TargetEnemyCharacter != nullptr)
 			{
 				// 対象の敵キャラクターが存在する場合
@@ -155,7 +172,24 @@ void Action_Effect_Attack::ExecuteEffect()
 		{
 			// 単体攻撃である場合
 			/* 対象の立ち位置の仲間を取得 */
-			std::shared_ptr<Character_Base> TargetFriendCharacter = this->pDataList_Battle->GetFriendCharacter(this->Target_Position);
+			std::shared_ptr<Character_Base> TargetFriendCharacter = nullptr;
+
+			/* 対象の仲間が存在していて、HPが残っているか確認 */
+			for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
+			{
+				/* ターゲットの設定 */
+				this->Target_Position = (this->Target_Position + i) % DataList_Battle::POSITION_MAX;
+
+				/* ターゲットの仲間を取得 */
+				TargetFriendCharacter = this->pDataList_Battle->GetFriendCharacter(this->Target_Position);
+
+				/* ターゲットの仲間キャラクターが存在していて、HPが1以上であるならループを抜ける */
+				if (TargetFriendCharacter != nullptr && TargetFriendCharacter->GetHP_Now() > 0)
+				{
+					break;
+				}
+			}
+
 			if (TargetFriendCharacter != nullptr)
 			{
 				// 対象の仲間キャラクターが存在する場合
