@@ -29,7 +29,7 @@ class Scene_UI_Button : public Scene_Base
 		static const int FRAME_THICKNESS				= 16;	// 枠の太さ
 		static const int EMPHASIS_ANIMATION_THICKNESS	= 32;	// 強調表示アニメーションの太さ
 		static const int EMPHASIS_ANIMATION_MAX			= 5;	// 強調表示アニメーションの最大数
-		static const int EMPHASIS_ANIMATION_SPEED		= 10;	// 強調表示アニメーションの速度(変更までのフレーム数)
+		static const int EMPHASIS_ANIMATION_SPEED		= 5;	// 強調表示アニメーションの速度(変更までのフレーム数)
 
 	private:
 		/* 変数 */
