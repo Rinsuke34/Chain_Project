@@ -36,7 +36,7 @@ void Card_Item_HealingPotion::BattleAction()
 	addEffect->HealAmount						= 5 + this->iNowChainCount * 5;		// 回復量:5 + (チェイン数 * 5)
 	addEffect->EffectUser						= this->pPlayer;					// 効果の使用者:プレイヤーキャラクター
 	addEffect->AllRange							= true;								// 全体に効果を与える
-	addEffect->Priority							= 30;								// 低め
+	addEffect->Priority							= 100 - this->GetMyAreaNo();		// 100-設定されたエリア番号を優先順位に設定
 	addEffect->EffectCard						= shared_from_this();				// 効果を使用するカード:このカード
 	this->pDataList_Battle->AddEffect(addEffect);
 

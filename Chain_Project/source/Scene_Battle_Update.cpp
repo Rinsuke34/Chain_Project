@@ -365,11 +365,20 @@ void Scene_Battle::Update_BattleAction()
 	std::shared_ptr<Action_Effect_Base> pEffect = EffectList.front();
 	this->pDataList_Battle->RemoveEffect(pEffect);
 
+	/* 実行者が生存しているか確認 */
+	std::shared_ptr<Character_Base>	EffectUser = pEffect->EffectUser;
+	if (EffectUser != nullptr)
+	{
+		// 生存している場合
+		/* その行動内容を実行者の行動内容から削除 */
+		EffectUser->Delete_Action_Effect(pEffect);
+
+		/* 効果の内容に応じた処理を実行 */
+		pEffect->ExecuteEffect();
+	}
+
 	/* 使用した効果に紐づいたカードをトラッシュ */
 	Trash_UseCard(pEffect);
-
-	/* 効果の内容に応じた処理を実行 */
-	pEffect->ExecuteEffect();
 
 	/* キャラクターが死亡しているか確認 */
 	Character_Death_Check();
@@ -649,6 +658,12 @@ void Scene_Battle::Character_Death_Check()
 				// 死亡している場合
 				/* nullptrに設定する */
 				this->pDataList_Battle->SetFriendCharacter(i, nullptr);
+
+				/* 該当のキャラクターに紐づいた行動内容を削除する */
+				for (auto& Effect : FriendCharacter->GetActionEffectList())
+				{
+					this->pDataList_Battle->RemoveEffect(Effect);
+				}
 			}
 		}
 	}
@@ -664,6 +679,12 @@ void Scene_Battle::Character_Death_Check()
 				// 死亡している場合
 				/* nullptrに設定する */
 				this->pDataList_Battle->SetEnemyCharacter(i, nullptr);
+
+				/* 該当のキャラクターに紐づいた行動内容を削除する */
+				for (auto& Effect : EnemyCharacter->GetActionEffectList())
+				{
+					this->pDataList_Battle->RemoveEffect(Effect);
+				}
 			}
 		}
 	}

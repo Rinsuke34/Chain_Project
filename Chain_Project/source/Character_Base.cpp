@@ -10,6 +10,7 @@
 #include "DataList_Image.h"
 #include "DataList_Battle.h"
 #include "Buff_Debuff.h"
+#include "Action_Effect.h"
 
 // コンストラクタ
 Character_Base::Character_Base()
@@ -23,13 +24,23 @@ Character_Base::Character_Base()
 	this->Camp				= -1;			// 陣営
 	this->SizeX				= -1;			// キャラクターの幅
 	this->SizeY				= -1;			// キャラクターの高さ
-	this->ActionEffectSizeX	= -1;			// 行動内容描写部分でのキャラクターの幅
-	this->ActionEffectSizeY	= -1;			// 行動内容描写部分でのキャラクターの高さ
 	this->CorrectionPos		= { 0, 0 };		// 補正座標
 	this->AddBuffReaction	= 0;			// バフ付与時のリアクション
 	this->DamageReaction	= 0;			// 被ダメージ時のリアクション
 	this->AttackReaction	= 0;			// 攻撃時のリアクション
-	this->EyeHeight			= 0;			// 目線の高さ(行動内容アイコンの描写位置)
+
+	/* 行動内容用フレーム画像取得 */
+	// 画像管理データリストを取得
+	std::shared_ptr<DataList_Image> pDataList_Image = std::dynamic_pointer_cast<DataList_Image>(gpDataListServer->GetDataList("DataList_Image"));
+	// 角
+	std::string Image_Name = "UI/Button/Button_Frame_Corner";
+	this->Image_Frame_Corner = pDataList_Image->iGetImageHandle(Image_Name);
+	// 線
+	Image_Name = "UI/Button/Button_Frame_Line";
+	this->Image_Frame_Line = pDataList_Image->iGetImageHandle(Image_Name);
+	// 内側
+	Image_Name = "UI/Button/Button_Frame_Inside";
+	this->Image_Frame_Inside = pDataList_Image->iGetImageHandle(Image_Name);
 
 	/* データリスト取得 */
 	// バトル用データリスト
@@ -46,13 +57,6 @@ void Character_Base::Draw()
 	if (this->SizeX == -1 || this->SizeY == -1)
 	{
 		GetGraphSize(*(this->Image), &this->SizeX, &this->SizeY);
-	}
-
-	/* 行動内容描写部分用のサイズが設定されていないなら画像サイズを算出 */
-	if(this->ActionEffectSizeX == -1 || this->ActionEffectSizeY == -1)
-	{
-		this->ActionEffectSizeX = this->SizeX;
-		this->ActionEffectSizeY = this->SizeY;
 	}
 
 	/* キャラクター画像の描画 */
@@ -421,4 +425,142 @@ void Character_Base::Correction_Reaction()
 		this->CorrectionPos.iX += (this->AttackReaction * 2) * iDirection;
 		this->AttackReaction--;
 	}
+}
+
+// 行動内容の描写
+void Character_Base::Draw_Action_Effect()
+{
+	/* 所持している行動内容一覧を描写 */
+	int Index = 0;
+	for (auto& ActionEffect : this->ActionEffectList)
+	{
+		/* 枠を描写 */
+		// 元のアイコン描画位置・サイズは変更しない
+		const int iconX = this->BasePos.iX + ACTION_X;
+		const int iconY = this->BasePos.iY + ACTION_Y + (Index * ACTION_INTERVAL);
+		const int iconW = ACTION_WIDE;
+		const int iconH = ACTION_HEIGHT;
+
+		// 枠だけ小さくするためのパディング（ピクセル単位）
+		const int framePadding = 24;
+		const int frameW = iconW - framePadding;
+		const int frameH = iconH - framePadding;
+
+		// 枠の中心座標（アイコン中央と揃える）
+		const int centerX = iconX + (iconW / 2);
+		const int centerY = iconY + (iconH / 2);
+
+		/* 枠を描写（Scene_UI_Button に合わせた方式） */
+		// 角(左上)
+		DrawModiGraph(
+			centerX - frameW / 2 - FRAME_THICKNESS,	centerY - frameH / 2 - FRAME_THICKNESS,
+			centerX - frameW / 2,					centerY - frameH / 2 - FRAME_THICKNESS,
+			centerX - frameW / 2,					centerY - frameH / 2,
+			centerX - frameW / 2 - FRAME_THICKNESS,	centerY - frameH / 2,
+			*(this->Image_Frame_Corner),
+			TRUE
+		);
+		// 角(右上)
+		DrawModiGraph(
+			centerX + frameW / 2 + FRAME_THICKNESS,	centerY - frameH / 2 - FRAME_THICKNESS,
+			centerX + frameW / 2 + FRAME_THICKNESS,	centerY - frameH / 2,
+			centerX + frameW / 2,					centerY - frameH / 2,
+			centerX + frameW / 2,					centerY - frameH / 2 - FRAME_THICKNESS,
+			*(this->Image_Frame_Corner),
+			TRUE
+		);
+		// 角(右下)
+		DrawModiGraph(
+			centerX + frameW / 2 + FRAME_THICKNESS,	centerY + frameH / 2 + FRAME_THICKNESS,
+			centerX + frameW / 2,					centerY + frameH / 2 + FRAME_THICKNESS,
+			centerX + frameW / 2,					centerY + frameH / 2,
+			centerX + frameW / 2 + FRAME_THICKNESS,	centerY + frameH / 2,
+			*(this->Image_Frame_Corner),
+			TRUE
+		);
+		// 角(左下)
+		DrawModiGraph(
+			centerX - frameW / 2 - FRAME_THICKNESS,	centerY + frameH / 2 + FRAME_THICKNESS,
+			centerX - frameW / 2 - FRAME_THICKNESS,	centerY + frameH / 2,
+			centerX - frameW / 2,					centerY + frameH / 2,
+			centerX - frameW / 2,					centerY + frameH / 2 + FRAME_THICKNESS,
+			*(this->Image_Frame_Corner),
+			TRUE
+		);
+		// 線(上)
+		DrawModiGraph(
+			centerX - frameW / 2, centerY - frameH / 2 - FRAME_THICKNESS,
+			centerX + frameW / 2, centerY - frameH / 2 - FRAME_THICKNESS,
+			centerX + frameW / 2, centerY - frameH / 2,
+			centerX - frameW / 2, centerY - frameH / 2,
+			*(this->Image_Frame_Line),
+			TRUE
+		);
+		// 線(右)
+		DrawModiGraph(
+			centerX + frameW / 2 + FRAME_THICKNESS, centerY + frameH / 2,
+			centerX + frameW / 2 + FRAME_THICKNESS,	centerY - frameH / 2,
+			centerX + frameW / 2,					centerY - frameH / 2,
+			centerX + frameW / 2,					centerY + frameH / 2,
+			*(this->Image_Frame_Line),
+			TRUE
+		);
+		// 線(下)
+		DrawModiGraph(
+			centerX + frameW / 2, centerY + frameH / 2 + FRAME_THICKNESS,
+			centerX - frameW / 2, centerY + frameH / 2 + FRAME_THICKNESS,
+			centerX - frameW / 2, centerY + frameH / 2,
+			centerX + frameW / 2, centerY + frameH / 2,
+			*(this->Image_Frame_Line),
+			TRUE
+		);
+		// 線(左)
+		DrawModiGraph(
+			centerX - frameW / 2 - FRAME_THICKNESS, centerY - frameH / 2,
+			centerX - frameW / 2 - FRAME_THICKNESS, centerY + frameH / 2,
+			centerX - frameW / 2,					centerY + frameH / 2,
+			centerX - frameW / 2,					centerY - frameH / 2,
+			*(this->Image_Frame_Line),
+			TRUE
+		);
+		// 内側
+		DrawModiGraph(
+			centerX - frameW / 2, centerY - frameH / 2,
+			centerX + frameW / 2, centerY - frameH / 2,
+			centerX + frameW / 2, centerY + frameH / 2,
+			centerX - frameW / 2, centerY + frameH / 2,
+			*(this->Image_Frame_Inside),
+			TRUE
+		);
+
+		/* 行動内容の描写 */
+		DrawModiGraph(
+			this->BasePos.iX + ACTION_X,				this->BasePos.iY + ACTION_Y + (Index * ACTION_INTERVAL),
+			this->BasePos.iX + ACTION_X + ACTION_WIDE,	this->BasePos.iY + ACTION_Y + (Index * ACTION_INTERVAL),
+			this->BasePos.iX + ACTION_X + ACTION_WIDE,	this->BasePos.iY + ACTION_Y + ACTION_HEIGHT + (Index * ACTION_INTERVAL),
+			this->BasePos.iX + ACTION_X,				this->BasePos.iY + ACTION_Y + ACTION_HEIGHT + (Index * ACTION_INTERVAL),
+			*(ActionEffect->GetImage()),
+			TRUE
+		);
+	}
+}
+
+// 該当の行動内容の削除
+void Character_Base::Delete_Action_Effect(std::shared_ptr<Action_Effect_Base> ActionEffect)
+{
+	// 引数
+	// ActionEffect : 削除する行動内容
+
+	/* 指定の行動内容を削除 */
+	this->ActionEffectList.erase(
+		std::remove_if(
+			this->ActionEffectList.begin(),
+			this->ActionEffectList.end(),
+			[&](const std::shared_ptr<Action_Effect_Base>& Effect)
+			{
+				return Effect == ActionEffect;
+			}
+		),
+		this->ActionEffectList.end()
+	);
 }

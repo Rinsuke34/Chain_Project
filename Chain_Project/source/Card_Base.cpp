@@ -82,7 +82,7 @@ void Card_Base::BattleAction()
 							addEffect->DamageAmount		= this->Strength + this->Strength_Buff;	// ダメージ量:カードの攻撃力
 							addEffect->AllRange			= false;								// 全体攻撃でない
 							addEffect->EffectUser		= this->pPlayer;						// 効果の使用者:プレイヤーキャラクター
-							addEffect->Priority			= 5;									// 敵よりは高め
+							addEffect->Priority			= 100 - this->GetMyAreaNo();			// 100-設定されたエリア番号を優先順位に設定
 							addEffect->EffectCard		= shared_from_this();					// 効果を使用するカード:このカード
 							this->pDataList_Battle->AddEffect(addEffect);
 							break;
@@ -112,7 +112,7 @@ void Card_Base::BattleAction()
 							addEffect->DamageAmount		= this->Strength + this->Strength_Buff;	// ダメージ量:カードの攻撃力
 							addEffect->AllRange			= false;								// 全体攻撃でない
 							addEffect->EffectUser		= this->pPlayer;						// 効果の使用者:プレイヤーキャラクター
-							addEffect->Priority			= 5;									// 敵よりは高め
+							addEffect->Priority			= 100 - this->GetMyAreaNo();			// 100-設定されたエリア番号を優先順位に設定
 							addEffect->EffectCard		= shared_from_this();					// 効果を使用するカード:このカード
 							this->pDataList_Battle->AddEffect(addEffect);
 							break;
@@ -132,7 +132,7 @@ void Card_Base::BattleAction()
 					addEffect->DamageAmount		= this->Strength + this->Strength_Buff;	// ダメージ量:カードの攻撃力
 					addEffect->AllRange			= true;									// 全体攻撃である
 					addEffect->EffectUser		= this->pPlayer;						// 効果の使用者:プレイヤーキャラクター
-					addEffect->Priority			= 5;									// 敵よりは高め
+					addEffect->Priority			= 100 - this->GetMyAreaNo();			// 100-設定されたエリア番号を優先順位に設定
 					addEffect->EffectCard		= shared_from_this();					// 効果を使用するカード:このカード
 					this->pDataList_Battle->AddEffect(addEffect);
 				}
@@ -151,7 +151,7 @@ void Card_Base::BattleAction()
 		addEffect->ShieldAmount		= this->Diffence + this->Diffence_Buff;	// シールド付与量:カードの防御力
 		addEffect->EffectUser		= this->pPlayer;						// 効果の使用者:プレイヤーキャラクター
 		addEffect->AllRange			= true;									// 全体付与である
-		addEffect->Priority			= 100;									// そうとう優先度高め
+		addEffect->Priority			= 100 - this->GetMyAreaNo();			// 100-設定されたエリア番号を優先順位に設定
 		addEffect->EffectCard		= shared_from_this();					// 効果を使用するカード:このカード
 		this->pDataList_Battle->AddEffect(addEffect);
 	}

@@ -81,6 +81,7 @@ class Scene_Battle : public Scene_Base
 		// 描写処理
 		void Draw_BackGround();				// 背景描写
 		void Draw_Character();				// キャラクター描写
+		void Draw_Character_Move();			// キャラクターの行動内容描写
 		void Draw_Chain();					// 鎖(チェイン時)描写
 		void Draw_BattleArea();				// バトルエリア描写
 		void Draw_HandCard();				// 手札の描写

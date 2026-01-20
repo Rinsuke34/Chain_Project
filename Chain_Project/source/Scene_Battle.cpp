@@ -207,6 +207,9 @@ void Scene_Battle::Draw()
 	/* キャラクター描写 */
 	Draw_Character();
 
+	/* キャラクターの行動内容描写 */
+	Draw_Character_Move();
+
 	/* 鎖(チェイン時)描写 */
 	Draw_Chain();
 

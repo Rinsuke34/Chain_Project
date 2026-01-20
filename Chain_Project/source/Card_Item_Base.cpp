@@ -31,12 +31,9 @@ void Card_Item_Base::BattleAction()
 	pItemEffect->EffectUser			= this->pPlayer;				// 効果の使用者:プレイヤーキャラクター
 	pItemEffect->AllRange			= false;						// 全体効果でない
 	pItemEffect->EffectCard			= std::dynamic_pointer_cast<Card_Item_Base>(shared_from_this());
-	pItemEffect->Priority			= 40;							// ちょっと低め
+	pItemEffect->Priority			= 100 - this->GetMyAreaNo();	// 100-設定されたエリア番号を優先順位に設定
 	pItemEffect->EffectCard			= shared_from_this();			// 効果を使用するカード:このカード
 	this->pDataList_Battle->AddEffect(pItemEffect);
-
-	/* ロストフラグを有効化 */
-	this->bLostFlag = true;
 }
 
 // 背景を描写

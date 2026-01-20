@@ -30,7 +30,7 @@ void Card_Spell_Base::BattleAction()
 	pSpellEffect->EffectUser		= this->pPlayer;					// 効果の使用者:プレイヤーキャラクター
 	pSpellEffect->AllRange			= false;							// 全体効果でない
 	pSpellEffect->EffectCard		= std::dynamic_pointer_cast<Card_Spell_Base>(shared_from_this());
-	pSpellEffect->Priority			= 40;								// ちょっと低め
+	pSpellEffect->Priority			= 100 - this->GetMyAreaNo();		// 100-設定されたエリア番号を優先順位に設定
 	pSpellEffect->EffectCard		= shared_from_this();				// 効果を使用するカード:このカード
 	this->pDataList_Battle->AddEffect(pSpellEffect);
 }

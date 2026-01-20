@@ -16,11 +16,12 @@ class DataList_Battle;
 class Action_Effect_Base
 {
 	public:
-		Action_Effect_Base();			// コンストラクタ
-		virtual ~Action_Effect_Base();	// デストラクタ
+		Action_Effect_Base();				// コンストラクタ
+		virtual ~Action_Effect_Base() {};	// デストラクタ
 
 		/* 関数 */
-		virtual void ExecuteEffect() {};	// 効果実行
+		virtual void ExecuteEffect()	{};	// 効果実行
+		virtual void Setup_Image();			// 画像設定
 
 		/* 変数 */
 		int									Target_Camp;		// 効果対象の陣営
@@ -29,11 +30,22 @@ class Action_Effect_Base
 		bool								AllRange;			// 全体に効果を与えるか
 		int									Priority;			// 優先順位(高いほど先に実行)
 		std::shared_ptr<Card_Base>			EffectCard;			// 効果を使用するカード
+		int									IconType;			// アイコンのタイプ
+
+		/* 定数 */
+		static const int ICON_TYPE_ATTACK	= 0;	// アイコンタイプ:攻撃
+		static const int ICON_TYPE_DEFENCE	= 1;	// アイコンタイプ:防御
+		static const int ICON_TYPE_HEAL		= 2;	// アイコンタイプ:回復
+		static const int ICON_TYPE_EXTRA	= 3;	// アイコンタイプ:特殊効果
+
+		/* ゲッター */
+		std::shared_ptr<int> GetImage()		{ return Image; }	// 画像取得
 
 	protected:
 
 		/* 変数 */
 		std::shared_ptr<DataList_Battle>	pDataList_Battle;	// 戦闘用データリスト
+		std::shared_ptr<int>				Image;				// 画像
 };
 
 // 攻撃

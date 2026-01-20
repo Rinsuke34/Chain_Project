@@ -13,6 +13,7 @@
 #include "DataList_Battle.h"
 #include "Card_Base.h"
 #include "Character_Base.h"
+#include "Character_Player.h"
 
 // 背景描写
 void Scene_Battle::Draw_BackGround()
@@ -84,6 +85,36 @@ void Scene_Battle::Draw_Character()
 		if (EnemyCharacter != nullptr)
 		{
 			EnemyCharacter->Draw();
+		}
+	}
+}
+
+// キャラクターの行動内容描写
+void Scene_Battle::Draw_Character_Move()
+{
+	/* 仲間キャラクターの行動内容描写 */
+	for (int i = 0; i < 3; i++)
+	{
+		auto FriendCharacter = this->pDataList_Battle->GetFriendCharacter(i);
+		if (FriendCharacter != nullptr)
+		{
+			/* プレイヤーであるなら対象外とする */
+			if (std::dynamic_pointer_cast<Character_Player>(FriendCharacter) != nullptr)
+			{
+				continue;
+			}
+
+			FriendCharacter->Draw_Action_Effect();
+		}
+	}
+
+	/* 敵キャラクターの行動内容描写 */
+	for (int i = 0; i < 3; i++)
+	{
+		auto EnemyCharacter = this->pDataList_Battle->GetEnemyCharacter(i);
+		if (EnemyCharacter != nullptr)
+		{
+			EnemyCharacter->Draw_Action_Effect();
 		}
 	}
 }

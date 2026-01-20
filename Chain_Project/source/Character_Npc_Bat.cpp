@@ -15,9 +15,6 @@ Character_Bat::Character_Bat() : Character_Base()
 	this->Camp		= Character_Base::CAMP_ENEMY;	// 陣営:敵陣営
 	this->SizeX		= 150;			// キャラクターの幅
 	this->SizeY		= 150;			// キャラクターの高さ
-	this->ActionEffectSizeX = 75;	// 行動内容描写部分でのキャラクターの幅
-	this->ActionEffectSizeY = 75;	// 行動内容描写部分でのキャラクターの高さ
-	this->EyeHeight = -15;			// 目線の高さ(行動内容アイコンの描写位置)
 	SetUpImage("Character_Ilust/Npc/Bat");
 }
 
@@ -43,6 +40,7 @@ void Character_Bat::Action()
 				addEffect->Priority			= 0;							// 優先順位：最遅
 				addEffect->EffectCard		= nullptr;						// 効果を使用するカード:無し
 				this->pDataList_Battle->AddEffect(addEffect);
+				this->ActionEffectList.push_back(addEffect);
 				break;
 			}
 		}

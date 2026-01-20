@@ -22,16 +22,46 @@ Action_Effect_Base::Action_Effect_Base()
 	this->AllRange			= false;	// 全体に効果を与えるか
 	this->Priority			= 0;		// 優先順位(高いほど先に実行)
 	this->EffectCard		= nullptr;	// 効果を使用するカード
+	this->IconType			= -1;		// アイコンのタイプ
 
 	/* データリスト取得 */
 	// バトル用データリスト
 	this->pDataList_Battle = std::dynamic_pointer_cast<DataList_Battle>(gpDataListServer->GetDataList("DataList_Battle"));
 }
 
-// デストラクタ
-Action_Effect_Base::~Action_Effect_Base()
+// 画像設定
+void Action_Effect_Base::Setup_Image()
 {
+	/* 画像名称取得 */
+	std::string ImageName;
+	switch (IconType)
+	{
+		// アイコンタイプ:攻撃
+		case ICON_TYPE_ATTACK:
+			ImageName = "Common_Icon/Icon_Attack";
+			break;
 
+		// アイコンタイプ:防御
+		case ICON_TYPE_DEFENCE:
+			ImageName = "Common_Icon/Icon_Defence";
+			break;
+
+		// アイコンタイプ:回復
+		case ICON_TYPE_HEAL:
+			ImageName = "Common_Icon/Icon_Heal";
+			break;
+
+		// アイコンタイプ:特殊効果
+		case ICON_TYPE_EXTRA:
+			ImageName = "Common_Icon/Icon_Extra";
+			break;
+	}
+
+	/* 画像管理データリストを取得 */
+	std::shared_ptr<DataList_Image> pDataList_Image = std::dynamic_pointer_cast<DataList_Image>(gpDataListServer->GetDataList("DataList_Image"));
+
+	/* 指定の画像を読み込む */
+	this->Image = pDataList_Image->iGetImageHandle(ImageName);
 }
 
 /* 攻撃 */
@@ -39,7 +69,11 @@ Action_Effect_Base::~Action_Effect_Base()
 Action_Effect_Attack::Action_Effect_Attack()
 {
 	/* 初期化 */
-	this->DamageAmount	= 0;	// ダメージ量
+	this->DamageAmount	= 0;				// ダメージ量
+	this->IconType		= ICON_TYPE_ATTACK;	// アイコンタイプ:攻撃
+
+	/* 画像設定 */
+	Setup_Image();
 }
 
 // 効果実行
@@ -223,7 +257,11 @@ void Action_Effect_Attack::ExecuteEffect()
 Action_Effect_Defence::Action_Effect_Defence()
 {
 	/* 初期化 */
-	this->ShieldAmount	= 0;	// シールド量
+	this->ShieldAmount	= 0;					// シールド量
+	this->IconType		= ICON_TYPE_DEFENCE;	// アイコンタイプ:防御
+
+	/* 画像設定 */
+	Setup_Image();
 }
 
 // 効果実行
@@ -373,7 +411,11 @@ void Action_Effect_Defence::ExecuteEffect()
 Action_Effect_Heal::Action_Effect_Heal()
 {
 	/* 初期化 */
-	this->HealAmount	= 0;		// 回復量
+	this->HealAmount	= 0;				// 回復量
+	this->IconType		= ICON_TYPE_HEAL;	// アイコンタイプ:回復
+
+	/* 画像設定 */
+	Setup_Image();
 }
 
 // 効果実行
@@ -522,7 +564,11 @@ void Action_Effect_Heal::ExecuteEffect()
 Action_Effect_Extra::Action_Effect_Extra()
 {
 	/* 初期化 */
-	this->EffectCard	= nullptr;	// 特殊効果を使用するカード
+	this->EffectCard	= nullptr;			// 特殊効果を使用するカード
+	this->IconType		= ICON_TYPE_EXTRA;	// アイコンタイプ:特殊効果
+
+	/* 画像設定 */
+	Setup_Image();
 }
 
 // 効果実行

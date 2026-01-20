@@ -11,6 +11,7 @@
 // 前方宣言
 class DataList_Battle;
 class Character_Buff_Debuff_Base;
+class Action_Effect_Base;
 
 // キャラクターのベースクラス
 class Character_Base : public std::enable_shared_from_this<Character_Base>
@@ -30,21 +31,21 @@ class Character_Base : public std::enable_shared_from_this<Character_Base>
 		virtual void ShieldReset_EndTurn();		// シールドリセット(ターン終了時)
 		virtual void Heal(int Heal);			// 回復処理
 		virtual void Update_Buff_Debuff();		// バフ、デバフの更新
-		virtual void Add_Buff_Debuff(const std::shared_ptr<Character_Buff_Debuff_Base>& Buff_Debuff);	// バフ、デバフの追加
+		virtual void Add_Buff_Debuff(const std::shared_ptr<Character_Buff_Debuff_Base>& Buff_Debuff);							// バフ、デバフの追加
 		virtual std::vector<std::shared_ptr<Character_Buff_Debuff_Base>> CheckGet_Buff_Debuff(std::string Buff_Debuff_Name);	// 対象の名称のバフ、デバフを取得
+		virtual void Draw_Action_Effect();																						// 行動内容の描写
+		virtual void Delete_Action_Effect(std::shared_ptr<Action_Effect_Base> ActionEffect);									// 該当の行動内容の削除
 
 		/* ゲッター */
-		int 					GetHP_Max()				{ return iHP_Max; }				// 体力(最大値)の取得
-		int 					GetHP_Now()				{ return iHP_Now; }				// 体力(現在値)の取得
-		int 					GetShield_Now()			{ return iShield_Now; }			// シールド(現在値)の取得
-		Struct_2D::POSITION		GetBasePos()			{ return BasePos; }				// 基準座標の取得
-		int						GetCamp()				{ return Camp; }				// 陣営の取得
-		std::shared_ptr<int>	GetImage()				{ return Image; }				// 画像取得
-		int						GetSizeX()				{ return SizeX; }				// キャラクターの幅
-		int						GetSizeY()				{ return SizeY; }				// キャラクターの高さ
-		int						GetActionEffectSizeX()	{ return ActionEffectSizeX; }	// 行動内容描写部分でのキャラクターの幅
-		int						GetActionEffectSizeY()	{ return ActionEffectSizeY; }	// 行動内容描写部分でのキャラクターの高さ
-		int 					GetEyeHeight()			{ return EyeHeight; }			// 目線の高さ(行動内容アイコンの描写位置)
+		int 												GetHP_Max()				{ return iHP_Max; }				// 体力(最大値)の取得
+		int 												GetHP_Now()				{ return iHP_Now; }				// 体力(現在値)の取得
+		int 												GetShield_Now()			{ return iShield_Now; }			// シールド(現在値)の取得
+		Struct_2D::POSITION									GetBasePos()			{ return BasePos; }				// 基準座標の取得
+		int													GetCamp()				{ return Camp; }				// 陣営の取得
+		std::shared_ptr<int>								GetImage()				{ return Image; }				// 画像取得
+		int													GetSizeX()				{ return SizeX; }				// キャラクターの幅
+		int													GetSizeY()				{ return SizeY; }				// キャラクターの高さ
+		std::vector<std::shared_ptr<Action_Effect_Base>>	GetActionEffectList()	{ return ActionEffectList; }	// 行動内容一覧の取得
 
 		/* セッター */
 		void	SetHp_Max(int MaxHP)					{ this->iHP_Max			= MaxHP; }		// 体力(最大値)の設定
@@ -52,7 +53,6 @@ class Character_Base : public std::enable_shared_from_this<Character_Base>
 		void	SetShield_Now(int NowShield)			{ this->iShield_Now		= NowShield; }	// シールド(現在値)の設定
 		void	SetBasePos(Struct_2D::POSITION Pos)		{ this->BasePos			= Pos; }		// 基準座標の設定
 		void	SetCamp(int camp)						{ this->Camp			= camp; }		// 陣営の設定
-		void	SetEyeHeight(int height)				{ this->EyeHeight		= height; }		// 目線の高さ(行動内容アイコンの描写位置)の設定
 
 		/* 定数 */
 		// 描写系
@@ -62,6 +62,12 @@ class Character_Base : public std::enable_shared_from_this<Character_Base>
 		static const int	HPBAR_FRAME_WIDE	= 2;	// HPバーのフレームの幅
 		static const int	SHIELDBAR_HEIGHT	= 16;	// シールドバーの高さ
 		static const int	SHIELDBAR_UPPER		= 17;	// シールドバーの上端位置補正値
+		static const int	ACTION_WIDE			= 48;	// 行動予告の幅
+		static const int	ACTION_HEIGHT		= 48;	// 行動内容の高さ
+		static const int	ACTION_X			= -96;	// 行動予告のX座標補正値
+		static const int	ACTION_Y			= -128;	// 行動予告のY座標補正値
+		static const int	ACTION_INTERVAL		= 52;	// 行動内容の描写間隔
+		static const int	FRAME_THICKNESS		= 16;	// 枠の太さ
 		// 陣営
 		static const int	CAMP_NONE		= -1;	// 陣営無し
 		static const int	CAMP_FRIEND		= 0;	// 仲間陣営
@@ -75,21 +81,24 @@ class Character_Base : public std::enable_shared_from_this<Character_Base>
 		int						iHP_Max;		// 体力(最大値)
 		int						iHP_Now;		// 体力(現在値)
 		int						iShield_Now;	// シールド(現在値)
-		std::shared_ptr<int>	Image;			// 画像
 		int						Camp;			// 陣営
 		// その他
 		Struct_2D::POSITION		BasePos;			// 基準座標(足元)
 		int						SizeX;				// キャラクターの幅
 		int						SizeY;				// キャラクターの高さ
-		int						ActionEffectSizeX;	// 行動内容描写部分でのキャラクターの幅
-		int						ActionEffectSizeY;	// 行動内容描写部分でのキャラクターの高さ
-		int						EyeHeight;			// 目線の高さ(行動内容アイコンの描写位置)
 		Struct_2D::POSITION		CorrectionPos;		// 補正座標
 		int						AddBuffReaction;	// バフ付与時のリアクション
 		int						DamageReaction;		// 被ダメージ時のリアクション
 		int						AttackReaction;		// 攻撃時のリアクション
 		// バフ、デバフ情報
 		std::vector<std::shared_ptr<Character_Buff_Debuff_Base>> 	Buff_Debuff_List;	// バフ、デバフ一覧
+		// 行動内容
+		std::vector<std::shared_ptr<Action_Effect_Base>>			ActionEffectList;	// 所持している行動内容一覧
+		// 画像
+		std::shared_ptr<int>	Image;				// キャラクター画像
+		std::shared_ptr<int>	Image_Frame_Corner;	// 角
+		std::shared_ptr<int>	Image_Frame_Line;	// 線
+		std::shared_ptr<int>	Image_Frame_Inside;	// 内側
 
 		/* 関数 */
 		void SetUpImage(std::string ImageName);		// 指定の名称の画像を設定する
