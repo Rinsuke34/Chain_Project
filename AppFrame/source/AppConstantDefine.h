@@ -24,3 +24,6 @@ static const int INPUT_DIRECTION	= 2;	// 左右の総数(※マジックナンバー対策で作成
 
 // 初期閾値
 static const unsigned char	INIT_TRIGGER_THRESHOLD	= 10;	// トリガー入力の初期閾値
+
+/* その他 */
+static const float PI	= 3.1415926535f;	// 円周率(パイ)

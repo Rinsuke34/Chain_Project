@@ -12,17 +12,6 @@
 #include "DataList_Image.h"
 #include "DataList_GameResource.h"
 
-// テスト用クラス
-#include "Card_Arms_WoodenShield.h"
-#include "Card_Arms_WoodenSword.h"
-#include "Card_Item_HealingPotion.h"
-#include "Card_Spell_ArmsEnhancement.h"
-#include "Card_Arms_GrassSword.h"
-#include "Card_Arms_PoisonDagger.h"
-#include "Card_Arms_TravelerSword.h"
-#include "Card_Item_PoisonPotion.h"
-#include "Card_Arms_TravelerShield.h"
-
 // コンストラクタ
 Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 0, false, false)
 {
@@ -82,33 +71,29 @@ Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 0, false, false)
 		gpSceneServer->AddSceneReservation(this->UI_DecisionButton);
 	}
 
-	/* テスト用のカード生成処理 */
-	// ※ テスト用なので直打ち
-	// カード設定
-	std::vector<std::shared_ptr<Card_Base>> DeckCardList;
-	DeckCardList.push_back(std::make_shared<Card_Arms_GrassSword>());
-	DeckCardList.push_back(std::make_shared<Card_Arms_GrassSword>());
-	DeckCardList.push_back(std::make_shared<Card_Spell_ArmsEnhancement>());
-	DeckCardList.push_back(std::make_shared<Card_Arms_TravelerSword>());
-	DeckCardList.push_back(std::make_shared<Card_Arms_TravelerShield>());
-	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenSword>());
-	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenShield>());
-	DeckCardList.push_back(std::make_shared<Card_Item_HealingPotion>());
-	DeckCardList.push_back(std::make_shared<Card_Arms_GrassSword>());
-	DeckCardList.push_back(std::make_shared<Card_Arms_PoisonDagger>());
-	DeckCardList.push_back(std::make_shared<Card_Item_PoisonPotion>());
+	/* カード設定 */
+	// ゲームリソースに登録されたデッキを設定する
+	std::vector<std::shared_ptr<Card_Base>> DeckCardList = this->pDataList_GameResource->GetDeckCardList();
+	// データリストにデッキを設定
 	this->pDataList_Battle->SetAllDeckCardList(DeckCardList);
 	this->pDataList_Battle->SetDeckCardList(DeckCardList);
-	// 画像更新
+	// セットアップ処理
 	for (auto& Deck : DeckCardList)
 	{
 		Deck->UpdateImage();
+		Deck->SetUp_DataList();
 	}
 }
 
 // デストラクタ
 Scene_Battle::~Scene_Battle()
 {
+	/* カードのバフをリセット */
+	for (auto& Card : this->pDataList_Battle->GetAllDeckCardList())
+	{
+		Card->Reset_Buff();
+	}
+
 	/* データリスト"バトル用データ管理"を削除 */
 	gpDataListServer->DeleteDataList("DataList_Battle");
 

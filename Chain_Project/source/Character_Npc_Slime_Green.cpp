@@ -15,6 +15,7 @@ Character_Slime_Green::Character_Slime_Green() : Character_Base()
 	this->Camp		= Character_Base::CAMP_ENEMY;	// 陣営:敵陣営
 	this->SizeX		= 150;			// キャラクターの幅
 	this->SizeY		= 150;			// キャラクターの高さ
+	this->DropCoin	= 2;			// ドロップするコインの枚数
 	SetUpImage("Character_Ilust/Npc/Slime_Green");
 }
 

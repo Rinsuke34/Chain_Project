@@ -33,10 +33,6 @@ Card_Base::Card_Base()
 	this->bLostFlag			= false;										// 削除フラグ
 	this->iNowChainCount	= 0;											// 現在のチェイン数(ターン開始時に設定)
 	this->pPlayer			= nullptr;										// プレイヤーキャラクターのポインタ
-
-	/* データリスト取得 */
-	// バトル用データリスト
-	this->pDataList_Battle = std::dynamic_pointer_cast<DataList_Battle>(gpDataListServer->GetDataList("DataList_Battle"));
 }
 
 // デストラクタ
@@ -231,13 +227,16 @@ int Card_Base::GetMyAreaNo()
 	// 戻り値
 	// int <- 自身のバトルエリア番号(ないなら-1)
 
-	/* バトルエリアを巡回し、自身と同一オブジェクトの shared_ptr を探す */
-	for (int i = 0; i < DataList_Battle::BATTLE_AREA_MAX; ++i)
+	if (this->pDataList_Battle != nullptr)
 	{
-		std::shared_ptr<Card_Base> pAreaCard = this->pDataList_Battle->GetBattleAreaCardList(i);
-		if (pAreaCard != nullptr && pAreaCard.get() == this)
+		/* バトルエリアを巡回し、自身と同一オブジェクトの shared_ptr を探す */
+		for (int i = 0; i < DataList_Battle::BATTLE_AREA_MAX; ++i)
 		{
-			return i;
+			std::shared_ptr<Card_Base> pAreaCard = this->pDataList_Battle->GetBattleAreaCardList(i);
+			if (pAreaCard != nullptr && pAreaCard.get() == this)
+			{
+				return i;
+			}
 		}
 	}
 
@@ -331,4 +330,22 @@ bool Card_Base::MouseInCard()
 		// 存在しないならばfalseを返す
 		return false;
 	}
+}
+
+// データリストの取得処理を行う
+void Card_Base::SetUp_DataList()
+{
+	/* バトル用データリスト */
+	this->pDataList_Battle = std::dynamic_pointer_cast<DataList_Battle>(gpDataListServer->GetDataList("DataList_Battle"));
+}
+
+// バフのリセット処理
+void Card_Base::Reset_Buff()
+{
+	/* バフをリセット */
+	this->Strength_Buff = 0;
+	this->Diffence_Buff = 0;
+
+	/* 画像更新 */
+	UpdateImage();
 }

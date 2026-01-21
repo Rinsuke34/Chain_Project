@@ -193,6 +193,7 @@
     <ClCompile Include="source\DataList_Font.cpp" />
     <ClCompile Include="source\DataList_GameResource.cpp" />
     <ClCompile Include="source\DataList_Image.cpp" />
+    <ClCompile Include="source\Drop_Item.cpp" />
     <ClCompile Include="source\FunctionDefine.cpp" />
     <ClCompile Include="source\Main.cpp" />
     <ClCompile Include="source\Scene_Battle_Setup.cpp" />
@@ -246,6 +247,7 @@
     <ClInclude Include="source\DataList_Font.h" />
     <ClInclude Include="source\DataList_GameResource.h" />
     <ClInclude Include="source\DataList_Image.h" />
+    <ClInclude Include="source\Drop_Item.h" />
     <ClInclude Include="source\FunctionDefine.h" />
     <ClInclude Include="source\Scene_Battle.h" />
     <ClInclude Include="source\Scene_Build.h" />

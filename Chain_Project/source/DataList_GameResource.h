@@ -8,6 +8,8 @@
 
 /* 前方宣言 */
 class WoldMap_Node_Base;
+class Card_Base;
+class Character_Player;
 
 // データリスト"ゲームリソース管理"クラス
 class DataList_GameResource : public DataList_Base
@@ -20,22 +22,26 @@ class DataList_GameResource : public DataList_Base
 		void AddCoin(int coin);					// コインを追加
 
 		/* ゲッター */
-		int									GetGameState()			{ return GameState; }			// ゲームの状態
-		bool								GetStageEndFlg()		{ return StageEndFlg; }			// ステージ終了フラグ
-		bool								GetWoldMapActiveFlg()	{ return WoldMapActiveFlg; }	// ワールドマップが有効であるかのフラグ
-		std::shared_ptr<WoldMap_Node_Base>	GetNowMapNode()			{ return NowMapNode; }			// 現在地点のノード
-		bool								GetNextStageSelectFlg() { return NextStageSelectFlg; }	// 次のステージの選択が完了したかのフラグ
-		bool								GetGameEndFlg()			{ return GameEndFlg; }			// ゲーム終了フラグ
-		int									GetHaveCoin()			{ return HaveCoin; }			// 所持コイン
+		int										GetGameState()			{ return GameState; }			// ゲームの状態
+		bool									GetStageEndFlg()		{ return StageEndFlg; }			// ステージ終了フラグ
+		bool									GetWoldMapActiveFlg()	{ return WoldMapActiveFlg; }	// ワールドマップが有効であるかのフラグ
+		std::shared_ptr<WoldMap_Node_Base>		GetNowMapNode()			{ return NowMapNode; }			// 現在地点のノード
+		bool									GetNextStageSelectFlg() { return NextStageSelectFlg; }	// 次のステージの選択が完了したかのフラグ
+		bool									GetGameEndFlg()			{ return GameEndFlg; }			// ゲーム終了フラグ
+		int										GetHaveCoin()			{ return HaveCoin; }			// 所持コイン
+		std::vector<std::shared_ptr<Card_Base>>	GetDeckCardList()		{ return DeckCardList; }		// カードリスト
+		std::shared_ptr<Character_Player>		GetPlayerCharacter() { return PlayerCharacter; }		// プレイヤーキャラクター
 
 		/* セッター */
-		void SetGameState(int state)								{ GameState				= state; }	// ゲームの状態
-		void SetStageEndFlg(bool flg)								{ StageEndFlg			= flg; }	// ステージ終了フラグ
-		void SetWoldMapActiveFlg(bool flg)							{ WoldMapActiveFlg		= flg; }	// ワールドマップが有効であるかのフラグ
-		void SetNowMapNode(std::shared_ptr<WoldMap_Node_Base> node)	{ NowMapNode			= node; }	// 現在地点のノード
-		void SetNextStageSelectedFlg(bool flg)						{ NextStageSelectFlg	= flg; }	// 次のステージの選択が完了したかのフラグ
-		void SetGameEndFlg(bool flg)								{ GameEndFlg			= flg; }	// ゲーム終了フラグ
-		void SetHaveCoin(int coin)									{ HaveCoin				= coin; }	// 所持コイン
+		void SetGameState(int state)											{ GameState				= state; }		// ゲームの状態
+		void SetStageEndFlg(bool flg)											{ StageEndFlg			= flg; }		// ステージ終了フラグ
+		void SetWoldMapActiveFlg(bool flg)										{ WoldMapActiveFlg		= flg; }		// ワールドマップが有効であるかのフラグ
+		void SetNowMapNode(std::shared_ptr<WoldMap_Node_Base> node)				{ NowMapNode			= node; }		// 現在地点のノード
+		void SetNextStageSelectedFlg(bool flg)									{ NextStageSelectFlg	= flg; }		// 次のステージの選択が完了したかのフラグ
+		void SetGameEndFlg(bool flg)											{ GameEndFlg			= flg; }		// ゲーム終了フラグ
+		void SetHaveCoin(int coin)												{ HaveCoin				= coin; }		// 所持コイン
+		void SetDeckCardList(std::vector<std::shared_ptr<Card_Base>> cardList)	{ DeckCardList			= cardList; }	// カードリスト
+		void SetPlayerCharacter(std::shared_ptr<Character_Player> character)	{ PlayerCharacter		= character; }	// プレイヤーキャラクター
 
 		/* 定数 */
 		// ゲームの状態
@@ -44,11 +50,13 @@ class DataList_GameResource : public DataList_Base
 
 	private:
 		/* 変数 */
-		int									GameState;			// ゲームの状態
-		bool								StageEndFlg;		// ステージ終了フラグ
-		bool								WoldMapActiveFlg;	// ワールドマップが有効であるかのフラグ
-		std::shared_ptr<WoldMap_Node_Base>	NowMapNode;			// 現在地点のノード
-		bool								NextStageSelectFlg;	// 次のステージの選択が完了したかのフラグ
-		bool								GameEndFlg;			// ゲーム終了フラグ
-		int									HaveCoin;			// 所持コイン
+		int										GameState;			// ゲームの状態
+		bool									StageEndFlg;		// ステージ終了フラグ
+		bool									WoldMapActiveFlg;	// ワールドマップが有効であるかのフラグ
+		std::shared_ptr<WoldMap_Node_Base>		NowMapNode;			// 現在地点のノード
+		bool									NextStageSelectFlg;	// 次のステージの選択が完了したかのフラグ
+		bool									GameEndFlg;			// ゲーム終了フラグ
+		int										HaveCoin;			// 所持コイン
+		std::vector<std::shared_ptr<Card_Base>>	DeckCardList;		// カードリスト
+		std::shared_ptr<Character_Player>		PlayerCharacter;	// プレイヤーキャラクター
 };

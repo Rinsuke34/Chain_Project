@@ -16,18 +16,20 @@
 Character_Base::Character_Base()
 {
 	/* 初期化 */
-	this->iHP_Max			= 0;			// 体力(最大値)
-	this->iHP_Now			= 0;			// 体力(現在値)
-	this->iShield_Now		= 0;			// シールド(現在値)
-	this->Image				= nullptr;		// 画像
-	this->BasePos			= { 0, 0 };		// 基準座標
-	this->Camp				= -1;			// 陣営
-	this->SizeX				= -1;			// キャラクターの幅
-	this->SizeY				= -1;			// キャラクターの高さ
-	this->CorrectionPos		= { 0, 0 };		// 補正座標
-	this->AddBuffReaction	= 0;			// バフ付与時のリアクション
-	this->DamageReaction	= 0;			// 被ダメージ時のリアクション
-	this->AttackReaction	= 0;			// 攻撃時のリアクション
+	this->iHP_Max						= 0;							// 体力(最大値)
+	this->iHP_Now						= 0;							// 体力(現在値)
+	this->iShield_Now					= 0;							// シールド(現在値)
+	this->Image							= nullptr;						// 画像
+	this->BasePos						= { 0, 0 };						// 基準座標
+	this->Camp							= -1;							// 陣営
+	this->SizeX							= -1;							// キャラクターの幅
+	this->SizeY							= -1;							// キャラクターの高さ
+	this->CorrectionPos					= { 0, 0 };						// 補正座標
+	this->AddBuffReaction				= 0;							// バフ付与時のリアクション
+	this->DamageReaction				= 0;							// 被ダメージ時のリアクション
+	this->AttackReaction				= 0;							// 攻撃時のリアクション
+	this->Death_DeleteFlg				= false;						// 死亡により盤面上から削除するかのフラグ
+	this->FlattenPercent				= 100;							// 平たくする量(%単位 / 100が標準)
 
 	/* 行動内容用フレーム画像取得 */
 	// 画像管理データリストを取得
@@ -64,8 +66,8 @@ void Character_Base::Draw()
 	{
 		// 味方陣営なら右向き(画像のまま)
 		DrawModiGraph(
-			this->BasePos.iX + CorrectionPos.iX - (this->SizeX / 2), this->BasePos.iY + CorrectionPos.iY - (this->SizeY),
-			this->BasePos.iX + CorrectionPos.iX + (this->SizeX / 2), this->BasePos.iY + CorrectionPos.iY - (this->SizeY),
+			this->BasePos.iX + CorrectionPos.iX - (this->SizeX / 2), this->BasePos.iY + CorrectionPos.iY - ((this->SizeY) * static_cast<float>(this->FlattenPercent / 100.f)),
+			this->BasePos.iX + CorrectionPos.iX + (this->SizeX / 2), this->BasePos.iY + CorrectionPos.iY - ((this->SizeY) * static_cast<float>(this->FlattenPercent / 100.f)),
 			this->BasePos.iX + CorrectionPos.iX + (this->SizeX / 2), this->BasePos.iY + CorrectionPos.iY,
 			this->BasePos.iX + CorrectionPos.iX - (this->SizeX / 2), this->BasePos.iY + CorrectionPos.iY,
 			*(this->Image),
@@ -76,8 +78,8 @@ void Character_Base::Draw()
 	{
 		// 敵陣営なら左右反転
 		DrawModiGraph(
-			this->BasePos.iX + CorrectionPos.iX + (this->SizeX / 2), this->BasePos.iY + CorrectionPos.iY - (this->SizeY),
-			this->BasePos.iX + CorrectionPos.iX - (this->SizeX / 2), this->BasePos.iY + CorrectionPos.iY - (this->SizeY),
+			this->BasePos.iX + CorrectionPos.iX + (this->SizeX / 2), this->BasePos.iY + CorrectionPos.iY - ((this->SizeY) * static_cast<float>(this->FlattenPercent / 100.f)),
+			this->BasePos.iX + CorrectionPos.iX - (this->SizeX / 2), this->BasePos.iY + CorrectionPos.iY - ((this->SizeY) * static_cast<float>(this->FlattenPercent / 100.f)),
 			this->BasePos.iX + CorrectionPos.iX - (this->SizeX / 2), this->BasePos.iY + CorrectionPos.iY,
 			this->BasePos.iX + CorrectionPos.iX + (this->SizeX / 2), this->BasePos.iY + CorrectionPos.iY,
 			*(this->Image),
@@ -424,6 +426,34 @@ void Character_Base::Correction_Reaction()
 	{
 		this->CorrectionPos.iX += (this->AttackReaction * 2) * iDirection;
 		this->AttackReaction--;
+	}
+
+	/* 死亡時のリアクション補正 */
+	if (this->iHP_Now <= 0)
+	{
+		// 死亡している場合
+		/* 平たくしていく */
+		if (this->FlattenPercent > 0)
+		{
+			// 平たくする量が0より大きい場合
+			this->FlattenPercent -= 1;
+			if (this->FlattenPercent < 0)
+			{
+				this->FlattenPercent = 0;
+			}
+		}
+		else
+		{
+			// 平たくする量が0以下になった場合
+			/* 削除フラグの有効化 */
+			this->FlattenPercent = 0;
+			this->Death_DeleteFlg = true;
+		}		
+	}
+	else
+	{
+		// 生存している場合
+
 	}
 }
 

@@ -33,6 +33,8 @@ class Card_Base : public std::enable_shared_from_this<Card_Base>
 		virtual void	Add_Diffence_Buff(int amount);										// 防御力バフ追加
 		virtual void	Card_Effect_Extra_Process() {};										// カード効果(特殊効果)
 		virtual bool	MouseInCard();														// マウスカーソルがカード上にあるか確認
+		virtual void	SetUp_DataList();													// データリストの取得処理を行う
+		virtual void	Reset_Buff();														// バフのリセット処理
 		
 		/* セッター */
 		// カード情報

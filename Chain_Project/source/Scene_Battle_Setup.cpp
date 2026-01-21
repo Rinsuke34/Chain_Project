@@ -5,6 +5,7 @@
 #include "Scene_Battle.h"
 // 関連クラス
 #include "DataList_Battle.h"
+#include "DataList_GameResource.h"
 // 関連クラス(キャラクター)
 #include "Character_Player.h"
 #include "Character_Npc_Slime_Green.h"
@@ -18,7 +19,7 @@ void Scene_Battle::Character_Setup(int Level, bool BossFlg)
 	// BossFlg	<- ボス戦であるかの判別に使用
 
 	/* プレイヤー側キャラクターを設定 */
-	this->pDataList_Battle->SetFriendCharacter(DataList_Battle::POSITION_MIDDLE, std::make_shared<Character_Player>());
+	this->pDataList_Battle->SetFriendCharacter(DataList_Battle::POSITION_MIDDLE, this->pDataList_GameResource->GetPlayerCharacter());
 
 	/* ボスバトルであるか確認 */
 	if (BossFlg)

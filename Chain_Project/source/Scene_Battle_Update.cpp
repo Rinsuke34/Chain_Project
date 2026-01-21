@@ -381,7 +381,7 @@ void Scene_Battle::Update_BattleAction()
 	Trash_UseCard(pEffect);
 
 	/* キャラクターが死亡しているか確認 */
-	Character_Death_Check();
+	Character_Death_Delete_Check();
 
 	/* 効果処理後のディレイ時間を設定 */
 	this->iBattleActionDelay = 30;
@@ -453,7 +453,7 @@ void Scene_Battle::Update_StatusEffectAdvance()
 	}
 
 	/* キャラクターが死亡しているか確認 */
-	Character_Death_Check();
+	Character_Death_Delete_Check();
 
 	/* チェイン情報を初期化する */
 	this->pDataList_Battle->ResetChain();
@@ -644,8 +644,8 @@ int Scene_Battle::GetMouseInBattleArea()
 	return -1;
 }
 
-// キャラクターが死亡しているか確認
-void Scene_Battle::Character_Death_Check()
+// キャラクターが死亡していて、削除するかの確認処理
+void Scene_Battle::Character_Death_Delete_Check()
 {
 	/* 仲間キャラクターの死亡確認 */
 	for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
@@ -656,8 +656,13 @@ void Scene_Battle::Character_Death_Check()
 			if (FriendCharacter->GetHP_Now() <= 0)
 			{
 				// 死亡している場合
-				/* nullptrに設定する */
-				this->pDataList_Battle->SetFriendCharacter(i, nullptr);
+				/* 削除するかの確認 */
+				if (FriendCharacter->GetDeathDeleteFlg())
+				{
+					// 削除する場合
+					/* nullptrに設定する */
+					this->pDataList_Battle->SetFriendCharacter(i, nullptr);
+				}
 
 				/* 該当のキャラクターに紐づいた行動内容を削除する */
 				for (auto& Effect : FriendCharacter->GetActionEffectList())
@@ -677,8 +682,13 @@ void Scene_Battle::Character_Death_Check()
 			if (EnemyCharacter->GetHP_Now() <= 0)
 			{
 				// 死亡している場合
-				/* nullptrに設定する */
-				this->pDataList_Battle->SetEnemyCharacter(i, nullptr);
+				/* 削除するかの確認 */
+				if (EnemyCharacter->GetDeathDeleteFlg())
+				{
+					// 削除する場合
+					/* nullptrに設定する */
+					this->pDataList_Battle->SetEnemyCharacter(i, nullptr);
+				}
 
 				/* 該当のキャラクターに紐づいた行動内容を削除する */
 				for (auto& Effect : EnemyCharacter->GetActionEffectList())
@@ -768,16 +778,19 @@ void Scene_Battle::CheckGameEnd()
 		return;
 	}
 
-	/* 敵キャラクターが存在しているか確認 */
+	/* 体力が1以上の敵キャラクターが存在するか確認 */
 	bool bEnemyCharacterExist = false;
 	for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
 	{
 		auto EnemyCharacter = this->pDataList_Battle->GetEnemyCharacter(i);
 		if (EnemyCharacter != nullptr)
 		{
-			// 敵キャラクターが存在している場合、処理を抜ける
-			bEnemyCharacterExist = true;
-			break;
+			if (EnemyCharacter->GetHP_Now() > 0)
+			{
+				// 体力が1以上の敵キャラクターが存在している場合、処理を抜ける
+				bEnemyCharacterExist = true;
+				break;
+			}
 		}
 	}
 

@@ -100,7 +100,7 @@ class Scene_Battle : public Scene_Base
 		void CharacterPosition_Setup();										// キャラクターの座標の設定
 		std::shared_ptr<Card_Base>	GetMouseInCard();						// マウスが重なっているカードを取得
 		int	 GetMouseInBattleArea();										// マウスが重なっているバトルエリアを取得
-		void Character_Death_Check();										// キャラクターが死亡しているか確認
+		void Character_Death_Delete_Check();								// キャラクターが死亡していて、削除するかの確認処理
 		void CheckLostCard();												// ロスト対象のカードを確認し、ロストカード一覧に入れる
 		void ResetChain();													// チェイン数をリセット
 		void CheckGameEnd();												// 戦闘が終了しているかの確認

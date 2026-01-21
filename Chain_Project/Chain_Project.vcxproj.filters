@@ -157,14 +157,8 @@
     <Filter Include="ソース ファイル\キャラクター\NPC\コウモリ">
       <UniqueIdentifier>{bd921c52-cd40-4bd1-83c7-ba9f81616785}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\キャラクター\行動内容">
-      <UniqueIdentifier>{b8ccef21-d3a2-469f-bb9d-c7901eb36d8f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ヘッダー ファイル\キャラクター\バフ、デバフ">
       <UniqueIdentifier>{2af10e8c-c74f-47d7-a0cc-4e5d5c3010a9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\キャラクター\行動内容">
-      <UniqueIdentifier>{ae3931cd-25ad-44c2-913c-3ca096e67a0d}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\キャラクター\バフ、デバフ">
       <UniqueIdentifier>{2b6b3417-2d8d-4c52-a2a6-13ec55377001}</UniqueIdentifier>
@@ -283,6 +277,24 @@
     <Filter Include="ソース ファイル\シーン\リソース描写">
       <UniqueIdentifier>{b36ea8cb-0d92-4c78-873b-0a3f8ad8206a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\その他">
+      <UniqueIdentifier>{841c9d74-3e99-4579-9763-e096e5f5ddf8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\その他\キャラクター行動内容">
+      <UniqueIdentifier>{ae3931cd-25ad-44c2-913c-3ca096e67a0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\その他">
+      <UniqueIdentifier>{5c7dd2eb-fb6b-44e9-a185-fc320d074de2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\その他\キャラクター行動内容">
+      <UniqueIdentifier>{b8ccef21-d3a2-469f-bb9d-c7901eb36d8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\その他\ドロップアイテム">
+      <UniqueIdentifier>{b5c0284f-2437-407a-b860-6c08c479574f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\その他\ドロップアイテム">
+      <UniqueIdentifier>{b57e1158-fc4c-4535-b746-a1038684d89e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Main.cpp">
@@ -358,7 +370,7 @@
       <Filter>ソース ファイル\カード\魔法%28Spell%29\武具強化</Filter>
     </ClCompile>
     <ClCompile Include="source\Action_Effect.cpp">
-      <Filter>ソース ファイル\キャラクター\行動内容</Filter>
+      <Filter>ソース ファイル\その他\キャラクター行動内容</Filter>
     </ClCompile>
     <ClCompile Include="source\Scene_Particles_Text.cpp">
       <Filter>ソース ファイル\シーン\パーティクル%28文字%29</Filter>
@@ -422,6 +434,9 @@
     </ClCompile>
     <ClCompile Include="source\Scene_Draw_GameResource.cpp">
       <Filter>ソース ファイル\シーン\リソース描写</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Drop_Item.cpp">
+      <Filter>ソース ファイル\その他\ドロップアイテム</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -489,7 +504,7 @@
       <Filter>ヘッダー ファイル\カード\魔法%28Spell%29\武具強化</Filter>
     </ClInclude>
     <ClInclude Include="source\Action_Effect.h">
-      <Filter>ヘッダー ファイル\キャラクター\行動内容</Filter>
+      <Filter>ヘッダー ファイル\その他\キャラクター行動内容</Filter>
     </ClInclude>
     <ClInclude Include="source\Scene_Particles_Text.h">
       <Filter>ヘッダー ファイル\シーン\パーティクル%28文字%29</Filter>
@@ -550,6 +565,9 @@
     </ClInclude>
     <ClInclude Include="source\Scene_Draw_GameResource.h">
       <Filter>ヘッダー ファイル\シーン\リソース描写</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Drop_Item.h">
+      <Filter>ヘッダー ファイル\その他\ドロップアイテム</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
