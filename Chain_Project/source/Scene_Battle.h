@@ -52,6 +52,9 @@ class Scene_Battle : public Scene_Base
 		static const int	CHARACTER_POS_Y						= 280;	// キャラクターのY座標
 		static const int	BATTLE_AREA_HEIGHT					= 328;	// バトルエリアの高さ
 		static const int	BATTLE_AREA_WIDE					= 258;	// バトルエリアの幅
+		// アニメーション関連
+		static const int EMPHASIS_ANIMATION_MAX					= 4;	// 強調表示アニメーションの最大数
+		static const int EMPHASIS_ANIMATION_SPEED				= 8;	// 強調表示アニメーションの速度(変更までのフレーム数)
 
 	private:
 		/* 変数 */
@@ -63,10 +66,13 @@ class Scene_Battle : public Scene_Base
 		int iBattlePhase_NowBattleAreaNo;						// 現在処理の実行中のバトルエリア
 		bool bReloadFlg;										// リロードフラグ
 		int iBattleActionDelay;									// バトルアクション間のディレイ時間
-		/* 関数 */
+		int	BattleArea_Anim_ImageNo;							// バトルエリアのアニメーションの画像番号
+		int	BattleArea_Anim_ChangeDelay;						// バトルエリアのアニメーションの変更までの待機時間
 		// 画像
-		std::shared_ptr<int> Image_BattleArea[2];	// バトルエリア[0:通常時, 1:カーソル接触時]
-		std::shared_ptr<int> Image_BackGround[3];	// 背景画像[0:キャラクター立ち位置の背景, 1:キャラクター立ち位置の足場, 2:カード置き場]
+		std::shared_ptr<int> Image_BattleArea[2];										// バトルエリア[0:通常時, 1:カーソル接触時]
+		std::shared_ptr<int> Image_BattleArea_Emphasis_Anim[EMPHASIS_ANIMATION_MAX];	// バトルエリア(カーソル接触時のアニメーション)[0～3]
+		std::shared_ptr<int> Image_BackGround[3];										// 背景画像[0:キャラクター立ち位置の背景, 1:キャラクター立ち位置の足場, 2:カード置き場]
+		/* 関数 */
 		// 各フェーズごとの更新処理
 		void Update_EffectTurnStart();		// "ターン開始時"の効果発動
 		void Update_DrawCard();				// カードドロー
@@ -90,7 +96,6 @@ class Scene_Battle : public Scene_Base
 		std::shared_ptr<Scene_UI_Button> UI_DecisionButton;	// 決定ボタン
 		// その他
 		void CardPosition_HandSetSettingPosting();							// 手札のカード設定座標の設定
-		void Action_Effect_SetSettingPositing();							// 行動内容の設定座標の設定
 		void Card_Update();													// カードの更新処理
 		void CharacterPosition_Setup();										// キャラクターの座標の設定
 		std::shared_ptr<Card_Base>	GetMouseInCard();						// マウスが重なっているカードを取得
@@ -100,4 +105,5 @@ class Scene_Battle : public Scene_Base
 		void ResetChain();													// チェイン数をリセット
 		void CheckGameEnd();												// 戦闘が終了しているかの確認
 		void Trash_UseCard(std::shared_ptr<Action_Effect_Base> pEffect);	// 効果を使用したカードのトラッシュ処理
+		void Update_EmphasisAnim();											// バトルエリアのカーソル接触時のアニメーションを設定
 };

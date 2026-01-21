@@ -195,6 +195,18 @@ void Scene_Battle::Draw_BattleArea()
 			(SCREEN_SIZE_WIDE / 2)	+ (BATTLE_AREA_WIDE / 2) + (BATTLE_AREA_INTERVAL * (i - 2)),
 			BATTLE_AREA_POS_Y		+ (BATTLE_AREA_HEIGHT / 2),
 			*(this->Image_BattleArea[(iSelectAreaNo == i) ? 1 : 0]), TRUE);
+
+		/* 選択中であるならアニメーションを描写 */
+		if (iSelectAreaNo == i)
+		{
+			/* アニメーション */
+			DrawExtendGraph(
+				(SCREEN_SIZE_WIDE / 2) - (BATTLE_AREA_WIDE / 2) + (BATTLE_AREA_INTERVAL * (i - 2)),
+				BATTLE_AREA_POS_Y - (BATTLE_AREA_HEIGHT / 2),
+				(SCREEN_SIZE_WIDE / 2) + (BATTLE_AREA_WIDE / 2) + (BATTLE_AREA_INTERVAL * (i - 2)),
+				BATTLE_AREA_POS_Y + (BATTLE_AREA_HEIGHT / 2),
+				*(this->Image_BattleArea_Emphasis_Anim[BattleArea_Anim_ImageNo]), TRUE);
+		}
 	}
 
 	/* カードの描写 */

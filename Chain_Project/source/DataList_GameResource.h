@@ -16,6 +16,9 @@ class DataList_GameResource : public DataList_Base
 		DataList_GameResource();				// コンストラクタ
 		virtual ~DataList_GameResource() {};	// デストラクタ
 
+		/* 関数 */
+		void AddCoin(int coin);					// コインを追加
+
 		/* ゲッター */
 		int									GetGameState()			{ return GameState; }			// ゲームの状態
 		bool								GetStageEndFlg()		{ return StageEndFlg; }			// ステージ終了フラグ
@@ -23,6 +26,7 @@ class DataList_GameResource : public DataList_Base
 		std::shared_ptr<WoldMap_Node_Base>	GetNowMapNode()			{ return NowMapNode; }			// 現在地点のノード
 		bool								GetNextStageSelectFlg() { return NextStageSelectFlg; }	// 次のステージの選択が完了したかのフラグ
 		bool								GetGameEndFlg()			{ return GameEndFlg; }			// ゲーム終了フラグ
+		int									GetHaveCoin()			{ return HaveCoin; }			// 所持コイン
 
 		/* セッター */
 		void SetGameState(int state)								{ GameState				= state; }	// ゲームの状態
@@ -31,6 +35,7 @@ class DataList_GameResource : public DataList_Base
 		void SetNowMapNode(std::shared_ptr<WoldMap_Node_Base> node)	{ NowMapNode			= node; }	// 現在地点のノード
 		void SetNextStageSelectedFlg(bool flg)						{ NextStageSelectFlg	= flg; }	// 次のステージの選択が完了したかのフラグ
 		void SetGameEndFlg(bool flg)								{ GameEndFlg			= flg; }	// ゲーム終了フラグ
+		void SetHaveCoin(int coin)									{ HaveCoin				= coin; }	// 所持コイン
 
 		/* 定数 */
 		// ゲームの状態
@@ -45,4 +50,5 @@ class DataList_GameResource : public DataList_Base
 		std::shared_ptr<WoldMap_Node_Base>	NowMapNode;			// 現在地点のノード
 		bool								NextStageSelectFlg;	// 次のステージの選択が完了したかのフラグ
 		bool								GameEndFlg;			// ゲーム終了フラグ
+		int									HaveCoin;			// 所持コイン
 };

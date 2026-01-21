@@ -14,4 +14,11 @@ DataList_GameResource::DataList_GameResource() : DataList_Base("DataList_GameRes
 	this->NowMapNode			= nullptr;		// 現在地点のノード
 	this->NextStageSelectFlg	= false;		// 次のステージの選択が完了したかのフラグ
 	this->GameEndFlg			= false;		// ゲーム終了フラグ
+	this->HaveCoin				= 0;			// 所持コイン
+}
+
+// コインを追加
+void DataList_GameResource::AddCoin(int coin)
+{
+	this->HaveCoin += coin;
 }

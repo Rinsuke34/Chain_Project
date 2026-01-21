@@ -200,6 +200,7 @@
     <ClCompile Include="source\Scene_Battle.cpp" />
     <ClCompile Include="source\Scene_Battle_Draw.cpp" />
     <ClCompile Include="source\Scene_Battle_Update.cpp" />
+    <ClCompile Include="source\Scene_Draw_GameResource.cpp" />
     <ClCompile Include="source\Scene_GameManager.cpp" />
     <ClCompile Include="source\Scene_GameOver.cpp" />
     <ClCompile Include="source\Scene_Load_Checker.cpp" />
@@ -248,6 +249,7 @@
     <ClInclude Include="source\FunctionDefine.h" />
     <ClInclude Include="source\Scene_Battle.h" />
     <ClInclude Include="source\Scene_Build.h" />
+    <ClInclude Include="source\Scene_Draw_GameResource.h" />
     <ClInclude Include="source\Scene_GameManager.h" />
     <ClInclude Include="source\Scene_GameOver.h" />
     <ClInclude Include="source\Scene_Load_Checker.h" />

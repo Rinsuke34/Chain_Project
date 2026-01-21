@@ -822,3 +822,34 @@ void Scene_Battle::Trash_UseCard(std::shared_ptr<Action_Effect_Base> pEffect)
 	this->pDataList_Battle->AddTrashCard(this->pDataList_Battle->GetBattleAreaCardList(this->iBattlePhase_NowBattleAreaNo));
 	this->pDataList_Battle->RemoveBattleAreaCard(this->iBattlePhase_NowBattleAreaNo);
 }
+
+// バトルエリアのカーソル接触時のアニメーションを設定
+void Scene_Battle::Update_EmphasisAnim()
+{
+	/* バトルエリアにカーソルが接触しているか確認 */
+	if (GetMouseInBattleArea() != -1)
+	{
+		// 接触している場合
+		/* アニメーションの状態を進める */
+		this->BattleArea_Anim_ChangeDelay--;
+		if (this->BattleArea_Anim_ChangeDelay <= 0)
+		{
+			// 変更待機時間が0以下になった場合、アニメーションを進める
+			this->BattleArea_Anim_ImageNo++;
+			if (this->BattleArea_Anim_ImageNo >= EMPHASIS_ANIMATION_MAX)
+			{
+				// 最大数を超えた場合、最初の状態に戻す
+				this->BattleArea_Anim_ImageNo = 0;
+			}
+			// 変更待機時間をリセット
+			this->BattleArea_Anim_ChangeDelay = EMPHASIS_ANIMATION_SPEED;
+		}
+	}
+	else
+	{
+		// 接触していない場合
+		/* アニメーションの状態をリセットする */
+		this->BattleArea_Anim_ImageNo		= 0;
+		this->BattleArea_Anim_ChangeDelay	= EMPHASIS_ANIMATION_SPEED;
+	}
+}

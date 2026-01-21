@@ -31,6 +31,8 @@ Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 0, false, false)
 	this->iBattlePhase_NowBattleAreaNo	= 0;		// 現在処理の実行中のバトルエリア
 	this->bReloadFlg					= false;	// ドロー失敗フラグ
 	this->iBattleActionDelay			= 0;		// バトルアクション間のディレイ時間
+	this->BattleArea_Anim_ImageNo		= 0;		// バトルエリアのアニメーションの画像番号
+	this->BattleArea_Anim_ChangeDelay	= 0;		// バトルエリアのアニメーションの変更までの待機時間
 
 	/* データリスト"バトル用データ管理"を作成 */
 	this->pDataList_Battle = std::make_shared<DataList_Battle>();
@@ -50,6 +52,16 @@ Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 0, false, false)
 		this->Image_BattleArea[0] = pDataList_Image->iGetImageHandle(ImageFilePath);
 		ImageFilePath = "UI/Battle/UI_BattleArea_Over";
 		this->Image_BattleArea[1] = pDataList_Image->iGetImageHandle(ImageFilePath);
+
+		// バトルエリア(カーソル接触時のアニメーション)[0～3]
+		ImageFilePath = "UI/Battle/Emphasis_Anim/UI_BattleArea_Emphasis_1";
+		this->Image_BattleArea_Emphasis_Anim[0] = pDataList_Image->iGetImageHandle(ImageFilePath);
+		ImageFilePath = "UI/Battle/Emphasis_Anim/UI_BattleArea_Emphasis_2";
+		this->Image_BattleArea_Emphasis_Anim[1] = pDataList_Image->iGetImageHandle(ImageFilePath);
+		ImageFilePath = "UI/Battle/Emphasis_Anim/UI_BattleArea_Emphasis_3";
+		this->Image_BattleArea_Emphasis_Anim[2] = pDataList_Image->iGetImageHandle(ImageFilePath);
+		ImageFilePath = "UI/Battle/Emphasis_Anim/UI_BattleArea_Emphasis_4";
+		this->Image_BattleArea_Emphasis_Anim[3] = pDataList_Image->iGetImageHandle(ImageFilePath);
 
 		// 背景画像[0:キャラクター立ち位置の背景, 1:キャラクター立ち位置の足場, 2:カード置き場]
 		ImageFilePath = "BackGround/Battle_Cave_BackGround";
@@ -196,6 +208,9 @@ void Scene_Battle::Update()
 	/* カードやアクション内容等の更新処理 */
 	Card_Update();
 	CharacterPosition_Setup();
+
+	/* バトルエリアのカーソル接触時のアニメーションを設定 */
+	Update_EmphasisAnim();
 }
 
 // 描画
