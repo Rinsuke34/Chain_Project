@@ -16,20 +16,22 @@
 Character_Base::Character_Base()
 {
 	/* 初期化 */
-	this->iHP_Max						= 0;							// 体力(最大値)
-	this->iHP_Now						= 0;							// 体力(現在値)
-	this->iShield_Now					= 0;							// シールド(現在値)
-	this->Image							= nullptr;						// 画像
-	this->BasePos						= { 0, 0 };						// 基準座標
-	this->Camp							= -1;							// 陣営
-	this->SizeX							= -1;							// キャラクターの幅
-	this->SizeY							= -1;							// キャラクターの高さ
-	this->CorrectionPos					= { 0, 0 };						// 補正座標
-	this->AddBuffReaction				= 0;							// バフ付与時のリアクション
-	this->DamageReaction				= 0;							// 被ダメージ時のリアクション
-	this->AttackReaction				= 0;							// 攻撃時のリアクション
-	this->Death_DeleteFlg				= false;						// 死亡により盤面上から削除するかのフラグ
-	this->FlattenPercent				= 100;							// 平たくする量(%単位 / 100が標準)
+	this->iHP_Max						= 0;								// 体力(最大値)
+	this->iHP_Now						= 0;								// 体力(現在値)
+	this->iShield_Now					= 0;								// シールド(現在値)
+	this->Image							= nullptr;							// 画像
+	this->BasePos						= { 0, 0 };							// 基準座標
+	this->Camp							= -1;								// 陣営
+	this->SizeX							= -1;								// キャラクターの幅
+	this->SizeY							= -1;								// キャラクターの高さ
+	this->CorrectionPos					= { 0, 0 };							// 補正座標
+	this->AddBuffReaction				= 0;								// バフ付与時のリアクション
+	this->DamageReaction				= 0;								// 被ダメージ時のリアクション
+	this->AttackReaction				= 0;								// 攻撃時のリアクション
+	this->Death_DeleteFlg				= false;							// 死亡により盤面上から削除するかのフラグ
+	this->FlattenPercent				= 100;								// 平たくする量(%単位 / 100が標準)
+	this->StandbyFlatten_Count			= GetRand(STANDBY_FLATTEN_PERIOD);	// 待機時の平たくする量のカウント
+	this->StandbyFlatten_Percent		= 0;								// 待機児の平たくする量の実数値
 
 	/* 行動内容用フレーム画像取得 */
 	// 画像管理データリストを取得
@@ -453,7 +455,16 @@ void Character_Base::Correction_Reaction()
 	else
 	{
 		// 生存している場合
+		/* 待機時の平たくする量の更新 */
+		this->StandbyFlatten_Count++;
+		float value = (std::sin(2.f * PI * this->StandbyFlatten_Count / STANDBY_FLATTEN_PERIOD) + 1.f) / 2.f;
+		this->StandbyFlatten_Percent = value * STANDBY_FLATTEN_MAX;
+		if (this->StandbyFlatten_Count >= STANDBY_FLATTEN_PERIOD)
+		{
+			this->StandbyFlatten_Count = 0;
+		}
 
+		this->FlattenPercent = 100.f - this->StandbyFlatten_Percent;
 	}
 }
 

@@ -193,9 +193,13 @@ void Scene_Battle::Update()
 	/* カードやアクション内容等の更新処理 */
 	Card_Update();
 	CharacterPosition_Setup();
+	Update_DropItem();
 
 	/* バトルエリアのカーソル接触時のアニメーションを設定 */
 	Update_EmphasisAnim();
+
+	/* ドロップアイテムの作成処理 */
+	Create_DropItem();
 }
 
 // 描画
@@ -221,4 +225,7 @@ void Scene_Battle::Draw()
 
 	/* ホールド中のカードを描写 */
 	Draw_HoldCard();
+
+	/* ドロップアイテムの描写 */
+	Draw_DropItem();
 }

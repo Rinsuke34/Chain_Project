@@ -14,6 +14,7 @@
 #include "Character_Base.h"
 #include "Character_Player.h"
 #include "Action_Effect.h"
+#include "Drop_Item.h"
 
 /* 各フェーズごとの更新処理 */
 // "ターン開始時"の効果発動
@@ -864,5 +865,55 @@ void Scene_Battle::Update_EmphasisAnim()
 		/* アニメーションの状態をリセットする */
 		this->BattleArea_Anim_ImageNo		= 0;
 		this->BattleArea_Anim_ChangeDelay	= EMPHASIS_ANIMATION_SPEED;
+	}
+}
+
+// ドロップアイテムの更新処理
+void Scene_Battle::Update_DropItem()
+{
+	/* 更新処理 */
+	for (auto& DropItem : this->DropItem_List)
+	{
+		DropItem->Update();
+	}
+
+	/* 削除フラグが有効なら削除する */
+	this->DropItem_List.erase(
+		std::remove_if(
+			this->DropItem_List.begin(),
+			this->DropItem_List.end(),
+			[](const std::shared_ptr<Drop_Item_Base>& DropItem) {
+				return DropItem->GetDeleteFlg();
+			}
+		),
+		this->DropItem_List.end()
+	);
+}
+
+// ドロップアイテムの作成処理
+void Scene_Battle::Create_DropItem()
+{
+	/* HPが0以下の敵キャラクターがいるか確認 */
+	for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
+	{
+		auto EnemyCharacter = this->pDataList_Battle->GetEnemyCharacter(i);
+		if (EnemyCharacter != nullptr)
+		{
+			if (EnemyCharacter->GetHP_Now() <= 0)
+			{
+				// 死亡している場合
+				/* コインを生成 */
+				int Coin = EnemyCharacter->GetDropCoin();
+				if (Coin > 0)
+				{
+					std::shared_ptr<Drop_Item_Base> NewCoin = std::make_shared<Drop_Item_Coin>();
+					NewCoin->SetPosition(EnemyCharacter->GetBasePos());
+					this->DropItem_List.push_back(NewCoin);
+
+					/* ドロップコイン数を-1する */
+					EnemyCharacter->SetDropCoin(Coin - 1);
+				}
+			}
+		}
 	}
 }

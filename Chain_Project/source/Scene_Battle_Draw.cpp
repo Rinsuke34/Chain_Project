@@ -14,6 +14,7 @@
 #include "Card_Base.h"
 #include "Character_Base.h"
 #include "Character_Player.h"
+#include "Drop_Item.h"
 
 // ”wŒi•`ŽÊ
 void Scene_Battle::Draw_BackGround()
@@ -238,5 +239,14 @@ void Scene_Battle::Draw_HoldCard()
 	if (this->pDataList_Battle->GetHoldCard() != nullptr)
 	{
 		this->pDataList_Battle->GetHoldCard()->Draw();
+	}
+}
+
+// ƒhƒƒbƒvƒAƒCƒeƒ€‚Ì•`ŽÊˆ—
+void Scene_Battle::Draw_DropItem()
+{
+	for (auto& DropItem : this->DropItem_List)
+	{
+		DropItem->Draw();
 	}
 }

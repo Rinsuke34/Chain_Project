@@ -13,10 +13,14 @@
 // コンストラクタ
 Scene_Draw_GameResource::Scene_Draw_GameResource() : Scene_Base("Scene_Draw_GameResource", 9, false, false)
 {
-	/* 初期化 */
-	// データリスト取得
+	/* データリスト取得*/
 	this->pDataList_GameResource = std::dynamic_pointer_cast<DataList_GameResource>(gpDataListServer->GetDataList("DataList_GameResource"));
-	// 画像取得
+
+	/* 初期化 */
+	this->CoinScaleUp	= 0;											// コインアイコンのスケールアップ量
+	this->Coin_Old		= this->pDataList_GameResource->GetHaveCoin();	// 変更前のコイン枚数
+
+	/* 画像取得 */
 	std::shared_ptr<DataList_Image> pDataList_Image = std::dynamic_pointer_cast<DataList_Image>(gpDataListServer->GetDataList("DataList_Image"));
 	// コイン
 	std::string FineName = "Common_Icon/Icon_Coin";
@@ -30,6 +34,31 @@ Scene_Draw_GameResource::Scene_Draw_GameResource() : Scene_Base("Scene_Draw_Game
 	this->Image_Frame_Inside = pDataList_Image->iGetImageHandle(FineName);
 }
 
+// 更新
+void Scene_Draw_GameResource::Update()
+{
+	/* コインの枚数に変化があるか確認 */
+	int Coin_Now = this->pDataList_GameResource->GetHaveCoin();
+	if (Coin_Now != this->Coin_Old)
+	{
+		// 変化があるならば
+		/* コインアイコンのスケールアップ量を設定 */
+		this->CoinScaleUp = 5;		
+	}
+	else
+	{
+		// 変化がないならば
+		/* スケールを通常に戻す */
+		if (this->CoinScaleUp > 0)
+		{
+			this->CoinScaleUp--;
+		}
+	}
+
+	/* 変更前のコイン枚数を更新 */
+	this->Coin_Old = Coin_Now;
+}
+
 // 描画
 void Scene_Draw_GameResource::Draw()
 {
@@ -41,10 +70,10 @@ void Scene_Draw_GameResource::Draw()
 
 	/* コインアイコンの描写 */
 	DrawModiGraph(
-		14,	14,
-		46,	14,
-		46,	46,
-		14,	46,
+		COIN_POS_X_MINUS	- this->CoinScaleUp,	COIN_POS_Y_MINUS	- this->CoinScaleUp,
+		COIN_POS_X_PLUS		+ this->CoinScaleUp,	COIN_POS_Y_MINUS	- this->CoinScaleUp,
+		COIN_POS_X_PLUS		+ this->CoinScaleUp,	COIN_POS_Y_PLUS		+ this->CoinScaleUp,
+		COIN_POS_X_MINUS	- this->CoinScaleUp,	COIN_POS_Y_PLUS		+ this->CoinScaleUp,
 		*(this->Image_Coin),
 		TRUE
 	);
@@ -53,7 +82,7 @@ void Scene_Draw_GameResource::Draw()
 	std::string CoinString = " × " + std::to_string(this->pDataList_GameResource->GetHaveCoin());
 	DrawStringToHandle(
 		46,
-		12,
+		12 - this->CoinScaleUp,
 		CoinString.c_str(),
 		GetColor(0, 0, 0),
 		giFont_DonguriDuel_32);

@@ -13,6 +13,7 @@ class Scene_UI_Button;
 class DataList_Battle;
 class Card_Base;
 class DataList_GameResource;
+class Drop_Item_Base;
 
 // シーン"バトル画面"
 class Scene_Battle : public Scene_Base
@@ -62,36 +63,37 @@ class Scene_Battle : public Scene_Base
 		std::shared_ptr<DataList_Battle>		pDataList_Battle;		// バトル用データリスト
 		std::shared_ptr<DataList_GameResource>	pDataList_GameResource;	// ゲームリソース管理用データリスト
 		// その他
-		int iBattlePhase;										// バトルフェーズ
-		int iBattlePhase_NowBattleAreaNo;						// 現在処理の実行中のバトルエリア
-		bool bReloadFlg;										// リロードフラグ
-		int iBattleActionDelay;									// バトルアクション間のディレイ時間
-		int	BattleArea_Anim_ImageNo;							// バトルエリアのアニメーションの画像番号
-		int	BattleArea_Anim_ChangeDelay;						// バトルエリアのアニメーションの変更までの待機時間
+		int												iBattlePhase;					// バトルフェーズ
+		int												iBattlePhase_NowBattleAreaNo;	// 現在処理の実行中のバトルエリア
+		bool											bReloadFlg;						// リロードフラグ
+		int												iBattleActionDelay;				// バトルアクション間のディレイ時間
+		int												BattleArea_Anim_ImageNo;		// バトルエリアのアニメーションの画像番号
+		int												BattleArea_Anim_ChangeDelay;	// バトルエリアのアニメーションの変更までの待機時間
+		std::vector<std::shared_ptr<Drop_Item_Base>>	DropItem_List;					// ドロップアイテム一覧
 		// 画像
 		std::shared_ptr<int> Image_BattleArea[2];										// バトルエリア[0:通常時, 1:カーソル接触時]
 		std::shared_ptr<int> Image_BattleArea_Emphasis_Anim[EMPHASIS_ANIMATION_MAX];	// バトルエリア(カーソル接触時のアニメーション)[0～3]
 		std::shared_ptr<int> Image_BackGround[3];										// 背景画像[0:キャラクター立ち位置の背景, 1:キャラクター立ち位置の足場, 2:カード置き場]
 		/* 関数 */
 		// 各フェーズごとの更新処理
-		void Update_EffectTurnStart();		// "ターン開始時"の効果発動
-		void Update_DrawCard();				// カードドロー
-		void Update_EnemyActionDecision();	// 敵の行動決定
-		void Update_PlayerActionDecision();	// プレイヤーの行動決定
-		void Update_CardChainCheck();		// カードのチェイン数確認
-		void Update_EffectActionStart();	// "行動開始時"の効果発動
-		void Update_BattleAction_Decision();// 戦闘行動の決定
-		void Update_BattleAction();			// 戦闘行動
-		void Update_EffectTurnEnd();		// "ターン終了時"の効果発動
-		void Update_StatusEffectAdvance();	// 状態変化のターン進行
+		void Update_EffectTurnStart();			// "ターン開始時"の効果発動
+		void Update_DrawCard();					// カードドロー
+		void Update_EnemyActionDecision();		// 敵の行動決定
+		void Update_PlayerActionDecision();		// プレイヤーの行動決定
+		void Update_CardChainCheck();			// カードのチェイン数確認
+		void Update_EffectActionStart();		// "行動開始時"の効果発動
+		void Update_BattleAction_Decision();	// 戦闘行動の決定
+		void Update_BattleAction();				// 戦闘行動
+		void Update_EffectTurnEnd();			// "ターン終了時"の効果発動
+		void Update_StatusEffectAdvance();		// 状態変化のターン進行
 		// 描写処理
-		void Draw_BackGround();				// 背景描写
-		void Draw_Character();				// キャラクター描写
-		void Draw_Character_Move();			// キャラクターの行動内容描写
-		void Draw_Chain();					// 鎖(チェイン時)描写
-		void Draw_BattleArea();				// バトルエリア描写
-		void Draw_HandCard();				// 手札の描写
-		void Draw_HoldCard();				// ホールド中のカードを描写
+		void Draw_BackGround();					// 背景描写
+		void Draw_Character();					// キャラクター描写
+		void Draw_Character_Move();				// キャラクターの行動内容描写
+		void Draw_Chain();						// 鎖(チェイン時)描写
+		void Draw_BattleArea();					// バトルエリア描写
+		void Draw_HandCard();					// 手札の描写
+		void Draw_HoldCard();					// ホールド中のカードを描写
 		// UIのハンドル
 		std::shared_ptr<Scene_UI_Button> UI_DecisionButton;	// 決定ボタン
 		// その他
@@ -106,4 +108,7 @@ class Scene_Battle : public Scene_Base
 		void CheckGameEnd();												// 戦闘が終了しているかの確認
 		void Trash_UseCard(std::shared_ptr<Action_Effect_Base> pEffect);	// 効果を使用したカードのトラッシュ処理
 		void Update_EmphasisAnim();											// バトルエリアのカーソル接触時のアニメーションを設定
+		void Update_DropItem();												// ドロップアイテムの更新処理
+		void Draw_DropItem();												// ドロップアイテムの描写処理
+		void Create_DropItem();												// ドロップアイテムの作成処理
 };

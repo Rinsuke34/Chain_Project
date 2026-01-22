@@ -76,6 +76,9 @@ class Character_Base : public std::enable_shared_from_this<Character_Base>
 		static const int	CAMP_NONE		= -1;	// 陣営無し
 		static const int	CAMP_FRIEND		= 0;	// 仲間陣営
 		static const int	CAMP_ENEMY		= 1;	// 敵陣営
+		// その他
+		static const int	STANDBY_FLATTEN_PERIOD	= 120;	// 待機時の平たくする量の変化周期(秒)
+		static const int	STANDBY_FLATTEN_MAX		= 10;	// 待機時の平たくする量の最大値(%単位)
 
 	protected:
 		/* 変数 */
@@ -97,6 +100,8 @@ class Character_Base : public std::enable_shared_from_this<Character_Base>
 		int						DamageReaction;				// 被ダメージ時のリアクション
 		int						AttackReaction;				// 攻撃時のリアクション
 		int						FlattenPercent;				// 平たくする量(%単位 / 100が標準)		
+		int						StandbyFlatten_Count;		// 待機時の平たくする量のカウント
+		int						StandbyFlatten_Percent;		// 待機児の平たくする量の実数値
 		// バフ、デバフ情報
 		std::vector<std::shared_ptr<Character_Buff_Debuff_Base>> 	Buff_Debuff_List;	// バフ、デバフ一覧
 		// 行動内容
