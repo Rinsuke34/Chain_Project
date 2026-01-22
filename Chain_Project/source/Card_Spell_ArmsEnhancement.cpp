@@ -49,14 +49,4 @@ void Card_Spell_ArmsEnhancement::Card_Effect_Extra_Process()
 			HandCard->Add_Diffence_Buff(this->iNowChainCount);
 		}
 	}
-	// バトルエリアの武具カードにバフを与える
-	for (int i = 0; i < DataList_Battle::BATTLE_AREA_MAX; i++)
-	{
-		auto BattleAreaCard = this->pDataList_Battle->GetBattleAreaCardList(i);
-		if (BattleAreaCard != nullptr && BattleAreaCard->GetCardType() == TYPE_ARMS)
-		{
-			BattleAreaCard->Add_Strength_Buff(this->iNowChainCount);
-			BattleAreaCard->Add_Diffence_Buff(this->iNowChainCount);
-		}
-	}
 }

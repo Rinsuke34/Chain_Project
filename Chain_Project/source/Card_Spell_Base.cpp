@@ -23,6 +23,9 @@ Card_Spell_Base::Card_Spell_Base() : Card_Base()
 // 戦闘行動
 void Card_Spell_Base::BattleAction()
 {
+	/* プレイヤーを取得できていないならプレイヤーを取得する */
+	CheckHavePlayer();
+
 	/* スペルの処理を設定する */
 	std::shared_ptr<Action_Effect_Extra> pSpellEffect = std::make_shared<Action_Effect_Extra>();
 	pSpellEffect->Target_Camp		= Character_Base::CAMP_NONE;		// 効果対象の陣営:無し

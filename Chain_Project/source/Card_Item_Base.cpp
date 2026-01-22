@@ -24,6 +24,9 @@ Card_Item_Base::Card_Item_Base() : Card_Base()
 // ※回復や攻撃など標準の効果を行う場合は派生クラスでオーバーライドして実装する
 void Card_Item_Base::BattleAction()
 {
+	/* プレイヤーを取得できていないならプレイヤーを取得する */
+	CheckHavePlayer();
+
 	/* 道具の処理を設定する */
 	std::shared_ptr<Action_Effect_Extra> pItemEffect = std::make_shared<Action_Effect_Extra>();
 	pItemEffect->Target_Camp		= Character_Base::CAMP_NONE;	// 効果対象の陣営:無し

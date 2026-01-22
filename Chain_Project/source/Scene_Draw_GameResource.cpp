@@ -79,11 +79,21 @@ void Scene_Draw_GameResource::Draw()
 	);
 
 	/* •¶Žš—ñ‚Ì•`ŽÊ */
-	std::string CoinString = " ~ " + std::to_string(this->pDataList_GameResource->GetHaveCoin());
+	// "~"‚Ì•”•ª
+	std::string Kakeru = " ~ ";
 	DrawStringToHandle(
 		46,
+		12,
+		Kakeru.c_str(),
+		GetColor(0, 0, 0),
+		giFont_DonguriDuel_32);
+
+	// ŠŽ”
+	std::string HaveCoin = std::to_string(this->pDataList_GameResource->GetHaveCoin());
+	DrawStringToHandle(
+		46 + GetDrawStringWidthToHandle(Kakeru.c_str(), static_cast<int>(strlenDx(Kakeru.c_str())), giFont_DonguriDuel_32),
 		12 - this->CoinScaleUp,
-		CoinString.c_str(),
+		HaveCoin.c_str(),
 		GetColor(0, 0, 0),
 		giFont_DonguriDuel_32);
 }

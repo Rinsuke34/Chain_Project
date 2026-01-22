@@ -24,6 +24,12 @@ void Card_Arms_Base::Add_Strength_Buff(int amount)
 	// 引数
 	// amount	<- 加算するバフ量
 
+	/* 加算バフ量が0なら処理を行わない */
+	if (amount <= 0)
+	{
+		return;
+	}
+
 	/* 攻撃力 + バフ量が100以上にならないように設定する */
 	if (this->Strength + this->Strength_Buff + amount > 99)
 	{
@@ -53,6 +59,12 @@ void Card_Arms_Base::Add_Diffence_Buff(int amount)
 {
 	// 引数
 	// amount	<- 加算するバフ量
+
+	/* 加算バフ量が0なら処理を行わない */
+	if (amount <= 0)
+	{
+		return;
+	}
 
 	/* 防御力 + バフ量が100以上にならないように設定する */
 	if (this->Diffence + this->Diffence_Buff + amount > 99)
