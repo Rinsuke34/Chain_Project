@@ -181,9 +181,11 @@ void Card_Base::Update()
 void Card_Base::Draw()
 {
 	/* ‰æ‘œ•`ŽÊ */
-	DrawGraph(
-		this->Now_Position.iX - (IMAGE_SIZE_WIDTH / 2),
-		this->Now_Position.iY - (IMAGE_SIZE_HEIGHT / 2),
+	DrawModiGraph(
+		this->Now_Position.iX - (IMAGE_SIZE_WIDTH / 2),	this->Now_Position.iY - (IMAGE_SIZE_HEIGHT / 2),
+		this->Now_Position.iX + (IMAGE_SIZE_WIDTH / 2), this->Now_Position.iY - (IMAGE_SIZE_HEIGHT / 2),
+		this->Now_Position.iX + (IMAGE_SIZE_WIDTH / 2), this->Now_Position.iY + (IMAGE_SIZE_HEIGHT / 2),
+		this->Now_Position.iX - (IMAGE_SIZE_WIDTH / 2), this->Now_Position.iY + (IMAGE_SIZE_HEIGHT / 2),
 		this->Image,
 		TRUE
 	);
