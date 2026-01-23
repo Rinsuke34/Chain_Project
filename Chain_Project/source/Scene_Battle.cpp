@@ -82,6 +82,7 @@ Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 0, false, false)
 	{
 		Deck->UpdateImage();
 		Deck->SetUp_DataList();
+		Deck->SetCardState(Card_Base::CARDSTATE_DECK);
 	}
 }
 
@@ -200,6 +201,9 @@ void Scene_Battle::Update()
 
 	/* ドロップアイテムの作成処理 */
 	Create_DropItem();
+
+	/* キャラクターが死亡しているか確認 */
+	Character_Death_Delete_Check();
 }
 
 // 描画
@@ -219,6 +223,12 @@ void Scene_Battle::Draw()
 
 	/* バトルエリア描写 */
 	Draw_BattleArea();
+
+	/* 山札のカードの描写 */
+	Draw_DeckCard();
+
+	/* 捨て札のカードの描写 */
+	Draw_TrashCard();
 
 	/* 手札の描写 */
 	Draw_HandCard();

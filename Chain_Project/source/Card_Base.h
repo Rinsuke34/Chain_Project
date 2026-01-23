@@ -47,6 +47,8 @@ class Card_Base : public std::enable_shared_from_this<Card_Base>
 		void SetStrength_Buff(int strength)			{ Strength_Buff		= strength; }	// 攻撃力(バフ)の設定
 		void SetDiffence_Buff(int diffence)			{ Diffence_Buff		= diffence; }	// 防御力(バフ)の設定
 		void SetAttackRange(int range)				{ AttackRange		= range; }		// 攻撃範囲の設定
+		void SetRotationAngle(float angle)			{ RotateAngle		= angle; }		// 回転角度の設定
+		void SetCardState(int state)				{ CardState			= state; }		// カード状態の設定
 		// その他
 		void SetNowPos(Struct_2D::POSITION pos)		{ Now_Position		= pos; }		// 現在座標の設定
 		void SetSettingPos(Struct_2D::POSITION pos) { Setting_Position	= pos; }		// 設定座標の設定
@@ -64,6 +66,7 @@ class Card_Base : public std::enable_shared_from_this<Card_Base>
 		int							GetStrength_Buff()	{ return Strength; }		// 攻撃力(バフ)の取得
 		int							GetDiffence_Buff()	{ return Diffence; }		// 防御力(バフ)の取得
 		int							GetAttackRange()	{ return AttackRange; }		// 攻撃範囲の取得
+		float						GetRotationAngle()	{ return RotateAngle; }		// 回転角度の取得
 		// その他
 		Struct_2D::POSITION			GetNowPos()			{ return Now_Position; }		// 現在座標の取得
 		Struct_2D::POSITION			GetSettingPos()		{ return Setting_Position; }	// 設定座標の取得
@@ -111,6 +114,16 @@ class Card_Base : public std::enable_shared_from_this<Card_Base>
 		static const int SUTE_POS_Y			= 41;	// スート描写Y座標
 		// イラスト(描写)
 		static const int ILLUSTRATION_POS_Y = 32;	// イラスト描写Y座標(中心から見たときの補正量)
+		// 回転速度
+		const float ROTATE_INTERPOLATION_SPEED	= 0.1f;	// 回転補間速度
+		// カードの状態
+		static const int CARDSTATE_NONE			= -1;	// 無効
+		static const int CARDSTATE_DECK			= 0;	// デッキ
+		static const int CARDSTATE_HAND			= 1;	// 手札
+		static const int CARDSTATE_PICKED		= 2;	// ピックアップ中
+		static const int CARDSTATE_SETTING		= 3;	// 設定中
+		static const int CARDSTATE_TRASH		= 4;	// 捨て札
+		static const int CARDSTATE_LOST			= 5;	// ロスト
 
 	protected:
 		/* 変数 */
@@ -127,8 +140,11 @@ class Card_Base : public std::enable_shared_from_this<Card_Base>
 		int								Diffence_Buff;		// 防御力バフ(永続)
 		int								AttackRange;		// 攻撃範囲
 		std::string						ImageName;			// 画像の名前
+		int								CardState;			// カードの状態
 		// 画像
 		int								Image;				// 画像
+		std::shared_ptr<int>			Image_BackSide;		// 画像(裏面)
+		float							RotateAngle;		// 回転角度
 		// その他
 		Struct_2D::POSITION				Now_Position;		// 現在座標
 		Struct_2D::POSITION				Setting_Position;	// 設定座標(ホールドが解除された際に自動で補正される座標)
@@ -145,4 +161,7 @@ class Card_Base : public std::enable_shared_from_this<Card_Base>
 		virtual void	DrawName()			{};	// 名前を描写
 		virtual void	DrawExText()		{};	// 追加テキストの描写
 		virtual void	CheckHavePlayer();		// プレイヤーを取得しているか確認
+		virtual void	Complement_Position();	// 座標補完処理
+		virtual void	Complement_Rotate();	// 回転補完処理
+
 };

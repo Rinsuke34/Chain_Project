@@ -74,6 +74,7 @@ void Scene_Battle::Update_DrawCard()
 			std::shared_ptr<Card_Base> pDrawCard = this->pDataList_Battle->GetDeckCardList().front();
 			this->pDataList_Battle->AddHandCard(pDrawCard);
 			this->pDataList_Battle->RemoveDeckCard(pDrawCard);
+			pDrawCard->SetCardState(Card_Base::CARDSTATE_HAND);
 		}
 		else if(this->pDataList_Battle->GetHandCardList().size() == 0)
 		{
@@ -150,6 +151,9 @@ void Scene_Battle::Update_PlayerActionDecision()
 				gstKeyboardInputData.iMouseX,
 				gstKeyboardInputData.iMouseY
 			});
+
+			/* ホールド中のカードの状態を"ピックアップ中"に設定 */
+			this->pDataList_Battle->GetHoldCard()->SetCardState(Card_Base::CARDSTATE_PICKED);
 		}
 		else
 		{
@@ -169,6 +173,9 @@ void Scene_Battle::Update_PlayerActionDecision()
 					/* 戻したカードの設定座標を手札の位置に設定 */
 					this->pDataList_Battle->GetBattleAreaCardList(iBattleAreaIndex)->SetSettingPos({ 0, 0 });
 
+					/* 戻したカードの状態を"手札"に設定する */
+					this->pDataList_Battle->GetBattleAreaCardList(iBattleAreaIndex)->SetCardState(Card_Base::CARDSTATE_HAND);
+
 					/* バトルエリアのカードを削除 */
 					this->pDataList_Battle->RemoveBattleAreaCard(iBattleAreaIndex);
 				}
@@ -178,6 +185,9 @@ void Scene_Battle::Update_PlayerActionDecision()
 
 				/* 配置したカードの設定座標をバトルエリアの位置に設定 */
 				this->pDataList_Battle->GetHoldCard()->SetSettingPos({ (SCREEN_SIZE_WIDE / 2) + (BATTLE_AREA_INTERVAL * (iBattleAreaIndex - 2)), BATTLE_AREA_POS_Y });
+
+				/* 配置したカードの状態を"設定中"にする */
+				this->pDataList_Battle->GetHoldCard()->SetCardState(Card_Base::CARDSTATE_SETTING);
 			}
 			else
 			{
@@ -187,6 +197,9 @@ void Scene_Battle::Update_PlayerActionDecision()
 
 				/* 戻したカードの設定座標を手札の位置に設定 */
 				this->pDataList_Battle->GetHoldCard()->SetSettingPos({0, 0});
+
+				/* ホールド中のカードの状態を"手札"に設定する */
+				this->pDataList_Battle->GetHoldCard()->SetCardState(Card_Base::CARDSTATE_HAND);
 			}
 
 			/* ホールド中のカードをホールド解除する */
@@ -488,6 +501,24 @@ void Scene_Battle::CardPosition_HandSetSettingPosting()
 // カードの更新処理
 void Scene_Battle::Card_Update()
 {
+	/* 山札のカードの更新処理 */
+	for (const auto& DeckCard : this->pDataList_Battle->GetDeckCardList())
+	{
+		DeckCard->Update();
+	}
+
+	/* 捨て札のカードの更新処理 */
+	for (const auto& TrashCard : this->pDataList_Battle->GetTrashCardList())
+	{
+		TrashCard->Update();
+	}
+
+	/* ピックアップ中カードの更新処理 */
+	if (this->pDataList_Battle->GetHoldCard() != nullptr)
+	{
+		this->pDataList_Battle->GetHoldCard()->Update();
+	}
+
 	/* バトルエリアのカードの更新処理 */
 	for (int i = 0; i < DataList_Battle::BATTLE_AREA_MAX; i++)
 	{
@@ -717,10 +748,11 @@ void Scene_Battle::CheckLostCard()
 		}
 	}
 
-	/* ロストフラグが有効なカードをリストに登録 */
+	/* ロストフラグが有効なカードをリストに登録＆ロスト状態に設定 */
 	for (const auto& card : LostCardList)
 	{
 		this->pDataList_Battle->AddLostCard(card);
+		card->SetCardState(Card_Base::CARDSTATE_LOST);
 	}
 
 	/* 該当のカードをデッキ、手札、捨て札リストから削除 */
@@ -822,6 +854,7 @@ void Scene_Battle::Trash_UseCard(std::shared_ptr<Action_Effect_Base> pEffect)
 	}
 
 	/* 効果の紐づいたカードをバトルエリア1～5から探す */
+	this->iBattlePhase_NowBattleAreaNo = -1;
 	for (int i = 0; i < DataList_Battle::BATTLE_AREA_MAX; i++)
 	{
 		if (this->pDataList_Battle->GetBattleAreaCardList(i) == pEffect->EffectCard)
@@ -832,9 +865,14 @@ void Scene_Battle::Trash_UseCard(std::shared_ptr<Action_Effect_Base> pEffect)
 		}
 	}
 
-	/* 紐づいたカードをトラッシュする */
-	this->pDataList_Battle->AddTrashCard(this->pDataList_Battle->GetBattleAreaCardList(this->iBattlePhase_NowBattleAreaNo));
-	this->pDataList_Battle->RemoveBattleAreaCard(this->iBattlePhase_NowBattleAreaNo);
+	/* 見つかったか確認 */
+	if (this->iBattlePhase_NowBattleAreaNo != -1)
+	{
+		/* 紐づいたカードをトラッシュする */
+		this->pDataList_Battle->GetBattleAreaCardList(this->iBattlePhase_NowBattleAreaNo)->SetCardState(Card_Base::CARDSTATE_TRASH);
+		this->pDataList_Battle->AddTrashCard(this->pDataList_Battle->GetBattleAreaCardList(this->iBattlePhase_NowBattleAreaNo));
+		this->pDataList_Battle->RemoveBattleAreaCard(this->iBattlePhase_NowBattleAreaNo);
+	}
 }
 
 // バトルエリアのカーソル接触時のアニメーションを設定

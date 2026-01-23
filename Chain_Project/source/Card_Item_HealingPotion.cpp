@@ -39,7 +39,4 @@ void Card_Item_HealingPotion::BattleAction()
 	addEffect->Priority							= 100 - this->GetMyAreaNo();		// 100-設定されたエリア番号を優先順位に設定
 	addEffect->EffectCard						= shared_from_this();				// 効果を使用するカード:このカード
 	this->pDataList_Battle->AddEffect(addEffect);
-
-	/* ロストフラグを有効化 */
-	this->bLostFlag = true;
 }

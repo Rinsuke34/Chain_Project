@@ -25,14 +25,24 @@ Card_Base::Card_Base()
 	this->Strength_Buff	= 0;					// 攻撃力バフ
 	this->Diffence_Buff	= 0;					// 防御力バフ
 	this->AttackRange	= ATTACKRANGE_FRONT;	// 攻撃範囲
+	this->CardState		= CARDSTATE_NONE;		// カード状態
 	// 画像
 	this->Image = MakeScreen(IMAGE_SIZE_WIDTH, IMAGE_SIZE_HEIGHT, TRUE);
+	this->RotateAngle = 0.f;
 	// その他
 	this->Now_Position		= { SCREEN_SIZE_WIDE, SCREEN_SIZE_HEIGHT / 2 };	// 現在座標(ドローしてる感を出すため山札の位置を初期値に設定)
 	this->Setting_Position	= { 0, 0 };										// 設定座標(ホールドが解除された際に自動で補正される座標)
 	this->bLostFlag			= false;										// 削除フラグ
 	this->iNowChainCount	= 0;											// 現在のチェイン数(ターン開始時に設定)
 	this->pPlayer			= nullptr;										// プレイヤーキャラクターのポインタ
+
+	/* 画像取得 */
+	/* 画像管理データリストを取得 */
+	std::shared_ptr<DataList_Image> pDataList_Image = std::dynamic_pointer_cast<DataList_Image>(gpDataListServer->GetDataList("DataList_Image"));
+
+	/* 裏面画像を取得 */
+	std::string ImageFilePath = "Card_Commoon/Card_BackSide";
+	Image_BackSide = pDataList_Image->iGetImageHandle(ImageFilePath);
 }
 
 // デストラクタ
@@ -156,39 +166,100 @@ void Card_Base::BattleAction()
 // 更新処理
 void Card_Base::Update()
 {
-	/* X座標補間 */
-	if (std::abs(this->Setting_Position.iX - this->Now_Position.iX) < INTERPOLATION_SPEED)
+	/* 状態に応じて設定を変更する */
+	bool Complement_SkipFlg = false;	// 補完処理をスキップするか
+	switch (this->CardState)
 	{
-		this->Now_Position.iX = this->Setting_Position.iX;
-	}
-	else
-	{
-		this->Now_Position.iX += (this->Setting_Position.iX - this->Now_Position.iX) / INTERPOLATION_SPEED;
+		case CARDSTATE_DECK:	// デッキ
+			/* 設定座標の設定 */
+			this->Setting_Position.iX = SCREEN_SIZE_WIDE - 50;
+			this->Setting_Position.iY = SCREEN_SIZE_HEIGHT / 2 + 100;
+
+			/* 回転角度の設定 */
+			this->RotateAngle = -0.7853f;	// -45度
+			break;
+
+		case CARDSTATE_PICKED:	// ピックアップ中
+			/* 補完処理をスキップ */
+			Complement_SkipFlg = true;
+			break;
+
+		case CARDSTATE_HAND:	// 手札
+		case CARDSTATE_SETTING:	// 設定中
+			/* 特殊な処理は無し */
+			break;
+
+		case CARDSTATE_TRASH:	// 捨て札
+		case CARDSTATE_LOST:	// ロスト
+			/* 設定座標の設定 */
+			this->Setting_Position.iX = 100;
+			this->Setting_Position.iY = SCREEN_SIZE_HEIGHT / 2 + 100;
+			break;
 	}
 
-	/* Y座標補間 */
-	if (std::abs(this->Setting_Position.iY - this->Now_Position.iY) < INTERPOLATION_SPEED)
+	/* スキップフラグが無効であるなら補完処理を実施 */
+	if (Complement_SkipFlg == false)
 	{
-		this->Now_Position.iY = this->Setting_Position.iY;
-	}
-	else
-	{
-		this->Now_Position.iY += (this->Setting_Position.iY - this->Now_Position.iY) / INTERPOLATION_SPEED;
+		/* 座標補完処理 */
+		Complement_Position();
+
+		/* 回転補完処理 */
+		Complement_Rotate();
 	}
 }
 
 // 描画
 void Card_Base::Draw()
 {
-	/* 画像描写 */
-	DrawModiGraph(
-		this->Now_Position.iX - (IMAGE_SIZE_WIDTH / 2),	this->Now_Position.iY - (IMAGE_SIZE_HEIGHT / 2),
-		this->Now_Position.iX + (IMAGE_SIZE_WIDTH / 2), this->Now_Position.iY - (IMAGE_SIZE_HEIGHT / 2),
-		this->Now_Position.iX + (IMAGE_SIZE_WIDTH / 2), this->Now_Position.iY + (IMAGE_SIZE_HEIGHT / 2),
-		this->Now_Position.iX - (IMAGE_SIZE_WIDTH / 2), this->Now_Position.iY + (IMAGE_SIZE_HEIGHT / 2),
-		this->Image,
+	/* フラグ定義 */
+	bool bBackSideFlg	= false;	// 裏面を描画するか
+	bool bDarkToneFlg	= false;	// 暗く描画するか
+
+	/* 状態に応じて設定を変更する */
+	switch (this->CardState)
+	{
+		case CARDSTATE_DECK:	// デッキ
+			/* 裏面を描画 */
+			bBackSideFlg = true;
+			break;
+
+		case CARDSTATE_HAND:	// 手札
+		case CARDSTATE_PICKED:	// ピックアップ中
+		case CARDSTATE_SETTING:	// 設定中
+			/* 特殊な処理は無し */
+			break;
+
+		case CARDSTATE_TRASH:	// 捨て札
+		case CARDSTATE_LOST:	// ロスト
+			/* 暗く描写 */
+			bDarkToneFlg = true;
+			break;
+	}
+
+	/* 描画対象ハンドル */
+	int drawHandle = bBackSideFlg ? *(this->Image_BackSide) : this->Image;
+
+	/* 拡大率は 1.0f（比率を変えない） */
+	const float scale = 1.0f;
+
+	// 暗く描写するなら設定を暗くする (既存処理を維持)
+	if (bDarkToneFlg)
+	{
+		SetDrawBright(100, 100, 100);
+	}
+
+	/* 描写 */
+	DrawRotaGraph(
+		this->Now_Position.iX,		// 描画中心 X
+		this->Now_Position.iY,		// 描画中心 Y
+		static_cast<double>(scale),
+		static_cast<double>(this->RotateAngle),
+		drawHandle,
 		TRUE
 	);
+
+	/* 描画輝度を元に戻す */
+	SetDrawBright(255, 255, 255);
 }
 
 // 画像更新
@@ -350,4 +421,46 @@ void Card_Base::Reset_Buff()
 
 	/* 画像更新 */
 	UpdateImage();
+}
+
+// 座標補完処理
+void Card_Base::Complement_Position()
+{
+	/* X座標補間 */
+	if (std::abs(this->Setting_Position.iX - this->Now_Position.iX) < INTERPOLATION_SPEED)
+	{
+		this->Now_Position.iX = this->Setting_Position.iX;
+	}
+	else
+	{
+		this->Now_Position.iX += (this->Setting_Position.iX - this->Now_Position.iX) / INTERPOLATION_SPEED;
+	}
+
+	/* Y座標補間 */
+	if (std::abs(this->Setting_Position.iY - this->Now_Position.iY) < INTERPOLATION_SPEED)
+	{
+		this->Now_Position.iY = this->Setting_Position.iY;
+	}
+	else
+	{
+		this->Now_Position.iY += (this->Setting_Position.iY - this->Now_Position.iY) / INTERPOLATION_SPEED;
+	}
+}
+
+// 回転補完処理
+void Card_Base::Complement_Rotate()
+{
+	/* 角度を0に補完する(+なら-、-なら+の値へ) */
+	if (std::abs(this->RotateAngle) < ROTATE_INTERPOLATION_SPEED)
+	{
+		this->RotateAngle = 0.f;
+	}
+	else if (this->RotateAngle > 0.f)
+	{
+		this->RotateAngle -= ROTATE_INTERPOLATION_SPEED;
+	}
+	else if (this->RotateAngle < 0.f)
+	{
+		this->RotateAngle += ROTATE_INTERPOLATION_SPEED;
+	}
 }

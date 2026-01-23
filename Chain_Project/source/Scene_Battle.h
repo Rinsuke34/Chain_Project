@@ -94,6 +94,8 @@ class Scene_Battle : public Scene_Base
 		void Draw_BattleArea();					// バトルエリア描写
 		void Draw_HandCard();					// 手札の描写
 		void Draw_HoldCard();					// ホールド中のカードを描写
+		void Draw_TrashCard();					// 捨て札のカードの描写
+		void Draw_DeckCard();					// 山札のカードの描写
 		// UIのハンドル
 		std::shared_ptr<Scene_UI_Button> UI_DecisionButton;	// 決定ボタン
 		// その他

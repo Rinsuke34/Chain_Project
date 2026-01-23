@@ -250,3 +250,21 @@ void Scene_Battle::Draw_DropItem()
 		DropItem->Draw();
 	}
 }
+
+// ŽÌ‚ÄŽD‚ÌƒJ[ƒh‚Ì•`ŽÊ
+void Scene_Battle::Draw_TrashCard()
+{
+	for(auto& TrashCard : this->pDataList_Battle->GetTrashCardList())
+	{
+		TrashCard->Draw();
+	}
+}
+
+// ŽRŽD‚ÌƒJ[ƒh‚Ì•`ŽÊ
+void Scene_Battle::Draw_DeckCard()
+{
+	for(auto& DeckCard : this->pDataList_Battle->GetDeckCardList())
+	{
+		DeckCard->Draw();
+	}
+}
