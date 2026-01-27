@@ -86,10 +86,7 @@ void Drop_Item_Base::Draw()
 {
 	if (this->Image != nullptr)
 	{
-		int SizeX = 32,
-		int SizeY = 32;
-		
-		DrawGraph(this->Position.iX - (SizeX / 2), this->Position.iY - (SizeY / 2), *(this->Image), TRUE);
+		DrawGraph(this->Position.iX - (DRAW_SIZE / 2), this->Position.iY - (DRAW_SIZE / 2), *(this->Image), TRUE);
 	}
 }
 

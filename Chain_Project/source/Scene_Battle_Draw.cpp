@@ -152,8 +152,36 @@ void Scene_Battle::Draw_Chain()
 				};
 
 				/* 鎖を描写 */
-				DRAW_FUNCTION::DrawChain(BattleAreaPos_Left, BattleAreaPos_Right);
-				
+				Struct_2D::POSITION StartPos, EndPos;
+				// 3:右下から左上
+				StartPos	= BattleAreaPos_Right;
+				EndPos		= BattleAreaPos_Left;
+				StartPos.iY	+= 80;
+				EndPos.iY	-= 80;
+				StartPos.iX -= 60;
+				EndPos.iX	+= 60;
+				DRAW_FUNCTION::DrawChain_Anim(StartPos, EndPos, this->Chain_Anim_Count[3]);
+				// 2:左下から右上
+				StartPos	= BattleAreaPos_Left;
+				EndPos		= BattleAreaPos_Right;
+				StartPos.iY += 80;
+				EndPos.iY	-= 80;
+				StartPos.iX += 60;
+				EndPos.iX	-= 60;
+				DRAW_FUNCTION::DrawChain_Anim(StartPos, EndPos, this->Chain_Anim_Count[2]);
+				// 1:ちょっと右上からちょっと左下
+				StartPos	= BattleAreaPos_Right;
+				EndPos		= BattleAreaPos_Left;
+				StartPos.iY	-= 40;
+				EndPos.iY	+= 40;
+				DRAW_FUNCTION::DrawChain_Anim(StartPos, EndPos, this->Chain_Anim_Count[1]);
+				// 0:ちょっと左上からちょっと右下
+				StartPos	= BattleAreaPos_Left;
+				EndPos		= BattleAreaPos_Right;
+				StartPos.iY	-= 40;
+				EndPos.iY	+= 40;
+				DRAW_FUNCTION::DrawChain_Anim(StartPos, EndPos, this->Chain_Anim_Count[0]);
+
 				/* スート画像のサイズを取得 */
 				int SizeX, SizeY;
 				GetGraphSize(*(SuteFrame), &SizeX, &SizeY);
@@ -196,6 +224,22 @@ void Scene_Battle::Draw_BattleArea()
 			(SCREEN_SIZE_WIDE / 2)	+ (BATTLE_AREA_WIDE / 2) + (BATTLE_AREA_INTERVAL * (i - 2)),
 			BATTLE_AREA_POS_Y		+ (BATTLE_AREA_HEIGHT / 2),
 			*(this->Image_BattleArea[(iSelectAreaNo == i) ? 1 : 0]), TRUE);
+
+		/* 番号の背景 */
+		DrawExtendGraph(
+			(SCREEN_SIZE_WIDE / 2)	- (200 / 2) + (BATTLE_AREA_INTERVAL * (i - 2)),
+			BATTLE_AREA_POS_Y		- (BATTLE_AREA_HEIGHT / 2) - (100),
+			(SCREEN_SIZE_WIDE / 2)	+ (200 / 2) + (BATTLE_AREA_INTERVAL * (i - 2)),
+			BATTLE_AREA_POS_Y		- (BATTLE_AREA_HEIGHT / 2),
+			*(this->Image_BattleArea_No_Base), TRUE);
+
+		/* 番号 */
+		DrawExtendGraph(
+			(SCREEN_SIZE_WIDE / 2)	- (64 / 2) + (BATTLE_AREA_INTERVAL * (i - 2)),
+			BATTLE_AREA_POS_Y		- (BATTLE_AREA_HEIGHT / 2) - 50 - (64 / 2),
+			(SCREEN_SIZE_WIDE / 2)	+ (64 / 2) + (BATTLE_AREA_INTERVAL * (i - 2)),
+			BATTLE_AREA_POS_Y		- (BATTLE_AREA_HEIGHT / 2) - 50 + (64 / 2),
+			*(this->Image_BattleArea_No_Number[i]), TRUE);
 
 		/* 選択中であるならアニメーションを描写 */
 		if (iSelectAreaNo == i)

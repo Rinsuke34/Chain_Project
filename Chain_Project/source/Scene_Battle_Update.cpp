@@ -955,3 +955,16 @@ void Scene_Battle::Create_DropItem()
 		}
 	}
 }
+
+// 鎖のアニメーションの更新
+void Scene_Battle::Update_Chain_Anim()
+{
+	for (int i = 0; i < 4; i++)
+	{
+		this->Chain_Anim_Count[i] += (i + 1);
+		if(this->Chain_Anim_Count[i] >= CHAIN_ANIMATION_MAX)
+		{
+			this->Chain_Anim_Count[i] -= CHAIN_ANIMATION_MAX;
+		}
+	}
+}

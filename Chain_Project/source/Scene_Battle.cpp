@@ -22,6 +22,10 @@ Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 0, false, false)
 	this->iBattleActionDelay			= 0;		// バトルアクション間のディレイ時間
 	this->BattleArea_Anim_ImageNo		= 0;		// バトルエリアのアニメーションの画像番号
 	this->BattleArea_Anim_ChangeDelay	= 0;		// バトルエリアのアニメーションの変更までの待機時間
+	for (int i = 0; i < 4; i++)
+	{
+		this->Chain_Anim_Count[i]		= 0;		// 鎖のアニメーションのカウント
+	}
 
 	/* データリスト"バトル用データ管理"を作成 */
 	this->pDataList_Battle = std::make_shared<DataList_Battle>();
@@ -59,6 +63,22 @@ Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 0, false, false)
 		this->Image_BackGround[1] = pDataList_Image->iGetImageHandle(ImageFilePath);
 		ImageFilePath = "BackGround/Table";
 		this->Image_BackGround[2] = pDataList_Image->iGetImageHandle(ImageFilePath);
+
+		/* バトルエリアの番号の背景 */
+		ImageFilePath = "UI/Battle/BattleArea_No_Base";
+		this->Image_BattleArea_No_Base = pDataList_Image->iGetImageHandle(ImageFilePath);
+
+		/* バトルエリアの番号の数字[1～5] */
+		ImageFilePath = "UI/Battle/BattleArea_No_1";
+		this->Image_BattleArea_No_Number[0]= pDataList_Image->iGetImageHandle(ImageFilePath);
+		ImageFilePath = "UI/Battle/BattleArea_No_2";
+		this->Image_BattleArea_No_Number[1] = pDataList_Image->iGetImageHandle(ImageFilePath);
+		ImageFilePath = "UI/Battle/BattleArea_No_3";
+		this->Image_BattleArea_No_Number[2] = pDataList_Image->iGetImageHandle(ImageFilePath);
+		ImageFilePath = "UI/Battle/BattleArea_No_4";
+		this->Image_BattleArea_No_Number[3] = pDataList_Image->iGetImageHandle(ImageFilePath);
+		ImageFilePath = "UI/Battle/BattleArea_No_5";
+		this->Image_BattleArea_No_Number[4] = pDataList_Image->iGetImageHandle(ImageFilePath);
 	}
 
 	/* UI作成 */
@@ -204,6 +224,9 @@ void Scene_Battle::Update()
 
 	/* キャラクターが死亡しているか確認 */
 	Character_Death_Delete_Check();
+
+	/* 鎖のアニメーション更新 */
+	Update_Chain_Anim();
 }
 
 // 描画

@@ -39,6 +39,7 @@ class Drop_Item_Base
 		// その他
 		static const int	FALLING_SPEED_START	= -10;		// 落下速度(初速)
 		const float			MOVE_SPEED			= 50.f;		// 移動速度
+		static const int	DRAW_SIZE			= 32;		// 描写時のサイズ
 
 	protected:
 		/* 変数 */

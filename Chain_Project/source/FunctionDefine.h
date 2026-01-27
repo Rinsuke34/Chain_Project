@@ -15,7 +15,8 @@ namespace LOAD_FUNCTION
 // 描写関係
 namespace DRAW_FUNCTION
 {
-	void DrawChain(Struct_2D::POSITION StartPos, Struct_2D::POSITION EndPos);	// 鎖の描写
-	void DrawRoad(Struct_2D::POSITION StartPos, Struct_2D::POSITION EndPos);	// 道の描写
+	void DrawChain(Struct_2D::POSITION StartPos, Struct_2D::POSITION EndPos);						// 鎖の描写	
+	void DrawChain_Anim(Struct_2D::POSITION StartPos, Struct_2D::POSITION EndPos, int AnimCount);	// 鎖の描写（アニメーション付き）
+	void DrawRoad(Struct_2D::POSITION StartPos, Struct_2D::POSITION EndPos);						// 道の描写
 	void DrawFrame_Image(Struct_2D::POSITION CenterPos, Struct_2D::POSITION IconSize, int Frame_Thickness, int Image_Corner, int Image_Line, int Image_Inside);	// 画像でのフレームの描写
 }

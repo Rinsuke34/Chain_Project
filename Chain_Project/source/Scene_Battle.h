@@ -56,6 +56,7 @@ class Scene_Battle : public Scene_Base
 		// アニメーション関連
 		static const int EMPHASIS_ANIMATION_MAX					= 4;	// 強調表示アニメーションの最大数
 		static const int EMPHASIS_ANIMATION_SPEED				= 8;	// 強調表示アニメーションの速度(変更までのフレーム数)
+		static const int CHAIN_ANIMATION_MAX					= 40;	// 鎖のアニメーションの最大値
 
 	private:
 		/* 変数 */
@@ -70,10 +71,13 @@ class Scene_Battle : public Scene_Base
 		int												BattleArea_Anim_ImageNo;		// バトルエリアのアニメーションの画像番号
 		int												BattleArea_Anim_ChangeDelay;	// バトルエリアのアニメーションの変更までの待機時間
 		std::vector<std::shared_ptr<Drop_Item_Base>>	DropItem_List;					// ドロップアイテム一覧
+		int												Chain_Anim_Count[4];			// 鎖のアニメーションのカウント[0:ちょっと左上からちょっと右下 / 1:ちょっと右上からちょっと左下 / 2:左下から右上 / 3:右下から左上]
 		// 画像
 		std::shared_ptr<int> Image_BattleArea[2];										// バトルエリア[0:通常時, 1:カーソル接触時]
 		std::shared_ptr<int> Image_BattleArea_Emphasis_Anim[EMPHASIS_ANIMATION_MAX];	// バトルエリア(カーソル接触時のアニメーション)[0～3]
 		std::shared_ptr<int> Image_BackGround[3];										// 背景画像[0:キャラクター立ち位置の背景, 1:キャラクター立ち位置の足場, 2:カード置き場]
+		std::shared_ptr<int> Image_BattleArea_No_Base;									// バトルエリアの番号の背景
+		std::shared_ptr<int> Image_BattleArea_No_Number[5];								// バトルエリアの番号の数字[1～5]
 		/* 関数 */
 		// 各フェーズごとの更新処理
 		void Update_EffectTurnStart();			// "ターン開始時"の効果発動
@@ -113,4 +117,5 @@ class Scene_Battle : public Scene_Base
 		void Update_DropItem();												// ドロップアイテムの更新処理
 		void Draw_DropItem();												// ドロップアイテムの描写処理
 		void Create_DropItem();												// ドロップアイテムの作成処理
+		void Update_Chain_Anim();											// 鎖のアニメーションの更新
 };
