@@ -153,7 +153,7 @@ void Scene_Draw_GameResource::Draw()
 			giFont_DonguriDuel_32);
 
 		// ŠŽ”
-		std::string HaveCoin = std::to_string(this->pDataList_GameResource->GetHaveCoin());
+		std::string HaveCoin = std::to_string(this->pDataList_GameResource->GetDropCardList().size());
 		DrawStringToHandle(
 			46 + 148 + GetDrawStringWidthToHandle(Kakeru.c_str(), static_cast<int>(strlenDx(Kakeru.c_str())), giFont_DonguriDuel_32),
 			12 - this->CardScaleUp,
