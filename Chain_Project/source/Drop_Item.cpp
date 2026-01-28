@@ -126,3 +126,21 @@ void Drop_Item_Coin::Update_Moveing()
 		this->Position.iY += Direction.iY;
 	}	
 }
+
+// コンストラクタ
+Drop_Item_Card::Drop_Item_Card()
+{
+	/* 画像設定 */
+	// 画像管理データリストを取得
+	std::shared_ptr<DataList_Image> pDataList_Image = std::dynamic_pointer_cast<DataList_Image>(gpDataListServer->GetDataList("DataList_Image"));
+	// 画像名称
+	std::string ImageName = "Common_Icon/Icon_Card";
+	/* 指定の画像を読み込む */
+	this->Image = pDataList_Image->iGetImageHandle(ImageName);
+}
+
+// 移動フェーズ更新
+void Drop_Item_Card::Update_Moveing()
+{
+
+}

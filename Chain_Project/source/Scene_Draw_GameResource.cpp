@@ -32,6 +32,9 @@ Scene_Draw_GameResource::Scene_Draw_GameResource() : Scene_Base("Scene_Draw_Game
 	this->Image_Frame_Line = pDataList_Image->iGetImageHandle(FineName);
 	FineName = "UI/Button/Button_Frame_Inside_Over";
 	this->Image_Frame_Inside = pDataList_Image->iGetImageHandle(FineName);
+	// カード
+	FineName = "Common_Icon/Icon_Card";
+	this->Image_Card = pDataList_Image->iGetImageHandle(FineName);
 }
 
 // 更新
@@ -57,43 +60,105 @@ void Scene_Draw_GameResource::Update()
 
 	/* 変更前のコイン枚数を更新 */
 	this->Coin_Old = Coin_Now;
+
+	/* ドロップしたカードの枚数に変化があるか確認 */
+	int Card_Now = static_cast<int>(this->pDataList_GameResource->GetDropCardList().size());
+	if (Card_Now != this->Card_Old)
+	{
+		// 変化があるならば
+		/* カードアイコンのスケールアップ量を設定 */
+		this->CardScaleUp = 5;
+	}
+	else
+	{
+		// 変化がないならば
+		/* スケールを通常に戻す */
+		if (this->CardScaleUp > 0)
+		{
+			this->CardScaleUp--;
+		}
+	}
+
+	/* 変更前のカード枚数を更新 */
+	this->Card_Old = Card_Now;
 }
 
 // 描画
 void Scene_Draw_GameResource::Draw()
 {
-	/* コインアイコンの枠の描写 */
-	Struct_2D::POSITION CenterPos		= { 78,		30 };
-	Struct_2D::POSITION	IconSize		= { 128,	32 };
-	int					Frame_Thickness	= 8;
-	DRAW_FUNCTION::DrawFrame_Image(CenterPos, IconSize, Frame_Thickness, *(this->Image_Frame_Corner), *(this->Image_Frame_Line), *(this->Image_Frame_Inside));
+	/* コイン枚数の描写 */
+	{
+		/* コインアイコンの枠の描写 */
+		Struct_2D::POSITION CenterPos		= { 78,		30 };
+		Struct_2D::POSITION	IconSize		= { 128,	32 };
+		int					Frame_Thickness	= 8;
+		DRAW_FUNCTION::DrawFrame_Image(CenterPos, IconSize, Frame_Thickness, *(this->Image_Frame_Corner), *(this->Image_Frame_Line), *(this->Image_Frame_Inside));
+	
+		/* コインアイコンの描写 */
+		DrawModiGraph(
+			COIN_POS_X_MINUS	- this->CoinScaleUp,	COIN_POS_Y_MINUS	- this->CoinScaleUp,
+			COIN_POS_X_PLUS		+ this->CoinScaleUp,	COIN_POS_Y_MINUS	- this->CoinScaleUp,
+			COIN_POS_X_PLUS		+ this->CoinScaleUp,	COIN_POS_Y_PLUS		+ this->CoinScaleUp,
+			COIN_POS_X_MINUS	- this->CoinScaleUp,	COIN_POS_Y_PLUS		+ this->CoinScaleUp,
+			*(this->Image_Coin),
+			TRUE
+		);
+	
+		/* 文字列の描写 */
+		// "×"の部分
+		std::string Kakeru = " × ";
+		DrawStringToHandle(
+			46,
+			12,
+			Kakeru.c_str(),
+			GetColor(0, 0, 0),
+			giFont_DonguriDuel_32);
+	
+		// 所持数
+		std::string HaveCoin = std::to_string(this->pDataList_GameResource->GetHaveCoin());
+		DrawStringToHandle(
+			46 + GetDrawStringWidthToHandle(Kakeru.c_str(), static_cast<int>(strlenDx(Kakeru.c_str())), giFont_DonguriDuel_32),
+			12 - this->CoinScaleUp,
+			HaveCoin.c_str(),
+			GetColor(0, 0, 0),
+			giFont_DonguriDuel_32);
+	}
 
-	/* コインアイコンの描写 */
-	DrawModiGraph(
-		COIN_POS_X_MINUS	- this->CoinScaleUp,	COIN_POS_Y_MINUS	- this->CoinScaleUp,
-		COIN_POS_X_PLUS		+ this->CoinScaleUp,	COIN_POS_Y_MINUS	- this->CoinScaleUp,
-		COIN_POS_X_PLUS		+ this->CoinScaleUp,	COIN_POS_Y_PLUS		+ this->CoinScaleUp,
-		COIN_POS_X_MINUS	- this->CoinScaleUp,	COIN_POS_Y_PLUS		+ this->CoinScaleUp,
-		*(this->Image_Coin),
-		TRUE
-	);
+	/* ドロップしたカード枚数の描写 */
+	{
+		/* カードアイコンの枠の描写 */
+		Struct_2D::POSITION CenterPos	= { 226,	30 };
+		Struct_2D::POSITION	IconSize	= { 128,	32 };
+		int					Frame_Thickness = 8;
+		DRAW_FUNCTION::DrawFrame_Image(CenterPos, IconSize, Frame_Thickness, *(this->Image_Frame_Corner), *(this->Image_Frame_Line), *(this->Image_Frame_Inside));
 
-	/* 文字列の描写 */
-	// "×"の部分
-	std::string Kakeru = " × ";
-	DrawStringToHandle(
-		46,
-		12,
-		Kakeru.c_str(),
-		GetColor(0, 0, 0),
-		giFont_DonguriDuel_32);
+		/* カードアイコンの描写 */
+		DrawModiGraph(
+			CARD_POS_X_MINUS	- this->CardScaleUp, CARD_POS_Y_MINUS	- this->CardScaleUp,
+			CARD_POS_X_PLUS		+ this->CardScaleUp, CARD_POS_Y_MINUS	- this->CardScaleUp,
+			CARD_POS_X_PLUS		+ this->CardScaleUp, CARD_POS_Y_PLUS	+ this->CardScaleUp,
+			CARD_POS_X_MINUS	- this->CardScaleUp, CARD_POS_Y_PLUS	+ this->CardScaleUp,
+			*(this->Image_Card),
+			TRUE
+		);
 
-	// 所持数
-	std::string HaveCoin = std::to_string(this->pDataList_GameResource->GetHaveCoin());
-	DrawStringToHandle(
-		46 + GetDrawStringWidthToHandle(Kakeru.c_str(), static_cast<int>(strlenDx(Kakeru.c_str())), giFont_DonguriDuel_32),
-		12 - this->CoinScaleUp,
-		HaveCoin.c_str(),
-		GetColor(0, 0, 0),
-		giFont_DonguriDuel_32);
+		/* 文字列の描写 */
+		// "×"の部分
+		std::string Kakeru = " × ";
+		DrawStringToHandle(
+			46 + 148,
+			12,
+			Kakeru.c_str(),
+			GetColor(0, 0, 0),
+			giFont_DonguriDuel_32);
+
+		// 所持数
+		std::string HaveCoin = std::to_string(this->pDataList_GameResource->GetHaveCoin());
+		DrawStringToHandle(
+			46 + 148 + GetDrawStringWidthToHandle(Kakeru.c_str(), static_cast<int>(strlenDx(Kakeru.c_str())), giFont_DonguriDuel_32),
+			12 - this->CardScaleUp,
+			HaveCoin.c_str(),
+			GetColor(0, 0, 0),
+			giFont_DonguriDuel_32);
+	}
 }

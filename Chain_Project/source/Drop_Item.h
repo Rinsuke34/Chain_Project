@@ -8,6 +8,7 @@
 
 /* 前方宣言 */
 class DataList_GameResource;
+class Card_Base;
 
 /* ドロップアイテムクラス */
 // ベース
@@ -67,6 +68,27 @@ class Drop_Item_Coin : public Drop_Item_Base
 		virtual ~Drop_Item_Coin() {};	// デストラクタ
 
 	protected:
+		/* 関数 */
+		virtual void Update_Moveing()	override;	// 移動フェーズ更新
+};
+
+// カード
+class Drop_Item_Card : public Drop_Item_Base
+{
+	public:
+		Drop_Item_Card();				// コンストラクタ
+		virtual ~Drop_Item_Card() {};	// デストラクタ
+
+		/* セッター */
+		void SetCard(std::shared_ptr<Card_Base> Card) { this->Card = Card; }	// ドロップカード設定
+
+		/* ゲッター */
+		std::shared_ptr<Card_Base> GetCard() { return this->Card; }		// ドロップカード取得
+
+	protected:
+		/* 変数 */
+		std::shared_ptr<Card_Base> 	Card;	// ドロップカード
+
 		/* 関数 */
 		virtual void Update_Moveing()	override;	// 移動フェーズ更新
 };

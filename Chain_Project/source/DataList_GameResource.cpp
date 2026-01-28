@@ -50,3 +50,9 @@ void DataList_GameResource::AddCoin(int coin)
 {
 	this->HaveCoin += coin;
 }
+
+// ドロップカードを追加
+void DataList_GameResource::AddDropCard(std::shared_ptr<Card_Base> card)
+{
+	this->DropCardList.push_back(card);
+}

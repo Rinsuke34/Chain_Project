@@ -12,6 +12,7 @@
 class DataList_Battle;
 class Character_Buff_Debuff_Base;
 class Action_Effect_Base;
+class Card_Base;
 
 // キャラクターのベースクラス
 class Character_Base : public std::enable_shared_from_this<Character_Base>
@@ -48,14 +49,16 @@ class Character_Base : public std::enable_shared_from_this<Character_Base>
 		std::vector<std::shared_ptr<Action_Effect_Base>>	GetActionEffectList()	{ return ActionEffectList; }	// 行動内容一覧の取得
 		bool												GetDeathDeleteFlg()		{ return Death_DeleteFlg; }		// 死亡により盤面上から削除するかのフラグ
 		int													GetDropCoin()			{ return DropCoin; }			// ドロップするコインの枚数
+		std::vector<std::shared_ptr<Card_Base>>				GetDropCardList()		{ return DropCardList; }		// ドロップするカード一覧の取得
 
 		/* セッター */
-		void	SetHp_Max(int MaxHP)					{ this->iHP_Max			= MaxHP; }		// 体力(最大値)の設定
-		void	SetHp_Now(int NowHP)					{ this->iHP_Now			= NowHP; }		// 体力(現在地)の設定
-		void	SetShield_Now(int NowShield)			{ this->iShield_Now		= NowShield; }	// シールド(現在値)の設定
-		void	SetBasePos(Struct_2D::POSITION Pos)		{ this->BasePos			= Pos; }		// 基準座標の設定
-		void	SetCamp(int camp)						{ this->Camp			= camp; }		// 陣営の設定
-		void	SetDropCoin(int dropcoin)				{ this->DropCoin		= dropcoin; }	// ドロップするコインの枚数
+		void	SetHp_Max(int MaxHP)														{ this->iHP_Max			= MaxHP; }		// 体力(最大値)の設定
+		void	SetHp_Now(int NowHP)														{ this->iHP_Now			= NowHP; }		// 体力(現在地)の設定
+		void	SetShield_Now(int NowShield)												{ this->iShield_Now		= NowShield; }	// シールド(現在値)の設定
+		void	SetBasePos(Struct_2D::POSITION Pos)											{ this->BasePos			= Pos; }		// 基準座標の設定
+		void	SetCamp(int camp)															{ this->Camp			= camp; }		// 陣営の設定
+		void	SetDropCoin(int dropcoin)													{ this->DropCoin		= dropcoin; }	// ドロップするコインの枚数
+		void	SetDropCardList(const std::vector<std::shared_ptr<Card_Base>>& cardList)	{ this->DropCardList	= cardList; }	// ドロップするカード一覧の設定
 
 		/* 定数 */
 		// 描写系
@@ -102,6 +105,7 @@ class Character_Base : public std::enable_shared_from_this<Character_Base>
 		int						FlattenPercent;				// 平たくする量(%単位 / 100が標準)		
 		int						StandbyFlatten_Count;		// 待機時の平たくする量のカウント
 		int						StandbyFlatten_Percent;		// 待機児の平たくする量の実数値
+		std::vector<std::shared_ptr<Card_Base>>	DropCardList;	// ドロップするカード一覧
 		// バフ、デバフ情報
 		std::vector<std::shared_ptr<Character_Buff_Debuff_Base>> 	Buff_Debuff_List;	// バフ、デバフ一覧
 		// 行動内容

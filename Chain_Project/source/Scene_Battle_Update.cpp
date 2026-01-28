@@ -940,7 +940,7 @@ void Scene_Battle::Create_DropItem()
 			if (EnemyCharacter->GetHP_Now() <= 0)
 			{
 				// 死亡している場合
-				/* コインを生成 */
+				/* 所持コインがあるならコインを生成 */
 				int Coin = EnemyCharacter->GetDropCoin();
 				if (Coin > 0)
 				{
@@ -950,6 +950,20 @@ void Scene_Battle::Create_DropItem()
 
 					/* ドロップコイン数を-1する */
 					EnemyCharacter->SetDropCoin(Coin - 1);
+				}
+
+				/* 所持カードがあるならカードを生成 */
+				auto DropCard = EnemyCharacter->GetDropCardList();
+				if (DropCard.size() > 0)
+				{
+					std::shared_ptr<Drop_Item_Card> NewCard = std::make_shared<Drop_Item_Card>();
+					NewCard->SetCard(DropCard.back());
+					NewCard->SetPosition(EnemyCharacter->GetBasePos());
+					this->DropItem_List.push_back(NewCard);
+
+					/* ドロップカードリストから削除 */
+					DropCard.pop_back();
+					EnemyCharacter->SetDropCardList(DropCard);
 				}
 			}
 		}

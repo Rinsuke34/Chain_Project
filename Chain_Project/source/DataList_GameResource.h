@@ -19,7 +19,8 @@ class DataList_GameResource : public DataList_Base
 		virtual ~DataList_GameResource() {};	// デストラクタ
 
 		/* 関数 */
-		void AddCoin(int coin);					// コインを追加
+		void AddCoin(int coin);								// コインを追加
+		void AddDropCard(std::shared_ptr<Card_Base> card);	// ドロップカードを追加
 
 		/* ゲッター */
 		int										GetGameState()			{ return GameState; }			// ゲームの状態
@@ -30,7 +31,8 @@ class DataList_GameResource : public DataList_Base
 		bool									GetGameEndFlg()			{ return GameEndFlg; }			// ゲーム終了フラグ
 		int										GetHaveCoin()			{ return HaveCoin; }			// 所持コイン
 		std::vector<std::shared_ptr<Card_Base>>	GetDeckCardList()		{ return DeckCardList; }		// カードリスト
-		std::shared_ptr<Character_Player>		GetPlayerCharacter() { return PlayerCharacter; }		// プレイヤーキャラクター
+		std::shared_ptr<Character_Player>		GetPlayerCharacter()	{ return PlayerCharacter; }		// プレイヤーキャラクター
+		std::vector<std::shared_ptr<Card_Base>>	GetDropCardList()		{ return DropCardList; }		// ドロップカードリスト
 
 		/* セッター */
 		void SetGameState(int state)											{ GameState				= state; }		// ゲームの状態
@@ -42,6 +44,7 @@ class DataList_GameResource : public DataList_Base
 		void SetHaveCoin(int coin)												{ HaveCoin				= coin; }		// 所持コイン
 		void SetDeckCardList(std::vector<std::shared_ptr<Card_Base>> cardList)	{ DeckCardList			= cardList; }	// カードリスト
 		void SetPlayerCharacter(std::shared_ptr<Character_Player> character)	{ PlayerCharacter		= character; }	// プレイヤーキャラクター
+		void SetDropCardList(std::vector<std::shared_ptr<Card_Base>> cardList)	{ DropCardList			= cardList; }	// ドロップカードリスト
 
 		/* 定数 */
 		// ゲームの状態
@@ -59,4 +62,5 @@ class DataList_GameResource : public DataList_Base
 		int										HaveCoin;			// 所持コイン
 		std::vector<std::shared_ptr<Card_Base>>	DeckCardList;		// カードリスト
 		std::shared_ptr<Character_Player>		PlayerCharacter;	// プレイヤーキャラクター
+		std::vector<std::shared_ptr<Card_Base>> DropCardList;		// ドロップカードリスト
 };
