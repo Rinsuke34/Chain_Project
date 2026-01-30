@@ -7,6 +7,7 @@
 #include "FunctionDefine.h"
 // 関連クラス
 #include "Scene_WoldMap.h"
+#include "Scene_GetDropItem.h"
 #include "Scene_Draw_GameResource.h"
 #include "DataList_GameResource.h"
 #include "WoldMap_Node_Base.h"
@@ -23,6 +24,9 @@ Scene_GameManager::Scene_GameManager() : Scene_Base("Scene_GameManager", 5, fals
 
 	/* シーン(ワールドマップ)を作成 */
 	gpSceneServer->AddSceneReservation(std::make_shared<Scene_WoldMap>());
+
+	/* シーン(ドロップアイテム取得)を作成 */
+	gpSceneServer->AddSceneReservation(std::make_shared<Scene_GetDropItem>());
 
 	/* シーン(リソース描写)を作成 */
 	gpSceneServer->AddSceneReservation(std::make_shared<Scene_Draw_GameResource>());

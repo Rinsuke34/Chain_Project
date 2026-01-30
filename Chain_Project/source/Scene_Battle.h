@@ -78,6 +78,8 @@ class Scene_Battle : public Scene_Base
 		std::shared_ptr<int> Image_BackGround[3];										// 背景画像[0:キャラクター立ち位置の背景, 1:キャラクター立ち位置の足場, 2:カード置き場]
 		std::shared_ptr<int> Image_BattleArea_No_Base;									// バトルエリアの番号の背景
 		std::shared_ptr<int> Image_BattleArea_No_Number[5];								// バトルエリアの番号の数字[1～5]
+		// UIのハンドル
+		std::shared_ptr<Scene_UI_Button> UI_DecisionButton;	// 決定ボタン
 		/* 関数 */
 		// 各フェーズごとの更新処理
 		void Update_EffectTurnStart();			// "ターン開始時"の効果発動
@@ -100,8 +102,6 @@ class Scene_Battle : public Scene_Base
 		void Draw_HoldCard();					// ホールド中のカードを描写
 		void Draw_TrashCard();					// 捨て札のカードの描写
 		void Draw_DeckCard();					// 山札のカードの描写
-		// UIのハンドル
-		std::shared_ptr<Scene_UI_Button> UI_DecisionButton;	// 決定ボタン
 		// その他
 		void CardPosition_HandSetSettingPosting();							// 手札のカード設定座標の設定
 		void Card_Update();													// カードの更新処理

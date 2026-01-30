@@ -204,6 +204,7 @@
     <ClCompile Include="source\Scene_Draw_GameResource.cpp" />
     <ClCompile Include="source\Scene_GameManager.cpp" />
     <ClCompile Include="source\Scene_GameOver.cpp" />
+    <ClCompile Include="source\Scene_GetDropItem.cpp" />
     <ClCompile Include="source\Scene_Load_Checker.cpp" />
     <ClCompile Include="source\Scene_Load_Draw.cpp" />
     <ClCompile Include="source\Scene_Particles_Text.cpp" />
@@ -254,6 +255,7 @@
     <ClInclude Include="source\Scene_Draw_GameResource.h" />
     <ClInclude Include="source\Scene_GameManager.h" />
     <ClInclude Include="source\Scene_GameOver.h" />
+    <ClInclude Include="source\Scene_GetDropItem.h" />
     <ClInclude Include="source\Scene_Load_Checker.h" />
     <ClInclude Include="source\Scene_Load_Draw.h" />
     <ClInclude Include="source\Scene_Particles_Text.h" />

@@ -33,6 +33,7 @@ class DataList_GameResource : public DataList_Base
 		std::vector<std::shared_ptr<Card_Base>>	GetDeckCardList()		{ return DeckCardList; }		// カードリスト
 		std::shared_ptr<Character_Player>		GetPlayerCharacter()	{ return PlayerCharacter; }		// プレイヤーキャラクター
 		std::vector<std::shared_ptr<Card_Base>>	GetDropCardList()		{ return DropCardList; }		// ドロップカードリスト
+		bool									GetDropItemCheckFlg()	{ return DropItemCheckFlg; };	// ドロップアイテム確認シーンを有効化
 
 		/* セッター */
 		void SetGameState(int state)											{ GameState				= state; }		// ゲームの状態
@@ -45,6 +46,7 @@ class DataList_GameResource : public DataList_Base
 		void SetDeckCardList(std::vector<std::shared_ptr<Card_Base>> cardList)	{ DeckCardList			= cardList; }	// カードリスト
 		void SetPlayerCharacter(std::shared_ptr<Character_Player> character)	{ PlayerCharacter		= character; }	// プレイヤーキャラクター
 		void SetDropCardList(std::vector<std::shared_ptr<Card_Base>> cardList)	{ DropCardList			= cardList; }	// ドロップカードリスト
+		void SetDropItemCheckFlg(bool flg)										{ DropItemCheckFlg		= flg; };		// ドロップアイテム確認シーンを有効化
 
 		/* 定数 */
 		// ゲームの状態
@@ -63,4 +65,5 @@ class DataList_GameResource : public DataList_Base
 		std::vector<std::shared_ptr<Card_Base>>	DeckCardList;		// カードリスト
 		std::shared_ptr<Character_Player>		PlayerCharacter;	// プレイヤーキャラクター
 		std::vector<std::shared_ptr<Card_Base>> DropCardList;		// ドロップカードリスト
+		bool									DropItemCheckFlg;	// ドロップアイテム確認シーンを有効化
 };

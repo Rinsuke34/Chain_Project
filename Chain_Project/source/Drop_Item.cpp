@@ -142,5 +142,24 @@ Drop_Item_Card::Drop_Item_Card()
 // 移動フェーズ更新
 void Drop_Item_Card::Update_Moveing()
 {
+	Struct_2D::POSITION GoalPos = { 226, 30 };
+	Struct_2D::POSITION Direction;
+	Direction.iX = GoalPos.iX - this->Position.iX;
+	Direction.iY = GoalPos.iY - this->Position.iY;
+	float Distance = sqrtf(static_cast<float>(Direction.iX * Direction.iX + Direction.iY * Direction.iY));
 
+	if (Distance < MOVE_SPEED)
+	{
+		// ゴールに到達したならカードをドロップリストに加算し、アイテムを消去
+		this->pDataList_GameResource->AddDropCard(this->Card);
+		this->DeleteFlg = true;
+	}
+	else
+	{
+		// ゴールに向かって移動
+		Direction.iX = static_cast<int>(Direction.iX / Distance * MOVE_SPEED);
+		Direction.iY = static_cast<int>(Direction.iY / Distance * MOVE_SPEED);
+		this->Position.iX += Direction.iX;
+		this->Position.iY += Direction.iY;
+	}
 }

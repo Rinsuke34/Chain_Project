@@ -197,6 +197,16 @@ void Scene_Battle::Update()
 	else
 	{
 		// 戦闘終了の場合
+		/* ドロップアイテム確認シーンが無効になっているか確認 */
+		if (!this->pDataList_GameResource->GetDropItemCheckFlg())
+		{
+			// 次のステージ選択フラグが無効であるなら、有効にする
+			if (!this->pDataList_GameResource->GetNextStageSelectFlg())
+			{
+				this->pDataList_GameResource->SetNextStageSelectedFlg(true);
+			}
+		}
+
 		/* 次のステージの選択が完了しているならこのシーンを削除 */
 		if (this->pDataList_GameResource->GetNextStageSelectFlg())
 		{

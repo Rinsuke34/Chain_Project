@@ -833,8 +833,8 @@ void Scene_Battle::CheckGameEnd()
 		/* 戦闘終了(プレイヤー勝利)フェイズへ遷移 */
 		this->iBattlePhase = BATTLE_PHASE_BATTLE_END_WIN;
 
-		/* ワールドマップを有効にする */
-		this->pDataList_GameResource->SetWoldMapActiveFlg(true);
+		/* ドロップアイテム確認シーンを有効化 */
+		this->pDataList_GameResource->SetDropItemCheckFlg(true);
 
 		return;
 	}

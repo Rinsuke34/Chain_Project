@@ -295,6 +295,12 @@
     <Filter Include="ソース ファイル\その他\ドロップアイテム">
       <UniqueIdentifier>{b57e1158-fc4c-4535-b746-a1038684d89e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\シーン\取得アイテム">
+      <UniqueIdentifier>{ebe0e13f-8ded-4c44-9d4a-ec9d0f8ccf37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\シーン\取得アイテム">
+      <UniqueIdentifier>{3b268074-db87-42f7-b605-9beaa1c69413}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Main.cpp">
@@ -438,6 +444,9 @@
     <ClCompile Include="source\Drop_Item.cpp">
       <Filter>ソース ファイル\その他\ドロップアイテム</Filter>
     </ClCompile>
+    <ClCompile Include="source\Scene_GetDropItem.cpp">
+      <Filter>ソース ファイル\シーン\取得アイテム</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Scene_Load_Checker.h">
@@ -568,6 +577,9 @@
     </ClInclude>
     <ClInclude Include="source\Drop_Item.h">
       <Filter>ヘッダー ファイル\その他\ドロップアイテム</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Scene_GetDropItem.h">
+      <Filter>ヘッダー ファイル\シーン\取得アイテム</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
