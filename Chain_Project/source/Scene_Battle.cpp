@@ -13,7 +13,7 @@
 #include "DataList_GameResource.h"
 
 // コンストラクタ
-Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 0, false, false)
+Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 50, false, false)
 {
 	/* 初期化 */
 	this->iBattlePhase					= 0;		// バトルフェーズ
@@ -84,7 +84,7 @@ Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 0, false, false)
 	/* UI作成 */
 	{
 		/* "決定"ボタンの作成 */
-		this->UI_DecisionButton = std::make_shared<Scene_UI_Button>("Battle_DecisionButton", 1);
+		this->UI_DecisionButton = std::make_shared<Scene_UI_Button>("Battle_DecisionButton", this->iLayerOrder + 1);
 		this->UI_DecisionButton->SetButtonText("けってい");
 		this->UI_DecisionButton->SetCenterPos({ DECISIONBUTTON_POS_X, DECISIONBUTTON_POS_Y });
 		this->UI_DecisionButton->SetFontHandle(giFont_DonguriDuel_32);
@@ -121,6 +121,9 @@ Scene_Battle::~Scene_Battle()
 	/* 紐づいたUIを削除 */
 	this->UI_DecisionButton->SetDeleteFlg(true);
 	this->UI_DecisionButton = nullptr;
+
+	/* 次のステージ選択を未完了に戻す */
+	this->pDataList_GameResource->SetNextStageSelectedFlg(false);
 }
 
 // 更新
@@ -198,12 +201,13 @@ void Scene_Battle::Update()
 	{
 		// 戦闘終了の場合
 		/* ドロップアイテム確認シーンが無効になっているか確認 */
-		if (!this->pDataList_GameResource->GetDropItemCheckFlg())
+		if (!this->pDataList_GameResource->GetDropItemCheckFlg() &&
+			!this->pDataList_GameResource->GetNextStageSelectFlg())
 		{
-			// 次のステージ選択フラグが無効であるなら、有効にする
-			if (!this->pDataList_GameResource->GetNextStageSelectFlg())
+			// ワールドマップが無効であるなら、有効にする
+			if (!this->pDataList_GameResource->GetWoldMapActiveFlg())
 			{
-				this->pDataList_GameResource->SetNextStageSelectedFlg(true);
+				this->pDataList_GameResource->SetWoldMapActiveFlg(true);
 			}
 		}
 
@@ -212,9 +216,6 @@ void Scene_Battle::Update()
 		{
 			/* このシーンの削除フラグを有効にする */
 			this->bDeleteFlg = true;
-
-			/* 次のステージ選択を未完了に戻す */
-			this->pDataList_GameResource->SetNextStageSelectedFlg(false);
 		}
 	}
 

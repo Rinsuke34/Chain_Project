@@ -20,7 +20,7 @@
 #include "WoldMap_Node_Boss.h"
 
 // コンストラクタ
-Scene_WoldMap::Scene_WoldMap() : Scene_Base("Scene_WoldMap", 10, false, false)
+Scene_WoldMap::Scene_WoldMap() : Scene_Base("Scene_WoldMap", 200, false, false)
 {
 	/* 初期化 */
 	this->WoldMapNodeList.clear();												// ワールドマップノードリスト

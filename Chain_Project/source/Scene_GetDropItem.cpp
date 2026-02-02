@@ -14,7 +14,7 @@
 #include "VariableDefine.h"
 
 // コンストラクタ
-Scene_GetDropItem::Scene_GetDropItem() : Scene_Base("Scene_GetDropItem", 9, false, false)
+Scene_GetDropItem::Scene_GetDropItem() : Scene_Base("Scene_GetDropItem", 100, false, false)
 {
 	/* 初期化 */
 	this->SceneGetDropItemDrawPos	= { 0, DROPITEM_DRAWPOS_Y_LOW };	// ワールドマップの描写座標
@@ -65,7 +65,7 @@ void Scene_GetDropItem::Setup()
 	this->SceneGetDropItemDrawPos.iY = DROPITEM_DRAWPOS_Y_LOW;
 
 	/* "決定"ボタンの作成 */
-	this->UI_DecisionButton = std::make_shared<Scene_UI_Button>("Battle_DecisionButton", 10);
+	this->UI_DecisionButton = std::make_shared<Scene_UI_Button>("Battle_DecisionButton", this->iLayerOrder + 1);
 	this->UI_DecisionButton->SetButtonText("けってい");
 	this->UI_DecisionButton->SetCenterPos({ 1750, SceneGetDropItemDrawPos.iY + (DROPITEM_DRAW_HEIGHT / 2) });
 	this->UI_DecisionButton->SetFontHandle(giFont_DonguriDuel_32);
@@ -182,8 +182,8 @@ void Scene_GetDropItem::ActiveCheck()
 		/* 紐づいたUIが有効であるなら削除する */
 		if (this->UI_DecisionButton != nullptr)
 		{
-//			this->UI_DecisionButton->SetDeleteFlg(true);
-//			this->UI_DecisionButton = nullptr;
+			this->UI_DecisionButton->SetDeleteFlg(true);
+			this->UI_DecisionButton = nullptr;
 		}
 	}
 

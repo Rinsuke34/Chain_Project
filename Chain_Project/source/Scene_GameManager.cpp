@@ -16,7 +16,7 @@
 #include "Scene_Title.h"
 
 // コンストラクタ
-Scene_GameManager::Scene_GameManager() : Scene_Base("Scene_GameManager", 5, false, false)
+Scene_GameManager::Scene_GameManager() : Scene_Base("Scene_GameManager", 0, false, false)
 {
 	/* データリスト"ゲームリソース管理"を作成 */
 	this->pDataList_GameResource = std::make_shared<DataList_GameResource>();
