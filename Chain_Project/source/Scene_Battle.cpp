@@ -190,6 +190,26 @@ void Scene_Battle::Update()
 			break;
 	}
 
+	/* カードの設定座標の設定 */
+	CardPosition_HandSetSettingPosting();
+
+	/* カードやアクション内容等の更新処理 */
+	Card_Update();
+	CharacterPosition_Setup();
+	Update_DropItem();
+
+	/* バトルエリアのカーソル接触時のアニメーションを設定 */
+	Update_EmphasisAnim();
+
+	/* ドロップアイテムの作成処理 */
+	Create_DropItem();
+
+	/* キャラクターが死亡しているか確認 */
+	Character_Death_Delete_Check();
+
+	/* 鎖のアニメーション更新 */
+	Update_Chain_Anim();
+
 	/* 戦闘中であるかにより処理を変更 */
 	if (BattleEndFlg == false)
 	{
@@ -218,26 +238,6 @@ void Scene_Battle::Update()
 			this->bDeleteFlg = true;
 		}
 	}
-
-	/* カードの設定座標の設定 */
-	CardPosition_HandSetSettingPosting();
-
-	/* カードやアクション内容等の更新処理 */
-	Card_Update();
-	CharacterPosition_Setup();
-	Update_DropItem();
-
-	/* バトルエリアのカーソル接触時のアニメーションを設定 */
-	Update_EmphasisAnim();
-
-	/* ドロップアイテムの作成処理 */
-	Create_DropItem();
-
-	/* キャラクターが死亡しているか確認 */
-	Character_Death_Delete_Check();
-
-	/* 鎖のアニメーション更新 */
-	Update_Chain_Anim();
 }
 
 // 描画

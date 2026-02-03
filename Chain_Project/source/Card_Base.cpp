@@ -30,11 +30,11 @@ Card_Base::Card_Base()
 	this->Image = MakeScreen(IMAGE_SIZE_WIDTH, IMAGE_SIZE_HEIGHT, TRUE);
 	this->RotateAngle = 0.f;
 	// その他
-	this->Now_Position		= { SCREEN_SIZE_WIDE, SCREEN_SIZE_HEIGHT / 2 };	// 現在座標(ドローしてる感を出すため山札の位置を初期値に設定)
-	this->Setting_Position	= { 0, 0 };										// 設定座標(ホールドが解除された際に自動で補正される座標)
-	this->bLostFlag			= false;										// 削除フラグ
-	this->iNowChainCount	= 0;											// 現在のチェイン数(ターン開始時に設定)
-	this->pPlayer			= nullptr;										// プレイヤーキャラクターのポインタ
+	this->Now_Position		= { 0, 0 };		// 現在座標(ドローしてる感を出すため山札の位置を初期値に設定)
+	this->Setting_Position	= { 0, 0 };		// 設定座標(ホールドが解除された際に自動で補正される座標)
+	this->bLostFlag			= false;		// 削除フラグ
+	this->iNowChainCount	= 0;			// 現在のチェイン数(ターン開始時に設定)
+	this->pPlayer			= nullptr;		// プレイヤーキャラクターのポインタ
 
 	/* 画像取得 */
 	/* 画像管理データリストを取得 */
@@ -184,8 +184,10 @@ void Card_Base::Update()
 			Complement_SkipFlg = true;
 			break;
 
-		case CARDSTATE_HAND:	// 手札
-		case CARDSTATE_SETTING:	// 設定中
+		case CARDSTATE_HAND:			// 手札
+		case CARDSTATE_SETTING:			// 設定中
+		case CARDSTATE_GETLIST_BACK:	// 取得一覧:裏面
+		case CARDSTATE_GETLIST_FRONT:	// 取得一覧:表面
 			/* 特殊な処理は無し */
 			break;
 
@@ -218,14 +220,16 @@ void Card_Base::Draw()
 	/* 状態に応じて設定を変更する */
 	switch (this->CardState)
 	{
-		case CARDSTATE_DECK:	// デッキ
+		case CARDSTATE_DECK:			// デッキ
+		case CARDSTATE_GETLIST_BACK:	// 取得一覧:裏面
 			/* 裏面を描画 */
 			bBackSideFlg = true;
 			break;
 
-		case CARDSTATE_HAND:	// 手札
-		case CARDSTATE_PICKED:	// ピックアップ中
-		case CARDSTATE_SETTING:	// 設定中
+		case CARDSTATE_HAND:			// 手札
+		case CARDSTATE_PICKED:			// ピックアップ中
+		case CARDSTATE_SETTING:			// 設定中
+		case CARDSTATE_GETLIST_FRONT:	// 取得一覧:表面
 			/* 特殊な処理は無し */
 			break;
 

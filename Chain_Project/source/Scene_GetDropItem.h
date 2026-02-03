@@ -28,6 +28,12 @@ class Scene_GetDropItem : public Scene_Base
 		static const int DROPITEM_DRAWPOS_Y_MAX		= 300;					// ドロップアイテム取得画面の最大Y座標
 		static const int DROPITEM_DRAWPOS_Y_LOW		= SCREEN_SIZE_HEIGHT;	// ドロップアイテム取得画面の最低Y座標
 		static const int DROPITEM_FRAME_THICKNESS	= 32;					// ドロップアイテム取得画面フレームの太さ
+		static const int GETCARD_INTERVAL			= 170;					// 手札のカード間隔
+		static const int GETCARD_POS_Y				= 390;					// 手札のY座標
+		// フェーズ
+		static const int PHASE_CARD_LINE_UP		= 0;	// カード整列フェーズ
+		static const int PHASE_CARD_TABLE		= 1;	// カードを表にするフェーズ
+		static const int PHASE_WAIT_DECISION	= 2;	// 決定待機フェーズ
 
 	private:
 		/* 変数 */
@@ -35,8 +41,6 @@ class Scene_GetDropItem : public Scene_Base
 		std::vector<std::shared_ptr<Card_Base>>	GetCardList;			// 取得したカードリスト
 		// データリスト
 		std::shared_ptr<DataList_GameResource>	pDataList_GameResource;	// ゲームリソース管理用データリスト
-		// 画像
-		int						Image_SceneGetDropItem;		// ドロップアイテム取得画面の画像
 		// その他
 		Struct_2D::POSITION		SceneGetDropItemDrawPos;	// ドロップアイテム取得画面の描写座標
 		bool					OldActiveFlg;				// 以前のドロップアイテム確認シーン有効フラグ
@@ -45,9 +49,10 @@ class Scene_GetDropItem : public Scene_Base
 
 		/* 関数 */
 		void Update_DrawPos();				// 描写座標の更新
-		void Update_Image();				// 画像の更新
-		void SceneGetDropItem_Drow();		// ドロップアイテム取得画面の描画
 		void BackGround_Drow();				// 背景描写
 		void Setup();						// セットアップ
 		void ActiveCheck();					// ドロップアイテム確認シーンが無効→有効と変化しているか確認
+		void CardPosition_Setup();			// カード位置セットアップ
+		void Draw_GetCard();				// 取得カード描写
+		void Update_Card();					// カードの更新
 };

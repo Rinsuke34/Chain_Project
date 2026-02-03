@@ -57,3 +57,9 @@ void DataList_GameResource::AddDropCard(std::shared_ptr<Card_Base> card)
 {
 	this->DropCardList.push_back(card);
 }
+
+// ドロップカードリストをクリア
+void DataList_GameResource::ClearDropCardList()
+{
+	this->DropCardList.clear();
+}

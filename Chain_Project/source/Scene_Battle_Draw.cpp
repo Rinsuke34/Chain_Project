@@ -48,22 +48,6 @@ void Scene_Battle::Draw_BackGround()
 		*(this->Image_BackGround[2]),
 		TRUE
 	);
-
-	DrawFormatString(50, 50, GetColor(0, 0, 0), "デッキ枚数 : %llu", static_cast<unsigned long long>(this->pDataList_Battle->GetDeckCardList().size()));
-	DrawFormatString(50, 70, GetColor(0, 0, 0), "トラッシュ枚数 : %llu", static_cast<unsigned long long>(this->pDataList_Battle->GetTrashCardList().size()));
-
-	/* 各バトルエリアのチェイン数 */
-	for (int i = 0; i < DataList_Battle::BATTLE_AREA_MAX; i++)
-	{
-		auto BattleAreaCard = this->pDataList_Battle->GetBattleAreaCardList(i);
-		int ChainCount = 0;
-		if (BattleAreaCard != nullptr)
-		{
-			ChainCount = BattleAreaCard->GetNowChainCount();
-		}
-
-		DrawFormatString(50, 90 + i * 20, GetColor(0, 0, 0), "チェイン　エリア%d : %d", i + 1, ChainCount);
-	}
 }
 
 // キャラクター描写

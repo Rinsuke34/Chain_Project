@@ -117,13 +117,15 @@ class Card_Base : public std::enable_shared_from_this<Card_Base>
 		// 回転速度
 		const float ROTATE_INTERPOLATION_SPEED	= 0.1f;	// 回転補間速度
 		// カードの状態
-		static const int CARDSTATE_NONE			= -1;	// 無効
-		static const int CARDSTATE_DECK			= 0;	// デッキ
-		static const int CARDSTATE_HAND			= 1;	// 手札
-		static const int CARDSTATE_PICKED		= 2;	// ピックアップ中
-		static const int CARDSTATE_SETTING		= 3;	// 設定中
-		static const int CARDSTATE_TRASH		= 4;	// 捨て札
-		static const int CARDSTATE_LOST			= 5;	// ロスト
+		static const int CARDSTATE_NONE				= -1;	// 無効
+		static const int CARDSTATE_DECK				= 0;	// デッキ
+		static const int CARDSTATE_HAND				= 1;	// 手札
+		static const int CARDSTATE_PICKED			= 2;	// ピックアップ中
+		static const int CARDSTATE_SETTING			= 3;	// 設定中
+		static const int CARDSTATE_TRASH			= 4;	// 捨て札
+		static const int CARDSTATE_LOST				= 5;	// ロスト
+		static const int CARDSTATE_GETLIST_BACK		= 6;	// 取得一覧:裏面
+		static const int CARDSTATE_GETLIST_FRONT	= 7;	// 取得一覧:表面
 
 	protected:
 		/* 変数 */

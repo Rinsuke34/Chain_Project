@@ -21,6 +21,7 @@ class DataList_GameResource : public DataList_Base
 		/* 関数 */
 		void AddCoin(int coin);								// コインを追加
 		void AddDropCard(std::shared_ptr<Card_Base> card);	// ドロップカードを追加
+		void ClearDropCardList();							// ドロップカードリストをクリア
 
 		/* ゲッター */
 		int										GetGameState()			{ return GameState; }			// ゲームの状態

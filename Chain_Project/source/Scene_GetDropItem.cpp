@@ -19,8 +19,6 @@ Scene_GetDropItem::Scene_GetDropItem() : Scene_Base("Scene_GetDropItem", 100, fa
 	/* 初期化 */
 	this->SceneGetDropItemDrawPos	= { 0, DROPITEM_DRAWPOS_Y_LOW };	// ワールドマップの描写座標
 	this->OldActiveFlg				= false;							// 以前のドロップアイテム確認シーン有効フラグ
-	// 画像
-	this->Image_SceneGetDropItem	= MakeScreen(DROPITEM_DRAW_WIDTH, DROPITEM_DRAW_HEIGHT, TRUE);	// ワールドマップの画像
 
 	/* データリスト */
 	// ゲームリソース管理用データリスト
@@ -33,6 +31,12 @@ void Scene_GetDropItem::Update()
 	/* 描写座標の更新 */
 	Update_DrawPos();
 
+	/* カードの更新 */
+	Update_Card();
+
+	/* カード座標の設定 */
+	CardPosition_Setup();
+
 	/* "決定"ボタンが入力されたのならドロップアイテム確認シーンを無効化 */
 	if (this->UI_DecisionButton != nullptr)
 	{
@@ -44,9 +48,6 @@ void Scene_GetDropItem::Update()
 
 	/* ドロップアイテム確認シーンが無効→有効と変化しているか確認 */
 	ActiveCheck();
-
-	/* 画像の更新 */
-	Update_Image();
 }
 
 // セットアップ
@@ -55,14 +56,27 @@ void Scene_GetDropItem::Setup()
 	/* 現在設定されているカードリストを初期化 */
 	this->GetCardList.clear();
 	
-	/* ドロップしたカードリストを設定 */
+	/* ドロップしたカードリストを設定&セットアップ処理 */
 	for (auto& Card : this->pDataList_GameResource->GetDropCardList())
 	{
+		/* リストへ設定 */
 		this->GetCardList.push_back(Card);
+
+		/* セットアップ処理 */
+		Card->UpdateImage();
+		Struct_2D::POSITION StartPos = { 226, 30 };
+		Card->SetNowPos(StartPos);
+		Card->SetCardState(Card_Base::CARDSTATE_GETLIST_BACK);
 	}
 
+	/* リソース上のドロップしたカードを削除 */
+	this->pDataList_GameResource->ClearDropCardList();
+	
 	/* 描写座標を初期化 */
 	this->SceneGetDropItemDrawPos.iY = DROPITEM_DRAWPOS_Y_LOW;
+
+	/* 取得カードの初期配置をここで行う（Setup 内で確実に設定） */
+	CardPosition_Setup();
 
 	/* "決定"ボタンの作成 */
 	this->UI_DecisionButton = std::make_shared<Scene_UI_Button>("Battle_DecisionButton", this->iLayerOrder + 1);
@@ -75,8 +89,11 @@ void Scene_GetDropItem::Setup()
 // 描画
 void Scene_GetDropItem::Draw()
 {
-	/* ドロップアイテム取得画面の描画 */
-	SceneGetDropItem_Drow();
+	/* 背景描写 */
+	BackGround_Drow();
+
+	/* 取得カードの描写 */
+	Draw_GetCard();
 }
 
 // 描写座標の更新
@@ -117,28 +134,6 @@ void Scene_GetDropItem::Update_DrawPos()
 	}
 }
 
-// ドロップアイテム取得画面の描画
-void Scene_GetDropItem::SceneGetDropItem_Drow()
-{
-	DrawGraph(this->SceneGetDropItemDrawPos.iX, this->SceneGetDropItemDrawPos.iY, this->Image_SceneGetDropItem, TRUE);
-}
-
-// 画像の更新
-void Scene_GetDropItem::Update_Image()
-{
-	/* 描写先をドロップアイテム取得画面に設定 */
-	SetDrawScreen(this->Image_SceneGetDropItem);
-
-	/* 画像をクリア */
-	ClearDrawScreen();
-
-	/* 背景描写 */
-	BackGround_Drow();
-
-	/* 描写先を裏画面に戻す */
-	SetDrawScreen(DX_SCREEN_BACK);
-}
-
 // 背景描写
 void Scene_GetDropItem::BackGround_Drow()
 {
@@ -146,17 +141,17 @@ void Scene_GetDropItem::BackGround_Drow()
 	std::shared_ptr<DataList_Image> pDataList_Image = std::dynamic_pointer_cast<DataList_Image>(gpDataListServer->GetDataList("DataList_Image"));
 
 	/* 背景の枠の画像を取得 */
-	std::string ImageFilePath = "UI/Button/Button_Frame_Corner_Over";
+	std::string ImageFilePath = "UI/Button/Button_Frame_Corner";
 	std::shared_ptr<int> Image_Frame_Corner = pDataList_Image->iGetImageHandle(ImageFilePath);
-	ImageFilePath = "UI/Button/Button_Frame_Line_Over";
+	ImageFilePath = "UI/Button/Button_Frame_Line";
 	std::shared_ptr<int> Image_Frame_Line = pDataList_Image->iGetImageHandle(ImageFilePath);
-	ImageFilePath = "UI/Button/Button_Frame_Inside_Over";
+	ImageFilePath = "UI/Button/Button_Frame_Inside";
 	std::shared_ptr<int> Image_Frame_Inside = pDataList_Image->iGetImageHandle(ImageFilePath);
 
 	/* 背景、フレームの描写 */
 	DRAW_FUNCTION::DrawFrame_Image(
-		{ DROPITEM_DRAW_WIDTH / 2, DROPITEM_DRAW_HEIGHT / 2 },
-		{ DROPITEM_DRAW_WIDTH - (DROPITEM_FRAME_THICKNESS * 2), DROPITEM_DRAW_HEIGHT - (DROPITEM_FRAME_THICKNESS * 2) },
+		{ DROPITEM_DRAW_WIDTH / 2, (DROPITEM_DRAW_HEIGHT / 2) + SceneGetDropItemDrawPos.iY },
+		{ DROPITEM_DRAW_WIDTH - (DROPITEM_FRAME_THICKNESS * 2), DROPITEM_DRAW_HEIGHT - (DROPITEM_FRAME_THICKNESS * 2)},
 		DROPITEM_FRAME_THICKNESS,
 		*(Image_Frame_Corner),
 		*(Image_Frame_Line),
@@ -189,4 +184,43 @@ void Scene_GetDropItem::ActiveCheck()
 
 	/* 現在のシーン状態を設定 */
 	this->OldActiveFlg = this->pDataList_GameResource->GetDropItemCheckFlg();
+}
+
+// カード位置セットアップ
+void Scene_GetDropItem::CardPosition_Setup()
+{
+	/* 取得したカードの総数を取得 */
+	int CardCount = static_cast<int>(this->GetCardList.size());
+
+	/* 取得したカードの設定座標を算出し、設定する */
+	for (int i = 0; i < CardCount; i++)
+	{
+		/* 設定座標を算出 */
+		Struct_2D::POSITION SettingPos =
+		{
+			(DROPITEM_DRAW_WIDTH / 2) - ((GETCARD_INTERVAL * (CardCount - 1)) / 2) + (GETCARD_INTERVAL * i),
+			GETCARD_POS_Y + this->SceneGetDropItemDrawPos.iY
+		};
+
+		/* カードに設定座標を設定 */
+		this->GetCardList[i]->SetSettingPos(SettingPos);
+	}
+}
+
+// 取得カード描写
+void Scene_GetDropItem::Draw_GetCard()
+{
+	for (auto& Card : this->GetCardList)
+	{
+		Card->Draw();
+	}
+}
+
+// カードの更新
+void Scene_GetDropItem::Update_Card()
+{
+	for (auto& Card : this->GetCardList)
+	{
+		Card->Update();
+	}
 }

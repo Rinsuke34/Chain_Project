@@ -11,7 +11,7 @@
 #include "DataList_Image.h"
 
 // コンストラクタ
-Scene_Draw_GameResource::Scene_Draw_GameResource() : Scene_Base("Scene_Draw_GameResource", 9, false, false)
+Scene_Draw_GameResource::Scene_Draw_GameResource() : Scene_Base("Scene_Draw_GameResource", 60, false, false)
 {
 	/* データリスト取得*/
 	this->pDataList_GameResource = std::dynamic_pointer_cast<DataList_GameResource>(gpDataListServer->GetDataList("DataList_GameResource"));

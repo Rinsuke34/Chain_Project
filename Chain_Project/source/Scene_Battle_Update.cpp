@@ -830,6 +830,12 @@ void Scene_Battle::CheckGameEnd()
 	if (!bEnemyCharacterExist)
 	{
 		// 敵キャラクターが存在していない場合
+		/* ドロップアイテムが盤面上に残っているなら処理を抜ける(ドロップアイテムが消滅するまで待つ) */
+		if (this->DropItem_List.size() > 0)
+		{
+			return;
+		}
+
 		/* 戦闘終了(プレイヤー勝利)フェイズへ遷移 */
 		this->iBattlePhase = BATTLE_PHASE_BATTLE_END_WIN;
 
