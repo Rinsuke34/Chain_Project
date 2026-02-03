@@ -19,6 +19,9 @@ Scene_GetDropItem::Scene_GetDropItem() : Scene_Base("Scene_GetDropItem", 100, fa
 	/* 初期化 */
 	this->SceneGetDropItemDrawPos	= { 0, DROPITEM_DRAWPOS_Y_LOW };	// ワールドマップの描写座標
 	this->OldActiveFlg				= false;							// 以前のドロップアイテム確認シーン有効フラグ
+	this->Phase						= PHASE_CARD_LINE_UP;				// フェーズ
+	this->PhaseTimer				= PHASE_TIMER_MAX_MOVE;				// フェーズ用タイマー
+	this->TableCardIndex			= 0;								// カードを表にするフェーズ用カードインデックス
 
 	/* データリスト */
 	// ゲームリソース管理用データリスト
@@ -28,6 +31,9 @@ Scene_GetDropItem::Scene_GetDropItem() : Scene_Base("Scene_GetDropItem", 100, fa
 // 更新
 void Scene_GetDropItem::Update()
 {
+	/* フェーズの更新 */
+	Update_Phase();
+
 	/* 描写座標の更新 */
 	Update_DrawPos();
 
@@ -37,14 +43,8 @@ void Scene_GetDropItem::Update()
 	/* カード座標の設定 */
 	CardPosition_Setup();
 
-	/* "決定"ボタンが入力されたのならドロップアイテム確認シーンを無効化 */
-	if (this->UI_DecisionButton != nullptr)
-	{
-		if (this->UI_DecisionButton->GetMouseOverFlg() && (gstKeyboardInputData.igInput[INPUT_TRG] & MOUSE_INPUT_LEFT))
-		{
-			this->pDataList_GameResource->SetDropItemCheckFlg(false);
-		}
-	}
+	/* 終了確認 */
+	EndCheck();
 
 	/* ドロップアイテム確認シーンが無効→有効と変化しているか確認 */
 	ActiveCheck();
@@ -84,6 +84,11 @@ void Scene_GetDropItem::Setup()
 	this->UI_DecisionButton->SetCenterPos({ 1750, SceneGetDropItemDrawPos.iY + (DROPITEM_DRAW_HEIGHT / 2) });
 	this->UI_DecisionButton->SetFontHandle(giFont_DonguriDuel_32);
 	gpSceneServer->AddSceneReservation(this->UI_DecisionButton);
+
+	/* 初期化処理 */
+	this->Phase				= PHASE_CARD_LINE_UP;
+	this->PhaseTimer		= PHASE_TIMER_MAX_MOVE;
+	this->TableCardIndex	= 0;
 }
 
 // 描画
@@ -195,11 +200,18 @@ void Scene_GetDropItem::CardPosition_Setup()
 	/* 取得したカードの設定座標を算出し、設定する */
 	for (int i = 0; i < CardCount; i++)
 	{
+		/* そのインデックスのカードが裏面(削除選択)状態であるなら設定座標を少し下げる */
+		int CorrectionY = 0;
+		if (this->GetCardList[i]->GetCardState() == Card_Base::CARDSTATE_GETLIST_FRONT_DELETE)
+		{
+			CorrectionY = 20;
+		}
+
 		/* 設定座標を算出 */
 		Struct_2D::POSITION SettingPos =
 		{
 			(DROPITEM_DRAW_WIDTH / 2) - ((GETCARD_INTERVAL * (CardCount - 1)) / 2) + (GETCARD_INTERVAL * i),
-			GETCARD_POS_Y + this->SceneGetDropItemDrawPos.iY
+			GETCARD_POS_Y + this->SceneGetDropItemDrawPos.iY + CorrectionY
 		};
 
 		/* カードに設定座標を設定 */
@@ -222,5 +234,129 @@ void Scene_GetDropItem::Update_Card()
 	for (auto& Card : this->GetCardList)
 	{
 		Card->Update();
+	}
+}
+
+// フェーズの更新
+void Scene_GetDropItem::Update_Phase()
+{
+	/* フェーズに応じた更新処理 */
+	switch (this->Phase)
+	{
+		// カード整列フェーズ
+		case PHASE_CARD_LINE_UP:
+			/* タイマーを更新 */
+			if (this->PhaseTimer > 0)
+			{
+				// タイマーが残っている場合
+				this->PhaseTimer--;
+			}
+			else
+			{
+				// タイマーが無くなった場合
+				/* 次のフェーズへ */
+				this->Phase			= PHASE_CARD_TABLE;
+			}
+			break;
+
+		// カードを表にするフェーズ
+		case PHASE_CARD_TABLE:
+			/* 左クリックが大縄れたなら全てのカードを表にし、次のフェーズへ */
+			if (gstKeyboardInputData.igInput[INPUT_TRG] & MOUSE_INPUT_LEFT)
+			{
+				/* 全てのカードを表にする */
+				for (auto& Card : this->GetCardList)
+				{
+					Card->SetCardState(Card_Base::CARDSTATE_GETLIST_FRONT);
+				}
+				/* 次のフェーズへ */
+				this->Phase = PHASE_WAIT_DECISION;
+				break;
+			}
+
+			/* タイマーを更新 */
+			if (this->PhaseTimer > 0)
+			{
+				// タイマーが残っている場合
+				this->PhaseTimer--;
+			}
+			else
+			{
+				// タイマーが無くなった場合
+				/* タイマーをリセット */
+				this->PhaseTimer = PHASE_TIMER_MAX_OPEN;
+
+				/* カードを表にする */
+				if (this->TableCardIndex < static_cast<int>(this->GetCardList.size()))
+				{
+					this->GetCardList[this->TableCardIndex]->SetCardState(Card_Base::CARDSTATE_GETLIST_FRONT);
+				}
+
+				/* 次のカードへ */
+				this->TableCardIndex++;
+				if (this->TableCardIndex >= static_cast<int>(this->GetCardList.size()))
+				{
+					// 全てのカードを表にした場合
+					/* 次のフェーズへ */
+					this->Phase = PHASE_WAIT_DECISION;
+				}
+			}
+			break;
+
+		// 決定待機フェーズ
+		case PHASE_WAIT_DECISION:
+			/* 左クリックが押されたか確認 */
+			if (gstKeyboardInputData.igInput[INPUT_TRG] & MOUSE_INPUT_LEFT)
+			{
+				/* カーソルが接触しているカードがあるか確認 */
+				for (auto& Card : this->GetCardList)
+				{
+					if (Card->MouseInCard())
+					{
+						/* そのカードの状態を選択と非選択状態を切り替える */
+						if (Card->GetCardState() == Card_Base::CARDSTATE_GETLIST_FRONT_DELETE)
+						{
+							/* そのカードを通常状態にする */
+							Card->SetCardState(Card_Base::CARDSTATE_GETLIST_FRONT);
+						}
+						else
+						{
+							/* そのカードを削除選択状態にする */
+							Card->SetCardState(Card_Base::CARDSTATE_GETLIST_FRONT_DELETE);
+						}
+						break;
+					}
+				}
+			}
+			break;
+	}
+}
+
+// 終了確認
+void Scene_GetDropItem::EndCheck()
+{
+	/* "決定"ボタンが入力されたか確認 */
+	if (this->UI_DecisionButton != nullptr)
+	{
+		if (this->UI_DecisionButton->GetMouseOverFlg() && (gstKeyboardInputData.igInput[INPUT_TRG] & MOUSE_INPUT_LEFT))
+		{
+			/* ドロップアイテム確認シーンを無効化 */
+			this->pDataList_GameResource->SetDropItemCheckFlg(false);
+
+			/* デッキのカードリストを取得 */
+			std::vector<std::shared_ptr<Card_Base>> DeckCardList = this->pDataList_GameResource->GetDeckCardList();
+
+			/* 取得カードの内、削除状態ではないカードをデッキに追加する */
+			for (auto& Card : this->GetCardList)
+			{
+				if (Card->GetCardState() != Card_Base::CARDSTATE_GETLIST_FRONT_DELETE)
+				{
+					DeckCardList.push_back(Card);
+				}
+			}
+
+			/* デッキのカードリストを設定 */
+			this->pDataList_GameResource->SetDeckCardList(DeckCardList);
+		}
 	}
 }

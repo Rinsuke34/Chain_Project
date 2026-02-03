@@ -67,6 +67,7 @@ class Card_Base : public std::enable_shared_from_this<Card_Base>
 		int							GetDiffence_Buff()	{ return Diffence; }		// 防御力(バフ)の取得
 		int							GetAttackRange()	{ return AttackRange; }		// 攻撃範囲の取得
 		float						GetRotationAngle()	{ return RotateAngle; }		// 回転角度の取得
+		int							GetCardState()		{ return CardState; }		// カード状態の取得
 		// その他
 		Struct_2D::POSITION			GetNowPos()			{ return Now_Position; }		// 現在座標の取得
 		Struct_2D::POSITION			GetSettingPos()		{ return Setting_Position; }	// 設定座標の取得
@@ -117,15 +118,16 @@ class Card_Base : public std::enable_shared_from_this<Card_Base>
 		// 回転速度
 		const float ROTATE_INTERPOLATION_SPEED	= 0.1f;	// 回転補間速度
 		// カードの状態
-		static const int CARDSTATE_NONE				= -1;	// 無効
-		static const int CARDSTATE_DECK				= 0;	// デッキ
-		static const int CARDSTATE_HAND				= 1;	// 手札
-		static const int CARDSTATE_PICKED			= 2;	// ピックアップ中
-		static const int CARDSTATE_SETTING			= 3;	// 設定中
-		static const int CARDSTATE_TRASH			= 4;	// 捨て札
-		static const int CARDSTATE_LOST				= 5;	// ロスト
-		static const int CARDSTATE_GETLIST_BACK		= 6;	// 取得一覧:裏面
-		static const int CARDSTATE_GETLIST_FRONT	= 7;	// 取得一覧:表面
+		static const int CARDSTATE_NONE					= -1;	// 無効
+		static const int CARDSTATE_DECK					= 0;	// デッキ
+		static const int CARDSTATE_HAND					= 1;	// 手札
+		static const int CARDSTATE_PICKED				= 2;	// ピックアップ中
+		static const int CARDSTATE_SETTING				= 3;	// 設定中
+		static const int CARDSTATE_TRASH				= 4;	// 捨て札
+		static const int CARDSTATE_LOST					= 5;	// ロスト
+		static const int CARDSTATE_GETLIST_BACK			= 6;	// 取得一覧:裏面
+		static const int CARDSTATE_GETLIST_FRONT		= 7;	// 取得一覧:表面
+		static const int CARDSTATE_GETLIST_FRONT_DELETE	= 8;	// 取得一覧:表面(削除選択)
 
 	protected:
 		/* 変数 */
