@@ -357,6 +357,9 @@ void Scene_GetDropItem::EndCheck()
 
 			/* デッキのカードリストを設定 */
 			this->pDataList_GameResource->SetDeckCardList(DeckCardList);
+
+			/* 現在設定されているカードリストを初期化 */
+			this->GetCardList.clear();
 		}
 	}
 }
