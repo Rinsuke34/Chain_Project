@@ -447,6 +447,9 @@
     <ClCompile Include="source\Scene_GetDropItem.cpp">
       <Filter>ソース ファイル\シーン\取得アイテム</Filter>
     </ClCompile>
+    <ClCompile Include="source\Scene_Shop_Setup.cpp">
+      <Filter>ソース ファイル\シーン\ステージシーン\ショップ</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Scene_Load_Checker.h">
@@ -580,6 +583,9 @@
     </ClInclude>
     <ClInclude Include="source\Scene_GetDropItem.h">
       <Filter>ヘッダー ファイル\シーン\取得アイテム</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Card_Include.h">
+      <Filter>ヘッダー ファイル\カード</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -128,6 +128,8 @@ class Card_Base : public std::enable_shared_from_this<Card_Base>
 		static const int CARDSTATE_GETLIST_BACK			= 6;	// 取得一覧:裏面
 		static const int CARDSTATE_GETLIST_FRONT		= 7;	// 取得一覧:表面
 		static const int CARDSTATE_GETLIST_FRONT_DELETE	= 8;	// 取得一覧:表面(削除選択)
+		static const int CARDSTATE_SHOP_DISPLAY			= 9;	// ショップ:陳列中
+		static const int CARDSTATE_SHOP_SELLED			= 10;	// ショップ:購入済み
 
 	protected:
 		/* 変数 */

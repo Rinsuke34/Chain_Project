@@ -85,6 +85,7 @@ void Scene_GameManager::Create_StageScene()
 		case WoldMap_Node_Base::NODE_TYPE_SHOP:
 			// ショップシーンを作成
 			NewScene = std::make_shared<Scene_Shop>();
+			std::dynamic_pointer_cast<Scene_Shop>(NewScene)->ShopSetup(NowMapNode->GetNodeLevel());
 			break;
 
 		// ボスノードの場合

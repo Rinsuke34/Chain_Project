@@ -45,6 +45,10 @@ class Scene_GetDropItem : public Scene_Base
 		std::shared_ptr<DataList_GameResource>	pDataList_GameResource;	// ゲームリソース管理用データリスト
 		// UIのハンドル
 		std::shared_ptr<Scene_UI_Button>		UI_DecisionButton;		// 決定ボタン
+		// 画像
+		std::shared_ptr<int> Image_Frame_Corner;	// 角
+		std::shared_ptr<int> Image_Frame_Line;		// 線
+		std::shared_ptr<int> Image_Frame_Inside;	// 中央
 		// その他
 		Struct_2D::POSITION		SceneGetDropItemDrawPos;	// ドロップアイテム取得画面の描写座標
 		bool					OldActiveFlg;				// 以前のドロップアイテム確認シーン有効フラグ

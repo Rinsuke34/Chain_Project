@@ -23,6 +23,20 @@ Scene_GetDropItem::Scene_GetDropItem() : Scene_Base("Scene_GetDropItem", 100, fa
 	this->PhaseTimer				= PHASE_TIMER_MAX_MOVE;				// フェーズ用タイマー
 	this->TableCardIndex			= 0;								// カードを表にするフェーズ用カードインデックス
 
+	/* 画像取得 */
+	{
+		/* 画像管理データリストを取得 */
+		std::shared_ptr<DataList_Image> pDataList_Image = std::dynamic_pointer_cast<DataList_Image>(gpDataListServer->GetDataList("DataList_Image"));
+
+		/* 背景の枠の画像を取得 */
+		std::string ImageFilePath = "UI/Button/Button_Frame_Corner";
+		this->Image_Frame_Corner = pDataList_Image->iGetImageHandle(ImageFilePath);
+		ImageFilePath = "UI/Button/Button_Frame_Line";
+		this->Image_Frame_Line = pDataList_Image->iGetImageHandle(ImageFilePath);
+		ImageFilePath = "UI/Button/Button_Frame_Inside";
+		this->Image_Frame_Inside = pDataList_Image->iGetImageHandle(ImageFilePath);
+	}
+
 	/* データリスト */
 	// ゲームリソース管理用データリスト
 	this->pDataList_GameResource = std::dynamic_pointer_cast<DataList_GameResource>(gpDataListServer->GetDataList("DataList_GameResource"));
@@ -142,25 +156,14 @@ void Scene_GetDropItem::Update_DrawPos()
 // 背景描写
 void Scene_GetDropItem::BackGround_Drow()
 {
-	/* 画像管理データリストを取得 */
-	std::shared_ptr<DataList_Image> pDataList_Image = std::dynamic_pointer_cast<DataList_Image>(gpDataListServer->GetDataList("DataList_Image"));
-
-	/* 背景の枠の画像を取得 */
-	std::string ImageFilePath = "UI/Button/Button_Frame_Corner";
-	std::shared_ptr<int> Image_Frame_Corner = pDataList_Image->iGetImageHandle(ImageFilePath);
-	ImageFilePath = "UI/Button/Button_Frame_Line";
-	std::shared_ptr<int> Image_Frame_Line = pDataList_Image->iGetImageHandle(ImageFilePath);
-	ImageFilePath = "UI/Button/Button_Frame_Inside";
-	std::shared_ptr<int> Image_Frame_Inside = pDataList_Image->iGetImageHandle(ImageFilePath);
-
 	/* 背景、フレームの描写 */
 	DRAW_FUNCTION::DrawFrame_Image(
 		{ DROPITEM_DRAW_WIDTH / 2, (DROPITEM_DRAW_HEIGHT / 2) + SceneGetDropItemDrawPos.iY },
 		{ DROPITEM_DRAW_WIDTH - (DROPITEM_FRAME_THICKNESS * 2), DROPITEM_DRAW_HEIGHT - (DROPITEM_FRAME_THICKNESS * 2)},
 		DROPITEM_FRAME_THICKNESS,
-		*(Image_Frame_Corner),
-		*(Image_Frame_Line),
-		*(Image_Frame_Inside)
+		*(this->Image_Frame_Corner),
+		*(this->Image_Frame_Line),
+		*(this->Image_Frame_Inside)
 	);
 }
 

@@ -209,6 +209,7 @@
     <ClCompile Include="source\Scene_Load_Draw.cpp" />
     <ClCompile Include="source\Scene_Particles_Text.cpp" />
     <ClCompile Include="source\Scene_Shop.cpp" />
+    <ClCompile Include="source\Scene_Shop_Setup.cpp" />
     <ClCompile Include="source\Scene_Title.cpp" />
     <ClCompile Include="source\Scene_UI_Button.cpp" />
     <ClCompile Include="source\Scene_WoldMap.cpp" />
@@ -268,6 +269,7 @@
     <ClInclude Include="source\WoldMap_Node_Boss.h" />
     <ClInclude Include="source\WoldMap_Node_Enemy.h" />
     <ClInclude Include="source\WoldMap_Node_Shop.h" />
+    <ClInclude Include="source\Card_Include.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
