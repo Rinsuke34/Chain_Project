@@ -28,19 +28,23 @@ namespace PROJECT_INIT
 // 汎用計算系
 namespace PUBLIC_PROCESS
 {
-	float		fClamp(float fValue, float fMax, float fMin);																			// 値を範囲内に収める
-	bool		bCheckAboveThreshold(unsigned char ucValue, unsigned char ucThreshold);													// 閾値を超えているか確認
-	float		fAnalogStickNorm(short sMouseMove);																						// アナログスティックの入力を正規化(±1)
-	bool		bCheckInputDeadzone(float fInput, float fDeadzone);																		// 入力値がデッドゾーンの範囲内であるか確認
-	VECTOR		vecGetLineCrossPoint(VECTOR vecLineAStart, VECTOR vecLineADirection, VECTOR vecLineBStart, VECTOR vecLineBDirection);	// 2つの線分の交点を取得
-	COLOR_F		stAddCollorF(COLOR_F vecColorF_A, COLOR_F vecColorF_B);																	// 2つの色(COLOR_F型)を合成
-	std::string	aUtf8ToShiftJIS(std::string Utf8);																						// UTF-8 → Shift-JIS 変換
-	std::string	aShiftJisToUtf8(std::string ShiftJis);																					// Shift-JIS → UTF-8 変換
-	std::string	aCutShitfJisString(std::string ShiftJis, int iLength);																	// Shift-JIS文字列を指定文字数でカット
-	std::string aInsertNewLine(std::string ShiftJis, int iLength);																		// Shift-JIS文字列を指定文字数で改行
-	bool		bIsFloatDiffWithinThreshold(float fA, float fB, float fThreshold);														// 2つのfloat型の値の差が閾値以内であるか確認
-	bool		bBoxHitCheck(Struct_Collision::COLLISION_BOX BoxA, Struct_Collision::COLLISION_BOX BoxB);								// AABB同士の当たり判定
-	bool		bPositionIn2DRangeCheck(Struct_2D::POSITION Position, Struct_2D::RANGE Range);											// 指定の座標が指定範囲内に存在するか確認
+	float			fClamp(float fValue, float fMax, float fMin);																			// 値を範囲内に収める
+	bool			bCheckAboveThreshold(unsigned char ucValue, unsigned char ucThreshold);													// 閾値を超えているか確認
+	float			fAnalogStickNorm(short sMouseMove);																						// アナログスティックの入力を正規化(±1)
+	bool			bCheckInputDeadzone(float fInput, float fDeadzone);																		// 入力値がデッドゾーンの範囲内であるか確認
+	VECTOR			vecGetLineCrossPoint(VECTOR vecLineAStart, VECTOR vecLineADirection, VECTOR vecLineBStart, VECTOR vecLineBDirection);	// 2つの線分の交点を取得
+	COLOR_F			stAddCollorF(COLOR_F vecColorF_A, COLOR_F vecColorF_B);																	// 2つの色(COLOR_F型)を合成
+	std::string		aUtf8ToShiftJIS(std::string Utf8);																						// UTF-8 → Shift-JIS 変換
+	std::string		aShiftJisToUtf8(std::string ShiftJis);																					// Shift-JIS → UTF-8 変換
+	std::string		aCutShitfJisString(std::string ShiftJis, int iLength);																	// Shift-JIS文字列を指定文字数でカット
+	std::string		aInsertNewLine(std::string ShiftJis, int iLength);																		// Shift-JIS文字列を指定文字数で改行
+	bool			bIsFloatDiffWithinThreshold(float fA, float fB, float fThreshold);														// 2つのfloat型の値の差が閾値以内であるか確認
+	bool			bBoxHitCheck(Struct_Collision::COLLISION_BOX BoxA, Struct_Collision::COLLISION_BOX BoxB);								// AABB同士の当たり判定
+	bool			bPositionIn2DRangeCheck(Struct_2D::POSITION Position, Struct_2D::RANGE Range);											// 指定の座標が指定範囲内に存在するか確認
+	std::wstring	Utf8ToWstring(const std::string& src);																					// UTF-8 文字列をワイド文字列に変換
+	std::string		WstringToUtf8(const std::wstring& src); 																				// ワイド文字列を UTF-8 文字列に変換
+	std::string		WstringToShiftJIS(const std::wstring& src);																				// ワイド文字列を Shift-JIS 文字列に変換
+	std::wstring	MByteToWstring(const std::string& src);																					// マルチバイト文字列をワイド文字列に変換
 }
 
 // 汎用機能系

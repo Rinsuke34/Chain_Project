@@ -132,7 +132,8 @@ void Scene_Shop::Draw_ShopItems()
 			// 売り切れである場合
 			/* 売り切れテキスト描写 */
 			std::string PriceText = "うりきれ";
-			int TextSize = GetDrawStringWidth(PriceText.c_str(), static_cast<int>(strlenDx(PriceText.c_str())), giFont_DonguriDuel_32);
+//			int TextSize = GetDrawStringWidth(PriceText.c_str(), static_cast<int>(strlenDx(PriceText.c_str())), giFont_DonguriDuel_32);
+			int TextSize = GetFontSizeToHandle(giFont_DonguriDuel_32) * 4;
 			int StartPosX = ShopItem->GetCardCenterPosition().iX - (TextSize / 2);
 			DrawStringToHandle(
 				StartPosX,
@@ -140,23 +141,6 @@ void Scene_Shop::Draw_ShopItems()
 				PriceText.c_str(),
 				GetColor(255, 255, 0),
 				giFont_DonguriDuel_32
-			);
-			DrawLine(
-				StartPosX,
-				ShopItem->GetCardCenterPosition().iY + 150 - 16 + 16,
-				StartPosX,
-				ShopItem->GetCardCenterPosition().iY + 150 - 16 - 16,
-				GetColor(255, 255, 0),
-				6
-			);
-
-			DrawLine(
-				StartPosX + TextSize,
-				ShopItem->GetCardCenterPosition().iY + 150 - 16 + 16,
-				StartPosX + TextSize,
-				ShopItem->GetCardCenterPosition().iY + 150 - 16 - 16,
-				GetColor(255, 255, 0),
-				6
 			);
 		}
 		else

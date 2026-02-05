@@ -86,6 +86,8 @@ void Scene_Draw_GameResource::Update()
 // 描画
 void Scene_Draw_GameResource::Draw()
 {
+	return;
+
 	/* コイン枚数の描写 */
 	{
 		/* コインアイコンの枠の描写 */

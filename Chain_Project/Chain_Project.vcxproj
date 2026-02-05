@@ -212,6 +212,7 @@
     <ClCompile Include="source\Scene_Shop_Setup.cpp" />
     <ClCompile Include="source\Scene_Title.cpp" />
     <ClCompile Include="source\Scene_UI_Button.cpp" />
+    <ClCompile Include="source\Scene_UI_ExplanationText.cpp" />
     <ClCompile Include="source\Scene_WoldMap.cpp" />
     <ClCompile Include="source\VariableDefine.cpp" />
     <ClCompile Include="source\WoldMap_Node_Base.cpp" />
@@ -263,6 +264,7 @@
     <ClInclude Include="source\Scene_Shop.h" />
     <ClInclude Include="source\Scene_Title.h" />
     <ClInclude Include="source\Scene_UI_Button.h" />
+    <ClInclude Include="source\Scene_UI_ExplanationText.h" />
     <ClInclude Include="source\Scene_WoldMap.h" />
     <ClInclude Include="source\VariableDefine.h" />
     <ClInclude Include="source\WoldMap_Node_Base.h" />

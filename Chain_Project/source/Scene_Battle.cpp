@@ -12,6 +12,9 @@
 #include "DataList_Image.h"
 #include "DataList_GameResource.h"
 
+// テスト
+#include "Scene_UI_ExplanationText.h"
+
 // コンストラクタ
 Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 50, false, false)
 {
@@ -104,6 +107,13 @@ Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 50, false, false)
 		Deck->SetUp_DataList();
 		Deck->SetCardState(Card_Base::CARDSTATE_DECK);
 	}
+
+	// テスト用:説明文UIの作成
+	std::shared_ptr<Scene_UI_ExplanationText> Test_ExplanationText = std::make_shared<Scene_UI_ExplanationText>(this->iLayerOrder + 1);
+	gpSceneServer->AddSceneReservation(Test_ExplanationText);
+	Test_ExplanationText->SetExplanationText("/cysこうげきじ/ce/nていかくりつでしょうめつする");
+	Test_ExplanationText->SetBasePos({ 400, 200 });
+	gpSceneServer->AddSceneReservation(Test_ExplanationText);
 }
 
 // デストラクタ

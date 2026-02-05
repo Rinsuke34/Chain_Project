@@ -397,3 +397,47 @@ bool PUBLIC_PROCESS::bPositionIn2DRangeCheck(Struct_2D::POSITION Position, Struc
 	// 指定範囲内に存在しないならfalseを返す
 	return false;
 }
+
+// UTF-8 文字列をワイド文字列に変換
+std::wstring PUBLIC_PROCESS::Utf8ToWstring(const std::string& src)
+{
+	if (src.empty()) return {};
+	int req = ::MultiByteToWideChar(CP_UTF8, 0, src.data(), (int)src.size(), nullptr, 0);
+	if (req == 0) return {};
+	std::wstring dst(req, L'\0');
+	::MultiByteToWideChar(CP_UTF8, 0, src.data(), (int)src.size(), &dst[0], req);
+	return dst;
+}
+
+// ワイド文字列を UTF-8 文字列に変換
+std::string PUBLIC_PROCESS::WstringToUtf8(const std::wstring& src)
+{
+	if (src.empty()) return std::string();
+	int req = ::WideCharToMultiByte(CP_UTF8, 0, src.data(), (int)src.size(), nullptr, 0, nullptr, nullptr);
+	if (req == 0) return std::string();
+	std::string dst(req, '\0');
+	::WideCharToMultiByte(CP_UTF8, 0, src.data(), (int)src.size(), &dst[0], req, nullptr, nullptr);
+	return dst;
+}
+
+// ワイド文字列を Shift-JIS 文字列に変換
+std::string	PUBLIC_PROCESS::WstringToShiftJIS(const std::wstring& src)
+{
+	if (src.empty()) return {};
+	int req = ::WideCharToMultiByte(932 /* CP932 */, 0, src.data(), (int)src.size(), nullptr, 0, nullptr, nullptr);
+	if (req == 0) return {};
+	std::string dst(req, '\0');
+	::WideCharToMultiByte(932 /* CP932 */, 0, src.data(), (int)src.size(), &dst[0], req, nullptr, nullptr);
+	return dst;
+}
+
+// マルチバイト文字列をワイド文字列に変換
+std::wstring PUBLIC_PROCESS::MByteToWstring(const std::string& src)
+{
+	if (src.empty()) return std::wstring();
+	int req = ::MultiByteToWideChar(CP_ACP, 0, src.data(), (int)src.size(), nullptr, 0);
+	if (req == 0) return std::wstring();
+	std::wstring dst(req, L'\0');
+	::MultiByteToWideChar(CP_ACP, 0, src.data(), (int)src.size(), &dst[0], req);
+	return dst;
+}

@@ -301,6 +301,12 @@
     <Filter Include="ソース ファイル\シーン\取得アイテム">
       <UniqueIdentifier>{3b268074-db87-42f7-b605-9beaa1c69413}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\シーン\汎用UI\説明テキスト">
+      <UniqueIdentifier>{1152250a-6527-4e37-b4cc-6fa90aa1c132}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\シーン\汎用UI\説明テキスト">
+      <UniqueIdentifier>{fcac607c-cce9-421b-9ac8-c782dd0aed4f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Main.cpp">
@@ -450,6 +456,9 @@
     <ClCompile Include="source\Scene_Shop_Setup.cpp">
       <Filter>ソース ファイル\シーン\ステージシーン\ショップ</Filter>
     </ClCompile>
+    <ClCompile Include="source\Scene_UI_ExplanationText.cpp">
+      <Filter>ソース ファイル\シーン\汎用UI\説明テキスト</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Scene_Load_Checker.h">
@@ -586,6 +595,9 @@
     </ClInclude>
     <ClInclude Include="source\Card_Include.h">
       <Filter>ヘッダー ファイル\カード</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Scene_UI_ExplanationText.h">
+      <Filter>ヘッダー ファイル\シーン\汎用UI\説明テキスト</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
