@@ -114,6 +114,13 @@ Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 50, false, false)
 	Test_ExplanationText->SetExplanationText("/cysこうげきじ/ce/nていかくりつでしょうめつする");
 	Test_ExplanationText->SetBasePos({ 400, 200 });
 	gpSceneServer->AddSceneReservation(Test_ExplanationText);
+
+	// テスト用:説明文UIの作成
+	std::shared_ptr<Scene_UI_ExplanationText> Test_ExplanationText2 = std::make_shared<Scene_UI_ExplanationText>(this->iLayerOrder + 1);
+	gpSceneServer->AddSceneReservation(Test_ExplanationText2);
+	Test_ExplanationText2->SetExplanationText("/cysこうげきじ/ce/nていかくりつでしょうめつする");
+	Test_ExplanationText2->SetBasePos({ 400, 800 });
+	gpSceneServer->AddSceneReservation(Test_ExplanationText2);
 }
 
 // デストラクタ

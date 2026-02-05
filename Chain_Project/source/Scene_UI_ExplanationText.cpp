@@ -7,6 +7,7 @@
 #include "DataList_Image.h"
 // 共通定義
 #include "VariableDefine.h"
+#include "FunctionDefine.h"
 
 // コンストラクタ
 Scene_UI_ExplanationText::Scene_UI_ExplanationText(const int iLayer) : Scene_Base("Scene_UI_ExplanationText", iLayer, false, false)
@@ -48,110 +49,161 @@ void Scene_UI_ExplanationText::Update()
 // 描画
 void Scene_UI_ExplanationText::Draw()
 {
+	/* 文字列の描写 */
+	// ※文字列にコマンドを埋め込んで対応
+	// ・色変更：/cys (黄色開始)、/ce (色終了、白に戻す)
+	// ・改行：/n
+
 	// 元文字列（UTF-8 を想定）
 	const std::string& text = this->ExplanationText;
-
-	// マルチバイト(プロジェクト設定) -> wstring
 	std::wstring wtext = PUBLIC_PROCESS::MByteToWstring(text);
 
-	// 描画開始位置（Base_Pos を基準）
-	int baseX = this->Base_Pos.iX;
-	int baseY = this->Base_Pos.iY;
-	int x = baseX;
-	int y = baseY;
+	const int lineHeight		= 20;	// 行の高さ
+	const int maxCharsPerLine	= 8;	// 1行あたりの最大文字数（全角換算、半角なら2文字分）
 
-	// 行高（フォントサイズに合わせて調整）
-	const int lineHeight = 20;
-
-	// 描画色
-	const unsigned int colorWhite = GetColor(255, 255, 255);
-	const unsigned int colorYellow = GetColor(255, 255, 0);
-	unsigned int curColor = colorWhite;
-
-	// 1行あたりの文字カウント（表示カウント）。8文字で改行。
+	/* 1. 行数を算出 */
+	int totalLines = 1;
 	int countInLine = 0;
-
-	// バッファ（同じ色の文字をまとめる）
-	std::wstring buffer;
-
-	auto flushBuffer = [&](void) {
-		if (buffer.empty()) return;
-		// 共通関数で Shift_JIS(CP932) に変換して描画
-		std::string bytes = PUBLIC_PROCESS::WstringToShiftJIS(buffer);
-		DrawStringToHandle(x, y, bytes.c_str(), curColor, giFont_JF_Dot_MPlus10_20);
-		// 幅進行：GetDrawStringWidthToHandle が使える場合はそちらを使うのが望ましいが、
-		// 簡易的な進行で足りる場合は下記で対応
-		int approxAdvance = 0;
-		for (wchar_t wc : buffer) {
-			if (wc <= 0x007F) approxAdvance += 8;
-			else approxAdvance += 16;
-		}
-		x += approxAdvance;
-		buffer.clear();
-		};
-
-	// マーカーは "/cys" "/ce"、改行は "/n" に対応
-	const std::wstring markerStart = L"/cys";
-	const std::wstring markerEnd = L"/ce";
-	const std::wstring slashN = L"/n";
-
 	for (size_t i = 0; i < wtext.size(); )
 	{
-		// "/n" を改行として扱う
+		// コマンド長
+		const std::wstring markerStart	= L"/cys";
+		const std::wstring markerEnd	= L"/ce";
+		const std::wstring slashN		= L"/n";
+
 		if (i + slashN.size() <= wtext.size() && wtext.substr(i, slashN.size()) == slashN)
 		{
-			flushBuffer();
-			// 次行位置の計算（上方向なら減算、下方向なら加算）
-			if (this->UpwardDisplayFlg) y -= lineHeight; else y += lineHeight;
-			x = baseX;
+			totalLines++;
 			countInLine = 0;
 			i += slashN.size();
 			continue;
 		}
-
-		// マーカー検出（/cys /ce）
 		if (i + markerStart.size() <= wtext.size() && wtext.substr(i, markerStart.size()) == markerStart)
 		{
-			flushBuffer();
-			curColor = colorYellow;
 			i += markerStart.size();
 			continue;
 		}
 		if (i + markerEnd.size() <= wtext.size() && wtext.substr(i, markerEnd.size()) == markerEnd)
 		{
+			i += markerEnd.size();
+			continue;
+		}
+		if (wtext[i] == L'\n')
+		{
+			totalLines++;
+			countInLine = 0;
+			++i;
+			continue;
+		}
+		++countInLine;
+		++i;
+		if (countInLine >= maxCharsPerLine)
+		{
+			totalLines++;
+			countInLine = 0;
+		}
+	}
+
+	/* 2. 描画開始Y座標を決定 */
+	int baseX = this->Base_Pos.iX;
+	int baseY = this->Base_Pos.iY;
+	int startY = baseY;
+
+	if (this->UpwardDisplayFlg)
+	{
+		// 上方向描写：基準位置から上方向へ描写
+		startY = baseY - (totalLines) * lineHeight - FRAME_THICKNESS;
+	}
+	else
+	{
+		// 下方向描写：基準座標から下方向へ描写
+		startY = baseY + FRAME_THICKNESS;
+	}
+
+	/* 3. 描写開始X座標を決定 */
+	baseX = baseX - (maxCharsPerLine * 20) / 2;
+
+	/* 4. 背景を描写 */
+	// 横幅は最大8文字分（全角16px/半角8pxで128px程度）、高さはlineHeight*totalLines
+	const int boxWidth	= maxCharsPerLine * 20;
+	const int boxHeight	= lineHeight * totalLines;
+	DRAW_FUNCTION::DrawFrame_Image(
+		{ baseX + boxWidth / 2, startY + boxHeight / 2 },
+		{ boxWidth, boxHeight },
+		FRAME_THICKNESS,
+		*(this->Image_Frame_Corner),
+		*(this->Image_Frame_Line),
+		*(this->Image_Frame_Inside)
+	);
+
+	/* 5. 文字列描写 */
+	int x = baseX;
+	int y = startY;
+	unsigned int colorWhite		= GetColor(255, 255, 255);
+	unsigned int colorYellow	= GetColor(255, 255, 0);
+	unsigned int curColor		= colorWhite;
+	countInLine					= 0;
+	std::wstring buffer;
+
+	auto flushBuffer = [&]()
+	{
+		if (buffer.empty()) return;
+		std::string bytes = PUBLIC_PROCESS::WstringToShiftJIS(buffer);
+		DrawStringToHandle(x, y, bytes.c_str(), curColor, giFont_JF_Dot_MPlus10_20);
+		int approxAdvance = 0;
+		for (wchar_t wc : buffer)
+		{
+			if (wc <= 0x007F) approxAdvance += 8;
+			else approxAdvance += 16;
+		}
+		x += approxAdvance;
+		buffer.clear();
+	};
+
+	const std::wstring markerStart	= L"/cys";
+	const std::wstring markerEnd	= L"/ce";
+	const std::wstring slashN		= L"/n";
+
+	for (size_t i = 0; i < wtext.size(); )
+	{
+		if (i + slashN.size() <= wtext.size() && wtext.substr(i, slashN.size()) == slashN) {
+			flushBuffer();
+			y += lineHeight;
+			x = baseX;
+			countInLine = 0;
+			i += slashN.size();
+			continue;
+		}
+		if (i + markerStart.size() <= wtext.size() && wtext.substr(i, markerStart.size()) == markerStart) {
+			flushBuffer();
+			curColor = colorYellow;
+			i += markerStart.size();
+			continue;
+		}
+		if (i + markerEnd.size() <= wtext.size() && wtext.substr(i, markerEnd.size()) == markerEnd) {
 			flushBuffer();
 			curColor = colorWhite;
 			i += markerEnd.size();
 			continue;
 		}
-
-		// 既存の改行文字 '\n' もサポート
-		if (wtext[i] == L'\n')
-		{
+		if (wtext[i] == L'\n') {
 			flushBuffer();
-			if (this->UpwardDisplayFlg) y -= lineHeight; else y += lineHeight;
+			y += lineHeight;
 			x = baseX;
 			countInLine = 0;
 			++i;
 			continue;
 		}
-
-		// 通常文字をバッファへ追加
 		buffer.push_back(wtext[i]);
 		++i;
 		++countInLine;
-
-		// 8文字で改行
-		if (countInLine >= 8)
-		{
+		if (countInLine >= maxCharsPerLine) {
 			flushBuffer();
-			if (this->UpwardDisplayFlg) y -= lineHeight; else y += lineHeight;
+			y += lineHeight;
 			x = baseX;
 			countInLine = 0;
 		}
 	}
-
-	// 残りを描画
 	flushBuffer();
 }
 

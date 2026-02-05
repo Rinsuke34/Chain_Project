@@ -21,6 +21,10 @@ class Scene_UI_ExplanationText : public Scene_Base
 		void SetBasePos(Struct_2D::POSITION pos)					{ this->Base_Pos		= pos; }				// 基準座標を設定
 		void SetExplanationText(const std::string& ExplanationText)	{ this->ExplanationText	= ExplanationText; }	// 説明テキストを設定
 
+		/* 定数 */
+		static const int FRAME_THICKNESS = 16;	// 枠の大きさ
+
+
 	private:
 		/* 変数 */
 		// 描写内容
