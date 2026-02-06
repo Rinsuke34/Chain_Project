@@ -21,6 +21,8 @@ Card_Arms_TravelerShield::Card_Arms_TravelerShield() : Card_Arms_Base()
 	this->AttackRange = ATTACKRANGE_FRONT;	// 攻撃範囲
 	// 画像の名前
 	this->ImageName = "TravelerShield";		// 画像の名前
+	// 説明文
+	this->ExplanationText = "/cysこうどうまえ/ce/nぼうぎょりょくをチェインすうぶんきょうか";
 }
 
 // 効果発動:行動t直前

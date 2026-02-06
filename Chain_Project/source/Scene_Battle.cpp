@@ -7,13 +7,11 @@
 #include "VariableDefine.h"
 // 関連クラス
 #include "Scene_UI_Button.h"
+#include "Scene_UI_ExplanationText.h"
 #include "Card_Base.h"
 #include "DataList_Battle.h"
 #include "DataList_Image.h"
 #include "DataList_GameResource.h"
-
-// テスト
-#include "Scene_UI_ExplanationText.h"
 
 // コンストラクタ
 Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 50, false, false)
@@ -107,20 +105,6 @@ Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 50, false, false)
 		Deck->SetUp_DataList();
 		Deck->SetCardState(Card_Base::CARDSTATE_DECK);
 	}
-
-	// テスト用:説明文UIの作成
-	std::shared_ptr<Scene_UI_ExplanationText> Test_ExplanationText = std::make_shared<Scene_UI_ExplanationText>(this->iLayerOrder + 1);
-	gpSceneServer->AddSceneReservation(Test_ExplanationText);
-	Test_ExplanationText->SetExplanationText("/cysこうげきじ/ce/nていかくりつでしょうめつする");
-	Test_ExplanationText->SetBasePos({ 400, 200 });
-	gpSceneServer->AddSceneReservation(Test_ExplanationText);
-
-	// テスト用:説明文UIの作成
-	std::shared_ptr<Scene_UI_ExplanationText> Test_ExplanationText2 = std::make_shared<Scene_UI_ExplanationText>(this->iLayerOrder + 1);
-	gpSceneServer->AddSceneReservation(Test_ExplanationText2);
-	Test_ExplanationText2->SetExplanationText("/cysこうげきじ/ce/nていかくりつでしょうめつする");
-	Test_ExplanationText2->SetBasePos({ 400, 800 });
-	gpSceneServer->AddSceneReservation(Test_ExplanationText2);
 }
 
 // デストラクタ
@@ -136,8 +120,16 @@ Scene_Battle::~Scene_Battle()
 	gpDataListServer->DeleteDataList("DataList_Battle");
 
 	/* 紐づいたUIを削除 */
-	this->UI_DecisionButton->SetDeleteFlg(true);
-	this->UI_DecisionButton = nullptr;
+	if (this->UI_DecisionButton)
+	{
+		this->UI_DecisionButton->SetDeleteFlg(true);
+		this->UI_DecisionButton = nullptr;
+	}
+	if (this->UI_ExplanationText)
+	{
+		this->UI_ExplanationText->SetDeleteFlg(true);
+		this->UI_ExplanationText = nullptr;
+	}
 
 	/* 次のステージ選択を未完了に戻す */
 	this->pDataList_GameResource->SetNextStageSelectedFlg(false);
@@ -226,6 +218,9 @@ void Scene_Battle::Update()
 
 	/* 鎖のアニメーション更新 */
 	Update_Chain_Anim();
+
+	/* 説明文の設定 */
+	Update_Explanation();
 
 	/* 戦闘中であるかにより処理を変更 */
 	if (BattleEndFlg == false)

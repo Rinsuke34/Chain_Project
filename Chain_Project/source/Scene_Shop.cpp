@@ -11,6 +11,7 @@
 #include "DataList_Image.h"
 #include "Scene_UI_Button.h"
 #include "Card_Base.h"
+#include "Scene_UI_ExplanationText.h"
 
 /* 商品クラス */
 // コンストラクタ
@@ -69,8 +70,16 @@ Scene_Shop::Scene_Shop() : Scene_Base("Scene_Shop", 10, false, false)
 Scene_Shop::~Scene_Shop()
 {
 	/* 紐づいたUIを削除 */
-	this->UI_DecisionButton->SetDeleteFlg(true);
-	this->UI_DecisionButton = nullptr;
+	if (this->UI_DecisionButton)
+	{
+		this->UI_DecisionButton->SetDeleteFlg(true);
+		this->UI_DecisionButton = nullptr;
+	}
+	if (this->UI_ExplanationText)
+	{
+		this->UI_ExplanationText->SetDeleteFlg(true);
+		this->UI_ExplanationText = nullptr;
+	}
 }
 
 // 更新
@@ -81,6 +90,9 @@ void Scene_Shop::Update()
 
 	/* ショップ商品購入確認 */
 	ShopItem_BuyCheck();
+
+	/* 説明文設定 */
+	Update_Explanation();
 }
 
 // 描画
@@ -270,6 +282,52 @@ void Scene_Shop::ShopItem_BuyCheck()
 					}
 				}
 			}
+		}
+	}
+}
+
+// 説明文設定
+void Scene_Shop::Update_Explanation()
+{
+	/* ショップ内のカードにカーソルが重なっているか確認 */
+	bool ExplanationDrowFlg = false;
+	for(auto& card : this->ShopItemList)
+	{
+		/* マウスオーバーしているか確認 */
+		if (card->GetCard()->MouseInCard())
+		{
+			// マウスオーバーしている場合
+			/* 現在説明UIがnullであるなら作成する */
+			if (!this->UI_ExplanationText)
+			{
+				/* 説明UIを作成する */
+				this->UI_ExplanationText = std::make_shared<Scene_UI_ExplanationText>(this->iLayerOrder + 1);
+				gpSceneServer->AddSceneReservation(this->UI_ExplanationText);
+			}
+
+			/* 説明文を設定する */
+			this->UI_ExplanationText->SetExplanationText(card->GetCard()->GetExplanationText());
+
+			/* 設定座標を設定する */
+			Struct_2D::POSITION ExplanationPos = card->GetCard()->GetNowPos();
+			ExplanationPos.iY -= (Card_Base::CARD_HEIGHT / 2);
+			this->UI_ExplanationText->SetBasePos(ExplanationPos);
+
+			/* 上方向に描写するよう設定 */
+			this->UI_ExplanationText->SetUpwardDisplayFlg(true);
+
+			/* 描写フラグを有効化する */
+			ExplanationDrowFlg = true;
+		}
+	}
+
+	/* 描写フラグが無効であるなら説明UIを削除する */
+	if (!ExplanationDrowFlg)
+	{
+		if (this->UI_ExplanationText)
+		{
+			this->UI_ExplanationText->SetDeleteFlg(true);
+			this->UI_ExplanationText = nullptr;
 		}
 	}
 }

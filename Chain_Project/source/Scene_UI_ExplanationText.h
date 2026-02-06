@@ -14,16 +14,15 @@ class Scene_UI_ExplanationText : public Scene_Base
 		virtual ~Scene_UI_ExplanationText() {};			// デストラクタ
 
 		/* 関数 */
-		virtual void	Update()	override;	// 更新
 		virtual void	Draw()		override;	// 描画
 
 		/* セッター */
-		void SetBasePos(Struct_2D::POSITION pos)					{ this->Base_Pos		= pos; }				// 基準座標を設定
-		void SetExplanationText(const std::string& ExplanationText)	{ this->ExplanationText	= ExplanationText; }	// 説明テキストを設定
+		void SetBasePos(Struct_2D::POSITION pos)					{ this->Base_Pos			= pos; }				// 基準座標を設定
+		void SetExplanationText(const std::string& ExplanationText)	{ this->ExplanationText		= ExplanationText; }	// 説明テキストを設定
+		void SetUpwardDisplayFlg(bool flg)							{ this->UpwardDisplayFlg	= flg; }				// 上方向表示フラグを設定
 
 		/* 定数 */
 		static const int FRAME_THICKNESS = 16;	// 枠の大きさ
-
 
 	private:
 		/* 変数 */
@@ -36,7 +35,4 @@ class Scene_UI_ExplanationText : public Scene_Base
 		// その他
 		Struct_2D::POSITION		Base_Pos;					// 基準座標
 		bool					UpwardDisplayFlg;			// 上方向表示フラグ(有効なら基準座標から上側へむけて描写する)
-
-		/* 関数 */
-		void	Draw_BackGround();							// 背景描写
 };

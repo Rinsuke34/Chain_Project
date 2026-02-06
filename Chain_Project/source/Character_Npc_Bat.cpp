@@ -5,7 +5,7 @@
 #include "Character_Npc_Bat.h"
 // 関連クラス
 #include "DataList_Battle.h"
-#include "Card_Arms_PoisonDagger.h"
+#include "Card_Include.h"
 
 // コンストラクタ
 Character_Bat::Character_Bat() : Character_Base()

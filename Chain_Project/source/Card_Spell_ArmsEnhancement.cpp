@@ -23,6 +23,8 @@ Card_Spell_ArmsEnhancement::Card_Spell_ArmsEnhancement() : Card_Spell_Base()
 	this->AttackRange	= ATTACKRANGE_FRONT;	// 攻撃範囲
 	// 画像の名前
 	this->ImageName		= "ArmsEnhancement";	// 画像の名前
+	// 説明文
+	this->ExplanationText = "てふだとやまふだのぶぐカードをチェインすうぶんきょうかする";
 }
 
 // カード効果(特殊効果)

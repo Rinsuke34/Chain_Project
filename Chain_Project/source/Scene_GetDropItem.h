@@ -10,13 +10,14 @@
 class DataList_GameResource;
 class Card_Base;
 class Scene_UI_Button;
+class Scene_UI_ExplanationText;
 
 // シーン"ドロップアイテム取得"
 class Scene_GetDropItem : public Scene_Base
 {
 	public:
-		Scene_GetDropItem();				// コンストラクタ
-		virtual ~Scene_GetDropItem() {};	// デストラクタ
+		Scene_GetDropItem();			// コンストラクタ
+		virtual ~Scene_GetDropItem();	// デストラクタ
 
 		/* 関数 */
 		virtual void	Update()	override;		// 更新
@@ -44,7 +45,8 @@ class Scene_GetDropItem : public Scene_Base
 		// データリスト
 		std::shared_ptr<DataList_GameResource>	pDataList_GameResource;	// ゲームリソース管理用データリスト
 		// UIのハンドル
-		std::shared_ptr<Scene_UI_Button>		UI_DecisionButton;		// 決定ボタン
+		std::shared_ptr<Scene_UI_Button>			UI_DecisionButton;	// 決定ボタン
+		std::shared_ptr<Scene_UI_ExplanationText>	UI_ExplanationText; // 説明文表示UI
 		// 画像
 		std::shared_ptr<int> Image_Frame_Corner;	// 角
 		std::shared_ptr<int> Image_Frame_Line;		// 線
@@ -66,4 +68,5 @@ class Scene_GetDropItem : public Scene_Base
 		void Update_Card();					// カードの更新
 		void Update_Phase();				// フェーズの更新
 		void EndCheck();					// 終了確認
+		void Update_Explanation();			// 説明文設定
 };

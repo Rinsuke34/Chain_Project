@@ -5,7 +5,7 @@
 #include "Character_Npc_Slime_Green.h"
 // 関連クラス
 #include "DataList_Battle.h"
-#include "Card_Arms_WoodenSword.h"
+#include "Card_Include.h"
 
 // コンストラクタ
 Character_Slime_Green::Character_Slime_Green() : Character_Base()
@@ -21,7 +21,7 @@ Character_Slime_Green::Character_Slime_Green() : Character_Base()
 
 	/* ドロップするカード一覧の設定 */
 	std::vector<std::shared_ptr<Card_Base>> dropCardList;
-	if ((rand() % 100) < 80) { dropCardList.push_back(std::make_shared<Card_Arms_WoodenSword>()); }	// 80%の確率で"木の剣"をドロップ
+	if ((rand() % 100) < 80) { dropCardList.push_back(std::make_shared<Card_Arms_TravelerShield>()); }	// 80%の確率で"木の剣"をドロップ
 	SetDropCardList(dropCardList);
 }
 
@@ -33,7 +33,7 @@ void Character_Slime_Green::Action()
 	{
 		// 最も前の仲間キャラクターを取得
 		std::shared_ptr<Character_Base> pTargetCharacter = nullptr;
-		for (int i = DataList_Battle::BATTLE_AREA_1; i < DataList_Battle::BATTLE_AREA_MAX; i++)
+		for (int i = DataList_Battle::POSITION_FRONT; i < DataList_Battle::POSITION_MAX; i++)
 		{
 			pTargetCharacter = this->pDataList_Battle->GetFriendCharacter(i);
 			if (pTargetCharacter != nullptr)

@@ -22,6 +22,8 @@ Card_Item_PoisonPotion::Card_Item_PoisonPotion() : Card_Item_Base()
 	this->Suite_List.push_back(SUITE_POISON);	// 毒
 	// 画像の名前
 	this->ImageName = "PoisonPotion";			// 画像の名前
+	// 説明文
+	this->ExplanationText = "てきぜんたいに/cysチェインすう/ceのどくをふよ";
 }
 
 // カード効果(特殊効果)

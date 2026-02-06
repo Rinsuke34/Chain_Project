@@ -13,7 +13,7 @@ void Scene_Shop::ShopSetup(int Level)
 	// Level <- ショップのラインナップの種類の判別に使用
 
 	/* ラインナップ設定処理 */
-	std::shared_ptr<Card_Base> AddCard = std::make_shared<Card_Arms_WoodenSword>();
+	std::shared_ptr<Card_Base> AddCard = std::make_shared<Card_Arms_TravelerShield>();
 	std::shared_ptr<Shop_Item> pShopItem = std::make_shared<Shop_Item>(AddCard, 5);
 	this->ShopItemList.push_back(pShopItem);
 

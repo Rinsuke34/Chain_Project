@@ -14,6 +14,7 @@ class DataList_Battle;
 class Card_Base;
 class DataList_GameResource;
 class Drop_Item_Base;
+class Scene_UI_ExplanationText;
 
 // シーン"バトル画面"
 class Scene_Battle : public Scene_Base
@@ -79,7 +80,8 @@ class Scene_Battle : public Scene_Base
 		std::shared_ptr<int> Image_BattleArea_No_Base;									// バトルエリアの番号の背景
 		std::shared_ptr<int> Image_BattleArea_No_Number[5];								// バトルエリアの番号の数字[1～5]
 		// UIのハンドル
-		std::shared_ptr<Scene_UI_Button> UI_DecisionButton;	// 決定ボタン
+		std::shared_ptr<Scene_UI_Button>			UI_DecisionButton;	// 決定ボタン
+		std::shared_ptr<Scene_UI_ExplanationText>	UI_ExplanationText; // 説明文表示UI
 		/* 関数 */
 		// 各フェーズごとの更新処理
 		void Update_EffectTurnStart();			// "ターン開始時"の効果発動
@@ -118,4 +120,5 @@ class Scene_Battle : public Scene_Base
 		void Draw_DropItem();												// ドロップアイテムの描写処理
 		void Create_DropItem();												// ドロップアイテムの作成処理
 		void Update_Chain_Anim();											// 鎖のアニメーションの更新
+		void Update_Explanation();											// 説明文設定
 };

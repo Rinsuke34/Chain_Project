@@ -54,6 +54,7 @@ class Card_Base : public std::enable_shared_from_this<Card_Base>
 		void SetSettingPos(Struct_2D::POSITION pos) { Setting_Position	= pos; }		// 設定座標の設定
 		void SetLostFlag(bool flag)					{ bLostFlag			= flag; }		// ロストフラグの設定
 		void SetNowChainCount(int count)			{ iNowChainCount	= count; }		// 現在のチェイン数の設定
+		void SetExplanationText(std::string text)	{ ExplanationText	= text; }		// 説明文の設定
 
 		/* ゲッター */
 		// カード情報
@@ -69,10 +70,11 @@ class Card_Base : public std::enable_shared_from_this<Card_Base>
 		float						GetRotationAngle()	{ return RotateAngle; }		// 回転角度の取得
 		int							GetCardState()		{ return CardState; }		// カード状態の取得
 		// その他
-		Struct_2D::POSITION			GetNowPos()			{ return Now_Position; }		// 現在座標の取得
-		Struct_2D::POSITION			GetSettingPos()		{ return Setting_Position; }	// 設定座標の取得
-		bool						GetLostFlg()		{ return bLostFlag; }			// ロストフラグの取得
-		int							GetNowChainCount()	{ return iNowChainCount; }		// 現在のチェイン数の取得
+		Struct_2D::POSITION			GetNowPos()				{ return Now_Position; }		// 現在座標の取得
+		Struct_2D::POSITION			GetSettingPos()			{ return Setting_Position; }	// 設定座標の取得
+		bool						GetLostFlg()			{ return bLostFlag; }			// ロストフラグの取得
+		int							GetNowChainCount()		{ return iNowChainCount; }		// 現在のチェイン数の取得
+		std::string					GetExplanationText()	{ return ExplanationText; }		// 説明文の取得
 
 		/* 定数 */
 		// 補間
@@ -157,6 +159,7 @@ class Card_Base : public std::enable_shared_from_this<Card_Base>
 		bool							bLostFlag;			// ロストフラグ(捨て札置き場におかれず完全に削除される)
 		int								iNowChainCount;		// 現在のチェイン数(ターン開始時に設定)
 		std::shared_ptr<Character_Base>	pPlayer;			// プレイヤーキャラクターのポインタ
+		std::string						ExplanationText;	// 説明文
 
 		/* 関数 */
 		virtual int		GetMyAreaNo();			// 自身のバトルエリア番号を取得
@@ -169,5 +172,4 @@ class Card_Base : public std::enable_shared_from_this<Card_Base>
 		virtual void	CheckHavePlayer();		// プレイヤーを取得しているか確認
 		virtual void	Complement_Position();	// 座標補完処理
 		virtual void	Complement_Rotate();	// 回転補完処理
-
 };

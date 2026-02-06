@@ -20,4 +20,6 @@ Card_Arms_WoodenShield::Card_Arms_WoodenShield() : Card_Arms_Base()
 	this->AttackRange	= ATTACKRANGE_FRONT;	// UŒ‚”ÍˆÍ
 	// ‰æ‘œ‚Ì–¼‘O
 	this->ImageName		= "WoodenShield";		// ‰æ‘œ‚Ì–¼‘O
+	// à–¾•¶
+	this->ExplanationText = "";
 }

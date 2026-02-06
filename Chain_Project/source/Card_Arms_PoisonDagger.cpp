@@ -24,6 +24,8 @@ Card_Arms_PoisonDagger::Card_Arms_PoisonDagger() : Card_Arms_Base()
 	this->AttackRange	= ATTACKRANGE_FRONT;	// UŒ‚”ÍˆÍ
 	// ‰æ‘œ‚Ì–¼‘O
 	this->ImageName	= "PoisonDagger";		// ‰æ‘œ‚Ì–¼‘O
+	// à–¾•¶
+	this->ExplanationText = "/cys‚±‚¤‚°‚«‚¶/ce/n‚¿‚¥‚¢‚ñ‚·‚¤‚Ô‚ñ‚Ì‚Ç‚­‚ð‚Ó‚æ";
 }
 
 // Œø‰Ê”­“®:s“®Žž

@@ -30,11 +30,12 @@ Card_Base::Card_Base()
 	this->Image = MakeScreen(IMAGE_SIZE_WIDTH, IMAGE_SIZE_HEIGHT, TRUE);
 	this->RotateAngle = 0.f;
 	// その他
-	this->Now_Position		= { 0, 0 };		// 現在座標(ドローしてる感を出すため山札の位置を初期値に設定)
-	this->Setting_Position	= { 0, 0 };		// 設定座標(ホールドが解除された際に自動で補正される座標)
-	this->bLostFlag			= false;		// 削除フラグ
-	this->iNowChainCount	= 0;			// 現在のチェイン数(ターン開始時に設定)
-	this->pPlayer			= nullptr;		// プレイヤーキャラクターのポインタ
+	this->Now_Position		= { 0, 0 };	// 現在座標(ドローしてる感を出すため山札の位置を初期値に設定)
+	this->Setting_Position	= { 0, 0 };	// 設定座標(ホールドが解除された際に自動で補正される座標)
+	this->bLostFlag			= false;	// 削除フラグ
+	this->iNowChainCount	= 0;		// 現在のチェイン数(ターン開始時に設定)
+	this->pPlayer			= nullptr;	// プレイヤーキャラクターのポインタ
+	this->ExplanationText	= "";		// 説明文
 
 	/* 画像取得 */
 	/* 画像管理データリストを取得 */

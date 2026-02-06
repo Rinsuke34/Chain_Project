@@ -307,6 +307,12 @@
     <Filter Include="ヘッダー ファイル\シーン\汎用UI\説明テキスト">
       <UniqueIdentifier>{fcac607c-cce9-421b-9ac8-c782dd0aed4f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\キャラクター\NPC\スライム%28青%29">
+      <UniqueIdentifier>{740f5327-97cb-4026-a631-3cc72141444b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\キャラクター\NPC\スライム%28青%29">
+      <UniqueIdentifier>{6e57cf7d-07a2-4dc6-b792-9d93f63e6ce4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Main.cpp">
@@ -459,6 +465,9 @@
     <ClCompile Include="source\Scene_UI_ExplanationText.cpp">
       <Filter>ソース ファイル\シーン\汎用UI\説明テキスト</Filter>
     </ClCompile>
+    <ClCompile Include="source\Character_Npc_Slime_Blue.cpp">
+      <Filter>ソース ファイル\キャラクター\NPC\スライム%28青%29</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Scene_Load_Checker.h">
@@ -598,6 +607,12 @@
     </ClInclude>
     <ClInclude Include="source\Scene_UI_ExplanationText.h">
       <Filter>ヘッダー ファイル\シーン\汎用UI\説明テキスト</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Character_Npc_Slime_Blue.h">
+      <Filter>ヘッダー ファイル\キャラクター\NPC\スライム%28青%29</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Character_Npc_Include.h">
+      <Filter>ヘッダー ファイル\キャラクター\NPC</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

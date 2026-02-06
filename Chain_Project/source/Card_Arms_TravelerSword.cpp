@@ -21,6 +21,8 @@ Card_Arms_TravelerSword::Card_Arms_TravelerSword() : Card_Arms_Base()
 	this->AttackRange	= ATTACKRANGE_FRONT;	// 攻撃範囲
 	// 画像の名前
 	this->ImageName = "TravelerSword";		// 画像の名前
+	// 説明文
+	this->ExplanationText = "/cysこうどうまえ/ce/nこうげきりょくをチェインすうぶんきょうか";
 }
 
 // 効果発動:行動直前

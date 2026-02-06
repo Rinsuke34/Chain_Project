@@ -8,7 +8,7 @@
 #include "DataList_Image.h"
 #include "Card_Base.h"
 #include "Scene_UI_Button.h"
-#include "Scene_UI_Button.h"
+#include "Scene_UI_ExplanationText.h"
 // 共通定義
 #include "FunctionDefine.h"
 #include "VariableDefine.h"
@@ -42,6 +42,22 @@ Scene_GetDropItem::Scene_GetDropItem() : Scene_Base("Scene_GetDropItem", 100, fa
 	this->pDataList_GameResource = std::dynamic_pointer_cast<DataList_GameResource>(gpDataListServer->GetDataList("DataList_GameResource"));
 }
 
+// デストラクタ
+Scene_GetDropItem::~Scene_GetDropItem()
+{
+	/* 紐づいたUIを削除 */
+	if (this->UI_DecisionButton)
+	{
+		this->UI_DecisionButton->SetDeleteFlg(true);
+		this->UI_DecisionButton = nullptr;
+	}
+	if (this->UI_ExplanationText)
+	{
+		this->UI_ExplanationText->SetDeleteFlg(true);
+		this->UI_ExplanationText = nullptr;
+	}
+}
+
 // 更新
 void Scene_GetDropItem::Update()
 {
@@ -62,6 +78,9 @@ void Scene_GetDropItem::Update()
 
 	/* ドロップアイテム確認シーンが無効→有効と変化しているか確認 */
 	ActiveCheck();
+
+	/* 説明文設定 */
+	Update_Explanation();
 }
 
 // セットアップ
@@ -363,6 +382,56 @@ void Scene_GetDropItem::EndCheck()
 
 			/* 現在設定されているカードリストを初期化 */
 			this->GetCardList.clear();
+		}
+	}
+}
+
+// 説明文設定
+void Scene_GetDropItem::Update_Explanation()
+{
+	/* すべてのカードにカーソルが重なっているか確認 */
+	bool ExplanationDrowFlg = false;
+	for (const auto& card : this->GetCardList)
+	{
+		if (card)
+		{
+			/* カーソルが重なっているか */
+			if (card->MouseInCard())
+			{
+				// 重なっている場合
+				/* 現在説明UIがnullであるなら作成する */
+				if (!this->UI_ExplanationText)
+				{
+					/* 説明UIを作成する */
+					this->UI_ExplanationText = std::make_shared<Scene_UI_ExplanationText>(this->iLayerOrder + 1);
+					gpSceneServer->AddSceneReservation(this->UI_ExplanationText);
+				}
+
+				/* 説明文を設定する */
+				this->UI_ExplanationText->SetExplanationText(card->GetExplanationText());
+
+				/* 設定座標を設定する */
+				Struct_2D::POSITION ExplanationPos = card->GetNowPos();
+				ExplanationPos.iY -= (Card_Base::CARD_HEIGHT / 2);
+				this->UI_ExplanationText->SetBasePos(ExplanationPos);
+
+				/* 上方向に描写するよう設定 */
+				this->UI_ExplanationText->SetUpwardDisplayFlg(true);
+
+				/* 描写フラグを有効化する */
+				ExplanationDrowFlg = true;
+				return;
+			}
+		}
+	}
+
+	/* 描写フラグが無効であるなら説明UIを削除する */
+	if (!ExplanationDrowFlg)
+	{
+		if (this->UI_ExplanationText)
+		{
+			this->UI_ExplanationText->SetDeleteFlg(true);
+			this->UI_ExplanationText = nullptr;
 		}
 	}
 }

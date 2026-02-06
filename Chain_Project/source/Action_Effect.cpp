@@ -43,7 +43,7 @@ void Action_Effect_Base::Setup_Image()
 
 		// アイコンタイプ:防御
 		case ICON_TYPE_DEFENCE:
-			ImageName = "Common_Icon/Icon_Defence";
+			ImageName = "Common_Icon/Icon_Shield";
 			break;
 
 		// アイコンタイプ:回復

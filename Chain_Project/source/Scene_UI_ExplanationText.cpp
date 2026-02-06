@@ -30,22 +30,6 @@ Scene_UI_ExplanationText::Scene_UI_ExplanationText(const int iLayer) : Scene_Bas
 	this->Image_Frame_Inside = pDataList_Image->iGetImageHandle(ImageFilePath);
 }
 
-// 更新
-void Scene_UI_ExplanationText::Update()
-{
-	/* 基準座標に応じて描写方向を設定 */
-	if (this->Base_Pos.iY <= SCREEN_SIZE_HEIGHT / 2)
-	{
-		// 基準座標が画面上半分の場合、上方向へ描写
-		this->UpwardDisplayFlg = true;
-	}
-	else
-	{
-		// 基準座標が画面下半分の場合、下方向へ描写
-		this->UpwardDisplayFlg = false;
-	}
-}
-
 // 描画
 void Scene_UI_ExplanationText::Draw()
 {
@@ -54,11 +38,17 @@ void Scene_UI_ExplanationText::Draw()
 	// ・色変更：/cys (黄色開始)、/ce (色終了、白に戻す)
 	// ・改行：/n
 
+	/* 文字列が設定されていないのであれば表示は行わない */
+	if (this->ExplanationText.empty())
+	{
+		return;
+	}
+
 	// 元文字列（UTF-8 を想定）
 	const std::string& text = this->ExplanationText;
 	std::wstring wtext = PUBLIC_PROCESS::MByteToWstring(text);
 
-	const int lineHeight		= 20;	// 行の高さ
+	const int lineHeight		= 22;	// 行の高さ
 	const int maxCharsPerLine	= 8;	// 1行あたりの最大文字数（全角換算、半角なら2文字分）
 
 	/* 1. 行数を算出 */
@@ -207,8 +197,3 @@ void Scene_UI_ExplanationText::Draw()
 	flushBuffer();
 }
 
-// 背景描写
-void Scene_UI_ExplanationText::Draw_BackGround()
-{
-
-}

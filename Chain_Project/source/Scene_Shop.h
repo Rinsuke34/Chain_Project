@@ -10,6 +10,7 @@
 class DataList_GameResource;
 class Scene_UI_Button;
 class Card_Base;
+class Scene_UI_ExplanationText;
 
 // 商品クラス
 class Shop_Item
@@ -56,7 +57,8 @@ class Scene_Shop : public Scene_Base
 		// データリスト
 		std::shared_ptr<DataList_GameResource>	pDataList_GameResource;	// ゲームリソース管理用データリスト
 		// UIのハンドル
-		std::shared_ptr<Scene_UI_Button>		UI_DecisionButton;		// 決定ボタン
+		std::shared_ptr<Scene_UI_Button>			UI_DecisionButton;	// 決定ボタン
+		std::shared_ptr<Scene_UI_ExplanationText>	UI_ExplanationText; // 説明文表示UI
 		// 画像
 		std::shared_ptr<int> Image_BackGround;		// 背景画像
 		std::shared_ptr<int> Image_Frame_Corner;	// 角
@@ -73,4 +75,5 @@ class Scene_Shop : public Scene_Base
 		void CardPosition_Setup();	// カード位置セットアップ
 		void ShopEnd_Check();		// ショップ終了確認
 		void ShopItem_BuyCheck();	// ショップ商品購入確認
+		void Update_Explanation();	// 説明文設定
 };

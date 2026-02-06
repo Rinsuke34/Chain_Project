@@ -6,6 +6,7 @@
 // 関連クラス
 #include "DataList_GameResource.h"
 #include "Scene_UI_Button.h"
+#include "Scene_UI_ExplanationText.h"
 #include "Scene_WoldMap.h"
 #include "Scene_GameOver.h"
 #include "Card_Base.h"
@@ -985,6 +986,63 @@ void Scene_Battle::Update_Chain_Anim()
 		if(this->Chain_Anim_Count[i] >= CHAIN_ANIMATION_MAX)
 		{
 			this->Chain_Anim_Count[i] -= CHAIN_ANIMATION_MAX;
+		}
+	}
+}
+
+// 説明文設定
+void Scene_Battle::Update_Explanation()
+{
+	/* すべてのカードにカーソルが重なっているか確認 */
+	bool ExplanationDrowFlg = false;
+	std::vector<std::shared_ptr<Card_Base>> AllDeckCardList = this->pDataList_Battle->GetAllDeckCardList();
+	for (const auto& card : AllDeckCardList)
+	{
+		if (card)
+		{
+			/* カーソルが重なっているか */
+			if (card->MouseInCard())
+			{
+				// 重なっている場合
+				/* 説明文を描写すべき状態であるかを確認 */
+				int CardState = card->GetCardState();
+				if (CardState == Card_Base::CARDSTATE_HAND ||
+					CardState == Card_Base::CARDSTATE_SETTING)
+				{
+					/* 現在説明UIがnullであるなら作成する */
+					if (!this->UI_ExplanationText)
+					{
+						/* 説明UIを作成する */
+						this->UI_ExplanationText = std::make_shared<Scene_UI_ExplanationText>(this->iLayerOrder + 1);
+						gpSceneServer->AddSceneReservation(this->UI_ExplanationText);
+					}
+
+					/* 説明文を設定する */
+					this->UI_ExplanationText->SetExplanationText(card->GetExplanationText());
+
+					/* 設定座標を設定する */
+					Struct_2D::POSITION ExplanationPos = card->GetNowPos();
+					ExplanationPos.iY -= (Card_Base::CARD_HEIGHT / 2);
+					this->UI_ExplanationText->SetBasePos(ExplanationPos);
+
+					/* 上方向に描写するよう設定 */
+					this->UI_ExplanationText->SetUpwardDisplayFlg(true);
+
+					/* 描写フラグを有効化する */
+					ExplanationDrowFlg = true;
+				}
+				return;
+			}
+		}
+	}
+
+	/* 描写フラグが無効であるなら説明UIを削除する */
+	if (!ExplanationDrowFlg)
+	{
+		if (this->UI_ExplanationText)
+		{
+			this->UI_ExplanationText->SetDeleteFlg(true);
+			this->UI_ExplanationText = nullptr;
 		}
 	}
 }

@@ -20,6 +20,8 @@ Card_Item_HealingPotion::Card_Item_HealingPotion() : Card_Item_Base()
 	this->Suite_List.push_back(SUITE_POTION);	// 薬(ポーション)
 	// 画像の名前
 	this->ImageName = "HealingPotion";			// 画像の名前
+	// 説明文
+	this->ExplanationText = "みかたぜんいんのたいりょくを/cys5 + チェインすう/ceかいふく";
 }
 
 // 戦闘行動
