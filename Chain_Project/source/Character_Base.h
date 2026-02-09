@@ -36,6 +36,7 @@ class Character_Base : public std::enable_shared_from_this<Character_Base>
 		virtual std::vector<std::shared_ptr<Character_Buff_Debuff_Base>> CheckGet_Buff_Debuff(std::string Buff_Debuff_Name);	// 対象の名称のバフ、デバフを取得
 		virtual void Draw_Action_Effect();																						// 行動内容の描写
 		virtual void Delete_Action_Effect(std::shared_ptr<Action_Effect_Base> ActionEffect);									// 該当の行動内容の削除
+		virtual bool MouseInCharacter();																						// マウスカーソルがキャラクター上にあるか確認
 
 		/* ゲッター */
 		int 												GetHP_Max()				{ return iHP_Max; }				// 体力(最大値)の取得
@@ -75,7 +76,6 @@ class Character_Base : public std::enable_shared_from_this<Character_Base>
 		static const int	ACTION_INTERVAL			= 52;	// 行動内容の描写間隔
 		static const int	FRAME_THICKNESS			= 16;	// 枠の太さ
 		static const int	STAND_MOVESPEED_MAX		= 3;	// 待機時の平たくする量の変化速度(最大速度)
-		static const int	ACTION_EFFECT_SCALE_MAX = 5;	// 行動内容のスケールサイズの最大値
 		// 陣営
 		static const int	CAMP_NONE		= -1;	// 陣営無し
 		static const int	CAMP_FRIEND		= 0;	// 仲間陣営

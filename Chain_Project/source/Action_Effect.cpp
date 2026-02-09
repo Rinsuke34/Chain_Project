@@ -23,6 +23,7 @@ Action_Effect_Base::Action_Effect_Base()
 	this->Priority			= 0;		// 優先順位(高いほど先に実行)
 	this->EffectCard		= nullptr;	// 効果を使用するカード
 	this->IconType			= -1;		// アイコンのタイプ
+	this->ExplanationText	= "";		// 説明文
 
 	/* データリスト取得 */
 	// バトル用データリスト
@@ -69,8 +70,9 @@ void Action_Effect_Base::Setup_Image()
 Action_Effect_Attack::Action_Effect_Attack()
 {
 	/* 初期化 */
-	this->DamageAmount	= 0;				// ダメージ量
-	this->IconType		= ICON_TYPE_ATTACK;	// アイコンタイプ:攻撃
+	this->DamageAmount		= 0;				// ダメージ量
+	this->IconType			= ICON_TYPE_ATTACK;	// アイコンタイプ:攻撃
+	this->ExplanationText	= "こうげき";		// 説明文
 
 	/* 画像設定 */
 	Setup_Image();
@@ -257,8 +259,9 @@ void Action_Effect_Attack::ExecuteEffect()
 Action_Effect_Defence::Action_Effect_Defence()
 {
 	/* 初期化 */
-	this->ShieldAmount	= 0;					// シールド量
-	this->IconType		= ICON_TYPE_DEFENCE;	// アイコンタイプ:防御
+	this->ShieldAmount		= 0;					// シールド量
+	this->IconType			= ICON_TYPE_DEFENCE;	// アイコンタイプ:防御
+	this->ExplanationText	= "ぼうぎょ";			// 説明文
 
 	/* 画像設定 */
 	Setup_Image();
@@ -411,8 +414,9 @@ void Action_Effect_Defence::ExecuteEffect()
 Action_Effect_Heal::Action_Effect_Heal()
 {
 	/* 初期化 */
-	this->HealAmount	= 0;				// 回復量
-	this->IconType		= ICON_TYPE_HEAL;	// アイコンタイプ:回復
+	this->HealAmount		= 0;				// 回復量
+	this->IconType			= ICON_TYPE_HEAL;	// アイコンタイプ:回復
+	this->ExplanationText	= "かいふく";		// 説明文
 
 	/* 画像設定 */
 	Setup_Image();

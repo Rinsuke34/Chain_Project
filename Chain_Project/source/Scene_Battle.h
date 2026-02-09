@@ -107,7 +107,7 @@ class Scene_Battle : public Scene_Base
 		// その他
 		void CardPosition_HandSetSettingPosting();							// 手札のカード設定座標の設定
 		void Card_Update();													// カードの更新処理
-		void CharacterPosition_Setup();										// キャラクターの座標の設定
+		void Character_SetPosition();										// キャラクターの座標の設定
 		std::shared_ptr<Card_Base>	GetMouseInCard();						// マウスが重なっているカードを取得
 		int	 GetMouseInBattleArea();										// マウスが重なっているバトルエリアを取得
 		void Character_Death_Delete_Check();								// キャラクターが死亡していて、削除するかの確認処理

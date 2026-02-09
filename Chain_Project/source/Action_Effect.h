@@ -31,6 +31,7 @@ class Action_Effect_Base
 		int									Priority;			// 優先順位(高いほど先に実行)
 		std::shared_ptr<Card_Base>			EffectCard;			// 効果を使用するカード
 		int									IconType;			// アイコンのタイプ
+		std::string							ExplanationText;	// 説明文
 
 		/* 定数 */
 		static const int ICON_TYPE_ATTACK	= 0;	// アイコンタイプ:攻撃

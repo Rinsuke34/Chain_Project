@@ -658,3 +658,34 @@ void Character_Base::ActionEffect_ScaleUpdate()
 		this->ActionEffect_Scale_Count = 0;
 	}
 }
+
+// マウスカーソルがキャラクター上にあるか確認
+bool Character_Base::MouseInCharacter()
+{
+	// 戻り値
+	// bool <-	マウスカーソルがキャラクター上にあるか
+
+	/* マウス座標を取得 */
+	Struct_2D::POSITION MousePosition = {
+		gstKeyboardInputData.iMouseX,
+		gstKeyboardInputData.iMouseY
+	};
+
+	/* カードの範囲を定義 */
+	Struct_2D::RANGE CardRange = {
+			this->BasePos.iX + CorrectionPos.iX - (this->SizeX / 2), this->BasePos.iY + CorrectionPos.iY - ((this->SizeY) * static_cast<float>(this->FlattenPercent / 100.f)),
+			this->BasePos.iX + CorrectionPos.iX + (this->SizeX / 2), this->BasePos.iY + CorrectionPos.iY,
+	};
+
+	/* 2D範囲内にマウス座標が存在するか確認 */
+	if (PUBLIC_PROCESS::bPositionIn2DRangeCheck(MousePosition, CardRange))
+	{
+		// 存在するならばtrueを返す
+		return true;
+	}
+	else
+	{
+		// 存在しないならばfalseを返す
+		return false;
+	}
+}

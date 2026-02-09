@@ -216,7 +216,7 @@ void Scene_Battle::Update()
 
 	/* カードやアクション内容等の更新処理 */
 	Card_Update();
-	CharacterPosition_Setup();
+	Character_SetPosition();
 	Update_DropItem();
 
 	/* バトルエリアのカーソル接触時のアニメーションを設定 */

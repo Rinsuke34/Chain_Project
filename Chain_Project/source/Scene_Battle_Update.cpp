@@ -537,10 +537,10 @@ void Scene_Battle::Card_Update()
 	}
 }
 
-// キャラクターの座標の設定
-void Scene_Battle::CharacterPosition_Setup()
+// キャラクターの座標設定
+void Scene_Battle::Character_SetPosition()
 {
-	/* 仲間キャラクターの座標設定 */
+	/* 仲間キャラクターの座標設定＆更新 */
 	for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
 	{
 		auto FriendCharacter = this->pDataList_Battle->GetFriendCharacter(i);
@@ -993,8 +993,10 @@ void Scene_Battle::Update_Chain_Anim()
 // 説明文設定
 void Scene_Battle::Update_Explanation()
 {
-	/* すべてのカードにカーソルが重なっているか確認 */
+	/* 優先順位は"行動内容の説明文 > カードの説明文"とする */
 	bool ExplanationDrowFlg = false;
+
+	/* すべてのカードにカーソルが重なっているか確認 */
 	std::vector<std::shared_ptr<Card_Base>> AllDeckCardList = this->pDataList_Battle->GetAllDeckCardList();
 	for (const auto& card : AllDeckCardList)
 	{
@@ -1033,6 +1035,50 @@ void Scene_Battle::Update_Explanation()
 				}
 				return;
 			}
+		}
+	}
+
+	/* すべてのキャラクターにカーソルが重なっているか確認 */
+	std::vector<std::shared_ptr<Character_Base>> AllCharacterList;
+	for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
+	{
+		std::shared_ptr GetCharacter = this->pDataList_Battle->GetFriendCharacter(i);
+		if (GetCharacter)	{ AllCharacterList.push_back(GetCharacter); }
+		GetCharacter = this->pDataList_Battle->GetEnemyCharacter(i);
+		if (GetCharacter)	{ AllCharacterList.push_back(GetCharacter); }
+	}
+	for (auto& Character : AllCharacterList)
+	{
+		/* カーソルが重なっているか */
+		if (Character->MouseInCharacter())
+		{
+			// 重なっている場合
+			/* 現在説明UIがnullであるなら作成する */
+			if (!this->UI_ExplanationText)
+			{
+				/* 説明UIを作成する */
+				this->UI_ExplanationText = std::make_shared<Scene_UI_ExplanationText>(this->iLayerOrder + 1);
+				gpSceneServer->AddSceneReservation(this->UI_ExplanationText);
+			}
+
+			/* 説明文を設定する */
+			std::string ExplanationText = "/cysこうどう/ce";
+			std::vector<std::shared_ptr<Action_Effect_Base>> ActionEffectList = Character->GetActionEffectList();
+			for (int i = 0; i < ActionEffectList.size(); i++)
+			{
+				ExplanationText += "/n";
+				ExplanationText += ActionEffectList[i]->ExplanationText;
+			}
+			this->UI_ExplanationText->SetExplanationText(ExplanationText);
+
+			/* 設定座標を設定する */
+			this->UI_ExplanationText->SetBasePos(Character->GetBasePos());
+
+			/* 下方向に描写するよう設定 */
+			this->UI_ExplanationText->SetUpwardDisplayFlg(false);
+
+			/* 描写フラグを有効化する */
+			ExplanationDrowFlg = true;
 		}
 	}
 
