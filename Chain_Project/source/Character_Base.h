@@ -75,6 +75,7 @@ class Character_Base : public std::enable_shared_from_this<Character_Base>
 		static const int	ACTION_INTERVAL			= 52;	// 行動内容の描写間隔
 		static const int	FRAME_THICKNESS			= 16;	// 枠の太さ
 		static const int	STAND_MOVESPEED_MAX		= 3;	// 待機時の平たくする量の変化速度(最大速度)
+		static const int	ACTION_EFFECT_SCALE_MAX = 5;	// 行動内容のスケールサイズの最大値
 		// 陣営
 		static const int	CAMP_NONE		= -1;	// 陣営無し
 		static const int	CAMP_FRIEND		= 0;	// 仲間陣営
@@ -88,24 +89,27 @@ class Character_Base : public std::enable_shared_from_this<Character_Base>
 		// データリスト
 		std::shared_ptr<DataList_Battle> pDataList_Battle;		// バトル用データリスト
 		// キャラクター情報
-		int						iHP_Max;					// 体力(最大値)
-		int						iHP_Now;					// 体力(現在値)
-		int						iShield_Now;				// シールド(現在値)
-		int						Camp;						// 陣営
-		bool					Death_DeleteFlg;			// 死亡により盤面上から削除するかのフラグ
-		int						DropCoin;					// ドロップするコイン枚数
+		int						iHP_Max;						// 体力(最大値)
+		int						iHP_Now;						// 体力(現在値)
+		int						iShield_Now;					// シールド(現在値)
+		int						Camp;							// 陣営
+		bool					Death_DeleteFlg;				// 死亡により盤面上から削除するかのフラグ
+		int						DropCoin;						// ドロップするコイン枚数
 		// その他
-		Struct_2D::POSITION		BasePos;					// 基準座標(足元)
-		int						SizeX;						// キャラクターの幅
-		int						SizeY;						// キャラクターの高さ
-		Struct_2D::POSITION		CorrectionPos;				// 補正座標
-		int						AddBuffReaction;			// バフ付与時のリアクション
-		int						DamageReaction;				// 被ダメージ時のリアクション
-		int						AttackReaction;				// 攻撃時のリアクション
-		int						FlattenPercent;				// 平たくする量(%単位 / 100が標準)		
-		int						StandbyFlatten_Count;		// 待機時の平たくする量のカウント
-		int						StandbyFlatten_Percent;		// 待機児の平たくする量の実数値
+		Struct_2D::POSITION		BasePos;						// 基準座標(足元)
+		int						SizeX;							// キャラクターの幅
+		int						SizeY;							// キャラクターの高さ
+		Struct_2D::POSITION		CorrectionPos;					// 補正座標
+		int						AddBuffReaction;				// バフ付与時のリアクション
+		int						DamageReaction;					// 被ダメージ時のリアクション
+		int						AttackReaction;					// 攻撃時のリアクション
+		int						FlattenPercent;					// 平たくする量(%単位 / 100が標準)		
+		int						StandbyFlatten_Count;			// 待機時の平たくする量のカウント
+		int						StandbyFlatten_Percent;			// 待機児の平たくする量の実数値
 		std::vector<std::shared_ptr<Card_Base>>	DropCardList;	// ドロップするカード一覧
+		int						ActionEffect_Scale_Size;		// 行動内容のスケールサイズ
+		int						ActionEffect_Scale_Count;		// 行動内容のスケールカウント
+
 		// バフ、デバフ情報
 		std::vector<std::shared_ptr<Character_Buff_Debuff_Base>> 	Buff_Debuff_List;	// バフ、デバフ一覧
 		// 行動内容
@@ -119,4 +123,5 @@ class Character_Base : public std::enable_shared_from_this<Character_Base>
 		/* 関数 */
 		void SetUpImage(std::string ImageName);		// 指定の名称の画像を設定する
 		void Correction_Reaction();					// 各リアクションによる座標補正
+		void ActionEffect_ScaleUpdate();			// 行動内容のスケール更新
 };

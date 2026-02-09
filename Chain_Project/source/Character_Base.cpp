@@ -32,6 +32,8 @@ Character_Base::Character_Base()
 	this->FlattenPercent				= 100;								// 平たくする量(%単位 / 100が標準)
 	this->StandbyFlatten_Count			= GetRand(STANDBY_FLATTEN_PERIOD);	// 待機時の平たくする量のカウント
 	this->StandbyFlatten_Percent		= 0;								// 待機児の平たくする量の実数値
+	this->ActionEffect_Scale_Count		= 0;								// 行動内容のスケールカウント
+	this->ActionEffect_Scale_Size		= 0;								// 行動内容のスケールサイズ
 
 	/* 行動内容用フレーム画像取得 */
 	// 画像管理データリストを取得
@@ -56,6 +58,9 @@ void Character_Base::Draw()
 {
 	/* 各リアクションによる座標補正 */
 	Correction_Reaction();
+
+	/* 行動内容の拡大、縮小処理 */
+	ActionEffect_ScaleUpdate();
 
 	/* キャラクターのサイズが設定されていないなら画像サイズを算出 */
 	if (this->SizeX == -1 || this->SizeY == -1)
@@ -576,10 +581,10 @@ void Character_Base::Draw_Action_Effect()
 
 		/* 行動内容の描写 */
 		DrawModiGraph(
-			this->BasePos.iX + ACTION_X,				this->BasePos.iY + ACTION_Y + (Index * ACTION_INTERVAL),
-			this->BasePos.iX + ACTION_X + ACTION_WIDE,	this->BasePos.iY + ACTION_Y + (Index * ACTION_INTERVAL),
-			this->BasePos.iX + ACTION_X + ACTION_WIDE,	this->BasePos.iY + ACTION_Y + ACTION_HEIGHT + (Index * ACTION_INTERVAL),
-			this->BasePos.iX + ACTION_X,				this->BasePos.iY + ACTION_Y + ACTION_HEIGHT + (Index * ACTION_INTERVAL),
+			this->BasePos.iX + ACTION_X - this->ActionEffect_Scale_Size,				this->BasePos.iY + ACTION_Y + (Index * ACTION_INTERVAL) - this->ActionEffect_Scale_Size,
+			this->BasePos.iX + ACTION_X + ACTION_WIDE + this->ActionEffect_Scale_Size,	this->BasePos.iY + ACTION_Y + (Index * ACTION_INTERVAL) - this->ActionEffect_Scale_Size,
+			this->BasePos.iX + ACTION_X + ACTION_WIDE + this->ActionEffect_Scale_Size,	this->BasePos.iY + ACTION_Y + ACTION_HEIGHT + (Index * ACTION_INTERVAL) + this->ActionEffect_Scale_Size,
+			this->BasePos.iX + ACTION_X - this->ActionEffect_Scale_Size,				this->BasePos.iY + ACTION_Y + ACTION_HEIGHT + (Index * ACTION_INTERVAL) + this->ActionEffect_Scale_Size,
 			*(ActionEffect->GetImage()),
 			TRUE
 		);
@@ -604,4 +609,52 @@ void Character_Base::Delete_Action_Effect(std::shared_ptr<Action_Effect_Base> Ac
 		),
 		this->ActionEffectList.end()
 	);
+}
+
+// 行動内容のスケール更新
+void Character_Base::ActionEffect_ScaleUpdate()
+{
+	// カウントは現在の値で補間を行い、その後インクリメントして 120 到達で 0 に戻す
+	int c = this->ActionEffect_Scale_Count; // 0..119 の想定
+
+	// 線形補間ヘルパー（a -> b を t(0..1) で補完）
+	auto lerp_int = [](int a, int b, double t) -> int {
+		return static_cast<int>(std::lround(a + (b - a) * t));
+		};
+
+	int scale = 0;
+	if (c <= 30)
+	{
+		// [0 .. 30] : 0 -> 3
+		double t = (30.0 == 0.0) ? 0.0 : static_cast<double>(c) / 30.0;
+		scale = lerp_int(0, 3, t);
+	}
+	else if (c <= 60)
+	{
+		// (30 .. 60] : 3 -> 0
+		double t = static_cast<double>(c - 30) / 30.0;
+		scale = lerp_int(3, 0, t);
+	}
+	else if (c <= 90)
+	{
+		// (60 .. 90] : 0 -> -3
+		double t = static_cast<double>(c - 60) / 30.0;
+		scale = lerp_int(0, -3, t);
+	}
+	else
+	{
+		// (90 .. 119] : -3 -> 0  (120 は 0 と等価)
+		double t = static_cast<double>(c - 90) / 30.0;
+		scale = lerp_int(-3, 0, t);
+	}
+
+	// 結果を設定
+	this->ActionEffect_Scale_Size = scale;
+
+	// カウントを進めて 120 到達で 0 に戻す
+	this->ActionEffect_Scale_Count++;
+	if (this->ActionEffect_Scale_Count >= 120)
+	{
+		this->ActionEffect_Scale_Count = 0;
+	}
 }
