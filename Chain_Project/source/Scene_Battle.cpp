@@ -95,6 +95,18 @@ Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 50, false, false)
 	/* カード設定 */
 	// ゲームリソースに登録されたデッキを設定する
 	std::vector<std::shared_ptr<Card_Base>> DeckCardList = this->pDataList_GameResource->GetDeckCardList();
+	// デッキリストのシャッフル
+	std::vector<std::shared_ptr<Card_Base>> ShuffledDeckCardList;
+	while (DeckCardList.size() > 0)
+	{
+		// ランダムなインデックスを取得
+		int RandomIndex = rand() % DeckCardList.size();
+		// シャッフル後のデッキリストに追加
+		ShuffledDeckCardList.push_back(DeckCardList[RandomIndex]);
+		// 元のデッキリストから削除
+		DeckCardList.erase(DeckCardList.begin() + RandomIndex);
+	}
+	DeckCardList = ShuffledDeckCardList;
 	// データリストにデッキを設定
 	this->pDataList_Battle->SetAllDeckCardList(DeckCardList);
 	this->pDataList_Battle->SetDeckCardList(DeckCardList);

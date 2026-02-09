@@ -92,6 +92,10 @@ void Main::DxLibInit()
 	/* 使用するDirect3DのバージョンをDirectX11に設定(デフォルトでなっているはずだが念のため) */
 	SetUseDirect3DVersion(DX_DIRECT3D_11);
 
+	/* 乱数の初期値を設定する */
+	// 現在時間から初期値を算出
+	SRand(static_cast<int>(std::chrono::system_clock::to_time_t(std::chrono::system_clock::now())));
+
 	/* プロジェクトでの初期設定を行う */
 	PROJECT_INIT::DxLibInit();
 }

@@ -22,7 +22,7 @@ Card_Arms_TravelerSword::Card_Arms_TravelerSword() : Card_Arms_Base()
 	// 画像の名前
 	this->ImageName = "TravelerSword";		// 画像の名前
 	// 説明文
-	this->ExplanationText = "/cysこうどうまえ/ce/nこうげきりょくをチェインすうぶんきょうか";
+	this->ExplanationText = "/cysこうどうまえ/ce/nこうげきりょくをきょうかする/n/cysチェインすう/ce";
 }
 
 // 効果発動:行動直前

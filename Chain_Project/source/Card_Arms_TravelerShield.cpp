@@ -22,7 +22,7 @@ Card_Arms_TravelerShield::Card_Arms_TravelerShield() : Card_Arms_Base()
 	// 画像の名前
 	this->ImageName = "TravelerShield";		// 画像の名前
 	// 説明文
-	this->ExplanationText = "/cysこうどうまえ/ce/nぼうぎょりょくをチェインすうぶんきょうか";
+	this->ExplanationText = "/cysこうどうまえ/ce/nぼうぎょりょくをきょうかする/n/cysチェインすう/ce";
 }
 
 // 効果発動:行動t直前

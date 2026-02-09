@@ -21,7 +21,7 @@ Card_Item_HealingPotion::Card_Item_HealingPotion() : Card_Item_Base()
 	// 画像の名前
 	this->ImageName = "HealingPotion";			// 画像の名前
 	// 説明文
-	this->ExplanationText = "みかたぜんいんのたいりょくを/cys5 + チェインすう/ceかいふく";
+	this->ExplanationText = "みかたぜんいんのたいりょくをかいふく/n/cys５+チェインすう×５";
 }
 
 // 戦闘行動

@@ -25,7 +25,7 @@ Card_Arms_PoisonDagger::Card_Arms_PoisonDagger() : Card_Arms_Base()
 	// 画像の名前
 	this->ImageName	= "PoisonDagger";		// 画像の名前
 	// 説明文
-	this->ExplanationText = "/cysこうげきじ/ce/nちぇいんすうぶんのどくをふよ";
+	this->ExplanationText = "/cysこうげきじ/ce/nこうげきたいしょうにどくをあたえる/n/cysチェインすう/ce";
 }
 
 // 効果発動:行動時
