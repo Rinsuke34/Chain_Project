@@ -27,9 +27,10 @@ class Scene_Title : public Scene_Base
 		void AddButton();				// UI(ボタン)の作成
 
 		/* 変数 */
+		double RotationAngle_MagicalCircle;			// 魔法陣の回転角度
 		// 画像
-		std::shared_ptr<int> Image_TitleLogo;	// タイトルロゴ
-		std::shared_ptr<int> Image_BackGround;	// タイトル背景
+		std::shared_ptr<int> Image_TitleLogo[3];	// タイトルロゴ[0:文字, 1:コンパス, 2:魔法陣]
+		std::shared_ptr<int> Image_BackGround;		// タイトル背景
 		// UIのハンドル
 		std::shared_ptr<Scene_UI_Button> UI_Button[3];	// ボタンUI[0:はじめから, 1:ビルド設定, 2:終了]
 };

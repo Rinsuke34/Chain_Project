@@ -19,6 +19,9 @@
 // ƒRƒ“ƒXƒgƒ‰ƒNƒ^
 Scene_Title::Scene_Title() : Scene_Base("Scene_Title", 0, false, false)
 {
+	/* ‰Šú‰» */
+	this->RotationAngle_MagicalCircle	= 0.0;	// –‚–@w‚Ì‰ñ“]Šp“x
+
 	/* ‰æ‘œƒŠƒ\[ƒX‚Ìæsƒ[ƒh */
 	AdvanceImageLoad();
 
@@ -67,16 +70,44 @@ void Scene_Title::Update()
 		gbEndFlg = true;
 		return;
 	}
+
+	/* –‚–@w‚Ì‰ñ“]Šp“xXV */
+	this->RotationAngle_MagicalCircle += 0.005;
 }
 
 // •`‰æ
 void Scene_Title::Draw()
 {
 	/* ”wŒi•`ŽÊ */
-	DrawExtendGraph(0, 0, SCREEN_SIZE_WIDE, SCREEN_SIZE_HEIGHT, *(this->Image_BackGround), TRUE);
+//	DrawExtendGraph(0, 0, SCREEN_SIZE_WIDE, SCREEN_SIZE_HEIGHT, *(this->Image_BackGround), TRUE);
 
 	/* ƒƒS‚Ì•`ŽÊ */
-	DrawExtendGraph(0, 0, SCREEN_SIZE_WIDE, 500, *(this->Image_TitleLogo), TRUE);
+	// ƒRƒ“ƒpƒX
+	int LogoSizeX = 126 * 5, LogoSizeY = 126 * 5;
+	int LogoCenterPosX = SCREEN_SIZE_WIDE / 2 - 375;
+	int LogoCenterPosY = 400;
+	DrawExtendGraph(
+		LogoCenterPosX - (LogoSizeX / 2), LogoCenterPosY - (LogoSizeY / 2),
+		LogoCenterPosX + (LogoSizeX / 2), LogoCenterPosY + (LogoSizeY / 2),
+		*(this->Image_TitleLogo[1]),
+		TRUE);
+	// –‚–@w
+	DrawRotaGraph(
+		LogoCenterPosX,
+		LogoCenterPosY,
+		1.75,
+		this->RotationAngle_MagicalCircle,
+		*(this->Image_TitleLogo[2]),
+		TRUE);
+	// •¶Žš—ñ
+	LogoSizeX = 256 * 5, LogoSizeY = 64 * 5;
+	LogoCenterPosX = SCREEN_SIZE_WIDE / 2;
+	LogoCenterPosY = 400;
+	DrawExtendGraph(
+		LogoCenterPosX - (LogoSizeX / 2), LogoCenterPosY - (LogoSizeY / 2),
+		LogoCenterPosX + (LogoSizeX / 2), LogoCenterPosY + (LogoSizeY / 2),
+		*(this->Image_TitleLogo[0]),
+		TRUE);
 }
 
 // ‰æ‘œƒŠƒ\[ƒX‚Ìæsƒ[ƒh
@@ -92,7 +123,13 @@ void Scene_Title::AdvanceImageLoad()
 	// ƒ^ƒCƒgƒ‹ƒƒS
 	std::string ImageFilePath = "Logo/Title";
 	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
-	this->Image_TitleLogo = pDataList_Image->iGetImageHandle(ImageFilePath);
+	this->Image_TitleLogo[0] = pDataList_Image->iGetImageHandle(ImageFilePath);
+	ImageFilePath = "Logo/Title_Compass";
+	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
+	this->Image_TitleLogo[1] = pDataList_Image->iGetImageHandle(ImageFilePath);
+	ImageFilePath = "Logo/Title_MagicCircle";
+	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
+	this->Image_TitleLogo[2] = pDataList_Image->iGetImageHandle(ImageFilePath);
 	// ƒ^ƒCƒgƒ‹”wŒi
 	ImageFilePath = "BackGround/Title_BackGround";
 	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);

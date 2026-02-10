@@ -313,6 +313,12 @@
     <Filter Include="ソース ファイル\キャラクター\NPC\スライム%28青%29">
       <UniqueIdentifier>{6e57cf7d-07a2-4dc6-b792-9d93f63e6ce4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\データリスト\音声データ管理">
+      <UniqueIdentifier>{a258f860-ce35-4628-b7d0-35ab87db166d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\データリスト\音声データ管理">
+      <UniqueIdentifier>{8d1e7619-6522-4667-94f9-9b3fba4a9ef5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Main.cpp">
@@ -468,6 +474,9 @@
     <ClCompile Include="source\Character_Npc_Slime_Blue.cpp">
       <Filter>ソース ファイル\キャラクター\NPC\スライム%28青%29</Filter>
     </ClCompile>
+    <ClCompile Include="source\DataList_Sound.cpp">
+      <Filter>ソース ファイル\データリスト\音声データ管理</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Scene_Load_Checker.h">
@@ -613,6 +622,9 @@
     </ClInclude>
     <ClInclude Include="source\Character_Npc_Include.h">
       <Filter>ヘッダー ファイル\キャラクター\NPC</Filter>
+    </ClInclude>
+    <ClInclude Include="source\DataList_Sound.h">
+      <Filter>ヘッダー ファイル\データリスト\音声データ管理</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
