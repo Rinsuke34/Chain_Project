@@ -30,14 +30,28 @@ void Scene_Battle::Draw_BackGround()
 	);
 
 	/* キャラクター足場 */
-	DrawModiGraph(
-		0, 250,
-		SCREEN_SIZE_WIDE, 250,
-		SCREEN_SIZE_WIDE, 300,
-		0, 300,
-		*(this->Image_BackGround[1]),
-		TRUE
-	);
+	// 描写頂点を算出
+	static const int TILE_POINT_MAX		= 32;
+	static const int TILE_UP_WIDE		= 64;
+	static const int TILE_UNDER_WIDE	= 66;
+	int UpPosX[TILE_POINT_MAX],UnderPosX[TILE_POINT_MAX];
+	for (int i = 0; i < TILE_POINT_MAX; i++)
+	{
+		UpPosX[i]		= (SCREEN_SIZE_WIDE / 2) - ((TILE_POINT_MAX / 2) * TILE_UP_WIDE)		+ (TILE_UP_WIDE * i);
+		UnderPosX[i]	= (SCREEN_SIZE_WIDE / 2) - ((TILE_POINT_MAX / 2) * TILE_UNDER_WIDE)	+ (TILE_UNDER_WIDE * i);
+	}
+	// 描写
+	for (int i = 0; i < TILE_POINT_MAX - 1; i++)
+	{
+		DrawModiGraph(
+			UpPosX[i],			250,
+			UpPosX[i + 1],		250,
+			UnderPosX[i + 1],	300,
+			UnderPosX[i],		300,
+			*(this->Image_BackGround[1]),
+			TRUE
+		);
+	}
 
 	/* カード置き場 */
 	DrawModiGraph(

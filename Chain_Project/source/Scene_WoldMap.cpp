@@ -131,19 +131,12 @@ void Scene_WoldMap::Node_Update()
 	}
 }
 
-// 各ノードの描画処理
-void Scene_WoldMap::Node_Draw()
-{
-	/* ワールドマップのノードを描写 */
-	for (auto& Node : this->WoldMapNodeList)
-	{
-		Node->Draw();
-	}
-}
-
 // 各ノードの中心座標を設定
 void Scene_WoldMap::Node_SetCenterPosition()
 {
+	/* 現在のノードのY座標から補正値を取得 */
+	int CorrectionY = (this->NowNode->GetPosition_Map().iY - 1) * WOLDMAP_NODE_INTERVAL_Y;
+
 	/* ワールドマップノードの中心座標を設定 */
 	for (auto& Node : this->WoldMapNodeList)
 	{
@@ -151,10 +144,27 @@ void Scene_WoldMap::Node_SetCenterPosition()
 		Struct_2D::POSITION SetPosition = { 0, 0 };
 
 		SetPosition.iX = Node->GetPosition_Map().iX * WOLDMAP_NODE_INTERVAL_X + (WOLDMAP_IMAGE_WIDTH / 2);
-		SetPosition.iY = Node->GetPosition_Map().iY * WOLDMAP_NODE_INTERVAL_Y;
+		SetPosition.iY = Node->GetPosition_Map().iY * WOLDMAP_NODE_INTERVAL_Y - CorrectionY;
 
 		/* 対象のノードの中心座標を設定 */
 		Node->SetPosition_Now(SetPosition);
+	}
+}
+
+// 各ノードの描画処理
+void Scene_WoldMap::Node_Draw()
+{
+	/* ワールドマップのノードを描写 */
+	for (auto& Node : this->WoldMapNodeList)
+	{
+		/* 現在地点より上の地点であるなら描写を省略 */
+		if (Node->GetPosition_Map().iY < this->NowNode->GetPosition_Map().iY)
+		{
+			continue;
+		}
+
+		/* ノードの描写処理 */
+		Node->Draw();
 	}
 }
 
@@ -164,6 +174,12 @@ void Scene_WoldMap::Road_Draw()
 	/* 各ノードからつながる道を描写 */
 	for (auto& Node : this->WoldMapNodeList)
 	{
+		/* 現在地点より上の地点であるなら描写を省略 */
+		if (Node->GetPosition_Map().iY < this->NowNode->GetPosition_Map().iY)
+		{
+			continue;
+		}
+
 		/* 移動可能なノードを取得 */
 		std::vector<std::shared_ptr<WoldMap_Node_Base>> MoveNodeList = Node->GetMoveNodeList();
 
@@ -395,8 +411,12 @@ void Scene_WoldMap::Select_Card()
 // マップデータの読み込み
 void Scene_WoldMap::Load_MapData()
 {
+	/* 現時点でのマップデータをリセットする */
+	this->WoldMapNodeList.clear();
+
 	/* マップデータのJSONファイルを開く */
-	std::ifstream FileName("resource/SetupData/MapData.json");
+	std::string MapDataFilePath = "resource/SetupData/MapData_Stage" + std::to_string(this->pDataList_GameResource->GetNowStageNo()) + ".json";
+	std::ifstream FileName(MapDataFilePath);
 
 	nlohmann::json MapData;
 	FileName >> MapData;
@@ -493,11 +513,32 @@ void Scene_WoldMap::CheckStageEnd()
 		return;
 	}
 
-	/* 移動先がないならステージクリアとする */
+	/* 移動先が存在するか確認 */
 	if (this->NextAreaCardList.size() == 0)
 	{
-		/* シーン"ゲームオーバー"を作成 */
-		gpSceneServer->AddSceneReservation(std::make_shared<Scene_GameOver>());
-		this->GameOverCreateFlg = true;
+		// 移動先が存在しない場合
+		/* 現在最終ステージであるか確認 */
+		if(this->pDataList_GameResource->GetNowStageNo() == DataList_GameResource::STAGE_NUMBER_MAX)
+		{
+			// 最終ステージである場合
+			/* シーン"ゲームオーバー"を作成 */
+			gpSceneServer->AddSceneReservation(std::make_shared<Scene_GameOver>());
+			this->GameOverCreateFlg = true;
+		}
+		else
+		{
+			// 最終ステージでない場合
+			/* 次のステージ番号に更新 */
+			this->pDataList_GameResource->SetNowStageNo(this->pDataList_GameResource->GetNowStageNo() + 1);
+
+			/* マップデータの読み込み */
+			Load_MapData();
+
+			/* 現在の地点を取得 */
+			CheckNowNode();
+
+			/* 移動先エリアカードの作成 */
+			NextAreaCard_Create();
+		}
 	}
 }

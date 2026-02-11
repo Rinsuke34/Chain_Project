@@ -5,10 +5,11 @@
 #include "DataList_Sound.h"
 
 // コンストラクタ
-DataList_Sound::DataList_Sound() : DataList_Base("DataList_Image")
+DataList_Sound::DataList_Sound() : DataList_Base("DataList_Sound")
 {
 	this->SoundList.clear();	// 音声データリスト
 	this->PlayBgm	= -1;		// 再生中のBGM
+	this->NowPlayBgmName = "";	// 現在再生中のBGM名
 }
 
 // デストラクタ
@@ -134,13 +135,28 @@ void DataList_Sound::PlayBgmSound(std::string& cFilePath)
 	// 引数
 	// cFilePath	<- 再生する音声データのファイル名
 
-	/* 現在BGMが再生されているか確認 */
-	if (CheckSoundMem(this->PlayBgm) == TRUE)
+	/* 現在再生しているBGMであるなら処理をスキップする */
+	if (this->NowPlayBgmName == cFilePath)
 	{
-		// 再生されている場合
-		/* BGMを停止＆メモリ上から削除 */
-		StopSoundMem(this->PlayBgm);
-		DeleteSoundMem(this->PlayBgm);
+		// 同じBGMである場合、処理を抜ける
+		return;
+	}
+	else
+	{
+		// 異なるBGMである場合、現在のBGM名を更新する
+		this->NowPlayBgmName = cFilePath;
+	}
+
+	/* 現在BGMが再生されているか確認 */
+	if (this->PlayBgm != -1)
+	{
+		if (CheckSoundMem(this->PlayBgm) == TRUE)
+		{
+			// 再生されている場合
+			/* BGMを停止＆メモリ上から削除 */
+			StopSoundMem(this->PlayBgm);
+			DeleteSoundMem(this->PlayBgm);
+		}
 	}
 
 	/* BGMを読み込む */
@@ -155,11 +171,8 @@ void DataList_Sound::PlayBgmSound(std::string& cFilePath)
 }
 
 // BGM音声データ停止
-void DataList_Sound::StopBgmSound(std::string& cFilePath)
+void DataList_Sound::StopBgmSound()
 {
-	// 引数
-	// cFilePath	<- 停止する音声データのファイル名
-
 	/* 現在BGMが再生されているか確認 */
 	if (CheckSoundMem(this->PlayBgm) == TRUE)
 	{
@@ -167,5 +180,8 @@ void DataList_Sound::StopBgmSound(std::string& cFilePath)
 		/* BGMを停止＆メモリ上から削除 */
 		StopSoundMem(this->PlayBgm);
 		DeleteSoundMem(this->PlayBgm);
+
+		/* 再生中BGM情報を初期化 */
+		this->NowPlayBgmName = "";
 	}
 }

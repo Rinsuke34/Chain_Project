@@ -20,6 +20,7 @@ DataList_GameResource::DataList_GameResource() : DataList_Base("DataList_GameRes
 	this->GameEndFlg			= false;		// ゲーム終了フラグ
 	this->HaveCoin				= 0;			// 所持コイン
 	this->DropItemCheckFlg		= false;		// ドロップアイテム確認シーンを有効化
+	this->NowStageNo			= 1;			// 現在のステージ番号
 
 	/* プレイヤーキャラクターの生成 */
 	this->PlayerCharacter = std::make_shared<Character_Player>();

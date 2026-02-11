@@ -12,6 +12,7 @@
 #include "DataList_Battle.h"
 #include "DataList_Image.h"
 #include "DataList_GameResource.h"
+#include "DataList_Sound.h"
 
 // コンストラクタ
 Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 50, false, false)
@@ -35,6 +36,8 @@ Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 50, false, false)
 	/* データリスト取得 */
 	// ゲームリソース管理用データリスト
 	this->pDataList_GameResource = std::dynamic_pointer_cast<DataList_GameResource>(gpDataListServer->GetDataList("DataList_GameResource"));
+	// サウンドデータリスト
+	this->pDataList_Sound = std::dynamic_pointer_cast<DataList_Sound>(gpDataListServer->GetDataList("DataList_Sound"));
 
 	/* 画像読み込み */
 	{
@@ -58,9 +61,9 @@ Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 50, false, false)
 		this->Image_BattleArea_Emphasis_Anim[3] = pDataList_Image->iGetImageHandle(ImageFilePath);
 
 		// 背景画像[0:キャラクター立ち位置の背景, 1:キャラクター立ち位置の足場, 2:カード置き場]
-		ImageFilePath = "BackGround/Battle_Cave_BackGround";
+		ImageFilePath = "BackGround/Battle_BackGround_Stage" + std::to_string(this->pDataList_GameResource->GetNowStageNo());
 		this->Image_BackGround[0] = pDataList_Image->iGetImageHandle(ImageFilePath);
-		ImageFilePath = "BackGround/Battle_Cave_Floor";
+		ImageFilePath = "BackGround/Battle_Floor_Stage" +  std::to_string(this->pDataList_GameResource->GetNowStageNo());
 		this->Image_BackGround[1] = pDataList_Image->iGetImageHandle(ImageFilePath);
 		ImageFilePath = "BackGround/Table";
 		this->Image_BackGround[2] = pDataList_Image->iGetImageHandle(ImageFilePath);
@@ -117,6 +120,10 @@ Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 50, false, false)
 		Deck->SetUp_DataList();
 		Deck->SetCardState(Card_Base::CARDSTATE_DECK);
 	}
+
+	/* BGM再生 */
+	std::string BgmFilePath = "fantasyXV";
+	this->pDataList_Sound->PlayBgmSound(BgmFilePath);
 }
 
 // デストラクタ
@@ -244,22 +251,31 @@ void Scene_Battle::Update()
 	else
 	{
 		// 戦闘終了の場合
-		/* ドロップアイテム確認シーンが無効になっているか確認 */
-		if (!this->pDataList_GameResource->GetDropItemCheckFlg() &&
-			!this->pDataList_GameResource->GetNextStageSelectFlg())
+		/* 戦闘終了後の処理 */
+		if (this->iBattlePhase == BATTLE_PHASE_BATTLE_END_WIN)
 		{
-			// ワールドマップが無効であるなら、有効にする
-			if (!this->pDataList_GameResource->GetWoldMapActiveFlg())
+			// プレイヤー勝利の場合
+			/* ドロップアイテム確認シーンが無効になっているか確認 */
+			if (!this->pDataList_GameResource->GetDropItemCheckFlg() &&
+				!this->pDataList_GameResource->GetNextStageSelectFlg())
 			{
-				this->pDataList_GameResource->SetWoldMapActiveFlg(true);
+				// ワールドマップが無効であるなら、有効にする
+				if (!this->pDataList_GameResource->GetWoldMapActiveFlg())
+				{
+					this->pDataList_GameResource->SetWoldMapActiveFlg(true);
+				}
+			}
+
+			/* 次のステージの選択が完了しているならこのシーンを削除 */
+			if (this->pDataList_GameResource->GetNextStageSelectFlg())
+			{
+				/* このシーンの削除フラグを有効にする */
+				this->bDeleteFlg = true;
 			}
 		}
-
-		/* 次のステージの選択が完了しているならこのシーンを削除 */
-		if (this->pDataList_GameResource->GetNextStageSelectFlg())
+		else if (this->iBattlePhase == BATTLE_PHASE_BATTLE_END_GAMEOVER)
 		{
-			/* このシーンの削除フラグを有効にする */
-			this->bDeleteFlg = true;
+			// プレイヤー敗北の場合	
 		}
 	}
 }

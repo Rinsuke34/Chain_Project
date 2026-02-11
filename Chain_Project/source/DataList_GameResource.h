@@ -35,6 +35,7 @@ class DataList_GameResource : public DataList_Base
 		std::shared_ptr<Character_Player>		GetPlayerCharacter()	{ return PlayerCharacter; }		// プレイヤーキャラクター
 		std::vector<std::shared_ptr<Card_Base>>	GetDropCardList()		{ return DropCardList; }		// ドロップカードリスト
 		bool									GetDropItemCheckFlg()	{ return DropItemCheckFlg; };	// ドロップアイテム確認シーンを有効化
+		int										GetNowStageNo()			{ return NowStageNo; };			// 現在のステージ番号
 
 		/* セッター */
 		void SetGameState(int state)											{ GameState				= state; }		// ゲームの状態
@@ -48,11 +49,14 @@ class DataList_GameResource : public DataList_Base
 		void SetPlayerCharacter(std::shared_ptr<Character_Player> character)	{ PlayerCharacter		= character; }	// プレイヤーキャラクター
 		void SetDropCardList(std::vector<std::shared_ptr<Card_Base>> cardList)	{ DropCardList			= cardList; }	// ドロップカードリスト
 		void SetDropItemCheckFlg(bool flg)										{ DropItemCheckFlg		= flg; };		// ドロップアイテム確認シーンを有効化
+		void SetNowStageNo(int stageNo)											{ NowStageNo			= stageNo; };	// 現在のステージ番号
 
 		/* 定数 */
 		// ゲームの状態
 		static const int STATE_STAGE	= 0;	// ステージ処理
 		static const int STATE_WORLDMAP	= 1;	// ワールドマップ
+		// ステージ番号
+		static const int STAGE_NUMBER_MAX = 3;	// 最大ステージ数
 
 	private:
 		/* 変数 */
@@ -67,4 +71,5 @@ class DataList_GameResource : public DataList_Base
 		std::shared_ptr<Character_Player>		PlayerCharacter;	// プレイヤーキャラクター
 		std::vector<std::shared_ptr<Card_Base>> DropCardList;		// ドロップカードリスト
 		bool									DropItemCheckFlg;	// ドロップアイテム確認シーンを有効化
+		int										NowStageNo;			// 現在のステージ番号
 };

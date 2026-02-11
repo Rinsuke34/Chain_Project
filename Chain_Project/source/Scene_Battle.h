@@ -15,6 +15,7 @@ class Card_Base;
 class DataList_GameResource;
 class Drop_Item_Base;
 class Scene_UI_ExplanationText;
+class DataList_Sound;
 
 // シーン"バトル画面"
 class Scene_Battle : public Scene_Base
@@ -64,6 +65,7 @@ class Scene_Battle : public Scene_Base
 		// データリスト
 		std::shared_ptr<DataList_Battle>		pDataList_Battle;		// バトル用データリスト
 		std::shared_ptr<DataList_GameResource>	pDataList_GameResource;	// ゲームリソース管理用データリスト
+		std::shared_ptr<DataList_Sound>			pDataList_Sound;		// サウンドデータリスト
 		// その他
 		int												iBattlePhase;					// バトルフェーズ
 		int												iBattlePhase_NowBattleAreaNo;	// 現在処理の実行中のバトルエリア

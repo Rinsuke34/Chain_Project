@@ -15,6 +15,7 @@
 #include "DataList_Image.h"
 #include "DataList_Font.h"
 #include "Card_Base.h"
+#include "DataList_Sound.h"
 
 // コンストラクタ
 Scene_Title::Scene_Title() : Scene_Base("Scene_Title", 0, false, false)
@@ -30,6 +31,13 @@ Scene_Title::Scene_Title() : Scene_Base("Scene_Title", 0, false, false)
 
 	/* UI(ボタン)の作成 */
 	AddButton();
+
+	/* BGM再生 */
+	// サウンド管理データリスト取得
+	std::shared_ptr<DataList_Sound> pDataList_Sound = std::dynamic_pointer_cast<DataList_Sound>(gpDataListServer->GetDataList("DataList_Sound"));
+	// BGM再生
+	std::string BgmFilePath = "fantasyX";
+	pDataList_Sound->PlayBgmSound(BgmFilePath);
 }
 
 // デストラクタ
@@ -41,6 +49,12 @@ Scene_Title::~Scene_Title()
 		this->UI_Button[i]->SetDeleteFlg(true);
 		this->UI_Button[i] = nullptr;
 	}
+
+	/* BGM停止 */
+	// サウンド管理データリスト取得
+	std::shared_ptr<DataList_Sound> pDataList_Sound = std::dynamic_pointer_cast<DataList_Sound>(gpDataListServer->GetDataList("DataList_Sound"));
+	// BGM停止
+	pDataList_Sound->StopBgmSound();
 }
 
 // 更新
@@ -79,7 +93,7 @@ void Scene_Title::Update()
 void Scene_Title::Draw()
 {
 	/* 背景描写 */
-//	DrawExtendGraph(0, 0, SCREEN_SIZE_WIDE, SCREEN_SIZE_HEIGHT, *(this->Image_BackGround), TRUE);
+	DrawExtendGraph(0, 0, SCREEN_SIZE_WIDE, SCREEN_SIZE_HEIGHT, *(this->Image_BackGround), TRUE);
 
 	/* ロゴの描写 */
 	// コンパス

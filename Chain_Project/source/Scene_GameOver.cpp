@@ -10,7 +10,7 @@
 #include "Scene_UI_Button.h"
 
 // コンストラクタ
-Scene_GameOver::Scene_GameOver() : Scene_Base("Scene_GameOver", 10, false, false)
+Scene_GameOver::Scene_GameOver() : Scene_Base("Scene_GameOver", 100, false, false)
 {
 	/* 初期化 */
 	this->GameEndFlg = false;		// ゲーム終了フラグ
@@ -22,7 +22,7 @@ Scene_GameOver::Scene_GameOver() : Scene_Base("Scene_GameOver", 10, false, false
 	/* UI作成 */
 	{
 		/* "決定"ボタンの作成 */
-		this->UI_DecisionButton = std::make_shared<Scene_UI_Button>("Battle_DecisionButton", 1);
+		this->UI_DecisionButton = std::make_shared<Scene_UI_Button>("Battle_DecisionButton", this->iLayerOrder + 1);
 		this->UI_DecisionButton->SetButtonText("ゲームオーバー");
 		this->UI_DecisionButton->SetCenterPos({ SCREEN_SIZE_WIDE / 2, SCREEN_SIZE_HEIGHT / 2 });
 		this->UI_DecisionButton->SetFontHandle(giFont_DonguriDuel_32);
@@ -52,7 +52,7 @@ void Scene_GameOver::Update()
 		if (this->UI_DecisionButton->GetMouseOverFlg() && (gstKeyboardInputData.igInput[INPUT_TRG] & MOUSE_INPUT_LEFT))
 		{
 			///* ワールドマップを有効にする */
-			//this->pDataList_GameResource->SetWoldMapActiveFlg(true);
+			this->pDataList_GameResource->SetWoldMapActiveFlg(true);
 
 			/* ゲーム終了フラグを有効化 */
 			this->GameEndFlg = true;
@@ -61,7 +61,6 @@ void Scene_GameOver::Update()
 	else
 	{
 		// 有効であるならば
-
 		/* ゲーム終了フラグを有効にする */
 		this->pDataList_GameResource->SetGameEndFlg(true);
 	}
