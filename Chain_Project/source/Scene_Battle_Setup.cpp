@@ -56,6 +56,24 @@ void Scene_Battle::Character_Setup(int Level, bool BossFlg)
 				this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_FRONT,	std::make_shared<Character_Slime_Green>());
 				this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_MIDDLE,	std::make_shared<Character_Slime_Green>());
 				break;
+
+			case 10:
+				break;
+
+			case 11:
+				break;
+
+			case 21:
+				break;
+
+			case 22:
+				break;
+
+			case 23:
+				break;
+
+			case 24:
+				break;
 		}
 	}
 }

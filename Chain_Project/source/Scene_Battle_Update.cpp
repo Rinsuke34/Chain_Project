@@ -452,6 +452,7 @@ void Scene_Battle::Update_EffectTurnEnd()
 void Scene_Battle::Update_StatusEffectAdvance()
 {
 	/* 各キャラクターの状態変化のターンを進行 */
+	// ※シールドのリセットもここで実施
 	for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
 	{
 		// 仲間
@@ -459,12 +460,14 @@ void Scene_Battle::Update_StatusEffectAdvance()
 		if (FriendCharacter != nullptr)
 		{
 			FriendCharacter->Update_Buff_Debuff();
+			FriendCharacter->ShieldReset_EndTurn();
 		}
 		// 敵
 		auto EnemyCharacter = this->pDataList_Battle->GetEnemyCharacter(i);
 		if (EnemyCharacter != nullptr)
 		{
 			EnemyCharacter->Update_Buff_Debuff();
+			EnemyCharacter->ShieldReset_EndTurn();
 		}
 	}
 

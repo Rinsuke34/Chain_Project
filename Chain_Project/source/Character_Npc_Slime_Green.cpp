@@ -16,12 +16,12 @@ Character_Slime_Green::Character_Slime_Green() : Character_Base()
 	this->Camp		= Character_Base::CAMP_ENEMY;	// 陣営:敵陣営
 	this->SizeX		= 150;			// キャラクターの幅
 	this->SizeY		= 150;			// キャラクターの高さ
-	this->DropCoin	= 2;			// ドロップするコインの枚数
+	this->DropCoin	= 5;			// ドロップするコインの枚数
 	SetUpImage("Character_Ilust/Npc/Slime_Green");
 
 	/* ドロップするカード一覧の設定 */
 	std::vector<std::shared_ptr<Card_Base>> dropCardList;
-	if ((rand() % 100) < 80) { dropCardList.push_back(std::make_shared<Card_Arms_TravelerShield>()); }	// 80%の確率で"木の剣"をドロップ
+	if ((rand() % 100) < 25) { dropCardList.push_back(std::make_shared<Card_Arms_WoodenShield>()); }	// 25%の確率で"木の剣"をドロップ
 	SetDropCardList(dropCardList);
 }
 

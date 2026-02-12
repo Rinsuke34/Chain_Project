@@ -252,16 +252,6 @@ void Scene_Battle::Update()
 	else
 	{
 		// 戦闘終了の場合
-		/* プレイヤーのシールドを0に設定 */
-		for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
-		{
-			auto FriendCharacter = this->pDataList_Battle->GetFriendCharacter(i);
-			if (FriendCharacter != nullptr)
-			{
-				FriendCharacter->SetShield_Now(0);
-			}
-		}
-
 		/* 戦闘終了後の処理 */
 		if (this->iBattlePhase == BATTLE_PHASE_BATTLE_END_WIN)
 		{

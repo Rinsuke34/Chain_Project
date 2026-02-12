@@ -18,7 +18,7 @@ Character_BigSlime_Green::Character_BigSlime_Green() : Character_Base()
 	this->Camp					= Character_Base::CAMP_ENEMY;	// 陣営:敵陣営
 	this->SizeX					= 300;							// キャラクターの幅
 	this->SizeY					= 300;							// キャラクターの高さ
-	this->DropCoin				= 10;							// ドロップするコインの枚数
+	this->DropCoin				= 30;							// ドロップするコインの枚数
 	this->ActionCount			= 0;							// 行動カウント(行動内容の決定に使用)
 	this->HPBarPosCorrectionY	= 130;							// HPバーの描写座標の補正値
 	SetUpImage("Character_Ilust/Npc/Slime_Green");
@@ -107,6 +107,7 @@ void Character_BigSlime_Green::Action_Extra()
 		// 存在しない場合
 		/* 前衛に青スライムを召喚 */
 		std::shared_ptr<Character_Slime_Blue> pBlueSlime = std::make_shared<Character_Slime_Blue>();
+		pBlueSlime->SetDropCoin(0);
 		this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_FRONT, pBlueSlime);
 	}
 
@@ -116,6 +117,7 @@ void Character_BigSlime_Green::Action_Extra()
 		// 存在しない場合
 		/* 中衛に緑スライムを召喚 */
 		std::shared_ptr<Character_Slime_Green> pGreenSlime = std::make_shared<Character_Slime_Green>();
+		pGreenSlime->SetDropCoin(0);
 		this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_MIDDLE, pGreenSlime);
 	}
 }
