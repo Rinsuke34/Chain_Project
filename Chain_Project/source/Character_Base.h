@@ -37,6 +37,7 @@ class Character_Base : public std::enable_shared_from_this<Character_Base>
 		virtual void Draw_Action_Effect();																						// 行動内容の描写
 		virtual void Delete_Action_Effect(std::shared_ptr<Action_Effect_Base> ActionEffect);									// 該当の行動内容の削除
 		virtual bool MouseInCharacter();																						// マウスカーソルがキャラクター上にあるか確認
+		virtual void Action_Extra() {};																							// 特殊行動(エネミーの特殊行動はこの関数を継承して行う)
 
 		/* ゲッター */
 		int 												GetHP_Max()				{ return iHP_Max; }				// 体力(最大値)の取得
@@ -109,6 +110,7 @@ class Character_Base : public std::enable_shared_from_this<Character_Base>
 		std::vector<std::shared_ptr<Card_Base>>	DropCardList;	// ドロップするカード一覧
 		int						ActionEffect_Scale_Size;		// 行動内容のスケールサイズ
 		int						ActionEffect_Scale_Count;		// 行動内容のスケールカウント
+		int						HPBarPosCorrectionY;			// HPバーの描写座標の補正値
 
 		// バフ、デバフ情報
 		std::vector<std::shared_ptr<Character_Buff_Debuff_Base>> 	Buff_Debuff_List;	// バフ、デバフ一覧

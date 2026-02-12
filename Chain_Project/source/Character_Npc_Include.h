@@ -8,3 +8,4 @@
 #include "Character_Npc_Bat.h"
 #include "Character_Npc_Slime_Green.h"
 #include "Character_Npc_Slime_Blue.h"
+#include "Character_Npc_BigSlime_Green.h"

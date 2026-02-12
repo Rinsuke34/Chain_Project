@@ -166,6 +166,7 @@ void DataList_Sound::PlayBgmSound(std::string& cFilePath)
 	/* BGM‚ðÄ¶ */
 	if (this->PlayBgm >= 0)
 	{
+		ChangeNextPlayVolumeSoundMem(100, this->PlayBgm);
 		PlaySoundMem(this->PlayBgm, DX_PLAYTYPE_LOOP);
 	}
 }

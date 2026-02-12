@@ -319,6 +319,12 @@
     <Filter Include="ヘッダー ファイル\データリスト\音声データ管理">
       <UniqueIdentifier>{8d1e7619-6522-4667-94f9-9b3fba4a9ef5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\キャラクター\NPC\スライム%28緑/巨大%29">
+      <UniqueIdentifier>{cbea00cd-8fe7-4743-9ff4-9f0889fb864a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\キャラクター\NPC\スライム%28緑/巨大%29">
+      <UniqueIdentifier>{e96bb89f-51d7-4d1d-94b4-8106e4d908fb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Main.cpp">
@@ -477,6 +483,9 @@
     <ClCompile Include="source\DataList_Sound.cpp">
       <Filter>ソース ファイル\データリスト\音声データ管理</Filter>
     </ClCompile>
+    <ClCompile Include="source\Character_Npc_BigSlime_Blue.cpp">
+      <Filter>ソース ファイル\キャラクター\NPC\スライム%28緑/巨大%29</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Scene_Load_Checker.h">
@@ -625,6 +634,9 @@
     </ClInclude>
     <ClInclude Include="source\DataList_Sound.h">
       <Filter>ヘッダー ファイル\データリスト\音声データ管理</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Character_Npc_BigSlime_Green.h">
+      <Filter>ヘッダー ファイル\キャラクター\NPC\スライム%28緑/巨大%29</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

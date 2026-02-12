@@ -26,16 +26,14 @@ void Scene_Battle::Character_Setup(int Level, bool BossFlg)
 		// ƒ{ƒX‚Å‚ ‚éê‡
 		switch (Level)
 		{
-			case 0:
-				this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_FRONT,	std::make_shared<Character_Slime_Green>());
-				this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_MIDDLE, std::make_shared<Character_Slime_Green>());
-				this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_BACK,	std::make_shared<Character_Bat>());
+			case 1:
+				this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_BACK,	std::make_shared<Character_BigSlime_Green>());
 				break;
 
-			case 1:
-				this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_FRONT,	std::make_shared<Character_Bat>());
-				this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_MIDDLE, std::make_shared<Character_Bat>());
-				this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_BACK,	std::make_shared<Character_Slime_Green>());
+			case 2:
+				break;
+
+			case 3:
 				break;
 		}
 	}

@@ -390,6 +390,7 @@ void Scene_Battle::Update_BattleAction()
 
 		/* 効果の内容に応じた処理を実行 */
 		pEffect->ExecuteEffect();
+		pEffect->Sound_Effect_Play();
 	}
 
 	/* 使用した効果に紐づいたカードをトラッシュ */

@@ -25,7 +25,7 @@ Card_Arms_PoisonDagger::Card_Arms_PoisonDagger() : Card_Arms_Base()
 	// 画像の名前
 	this->ImageName	= "PoisonDagger";		// 画像の名前
 	// 説明文
-	this->ExplanationText = "/cysこうげきじ/ce/nこうげきたいしょうにどくをあたえる/n/cysこうかりょう/ce/nチェインすう";
+	this->ExplanationText = "/cysこうげきじ/ce/nこうげきたいしょうにどくをあたえる/n/cysこうかりょう/ce/nチェインすう+５";
 }
 
 // 効果発動:行動時
@@ -42,7 +42,7 @@ void Card_Arms_PoisonDagger::Effect_Action_After(std::shared_ptr<Character_Base>
 		/* 残りターン数をチェイン数分加算する */
 		for (auto& debuff : Poison)
 		{
-			debuff->Buff_Debuff_Time += GetNowChainCount();	// 残りターン数 += チェイン数
+			debuff->Buff_Debuff_Time += GetNowChainCount() + 5;	// 残りターン数 += チェイン数 + 5
 		}
 	}
 	else

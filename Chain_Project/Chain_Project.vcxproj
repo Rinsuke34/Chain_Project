@@ -187,6 +187,7 @@
     <ClCompile Include="source\Card_Spell_Base.cpp" />
     <ClCompile Include="source\Character_Base.cpp" />
     <ClCompile Include="source\Character_Npc_Bat.cpp" />
+    <ClCompile Include="source\Character_Npc_BigSlime_Blue.cpp" />
     <ClCompile Include="source\Character_Npc_Slime_Blue.cpp" />
     <ClCompile Include="source\Character_Npc_Slime_Green.cpp" />
     <ClCompile Include="source\Character_Player.cpp" />
@@ -246,6 +247,7 @@
     <ClInclude Include="source\Card_Spell_Base.h" />
     <ClInclude Include="source\Character_Base.h" />
     <ClInclude Include="source\Character_Npc_Bat.h" />
+    <ClInclude Include="source\Character_Npc_BigSlime_Green.h" />
     <ClInclude Include="source\Character_Npc_Include.h" />
     <ClInclude Include="source\Character_Npc_Slime_Blue.h" />
     <ClInclude Include="source\Character_Npc_Slime_Green.h" />

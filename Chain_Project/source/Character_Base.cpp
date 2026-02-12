@@ -34,6 +34,7 @@ Character_Base::Character_Base()
 	this->StandbyFlatten_Percent		= 0;								// 待機児の平たくする量の実数値
 	this->ActionEffect_Scale_Count		= 0;								// 行動内容のスケールカウント
 	this->ActionEffect_Scale_Size		= 0;								// 行動内容のスケールサイズ
+	this->HPBarPosCorrectionY			= 0;								// HPバーの描写座標の補正値
 
 	/* 行動内容用フレーム画像取得 */
 	// 画像管理データリストを取得
@@ -118,7 +119,7 @@ void Character_Base::Draw_StatusBar()
 	/* 背景を描写 */
 	DrawGraph(
 		this->BasePos.iX - (HPBAR_WIDE / 2),
-		this->BasePos.iY - this->SizeY - HPBAR_UPPER,
+		this->BasePos.iY - this->SizeY - HPBAR_UPPER + this->HPBarPosCorrectionY,
 		this->iShield_Now > 0 ? *(StartusBar_BackGround_Shield_Image) : *(StatusBar_BackGround_Image),
 		TRUE
 	);
@@ -126,9 +127,9 @@ void Character_Base::Draw_StatusBar()
 	/* HPを描写 */
 	DrawBox(
 		this->BasePos.iX - (HPBAR_WIDE / 2) + HPBAR_FRAME_WIDE,
-		this->BasePos.iY - this->SizeY - HPBAR_UPPER + 2,
+		this->BasePos.iY - this->SizeY - HPBAR_UPPER + 2 + this->HPBarPosCorrectionY,
 		this->BasePos.iX - (HPBAR_WIDE / 2) + HPBAR_FRAME_WIDE + ((HPBAR_WIDE - (HPBAR_FRAME_WIDE * 2)) * this->iHP_Now) / this->iHP_Max,
-		this->BasePos.iY - this->SizeY - HPBAR_UPPER + 18,
+		this->BasePos.iY - this->SizeY - HPBAR_UPPER + 18 + this->HPBarPosCorrectionY,
 		GetColor(255, 0, 0),
 		TRUE
 	);
@@ -143,7 +144,7 @@ void Character_Base::Draw_StatusBar()
 	/* 残り体力の文字列描写 */
 	DrawStringToHandle(
 		this->BasePos.iX - (iSizeX / 2),
-		this->BasePos.iY - this->SizeY - HPBAR_UPPER + ((HPBAR_HEIGHT - iSizeY) / 2),
+		this->BasePos.iY - this->SizeY - HPBAR_UPPER + ((HPBAR_HEIGHT - iSizeY) / 2) + this->HPBarPosCorrectionY,
 		HPText.c_str(),
 		GetColor(255, 255, 255),
 		giFont_JF_Dot_MPlus10_20
@@ -159,7 +160,7 @@ void Character_Base::Draw_StatusBar()
 		/* シールドアイコン描写 */
 		DrawGraph(
 			(this->BasePos.iX - (HPBAR_WIDE / 2)) - (Shield_Icon_SizeX / 2),
-			(this->BasePos.iY - this->SizeY - HPBAR_UPPER) + (HPBAR_HEIGHT / 2) - (Shield_Icon_SizeY / 2),
+			(this->BasePos.iY - this->SizeY - HPBAR_UPPER) + (HPBAR_HEIGHT / 2) - (Shield_Icon_SizeY / 2) + this->HPBarPosCorrectionY,
 			*(Shield_Icon_Image),
 			TRUE
 		);
@@ -174,7 +175,7 @@ void Character_Base::Draw_StatusBar()
 		/* 残りシールドの文字列描写 */
 		DrawStringToHandle(
 			(this->BasePos.iX - (HPBAR_WIDE / 2)) - (iShield_Text_SizeX / 2),
-			(this->BasePos.iY - this->SizeY - HPBAR_UPPER) + (HPBAR_HEIGHT / 2) - (iShield_Text_SizeY / 2),
+			(this->BasePos.iY - this->SizeY - HPBAR_UPPER) + (HPBAR_HEIGHT / 2) - (iShield_Text_SizeY / 2) + this->HPBarPosCorrectionY,
 			ShieldText.c_str(),
 			GetColor(255, 255, 255),
 			giFont_JF_Dot_MPlus10_16
@@ -187,10 +188,10 @@ void Character_Base::Draw_StatusBar()
 	{
 		/* バフ、デバフの描写 */
 		DrawModiGraph(
-			this->BasePos.iX - (this->SizeX / 2) + (i * 32),		this->BasePos.iY - (this->SizeY) - 64,
-			this->BasePos.iX - (this->SizeX / 2) + ((i + 1) * 32),	this->BasePos.iY - (this->SizeY) - 64,
-			this->BasePos.iX - (this->SizeX / 2) + ((i + 1) * 32),	this->BasePos.iY - (this->SizeY) - 64 + 32,
-			this->BasePos.iX - (this->SizeX / 2) + (i * 32),		this->BasePos.iY - (this->SizeY) - 64 + 32,
+			this->BasePos.iX - (this->SizeX / 2) + (i * 32),		this->BasePos.iY - (this->SizeY) - 64 + this->HPBarPosCorrectionY,
+			this->BasePos.iX - (this->SizeX / 2) + ((i + 1) * 32),	this->BasePos.iY - (this->SizeY) - 64 + this->HPBarPosCorrectionY,
+			this->BasePos.iX - (this->SizeX / 2) + ((i + 1) * 32),	this->BasePos.iY - (this->SizeY) - 64 + 32 + this->HPBarPosCorrectionY,
+			this->BasePos.iX - (this->SizeX / 2) + (i * 32),		this->BasePos.iY - (this->SizeY) - 64 + 32 + this->HPBarPosCorrectionY,
 			*(this->Buff_Debuff_List[i]->Image),
 			TRUE
 		);
@@ -199,7 +200,7 @@ void Character_Base::Draw_StatusBar()
 		std::string TurnText = std::to_string(this->Buff_Debuff_List[i]->Buff_Debuff_Time);
 		DrawStringToHandle(
 			this->BasePos.iX - (this->SizeX / 2) + (i * 32) + 4,
-			this->BasePos.iY - (this->SizeY) - 64 + 16,
+			this->BasePos.iY - (this->SizeY) - 64 + 16 + this->HPBarPosCorrectionY,
 			TurnText.c_str(),
 			GetColor(255, 255, 255),
 			giFont_JF_Dot_MPlus10_16

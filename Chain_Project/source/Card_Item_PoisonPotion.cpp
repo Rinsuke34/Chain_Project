@@ -23,7 +23,7 @@ Card_Item_PoisonPotion::Card_Item_PoisonPotion() : Card_Item_Base()
 	// 画像の名前
 	this->ImageName = "PoisonPotion";			// 画像の名前
 	// 説明文
-	this->ExplanationText = "てきぜんたいにどくをふよ/n/cysこうかりょう/cys/nチェインすう";
+	this->ExplanationText = "てきぜんたいにどくをふよ/n/cysこうかりょう/cys/nチェインすう+５";
 }
 
 // カード効果(特殊効果)
@@ -45,7 +45,7 @@ void Card_Item_PoisonPotion::Card_Effect_Extra_Process()
 				/* 残りターン数をチェイン数分加算する */
 				for (auto& debuff : Poison)
 				{
-					debuff->Buff_Debuff_Time += GetNowChainCount();	// 残りターン数 += チェイン数
+					debuff->Buff_Debuff_Time += GetNowChainCount() + 5;	// 残りターン数 += チェイン数 + 5
 				}
 			}
 			else

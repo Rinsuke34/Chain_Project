@@ -10,6 +10,8 @@
 #include "Card_Base.h"
 #include "DataList_Battle.h"
 #include "DataList_Image.h"
+#include "DataList_Sound.h"
+#include "Character_Player.h"
 
 /* ベース */
 // コンストラクタ
@@ -24,10 +26,13 @@ Action_Effect_Base::Action_Effect_Base()
 	this->EffectCard		= nullptr;	// 効果を使用するカード
 	this->IconType			= -1;		// アイコンのタイプ
 	this->ExplanationText	= "";		// 説明文
+	this->Sound_Effect_Name	= "";		// 効果音名称
 
 	/* データリスト取得 */
 	// バトル用データリスト
 	this->pDataList_Battle = std::dynamic_pointer_cast<DataList_Battle>(gpDataListServer->GetDataList("DataList_Battle"));
+	// サウンド用データリスト
+	this->pDataList_Sound = std::dynamic_pointer_cast<DataList_Sound>(gpDataListServer->GetDataList("DataList_Sound"));
 }
 
 // 画像設定
@@ -65,6 +70,16 @@ void Action_Effect_Base::Setup_Image()
 	this->Image = pDataList_Image->iGetImageHandle(ImageName);
 }
 
+// 効果音再生
+void Action_Effect_Base::Sound_Effect_Play()
+{
+	/* 効果音を再生する */
+	if (this->Sound_Effect_Name != "")
+	{
+		this->pDataList_Sound->PlayMemSound(this->Sound_Effect_Name);
+	}
+}
+
 /* 攻撃 */
 // コンストラクタ
 Action_Effect_Attack::Action_Effect_Attack()
@@ -73,6 +88,7 @@ Action_Effect_Attack::Action_Effect_Attack()
 	this->DamageAmount		= 0;				// ダメージ量
 	this->IconType			= ICON_TYPE_ATTACK;	// アイコンタイプ:攻撃
 	this->ExplanationText	= "こうげき";		// 説明文
+	this->Sound_Effect_Name = "Attack";			// 効果音名称
 
 	/* 画像設定 */
 	Setup_Image();
@@ -262,6 +278,7 @@ Action_Effect_Defence::Action_Effect_Defence()
 	this->ShieldAmount		= 0;					// シールド量
 	this->IconType			= ICON_TYPE_DEFENCE;	// アイコンタイプ:防御
 	this->ExplanationText	= "ぼうぎょ";			// 説明文
+	this->Sound_Effect_Name = "Deffence";			// 効果音名称
 
 	/* 画像設定 */
 	Setup_Image();
@@ -417,6 +434,7 @@ Action_Effect_Heal::Action_Effect_Heal()
 	this->HealAmount		= 0;				// 回復量
 	this->IconType			= ICON_TYPE_HEAL;	// アイコンタイプ:回復
 	this->ExplanationText	= "かいふく";		// 説明文
+	this->Sound_Effect_Name = "Heal";			// 効果音名称
 
 	/* 画像設定 */
 	Setup_Image();
@@ -578,6 +596,20 @@ Action_Effect_Extra::Action_Effect_Extra()
 // 効果実行
 void Action_Effect_Extra::ExecuteEffect()
 {
-	/* カード効果(特殊効果)を実行 */
-	this->EffectCard->Card_Effect_Extra_Process();
+	/* 使用者がプレイヤーであるか */
+	if (std::dynamic_pointer_cast<Character_Player>(this->EffectUser))
+	{
+		// プレイヤーである場合
+		/* カードが設定されているか */
+		if (this->EffectCard != nullptr)
+		{
+			/* カード効果(特殊効果)を実行 */
+			this->EffectCard->Card_Effect_Extra_Process();
+		}
+	}
+	else
+	{
+		/* 特殊行動を実施 */
+		this->EffectUser->Action_Extra();
+	}	
 }

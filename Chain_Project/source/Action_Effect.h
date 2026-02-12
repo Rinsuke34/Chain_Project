@@ -10,6 +10,7 @@
 class Character_Base;
 class Card_Base;
 class DataList_Battle;
+class DataList_Sound;
 
 /* 行動内容クラス */
 // ベース
@@ -20,8 +21,9 @@ class Action_Effect_Base
 		virtual ~Action_Effect_Base() {};	// デストラクタ
 
 		/* 関数 */
-		virtual void ExecuteEffect()	{};	// 効果実行
+		virtual void ExecuteEffect() {};	// 効果実行
 		virtual void Setup_Image();			// 画像設定
+		virtual void Sound_Effect_Play();	// 効果音再生
 
 		/* 変数 */
 		int									Target_Camp;		// 効果対象の陣営
@@ -47,6 +49,8 @@ class Action_Effect_Base
 		/* 変数 */
 		std::shared_ptr<DataList_Battle>	pDataList_Battle;	// 戦闘用データリスト
 		std::shared_ptr<int>				Image;				// 画像
+		std::shared_ptr<DataList_Sound>		pDataList_Sound;	// サウンド用データリスト
+		std::string							Sound_Effect_Name;	// 効果音名称
 };
 
 // 攻撃
