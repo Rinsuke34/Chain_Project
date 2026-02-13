@@ -107,6 +107,7 @@ void Scene_Battle::Update_DrawCard()
 void Scene_Battle::Update_EnemyActionDecision()
 {
 	/* 全てのキャラクターの行動決定処理を行う */
+	// 敵キャラクターのシールドリセットもここで行う
 	for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
 	{
 		// 仲間キャラクター
@@ -120,6 +121,7 @@ void Scene_Battle::Update_EnemyActionDecision()
 		if (EnemyCharacter != nullptr)
 		{
 			EnemyCharacter->Action();
+			EnemyCharacter->ShieldReset_EndTurn();
 		}
 	}
 
@@ -452,7 +454,7 @@ void Scene_Battle::Update_EffectTurnEnd()
 void Scene_Battle::Update_StatusEffectAdvance()
 {
 	/* 各キャラクターの状態変化のターンを進行 */
-	// ※シールドのリセットもここで実施
+	// ※プレイヤー陣営のシールドのリセットもここで実施
 	for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
 	{
 		// 仲間
@@ -467,7 +469,6 @@ void Scene_Battle::Update_StatusEffectAdvance()
 		if (EnemyCharacter != nullptr)
 		{
 			EnemyCharacter->Update_Buff_Debuff();
-			EnemyCharacter->ShieldReset_EndTurn();
 		}
 	}
 

@@ -188,10 +188,10 @@ void Character_Base::Draw_StatusBar()
 	{
 		/* バフ、デバフの描写 */
 		DrawModiGraph(
-			this->BasePos.iX - (this->SizeX / 2) + (i * 32),		this->BasePos.iY - (this->SizeY) - 64 + this->HPBarPosCorrectionY,
-			this->BasePos.iX - (this->SizeX / 2) + ((i + 1) * 32),	this->BasePos.iY - (this->SizeY) - 64 + this->HPBarPosCorrectionY,
-			this->BasePos.iX - (this->SizeX / 2) + ((i + 1) * 32),	this->BasePos.iY - (this->SizeY) - 64 + 32 + this->HPBarPosCorrectionY,
-			this->BasePos.iX - (this->SizeX / 2) + (i * 32),		this->BasePos.iY - (this->SizeY) - 64 + 32 + this->HPBarPosCorrectionY,
+			this->BasePos.iX - (HPBAR_WIDE / 2) + (i * 32),			this->BasePos.iY - (this->SizeY) - 64 + this->HPBarPosCorrectionY,
+			this->BasePos.iX - (HPBAR_WIDE / 2) + ((i + 1) * 32),	this->BasePos.iY - (this->SizeY) - 64 + this->HPBarPosCorrectionY,
+			this->BasePos.iX - (HPBAR_WIDE / 2) + ((i + 1) * 32),	this->BasePos.iY - (this->SizeY) - 64 + 32 + this->HPBarPosCorrectionY,
+			this->BasePos.iX - (HPBAR_WIDE / 2) + (i * 32),			this->BasePos.iY - (this->SizeY) - 64 + 32 + this->HPBarPosCorrectionY,
 			*(this->Buff_Debuff_List[i]->Image),
 			TRUE
 		);
@@ -199,8 +199,8 @@ void Character_Base::Draw_StatusBar()
 		/* 残りターン数の描写 */
 		std::string TurnText = std::to_string(this->Buff_Debuff_List[i]->Buff_Debuff_Time);
 		DrawStringToHandle(
-			this->BasePos.iX - (this->SizeX / 2) + (i * 32) + 4,
-			this->BasePos.iY - (this->SizeY) - 64 + 16 + this->HPBarPosCorrectionY,
+			this->BasePos.iX - (HPBAR_WIDE / 2) + (i * 32) + 4,
+			this->BasePos.iY - (HPBAR_WIDE) - 64 + 16 + this->HPBarPosCorrectionY,
 			TurnText.c_str(),
 			GetColor(255, 255, 255),
 			giFont_JF_Dot_MPlus10_16
@@ -310,6 +310,17 @@ void Character_Base::AddShield(int Shield)
 
 	/* シールドを追加 */
 	this->iShield_Now += Shield;
+
+	/* シールド上昇量のテキストを描写 */
+	std::shared_ptr<Scene_Particles_Text> AddText = std::make_shared<Scene_Particles_Text>();
+	std::string DamageText = "+" + std::to_string(Shield);
+	AddText->SetText(DamageText);
+	AddText->SetPosition({ this->BasePos.iX - (HPBAR_WIDE / 2), this->BasePos.iY - this->SizeY - HPBAR_UPPER + (HPBAR_HEIGHT / 2) });
+	AddText->SetFontHandle(giFont_JF_Dot_MPlus10_16_Edge);
+	AddText->SetMove({ 0, -1 });
+	AddText->SetAlpha(0);
+	AddText->SetColor(GetColor(0, 191, 255));
+	gpSceneServer->AddSceneReservation(AddText);
 }
 
 // シールドリセット(ターン終了時)
@@ -333,6 +344,17 @@ void Character_Base::Heal(int Heal)
 	{
 		this->iHP_Now = this->iHP_Max;
 	}
+
+	/* 回復量のテキストを描写 */
+	std::shared_ptr<Scene_Particles_Text> AddText = std::make_shared<Scene_Particles_Text>();
+	std::string DamageText = "+" + std::to_string(Heal);
+	AddText->SetText(DamageText);
+	AddText->SetPosition({ this->BasePos.iX - (HPBAR_WIDE / 2), this->BasePos.iY - this->SizeY - HPBAR_UPPER + (HPBAR_HEIGHT / 2) });
+	AddText->SetFontHandle(giFont_JF_Dot_MPlus10_16_Edge);
+	AddText->SetMove({ 0, -1 });
+	AddText->SetAlpha(0);
+	AddText->SetColor(GetColor(255, 0, 0));
+	gpSceneServer->AddSceneReservation(AddText);
 }
 
 // バフ、デバフの更新

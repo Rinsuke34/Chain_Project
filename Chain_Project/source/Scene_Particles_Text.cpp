@@ -5,7 +5,7 @@
 #include "Scene_Particles_Text.h"
 
 // コンストラクタ
-Scene_Particles_Text::Scene_Particles_Text() : Scene_Base("Particles_Text", 10, false, false)
+Scene_Particles_Text::Scene_Particles_Text() : Scene_Base("Particles_Text", 9999, false, false)
 {
 	/* 初期化 */
 	this->Text			= "";					// 表示テキスト
@@ -48,6 +48,18 @@ void Scene_Particles_Text::Draw()
 	int iSizeY = GetFontSizeToHandle(iFontHandle);
 
 	/* 文字列を描写 */
+	// 黒色で縁取りするため、同じ文字列を8方向に描写
+	for(int i = 0; i < 8; i++)
+	{
+		int OffsetX = (i % 3) - 1;	// -1, 0, 1のいずれか
+		int OffsetY = (i / 3) - 1;	// -1, 0, 1のいずれか
+		DrawStringToHandle(
+			this->Pos.iX - (iSizeX / 2) + OffsetX, this->Pos.iY - (iSizeY / 2) + OffsetY,
+			this->Text.c_str(),
+			GetColor(0, 0, 0),
+			this->iFontHandle);
+	}
+
 	DrawStringToHandle(
 		this->Pos.iX - (iSizeX / 2), this->Pos.iY - (iSizeY / 2),
 		this->Text.c_str(),

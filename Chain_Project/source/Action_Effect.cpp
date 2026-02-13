@@ -116,6 +116,9 @@ void Action_Effect_Attack::ExecuteEffect()
 					if (this->EffectCard)
 					{
 						this->EffectCard->Effect_Action_Before(TargetEnemyCharacter);
+
+						/* ダメージ量をバフ後の値に設定 */
+						this->DamageAmount = this->EffectCard->GetStrength() + this->EffectCard->GetStrength_Buff();
 					}
 
 					/* ダメージ処理を実行 */
@@ -164,6 +167,9 @@ void Action_Effect_Attack::ExecuteEffect()
 				if (this->EffectCard)
 				{
 					this->EffectCard->Effect_Action_Before(TargetEnemyCharacter);
+
+					/* ダメージ量をバフ後の値に設定 */
+					this->DamageAmount = this->EffectCard->GetStrength() + this->EffectCard->GetStrength_Buff();
 				}
 
 				/* ダメージ処理を実行 */
@@ -201,6 +207,9 @@ void Action_Effect_Attack::ExecuteEffect()
 					if (this->EffectCard)
 					{
 						this->EffectCard->Effect_Action_Before(TargetFriendCharacter);
+
+						/* ダメージ量をバフ後の値に設定 */
+						this->DamageAmount = this->EffectCard->GetStrength() + this->EffectCard->GetStrength_Buff();
 					}
 
 					/* ダメージ処理を実行 */
@@ -249,6 +258,9 @@ void Action_Effect_Attack::ExecuteEffect()
 				if (this->EffectCard)
 				{
 					this->EffectCard->Effect_Action_Before(TargetFriendCharacter);
+
+					/* ダメージ量をバフ後の値に設定 */
+					this->DamageAmount = this->EffectCard->GetStrength() + this->EffectCard->GetStrength_Buff();
 				}
 
 				/* ダメージ処理を実行 */

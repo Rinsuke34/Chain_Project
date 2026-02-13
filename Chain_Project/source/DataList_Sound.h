@@ -20,6 +20,8 @@ class DataList_Sound : public DataList_Base
 		void					PlayMemSound(std::string& cFilePath);		// メモリ上の音声データ再生
 		void					PlayBgmSound(std::string& cFilePath);		// BGM音声データ再生(読み込み＆再生)
 		void					StopBgmSound();								// BGM音声データ停止
+		void					LoadBgmSound(std::string& cFilePath);		// BGM音声データ読み込み
+		void					PlayBgmSound_Now();							// 現在読み込まれているBGM音声データ再生
 
 	private:
 		/* 変数 */

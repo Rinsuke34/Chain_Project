@@ -21,23 +21,28 @@
 Scene_Title::Scene_Title() : Scene_Base("Scene_Title", 0, false, false)
 {
 	/* 初期化 */
-	this->RotationAngle_MagicalCircle	= 0.0;	// 魔法陣の回転角度
+	this->RotationAngle_MagicalCircle	= 0.0;					// 魔法陣の回転角度
+	this->iPhase						= PHASE_BLACKOUT;		// フェーズ
+	this->Counter_Phase					= 100;					// フェーズ用カウンター
+	this->LogoAlpha_White				= 0;					// タイトルロゴ(白)のアルファ値
+	this->LogoAlpha						= 0;					// タイトルロゴのアルファ値
+	this->CompassPosY					= -550;					// コンパスの描写座標
+	this->MagicalCircleScale			= 0.f;					// 魔法陣の拡大率
+	this->BuildingPosY					= SCREEN_SIZE_HEIGHT;	// 建物の描写座標Y
+	this->SkyAlpha						= 0;					// 空のアルファ値
+
+	/* BGM音声データ読み込み */
+	// サウンド管理データリスト取得
+	std::shared_ptr<DataList_Sound> pDataList_Sound = std::dynamic_pointer_cast<DataList_Sound>(gpDataListServer->GetDataList("DataList_Sound"));
+	// BGM音声データ読み込み
+	std::string BgmFilePath = "fantasyX";
+	pDataList_Sound->LoadBgmSound(BgmFilePath);
 
 	/* 画像リソースの先行ロード */
 	AdvanceImageLoad();
 
 	/* フォントリソースの先行ロード */
 	AdvanceFontLoad();
-
-	/* UI(ボタン)の作成 */
-	AddButton();
-
-	/* BGM再生 */
-	// サウンド管理データリスト取得
-	std::shared_ptr<DataList_Sound> pDataList_Sound = std::dynamic_pointer_cast<DataList_Sound>(gpDataListServer->GetDataList("DataList_Sound"));
-	// BGM再生
-	std::string BgmFilePath = "fantasyX";
-	pDataList_Sound->PlayBgmSound(BgmFilePath);
 }
 
 // デストラクタ
@@ -60,29 +65,133 @@ Scene_Title::~Scene_Title()
 // 更新
 void Scene_Title::Update()
 {
-	/* "はじめから"ボタンが押された場合の処理 */
-	if (this->UI_Button[0]->GetMouseOverFlg() && (gstKeyboardInputData.igInput[INPUT_TRG] & MOUSE_INPUT_LEFT))
+	/* フェーズに応じた処理を行う */
+	switch (this->iPhase)
 	{
-		gpSceneServer->SetDeleteCurrentSceneFlg(true);
-		LOAD_FUNCTION::AddLoadScene();
-		gpSceneServer->AddSceneReservation(std::make_shared<Scene_GameManager>());
-		return;
+		// ブラックアウト
+		case PHASE_BLACKOUT:
+			this->Counter_Phase--;
+			if (this->Counter_Phase <= 0)
+			{
+				this->iPhase = PHASE_LOGO_WHITE;
+				this->Counter_Phase = 200;
+			}
+			break;
+
+		// タイトルロゴ(白)表示
+		case PHASE_LOGO_WHITE:
+			if (this->LogoAlpha_White < 255)
+			{
+				this->LogoAlpha_White++;
+
+				this->Counter_Phase--;
+				if (this->Counter_Phase <= 0)
+				{
+					this->LogoAlpha = 255;
+					this->iPhase = PHASE_COMPASS_FALL;
+					this->Counter_Phase = 200;
+				}
+			}
+			break;
+
+		// コンパス落下
+		case PHASE_COMPASS_FALL:
+			if (this->CompassPosY < 400)
+			{
+				this->CompassPosY += 10;
+			}
+			if (this->BuildingPosY > 100)
+			{
+				this->BuildingPosY -= 10;
+			}
+			this->Counter_Phase--;
+			if (this->Counter_Phase <= 0)
+			{
+				this->CompassPosY	= 400;
+				this->BuildingPosY	= 100;
+				this->iPhase		= PHASE_LOGO_COLOR;
+				this->Counter_Phase	= 200;
+			}
+			break;
+
+		// タイトルロゴ(カラー)表示
+		case PHASE_LOGO_COLOR:
+			if (this->LogoAlpha_White > 0)
+			{
+				this->LogoAlpha_White--;
+			}
+			if (this->SkyAlpha < 255)
+			{
+				this->SkyAlpha += 2;
+			}
+			if (this->MagicalCircleScale < 1.75f)
+			{
+				this->MagicalCircleScale += 0.015f;
+			}
+			this->Counter_Phase--;
+			if (this->Counter_Phase <= 0)
+			{
+				// 完全に描写されたら次のフェーズへ
+				this->LogoAlpha_White		= 0;
+				this->iPhase				= PHASE_ADD_BUTTON;
+				this->SkyAlpha				= 255;
+				this->MagicalCircleScale	= 1.75f;
+			}
+			break;
+
+		// ボタン表示
+		case PHASE_ADD_BUTTON:
+			if (this->UI_Button[0] == nullptr)
+			{
+				/* UI(ボタン)の作成 */
+				AddButton();
+
+				/* BGM再生 */
+				// サウンド管理データリスト取得
+				std::shared_ptr<DataList_Sound> pDataList_Sound = std::dynamic_pointer_cast<DataList_Sound>(gpDataListServer->GetDataList("DataList_Sound"));
+				// 現在読み込まれているBGM音声データ再生
+				pDataList_Sound->PlayBgmSound_Now();
+			}
+			else
+			{
+				/* "はじめから"ボタンが押された場合の処理 */
+				if (this->UI_Button[0]->GetMouseOverFlg() && (gstKeyboardInputData.igInput[INPUT_TRG] & MOUSE_INPUT_LEFT))
+				{
+					gpSceneServer->SetDeleteCurrentSceneFlg(true);
+					LOAD_FUNCTION::AddLoadScene();
+					gpSceneServer->AddSceneReservation(std::make_shared<Scene_GameManager>());
+					return;
+				}
+
+				/* "ビルド設定"ボタンが押された場合の処理 */
+				if (this->UI_Button[1]->GetMouseOverFlg() && (gstKeyboardInputData.igInput[INPUT_TRG] & MOUSE_INPUT_LEFT))
+				{
+					gpSceneServer->SetDeleteCurrentSceneFlg(true);
+					LOAD_FUNCTION::AddLoadScene();
+					gpSceneServer->AddSceneReservation(std::make_shared<Scene_Build>());
+					return;
+				}
+
+				/* "終了"ボタンが押された場合の処理 */
+				if (this->UI_Button[2]->GetMouseOverFlg() && (gstKeyboardInputData.igInput[INPUT_TRG] & MOUSE_INPUT_LEFT))
+				{
+					gbEndFlg = true;
+					return;
+				}
+			}
+			break;
 	}
 
-	/* "ビルド設定"ボタンが押された場合の処理 */
-	if (this->UI_Button[1]->GetMouseOverFlg() && (gstKeyboardInputData.igInput[INPUT_TRG] & MOUSE_INPUT_LEFT))
+	/* クリックが押されたらボタン表示フェーズまでスキップ */
+	if ((this->iPhase != PHASE_ADD_BUTTON) && (gstKeyboardInputData.igInput[INPUT_TRG] & MOUSE_INPUT_LEFT))
 	{
-		gpSceneServer->SetDeleteCurrentSceneFlg(true);
-		LOAD_FUNCTION::AddLoadScene();
-		gpSceneServer->AddSceneReservation(std::make_shared<Scene_Build>());
-		return;
-	}
-
-	/* "終了"ボタンが押された場合の処理 */
-	if (this->UI_Button[2]->GetMouseOverFlg() && (gstKeyboardInputData.igInput[INPUT_TRG] & MOUSE_INPUT_LEFT))
-	{
-		gbEndFlg = true;
-		return;
+		this->iPhase				= PHASE_ADD_BUTTON;
+		this->LogoAlpha_White		= 0;		// タイトルロゴ(白)のアルファ値
+		this->LogoAlpha				= 255;		// タイトルロゴのアルファ値
+		this->CompassPosY			= 400;		// コンパスの描写座標
+		this->MagicalCircleScale	= 1.75f;	// 魔法陣の拡大率
+		this->BuildingPosY			= 100;		// 建物の描写座標Y
+		this->SkyAlpha				= 255;		// 空のアルファ値
 	}
 
 	/* 魔法陣の回転角度更新 */
@@ -92,36 +201,53 @@ void Scene_Title::Update()
 // 描画
 void Scene_Title::Draw()
 {
-	/* 背景描写 */
-	DrawExtendGraph(0, 0, SCREEN_SIZE_WIDE, SCREEN_SIZE_HEIGHT, *(this->Image_BackGround), TRUE);
+	/* 空の描写 */
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, this->SkyAlpha);
+	DrawExtendGraph(0, 0, SCREEN_SIZE_WIDE, SCREEN_SIZE_HEIGHT, *(this->Image_BackGround[0]), TRUE);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
-	/* ロゴの描写 */
-	// コンパス
-	int LogoSizeX = 126 * 5, LogoSizeY = 126 * 5;
+	/* 建造物の描写 */
+	DrawExtendGraph(0, 0 + this->BuildingPosY, SCREEN_SIZE_WIDE, SCREEN_SIZE_HEIGHT + this->BuildingPosY, *(this->Image_BackGround[1]), TRUE);
+
+	/* 魔法陣の描写 */
 	int LogoCenterPosX = SCREEN_SIZE_WIDE / 2 - 375;
-	int LogoCenterPosY = 400;
+	int LogoCenterPosY = this->CompassPosY;
+	DrawRotaGraph(
+		LogoCenterPosX,
+		LogoCenterPosY,
+		this->MagicalCircleScale,
+		this->RotationAngle_MagicalCircle,
+		*(this->Image_TitleLogo[2]),
+		TRUE);
+
+	/* コンパスの描写 */
+	int LogoSizeX = 126 * 5, LogoSizeY = 126 * 5;
 	DrawExtendGraph(
 		LogoCenterPosX - (LogoSizeX / 2), LogoCenterPosY - (LogoSizeY / 2),
 		LogoCenterPosX + (LogoSizeX / 2), LogoCenterPosY + (LogoSizeY / 2),
 		*(this->Image_TitleLogo[1]),
 		TRUE);
-	// 魔法陣
-	DrawRotaGraph(
-		LogoCenterPosX,
-		LogoCenterPosY,
-		1.75,
-		this->RotationAngle_MagicalCircle,
-		*(this->Image_TitleLogo[2]),
-		TRUE);
-	// 文字列
+
+	/* タイトルの文字列の描写 */
 	LogoSizeX = 256 * 5, LogoSizeY = 64 * 5;
 	LogoCenterPosX = SCREEN_SIZE_WIDE / 2;
 	LogoCenterPosY = 400;
+	// カラー
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, this->LogoAlpha);
 	DrawExtendGraph(
 		LogoCenterPosX - (LogoSizeX / 2), LogoCenterPosY - (LogoSizeY / 2),
 		LogoCenterPosX + (LogoSizeX / 2), LogoCenterPosY + (LogoSizeY / 2),
 		*(this->Image_TitleLogo[0]),
 		TRUE);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	// 白
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, this->LogoAlpha_White);
+	DrawExtendGraph(
+		LogoCenterPosX - (LogoSizeX / 2), LogoCenterPosY - (LogoSizeY / 2),
+		LogoCenterPosX + (LogoSizeX / 2), LogoCenterPosY + (LogoSizeY / 2),
+		*(this->Image_TitleLogo[3]),
+		TRUE);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
 // 画像リソースの先行ロード
@@ -144,10 +270,16 @@ void Scene_Title::AdvanceImageLoad()
 	ImageFilePath = "Logo/Title_MagicCircle";
 	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
 	this->Image_TitleLogo[2] = pDataList_Image->iGetImageHandle(ImageFilePath);
-	// タイトル背景
-	ImageFilePath = "BackGround/Title_BackGround";
+	ImageFilePath = "Logo/Title_White";
 	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
-	this->Image_BackGround = pDataList_Image->iGetImageHandle(ImageFilePath);
+	this->Image_TitleLogo[3] = pDataList_Image->iGetImageHandle(ImageFilePath);
+	// タイトル背景
+	ImageFilePath = "BackGround/Title_BackSky";
+	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
+	Image_BackGround[0] = pDataList_Image->iGetImageHandle(ImageFilePath);;
+	ImageFilePath = "BackGround/Title_BackBuilding";
+	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
+	Image_BackGround[1] = pDataList_Image->iGetImageHandle(ImageFilePath);;
 	// UI(ボタン)
 	ImageFilePath = "UI/Button/Button_Frame_Corner";
 	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);

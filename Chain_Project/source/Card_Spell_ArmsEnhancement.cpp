@@ -39,6 +39,7 @@ void Card_Spell_ArmsEnhancement::Card_Effect_Extra_Process()
 		{
 			DeckCard->Add_Strength_Buff(this->iNowChainCount);
 			DeckCard->Add_Diffence_Buff(this->iNowChainCount);
+			DeckCard->UpdateImage();
 		}
 	}
 	// 手札の武具カードにバフを与える
@@ -49,6 +50,7 @@ void Card_Spell_ArmsEnhancement::Card_Effect_Extra_Process()
 		{
 			HandCard->Add_Strength_Buff(this->iNowChainCount);
 			HandCard->Add_Diffence_Buff(this->iNowChainCount);
+			HandCard->UpdateImage();
 		}
 	}
 }

@@ -186,3 +186,50 @@ void DataList_Sound::StopBgmSound()
 		this->NowPlayBgmName = "";
 	}
 }
+
+// BGM音声データ読み込み
+void DataList_Sound::LoadBgmSound(std::string& cFilePath)
+{
+	// 引数
+	// cFilePath	<- 再生する音声データのファイル名
+
+	/* 現在再生しているBGMであるなら処理をスキップする */
+	if (this->NowPlayBgmName == cFilePath)
+	{
+		// 同じBGMである場合、処理を抜ける
+		return;
+	}
+	else
+	{
+		// 異なるBGMである場合、現在のBGM名を更新する
+		this->NowPlayBgmName = cFilePath;
+	}
+
+	/* 現在BGMが再生されているか確認 */
+	if (this->PlayBgm != -1)
+	{
+		if (CheckSoundMem(this->PlayBgm) == TRUE)
+		{
+			// 再生されている場合
+			/* BGMを停止＆メモリ上から削除 */
+			StopSoundMem(this->PlayBgm);
+			DeleteSoundMem(this->PlayBgm);
+		}
+	}
+
+	/* BGMを読み込む */
+	std::string FileName = "resource/SoundData/BGM/" + cFilePath + ".ogg";
+	this->PlayBgm = LoadSoundMem(FileName.c_str());
+}
+
+// 現在読み込まれているBGM音声データ再生
+void DataList_Sound::PlayBgmSound_Now()
+{
+	/* BGMを読み込む */
+	std::string FileName = "resource/SoundData/BGM/" + this->NowPlayBgmName + ".ogg";
+	this->PlayBgm = LoadSoundMem(FileName.c_str());
+
+	/* BGMを再生 */
+	ChangeNextPlayVolumeSoundMem(75, this->PlayBgm);
+	PlaySoundMem(this->PlayBgm, DX_PLAYTYPE_LOOP);
+}

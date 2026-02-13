@@ -53,7 +53,7 @@ void Card_Item_PoisonPotion::Card_Effect_Extra_Process()
 				// 所持していないなら
 				/* "状態異常：毒"を付与する */
 				std::shared_ptr<Character_Debuff_Poison> New_Poison_Debuff = std::make_shared<Character_Debuff_Poison>();
-				New_Poison_Debuff->Buff_Debuff_Time = GetNowChainCount() + 1;	// 残りターン数 = チェイン数 + 1
+				New_Poison_Debuff->Buff_Debuff_Time = GetNowChainCount() + 5;	// 残りターン数 = チェイン数 + 5
 				EnemyCharacter->Add_Buff_Debuff(New_Poison_Debuff);
 			}
 		}
