@@ -16,4 +16,8 @@ class Character_Player : public Character_Base
 		/* 定数 */
 		static const int PLAYER_WIDE	= 150;	// プレイヤーの幅
 		static const int PLAYER_HEIGHT	= 150;	// プレイヤーの高さ
+
+	private:
+		/* 関数 */
+		void PlayerSetup();		// プレイヤーのセットアップ
 };

@@ -20,6 +20,9 @@ DataList_Sound::~DataList_Sound()
 		/* 音声データの削除 */
 		DeleteSoundMem(Sound.second);
 	}
+
+	/* BGMの停止 */
+	StopSoundMem(this->PlayBgm);
 }
 
 // 音声データ読み込み

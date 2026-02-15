@@ -54,12 +54,6 @@ Scene_Title::~Scene_Title()
 		this->UI_Button[i]->SetDeleteFlg(true);
 		this->UI_Button[i] = nullptr;
 	}
-
-	/* BGM停止 */
-	// サウンド管理データリスト取得
-	std::shared_ptr<DataList_Sound> pDataList_Sound = std::dynamic_pointer_cast<DataList_Sound>(gpDataListServer->GetDataList("DataList_Sound"));
-	// BGM停止
-	pDataList_Sound->StopBgmSound();
 }
 
 // 更新
@@ -157,15 +151,22 @@ void Scene_Title::Update()
 				/* "はじめから"ボタンが押された場合の処理 */
 				if (this->UI_Button[0]->GetMouseOverFlg() && (gstKeyboardInputData.igInput[INPUT_TRG] & MOUSE_INPUT_LEFT))
 				{
+					/* ゲーム画面へ遷移 */
 					gpSceneServer->SetDeleteCurrentSceneFlg(true);
 					LOAD_FUNCTION::AddLoadScene();
 					gpSceneServer->AddSceneReservation(std::make_shared<Scene_GameManager>());
+
+					/* BGMを停止 */
+					// サウンド管理データリスト取得
+					std::shared_ptr<DataList_Sound> pDataList_Sound = std::dynamic_pointer_cast<DataList_Sound>(gpDataListServer->GetDataList("DataList_Sound"));
+					pDataList_Sound->StopBgmSound();
 					return;
 				}
 
 				/* "ビルド設定"ボタンが押された場合の処理 */
 				if (this->UI_Button[1]->GetMouseOverFlg() && (gstKeyboardInputData.igInput[INPUT_TRG] & MOUSE_INPUT_LEFT))
 				{
+					/* ビルド画面へ遷移 */
 					gpSceneServer->SetDeleteCurrentSceneFlg(true);
 					LOAD_FUNCTION::AddLoadScene();
 					gpSceneServer->AddSceneReservation(std::make_shared<Scene_Build>());

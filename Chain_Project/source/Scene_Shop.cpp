@@ -144,7 +144,6 @@ void Scene_Shop::Draw_ShopItems()
 			// 売り切れである場合
 			/* 売り切れテキスト描写 */
 			std::string PriceText = "うりきれ";
-//			int TextSize = GetDrawStringWidth(PriceText.c_str(), static_cast<int>(strlenDx(PriceText.c_str())), giFont_DonguriDuel_32);
 			int TextSize = GetFontSizeToHandle(giFont_DonguriDuel_32) * 4;
 			int StartPosX = ShopItem->GetCardCenterPosition().iX - (TextSize / 2);
 			DrawStringToHandle(

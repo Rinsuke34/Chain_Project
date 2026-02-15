@@ -91,6 +91,7 @@ class Card_Base : public std::enable_shared_from_this<Card_Base>
 		static const int TYPE_SPELL		= 1;	// 魔法
 		static const int TYPE_ITEM		= 2;	// アイテム
 		static const int TYPE_NEXT_AREA = 3;	// 移動先エリア
+		static const int TYPE_CLASS		= 4;	// クラス
 		// スートの種類
 		inline static const	std::string	SUITE_SWORD		= "Sword";		// 剣
 		inline static const	std::string	SUITE_SHIELD	= "Shield";		// 盾
@@ -132,6 +133,8 @@ class Card_Base : public std::enable_shared_from_this<Card_Base>
 		static const int CARDSTATE_GETLIST_FRONT_DELETE	= 8;	// 取得一覧:表面(削除選択)
 		static const int CARDSTATE_SHOP_DISPLAY			= 9;	// ショップ:陳列中
 		static const int CARDSTATE_SHOP_SELLED			= 10;	// ショップ:購入済み
+		static const int CARDSTATE_CLASS_SELECTED		= 11;	// クラス:選択中
+		static const int CARDSTATE_CLASS_UNSELECTED		= 12;	// クラス:未選択
 
 	protected:
 		/* 変数 */

@@ -12,22 +12,22 @@ class Scene_UI_Button;
 // シーン"タイトル画面"
 class Scene_Title : public Scene_Base
 {
-public:
-	Scene_Title();			// コンストラクタ
-	virtual ~Scene_Title();	// デストラクタ
+	public:
+		Scene_Title();			// コンストラクタ
+		virtual ~Scene_Title();	// デストラクタ
 
-	/* 関数 */
-	virtual void	Update()			override;	// 更新
-	virtual void	Draw()				override;	// 描画
+		/* 関数 */
+		virtual void	Update()			override;	// 更新
+		virtual void	Draw()				override;	// 描画
 
-	/* 定数 */
-	// フェーズ
-	static const int PHASE_BLACKOUT		= 0;	// ブラックアウト
-	static const int PHASE_LOGO_WHITE	= 1;	// タイトルロゴ(白)表示
-	static const int PHASE_COMPASS_FALL = 2;	// コンパス落下
-	static const int PHASE_LOGO_COLOR	= 3;	// タイトルロゴ(カラー)表示
-	static const int PHASE_ADD_BUTTON	= 4;	// ボタン表示
-	static const int PHASE_MAX			= 5;	// フェーズの最大数
+		/* 定数 */
+		// フェーズ
+		static const int PHASE_BLACKOUT		= 0;	// ブラックアウト
+		static const int PHASE_LOGO_WHITE	= 1;	// タイトルロゴ(白)表示
+		static const int PHASE_COMPASS_FALL = 2;	// コンパス落下
+		static const int PHASE_LOGO_COLOR	= 3;	// タイトルロゴ(カラー)表示
+		static const int PHASE_ADD_BUTTON	= 4;	// ボタン表示
+		static const int PHASE_MAX			= 5;	// フェーズの最大数
 
 	private:
 		/* 関数 */

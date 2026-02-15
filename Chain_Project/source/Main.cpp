@@ -12,6 +12,7 @@
 #include "DataList_Image.h"
 #include "DataList_Font.h"
 #include "DataList_Sound.h"
+#include "DataList_SaveData.h"
 
 // メインプログラム
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -48,8 +49,9 @@ namespace PROJECT_INIT
 	void	Init()
 	{
 		/* データリストサーバーへの登録 */
-		gpDataListServer->AddDataList(std::make_shared<DataList_Image>());	// 画像データ管理
-		gpDataListServer->AddDataList(std::make_shared<DataList_Font>());	// フォントデータ管理
-		gpDataListServer->AddDataList(std::make_shared<DataList_Sound>());	// 音声データ管理
+		gpDataListServer->AddDataList(std::make_shared<DataList_Image>());		// 画像データ管理
+		gpDataListServer->AddDataList(std::make_shared<DataList_Font>());		// フォントデータ管理
+		gpDataListServer->AddDataList(std::make_shared<DataList_Sound>());		// 音声データ管理
+		gpDataListServer->AddDataList(std::make_shared<DataList_SaveData>());	// セーブデータ管理
 	}
 }

@@ -192,6 +192,8 @@ void Card_Base::Update()
 		case CARDSTATE_GETLIST_FRONT_DELETE:	// 取得一覧:表面(削除選択)
 		case CARDSTATE_SHOP_DISPLAY:			// ショップ:陳列中
 		case CARDSTATE_SHOP_SELLED:				// ショップ:購入済み
+		case CARDSTATE_CLASS_SELECTED:			// クラス:選択中
+		case CARDSTATE_CLASS_UNSELECTED:		// クラス:未選択
 			/* 特殊な処理は無し */
 			break;
 
@@ -235,6 +237,7 @@ void Card_Base::Draw()
 		case CARDSTATE_SETTING:			// 設定中
 		case CARDSTATE_GETLIST_FRONT:	// 取得一覧:表面
 		case CARDSTATE_SHOP_DISPLAY:	// ショップ:陳列中
+		case CARDSTATE_CLASS_SELECTED:	// クラス:選択中
 			/* 特殊な処理は無し */
 			break;
 
@@ -242,6 +245,7 @@ void Card_Base::Draw()
 		case CARDSTATE_LOST:					// ロスト
 		case CARDSTATE_GETLIST_FRONT_DELETE:	// 取得一覧:表面(削除選択)
 		case CARDSTATE_SHOP_SELLED:				// ショップ:購入済み
+		case CARDSTATE_CLASS_UNSELECTED:		// クラス:未選択
 			/* 暗く描写 */
 			bDarkToneFlg = true;
 			break;
