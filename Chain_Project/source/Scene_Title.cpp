@@ -342,6 +342,10 @@ void Scene_Title::AdvanceFontLoad()
 	std::string FontFilePath = "DonguriDuel_32px";
 	pDataList_Font->LoadFontHandle_ASync(FontFilePath, 0);
 	giFont_DonguriDuel_32 = pDataList_Font->iGetFontHnadle(FontFilePath);
+	// ‚Ç‚ñ‚®‚èƒfƒ…ƒGƒ‹(64px)
+	FontFilePath = "DonguriDuel_64px";
+	pDataList_Font->LoadFontHandle_ASync(FontFilePath, 0);
+	giFont_DonguriDuel_64 = pDataList_Font->iGetFontHnadle(FontFilePath);
 	// JF-Dot-MPlus10(16px)
 	FontFilePath = "JF-Dot-MPlus10_16px";
 	pDataList_Font->LoadFontHandle_ASync(FontFilePath, 0);

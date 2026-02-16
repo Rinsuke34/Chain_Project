@@ -110,21 +110,21 @@ void Scene_Build::AddButton()
 	// HP
 	this->UI_Button[0] = std::make_shared<Scene_UI_Button>("Upgrade_Hp", 1);
 	this->UI_Button[0]->SetButtonText("きょうか");
-	this->UI_Button[0]->SetCenterPos({ 200, SCREEN_SIZE_HEIGHT / 2 });
+	this->UI_Button[0]->SetCenterPos({ 200, (SCREEN_SIZE_HEIGHT / 2) - 20 });
 	this->UI_Button[0]->SetFontHandle(giFont_DonguriDuel_32);
 	gpSceneServer->AddSceneReservation(this->UI_Button[0]);
 
 	// アビリティ
 	this->UI_Button[1] = std::make_shared<Scene_UI_Button>("Upgrade_Ability", 1);
 	this->UI_Button[1]->SetButtonText("きょうか");
-	this->UI_Button[1]->SetCenterPos({ 430, SCREEN_SIZE_HEIGHT / 2 });
+	this->UI_Button[1]->SetCenterPos({ 430, (SCREEN_SIZE_HEIGHT / 2) - 20 });
 	this->UI_Button[1]->SetFontHandle(giFont_DonguriDuel_32);
 	gpSceneServer->AddSceneReservation(this->UI_Button[1]);
 
 	// デッキ
 	this->UI_Button[2] = std::make_shared<Scene_UI_Button>("Upgrade_Deck", 1);
 	this->UI_Button[2]->SetButtonText("きょうか");
-	this->UI_Button[2]->SetCenterPos({ 200, 900 + 20 });
+	this->UI_Button[2]->SetCenterPos({ 200, 900 - 10 });
 	this->UI_Button[2]->SetFontHandle(giFont_DonguriDuel_32);
 	gpSceneServer->AddSceneReservation(this->UI_Button[2]);
 }
@@ -246,12 +246,66 @@ void Scene_Build::Draw_Hp()
 	);
 
 	/* 文字列の描写 */
+	CenterPosY = (SCREEN_SIZE_HEIGHT / 2) - 120;
 	DrawStringToHandle(
 		CenterPosX - GetDrawStringWidthToHandle("たいりょく", static_cast<int>(strlenDx("たいりょく")), giFont_DonguriDuel_32) / 2,
-		CenterPosY - 100,
+		CenterPosY,
 		"たいりょく",
 		GetColor(255, 255, 255),
 		giFont_DonguriDuel_32
+	);
+	std::string HpLevelText	= "レベル　";
+	int Color				= GetColor(255, 255, 255);
+	if (this->pDataList_SaveData->GetLevel_Hp(this->pDataList_SaveData->GetPlayerClassNo()) >= 5)
+	{
+		HpLevelText += "MAX";
+		Color = GetColor(255, 255, 0);
+	}
+	else
+	{
+		HpLevelText += std::to_string(this->pDataList_SaveData->GetLevel_Hp(this->pDataList_SaveData->GetPlayerClassNo()));
+	}
+	DrawStringToHandle(
+		CenterPosX - GetDrawStringWidthToHandle(HpLevelText.c_str(), static_cast<int>(strlenDx(HpLevelText.c_str())), giFont_DonguriDuel_32) / 2,
+		CenterPosY + 32,
+		HpLevelText.c_str(),
+		Color,
+		giFont_DonguriDuel_32
+	);
+
+	/* HP量の描写 */
+	int ClassNo		= this->pDataList_SaveData->GetPlayerClassNo();		// クラス番号
+	int Level_Hp	= this->pDataList_SaveData->GetLevel_Hp(ClassNo);	// HPレベル
+	int Hp_IncreaseAmount = 0;											// レベルごとのHP上昇量
+	switch (ClassNo)
+	{
+		// 魔法使い
+		case DataList_SaveData::CLASS_WIZARD:
+			Hp_IncreaseAmount = 1;
+			break;
+
+		// 盗賊
+		// 商人
+		case DataList_SaveData::CLASS_ROGUE:
+		case DataList_SaveData::CLASS_MARCHANT:
+			Hp_IncreaseAmount = 2;
+			break;
+
+		// 旅人
+		// 剣士
+		case DataList_SaveData::CLASS_TRAVELER:
+		case DataList_SaveData::CLASS_SWORDSMAN:
+			Hp_IncreaseAmount = 3;
+			break;
+	}
+	int Hp_Max = 20 + (Level_Hp * Hp_IncreaseAmount);
+	std::string HpText = std::to_string(Hp_Max);
+	DrawStringToHandle(
+		CenterPosX - GetDrawStringWidthToHandle(HpText.c_str(), static_cast<int>(strlenDx(HpText.c_str())), giFont_DonguriDuel_64) / 2,
+		CenterPosY + 160,
+		HpText.c_str(),
+		GetColor(255, 255, 255),
+		giFont_DonguriDuel_64
 	);
 }
 
@@ -271,10 +325,72 @@ void Scene_Build::Draw_Ability()
 	);
 
 	/* 文字列の描写 */
+	CenterPosX = 430;
+	CenterPosY = (SCREEN_SIZE_HEIGHT / 2) - 120;
 	DrawStringToHandle(
-		430 - GetDrawStringWidthToHandle("アビリティ", static_cast<int>(strlenDx("アビリティ")), giFont_DonguriDuel_32) / 2,
-		(SCREEN_SIZE_HEIGHT / 2) - 100,
+		CenterPosX - GetDrawStringWidthToHandle("アビリティ", static_cast<int>(strlenDx("アビリティ")), giFont_DonguriDuel_32) / 2,
+		CenterPosY,
 		"アビリティ",
+		GetColor(255, 255, 255),
+		giFont_DonguriDuel_32
+	);
+	std::string AvillityLevelText = "レベル　";
+	int Color = GetColor(255, 255, 255);
+	if (this->pDataList_SaveData->GetLevel_Hp(this->pDataList_SaveData->GetPlayerClassNo()) >= 3)
+	{
+		AvillityLevelText += "MAX";
+		Color = GetColor(255, 255, 0);
+	}
+	else
+	{
+		AvillityLevelText += std::to_string(this->pDataList_SaveData->GetLevel_Hp(this->pDataList_SaveData->GetPlayerClassNo()));
+	}
+	DrawStringToHandle(
+		CenterPosX - GetDrawStringWidthToHandle(AvillityLevelText.c_str(), static_cast<int>(strlenDx(AvillityLevelText.c_str())), giFont_DonguriDuel_32) / 2,
+		CenterPosY + 32,
+		AvillityLevelText.c_str(),
+		Color,
+		giFont_DonguriDuel_32
+	);
+
+	/* アビリティの文字列描写 */
+	std::string AvillityText;
+	int ClassNo			= this->pDataList_SaveData->GetPlayerClassNo();			// クラス番号
+	int AbilityLevel	= this->pDataList_SaveData->GetLevel_Ability(ClassNo);	// アビリティレベル
+	switch (ClassNo)
+	{
+		// 旅人
+		case DataList_SaveData::CLASS_TRAVELER:
+			AvillityText = "スート：たびびと をもつカードのこうかはつどうじチェインすうを+" + std::to_string(AbilityLevel) + "してじっこう\nターンかいしじのドローまいすう+１";
+			break;
+
+		// 剣士
+		case DataList_SaveData::CLASS_SWORDSMAN:
+			AvillityText = "スート：けん をもつカードのこうかはつどうじチェインすうを+" + std::to_string(AbilityLevel) + "してじっこう";
+			break;
+
+		// 魔法使い
+		case DataList_SaveData::CLASS_WIZARD:
+			AvillityText = "カードタイプ：スペル のカードのこうかはつどうじチェインすうを+" + std::to_string(AbilityLevel) + "してじっこう\nバトルかいしじつかいまをしょうかん";
+			break;
+
+		// 盗賊
+		case DataList_SaveData::CLASS_ROGUE:
+			AvillityText = "カードタイプ：たんけん のカードしようじ、ついかで+" + std::to_string(AbilityLevel) + "かいこうげきする\nカードドロップりつＵＰ";
+			break;
+		
+		// 商人
+		case DataList_SaveData::CLASS_MARCHANT:
+			AvillityText = "カードタイプ：どうぐ のカードのこうかはつどうじチェインすうを+" + std::to_string(AbilityLevel) + "してじっこう\nショップがはんがく";
+			break;
+	}
+
+	CenterPosX = 630;
+	CenterPosY = (SCREEN_SIZE_HEIGHT / 2) - 120;
+	DrawStringToHandle(
+		CenterPosX,
+		CenterPosY,
+		AvillityText.c_str(),
 		GetColor(255, 255, 255),
 		giFont_DonguriDuel_32
 	);
@@ -296,11 +412,31 @@ void Scene_Build::Draw_Deck()
 	);
 
 	/* 文字列の描写 */
+	CenterPosX = 200;
+	CenterPosY = 900 - 110;
 	DrawStringToHandle(
-		200 - GetDrawStringWidthToHandle("デッキ", static_cast<int>(strlenDx("デッキ")), giFont_DonguriDuel_32) / 2,
-		900 + 20 - 100,
+		CenterPosX - GetDrawStringWidthToHandle("デッキ", static_cast<int>(strlenDx("デッキ")), giFont_DonguriDuel_32) / 2,
+		CenterPosY,
 		"デッキ",
 		GetColor(255, 255, 255),
+		giFont_DonguriDuel_32
+	);
+	std::string DeckLevelText = "レベル　";
+	int Color = GetColor(255, 255, 255);
+	if (this->pDataList_SaveData->GetLevel_Hp(this->pDataList_SaveData->GetPlayerClassNo()) >= 3)
+	{
+		DeckLevelText += "MAX";
+		Color = GetColor(255, 255, 0);
+	}
+	else
+	{
+		DeckLevelText += std::to_string(this->pDataList_SaveData->GetLevel_Hp(this->pDataList_SaveData->GetPlayerClassNo()));
+	}
+	DrawStringToHandle(
+		CenterPosX - GetDrawStringWidthToHandle(DeckLevelText.c_str(), static_cast<int>(strlenDx(DeckLevelText.c_str())), giFont_DonguriDuel_32) / 2,
+		CenterPosY + 32,
+		DeckLevelText.c_str(),
+		Color,
 		giFont_DonguriDuel_32
 	);
 
