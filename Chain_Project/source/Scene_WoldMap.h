@@ -54,20 +54,20 @@ class Scene_WoldMap : public Scene_Base
 		bool									GameOverCreateFlg;		// ゲームオーバーシーン作成フラグ(作成済みならTrue)
 
 		/* 関数 */
-		void CheckNowNode();			// 現在のノードを確認
-		void NextAreaCard_Create();		// 移動先エリアカードの作成
-		void Node_Update();				// 各ノードの更新処理
-		void Node_Draw();				// 各ノードの描画処理
-		void Node_SetCenterPosition();	// 各ノードの中心座標を設定
-		void Road_Draw();				// 各ノードからつながる道を描写
-		void Update_Image();			// 画像の更新
-		void Update_DrawPos();			// 描写座標の更新
-		void WoldMap_Draw();			// ワールドマップの描写
-		void NextAreaCard_Update();		// 移動先エリアカードの更新
-		void NextAreaCard_Draw();		// 移動先エリアカードの描画
-		void BackGround_Draw();			// 背景描写
-		void Select_Card();				// カード選択
-		void Load_MapData();			// マップデータの読み込み
-		void Node_SetResource();		// ゲームリソース管理に現在のノード情報を設定
-		void CheckStageEnd();			// ステージクリアの確認
+		void CheckNowNode();					// 現在のノードを確認
+		void NextAreaCard_Create();				// 移動先エリアカードの作成
+		void Node_Update();						// 各ノードの更新処理
+		void Node_Draw();						// 各ノードの描画処理
+		void Node_SetCenterPosition();			// 各ノードの中心座標を設定
+		void Road_Draw();						// 各ノードからつながる道を描写
+		void Update_Image();					// 画像の更新
+		void Update_DrawPos();					// 描写座標の更新
+		void WoldMap_Draw();					// ワールドマップの描写
+		void NextAreaCard_Update();				// 移動先エリアカードの更新
+		void NextAreaCard_Draw();				// 移動先エリアカードの描画
+		void BackGround_Draw(bool FrameOnly);	// 背景描写
+		void Select_Card();						// カード選択
+		void Load_MapData();					// マップデータの読み込み
+		void Node_SetResource();				// ゲームリソース管理に現在のノード情報を設定
+		void CheckStageEnd();					// ステージクリアの確認
 };

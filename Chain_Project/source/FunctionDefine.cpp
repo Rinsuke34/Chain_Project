@@ -282,78 +282,90 @@ namespace DRAW_FUNCTION
 		// Image_Corner		<- Šp‚Ì‰æ‘œƒnƒ“ƒhƒ‹
 		// Image_Line		<- ü‚Ì‰æ‘œƒnƒ“ƒhƒ‹
 		// Image_Inside		<- “à‘¤‚Ì‰æ‘œƒnƒ“ƒhƒ‹
+		// ¦‰æ‘œƒnƒ“ƒhƒ‹‚Ì‘ã‚í‚è‚É-1‚ª‘ã“ü‚³‚ê‚½‚çA‚»‚Ì•”•ª‚Ì•`ŽÊ‚ðs‚í‚È‚¢
 
-		// Šp(¶ã)
-		DrawModiGraph(
-			CenterPos.iX - (IconSize.iX / 2) - Frame_Thickness, CenterPos.iY - (IconSize.iY / 2) - Frame_Thickness,
-			CenterPos.iX - (IconSize.iX / 2),					CenterPos.iY - (IconSize.iY / 2) - Frame_Thickness,
-			CenterPos.iX - (IconSize.iX / 2),					CenterPos.iY - (IconSize.iY / 2),
-			CenterPos.iX - (IconSize.iX / 2) - Frame_Thickness, CenterPos.iY - (IconSize.iY / 2),
-			Image_Corner, TRUE
-		);
-		// Šp(‰Eã)
-		DrawModiGraph(
-			CenterPos.iX + (IconSize.iX / 2) + Frame_Thickness, CenterPos.iY - (IconSize.iY / 2) - Frame_Thickness,
-			CenterPos.iX + (IconSize.iX / 2) + Frame_Thickness, CenterPos.iY - (IconSize.iY / 2),
-			CenterPos.iX + (IconSize.iX / 2),					CenterPos.iY - (IconSize.iY / 2),
-			CenterPos.iX + (IconSize.iX / 2),					CenterPos.iY - (IconSize.iY / 2) - Frame_Thickness,
-			Image_Corner, TRUE
-		);
-		// Šp(‰E‰º)
-		DrawModiGraph(
-			CenterPos.iX + (IconSize.iX / 2) + Frame_Thickness, CenterPos.iY + (IconSize.iY / 2) + Frame_Thickness,
-			CenterPos.iX + (IconSize.iX / 2),					CenterPos.iY + (IconSize.iY / 2) + Frame_Thickness,
-			CenterPos.iX + (IconSize.iX / 2),					CenterPos.iY + (IconSize.iY / 2),
-			CenterPos.iX + (IconSize.iX / 2) + Frame_Thickness, CenterPos.iY + (IconSize.iY / 2),
-			Image_Corner, TRUE
-		);
-		// Šp(¶‰º)
-		DrawModiGraph(
-			CenterPos.iX - (IconSize.iX / 2) - Frame_Thickness, CenterPos.iY + (IconSize.iY / 2) + Frame_Thickness,
-			CenterPos.iX - (IconSize.iX / 2) - Frame_Thickness, CenterPos.iY + (IconSize.iY / 2),
-			CenterPos.iX - (IconSize.iX / 2),					CenterPos.iY + (IconSize.iY / 2),
-			CenterPos.iX - (IconSize.iX / 2),					CenterPos.iY + (IconSize.iY / 2) + Frame_Thickness,
-			Image_Corner, TRUE
-		);
-		// ü(ã)
-		DrawModiGraph(
-			CenterPos.iX - (IconSize.iX / 2), CenterPos.iY - (IconSize.iY / 2) - Frame_Thickness,
-			CenterPos.iX + (IconSize.iX / 2), CenterPos.iY - (IconSize.iY / 2) - Frame_Thickness,
-			CenterPos.iX + (IconSize.iX / 2), CenterPos.iY - (IconSize.iY / 2),
-			CenterPos.iX - (IconSize.iX / 2), CenterPos.iY - (IconSize.iY / 2),
-			Image_Line, TRUE
-		);
-		// ü(‰E)
-		DrawModiGraph(
-			CenterPos.iX + (IconSize.iX / 2) + Frame_Thickness,	CenterPos.iY + (IconSize.iY / 2),
-			CenterPos.iX + (IconSize.iX / 2) + Frame_Thickness,	CenterPos.iY - (IconSize.iY / 2),
-			CenterPos.iX + (IconSize.iX / 2),					CenterPos.iY - (IconSize.iY / 2),
-			CenterPos.iX + (IconSize.iX / 2),					CenterPos.iY + (IconSize.iY / 2),
-			Image_Line, TRUE
-		);
-		// ü(‰º)
-		DrawModiGraph(
-			CenterPos.iX + (IconSize.iX / 2), CenterPos.iY + (IconSize.iY / 2) + Frame_Thickness,
-			CenterPos.iX - (IconSize.iX / 2), CenterPos.iY + (IconSize.iY / 2) + Frame_Thickness,
-			CenterPos.iX - (IconSize.iX / 2), CenterPos.iY + (IconSize.iY / 2),
-			CenterPos.iX + (IconSize.iX / 2), CenterPos.iY + (IconSize.iY / 2),
-			Image_Line, TRUE
-		);
-		// ü(¶)
-		DrawModiGraph(
-			CenterPos.iX - (IconSize.iX / 2) - Frame_Thickness,	CenterPos.iY - (IconSize.iY / 2),
-			CenterPos.iX - (IconSize.iX / 2) - Frame_Thickness,	CenterPos.iY + (IconSize.iY / 2),
-			CenterPos.iX - (IconSize.iX / 2),					CenterPos.iY + (IconSize.iY / 2),
-			CenterPos.iX - (IconSize.iX / 2),					CenterPos.iY - (IconSize.iY / 2),
-			Image_Line, TRUE
-		);
-		// “à‘¤
-		DrawModiGraph(
-			CenterPos.iX - (IconSize.iX / 2), CenterPos.iY - (IconSize.iY / 2),
-			CenterPos.iX + (IconSize.iX / 2), CenterPos.iY - (IconSize.iY / 2),
-			CenterPos.iX + (IconSize.iX / 2), CenterPos.iY + (IconSize.iY / 2),
-			CenterPos.iX - (IconSize.iX / 2), CenterPos.iY + (IconSize.iY / 2),
-			Image_Inside, TRUE
-		);
+		if (Image_Line != -1)
+		{
+			// Šp(¶ã)
+			DrawModiGraph(
+				CenterPos.iX - (IconSize.iX / 2) - Frame_Thickness, CenterPos.iY - (IconSize.iY / 2) - Frame_Thickness,
+				CenterPos.iX - (IconSize.iX / 2), CenterPos.iY - (IconSize.iY / 2) - Frame_Thickness,
+				CenterPos.iX - (IconSize.iX / 2), CenterPos.iY - (IconSize.iY / 2),
+				CenterPos.iX - (IconSize.iX / 2) - Frame_Thickness, CenterPos.iY - (IconSize.iY / 2),
+				Image_Corner, TRUE
+			);
+			// Šp(‰Eã)
+			DrawModiGraph(
+				CenterPos.iX + (IconSize.iX / 2) + Frame_Thickness, CenterPos.iY - (IconSize.iY / 2) - Frame_Thickness,
+				CenterPos.iX + (IconSize.iX / 2) + Frame_Thickness, CenterPos.iY - (IconSize.iY / 2),
+				CenterPos.iX + (IconSize.iX / 2), CenterPos.iY - (IconSize.iY / 2),
+				CenterPos.iX + (IconSize.iX / 2), CenterPos.iY - (IconSize.iY / 2) - Frame_Thickness,
+				Image_Corner, TRUE
+			);
+			// Šp(‰E‰º)
+			DrawModiGraph(
+				CenterPos.iX + (IconSize.iX / 2) + Frame_Thickness, CenterPos.iY + (IconSize.iY / 2) + Frame_Thickness,
+				CenterPos.iX + (IconSize.iX / 2), CenterPos.iY + (IconSize.iY / 2) + Frame_Thickness,
+				CenterPos.iX + (IconSize.iX / 2), CenterPos.iY + (IconSize.iY / 2),
+				CenterPos.iX + (IconSize.iX / 2) + Frame_Thickness, CenterPos.iY + (IconSize.iY / 2),
+				Image_Corner, TRUE
+			);
+			// Šp(¶‰º)
+			DrawModiGraph(
+				CenterPos.iX - (IconSize.iX / 2) - Frame_Thickness, CenterPos.iY + (IconSize.iY / 2) + Frame_Thickness,
+				CenterPos.iX - (IconSize.iX / 2) - Frame_Thickness, CenterPos.iY + (IconSize.iY / 2),
+				CenterPos.iX - (IconSize.iX / 2), CenterPos.iY + (IconSize.iY / 2),
+				CenterPos.iX - (IconSize.iX / 2), CenterPos.iY + (IconSize.iY / 2) + Frame_Thickness,
+				Image_Corner, TRUE
+			);
+		}
+		
+		if (Image_Line != -1)
+		{
+			// ü(ã)
+			DrawModiGraph(
+				CenterPos.iX - (IconSize.iX / 2), CenterPos.iY - (IconSize.iY / 2) - Frame_Thickness,
+				CenterPos.iX + (IconSize.iX / 2), CenterPos.iY - (IconSize.iY / 2) - Frame_Thickness,
+				CenterPos.iX + (IconSize.iX / 2), CenterPos.iY - (IconSize.iY / 2),
+				CenterPos.iX - (IconSize.iX / 2), CenterPos.iY - (IconSize.iY / 2),
+				Image_Line, TRUE
+			);
+			// ü(‰E)
+			DrawModiGraph(
+				CenterPos.iX + (IconSize.iX / 2) + Frame_Thickness, CenterPos.iY + (IconSize.iY / 2),
+				CenterPos.iX + (IconSize.iX / 2) + Frame_Thickness, CenterPos.iY - (IconSize.iY / 2),
+				CenterPos.iX + (IconSize.iX / 2), CenterPos.iY - (IconSize.iY / 2),
+				CenterPos.iX + (IconSize.iX / 2), CenterPos.iY + (IconSize.iY / 2),
+				Image_Line, TRUE
+			);
+			// ü(‰º)
+			DrawModiGraph(
+				CenterPos.iX + (IconSize.iX / 2), CenterPos.iY + (IconSize.iY / 2) + Frame_Thickness,
+				CenterPos.iX - (IconSize.iX / 2), CenterPos.iY + (IconSize.iY / 2) + Frame_Thickness,
+				CenterPos.iX - (IconSize.iX / 2), CenterPos.iY + (IconSize.iY / 2),
+				CenterPos.iX + (IconSize.iX / 2), CenterPos.iY + (IconSize.iY / 2),
+				Image_Line, TRUE
+			);
+			// ü(¶)
+			DrawModiGraph(
+				CenterPos.iX - (IconSize.iX / 2) - Frame_Thickness, CenterPos.iY - (IconSize.iY / 2),
+				CenterPos.iX - (IconSize.iX / 2) - Frame_Thickness, CenterPos.iY + (IconSize.iY / 2),
+				CenterPos.iX - (IconSize.iX / 2), CenterPos.iY + (IconSize.iY / 2),
+				CenterPos.iX - (IconSize.iX / 2), CenterPos.iY - (IconSize.iY / 2),
+				Image_Line, TRUE
+			);
+		}
+		
+		if (Image_Inside != -1)
+		{
+			// “à‘¤
+			DrawModiGraph(
+				CenterPos.iX - (IconSize.iX / 2), CenterPos.iY - (IconSize.iY / 2),
+				CenterPos.iX + (IconSize.iX / 2), CenterPos.iY - (IconSize.iY / 2),
+				CenterPos.iX + (IconSize.iX / 2), CenterPos.iY + (IconSize.iY / 2),
+				CenterPos.iX - (IconSize.iX / 2), CenterPos.iY + (IconSize.iY / 2),
+				Image_Inside, TRUE
+			);
+		}
 	}
 }

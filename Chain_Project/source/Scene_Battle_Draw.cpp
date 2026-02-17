@@ -261,6 +261,46 @@ void Scene_Battle::Draw_BattleArea()
 			BattleCard->Draw();
 		}
 	}
+
+	/* カードの強調表示アニメーションを描写 */
+	if (this->ActionCardInAreaNo != -1)
+	{
+		int EmphasisAnimCount = (this->ActionCard_Emphasis_AnimCount / 5);
+
+		// 上
+		DrawExtendGraph(
+			this->ActionCardArea_Anim_CenterPos.iX + 25,
+			this->ActionCardArea_Anim_CenterPos.iY - EmphasisAnimCount - (BATTLE_AREA_HEIGHT / 2) + 20,
+			this->ActionCardArea_Anim_CenterPos.iX - 25,
+			this->ActionCardArea_Anim_CenterPos.iY - EmphasisAnimCount - (BATTLE_AREA_HEIGHT / 2) - 7,
+			*(this->Image_BattleArea_ActionCard_Emphasis), TRUE);
+
+		// 下
+		DrawExtendGraph(
+			this->ActionCardArea_Anim_CenterPos.iX - 25,
+			this->ActionCardArea_Anim_CenterPos.iY + EmphasisAnimCount + (BATTLE_AREA_HEIGHT / 2) - 20,
+			this->ActionCardArea_Anim_CenterPos.iX + 25,
+			this->ActionCardArea_Anim_CenterPos.iY + EmphasisAnimCount + (BATTLE_AREA_HEIGHT / 2) + 7,
+			*(this->Image_BattleArea_ActionCard_Emphasis), TRUE);
+
+		// 右
+		DrawModiGraph(
+			this->ActionCardArea_Anim_CenterPos.iX + (BATTLE_AREA_WIDE / 2) - 20 + EmphasisAnimCount,		this->ActionCardArea_Anim_CenterPos.iY + 25,
+			this->ActionCardArea_Anim_CenterPos.iX + (BATTLE_AREA_WIDE / 2) - 20 + EmphasisAnimCount,		this->ActionCardArea_Anim_CenterPos.iY - 25,
+			this->ActionCardArea_Anim_CenterPos.iX + (BATTLE_AREA_WIDE / 2) + 7 + EmphasisAnimCount,		this->ActionCardArea_Anim_CenterPos.iY - 25,
+			this->ActionCardArea_Anim_CenterPos.iX + (BATTLE_AREA_WIDE / 2) + 7 + EmphasisAnimCount,		this->ActionCardArea_Anim_CenterPos.iY + 25,
+			*(this->Image_BattleArea_ActionCard_Emphasis), TRUE
+		);
+
+		// 左
+		DrawModiGraph(
+			this->ActionCardArea_Anim_CenterPos.iX - (BATTLE_AREA_WIDE / 2) + 20 - EmphasisAnimCount,		this->ActionCardArea_Anim_CenterPos.iY + 25,
+			this->ActionCardArea_Anim_CenterPos.iX - (BATTLE_AREA_WIDE / 2) + 20 - EmphasisAnimCount,		this->ActionCardArea_Anim_CenterPos.iY - 25,
+			this->ActionCardArea_Anim_CenterPos.iX - (BATTLE_AREA_WIDE / 2) - 7 - EmphasisAnimCount,		this->ActionCardArea_Anim_CenterPos.iY - 25,
+			this->ActionCardArea_Anim_CenterPos.iX - (BATTLE_AREA_WIDE / 2) - 7 - EmphasisAnimCount,		this->ActionCardArea_Anim_CenterPos.iY + 25,
+			*(this->Image_BattleArea_ActionCard_Emphasis), TRUE
+		);
+	}
 }
 
 // 手札描写

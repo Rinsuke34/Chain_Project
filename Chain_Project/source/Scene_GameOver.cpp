@@ -65,7 +65,7 @@ void Scene_GameOver::Update()
 				{
 					/* "決定"ボタンの作成 */
 					this->UI_DecisionButton = std::make_shared<Scene_UI_Button>("Battle_DecisionButton", this->iLayerOrder + 1);
-					this->UI_DecisionButton->SetButtonText("タイトルへ戻る");
+					this->UI_DecisionButton->SetButtonText("タイトルへもどる");
 					this->UI_DecisionButton->SetCenterPos({ SCREEN_SIZE_WIDE / 2, (SCREEN_SIZE_HEIGHT / 2) + 100 });
 					this->UI_DecisionButton->SetFontHandle(giFont_DonguriDuel_32);
 					gpSceneServer->AddSceneReservation(this->UI_DecisionButton);
@@ -106,9 +106,20 @@ void Scene_GameOver::Draw()
 	/* 背景(ブラックアウト)の描写 */
 	DrawBox(0, 0, SCREEN_SIZE_WIDE, SCREEN_SIZE_HEIGHT, GetColor(0, 0, 0), TRUE);
 
+	/* ゲームオーバーの文字描写 */
+	std::string GameOverText = "ゲームオーバー";
+	int iSizeX = 350;
+	DrawStringToHandle(
+		(SCREEN_SIZE_WIDE / 2) - (iSizeX / 2),
+		(SCREEN_SIZE_HEIGHT / 2) - 200,
+		GameOverText.c_str(),
+		GetColor(255, 255, 255),
+		giFont_DonguriDuel_64
+	);
+
 	/* 取得した経験値を描写 */
 	std::string GetExpText = "かくとく　" + std::to_string(this->GetExp) + "EXP";
-	int iSizeX = GetDrawStringWidth(GetExpText.c_str(), GetExpText.size(), giFont_DonguriDuel_32);
+	iSizeX = 210;
 	DrawStringToHandle(
 		(SCREEN_SIZE_WIDE / 2) - (iSizeX / 2),
 		(SCREEN_SIZE_HEIGHT / 2),

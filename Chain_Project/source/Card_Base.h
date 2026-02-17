@@ -58,17 +58,19 @@ class Card_Base : public std::enable_shared_from_this<Card_Base>
 
 		/* ゲッター */
 		// カード情報
-		int							GetRarity()			{ return iRarity; }			// レアリティの取得
-		int							GetCardType()		{ return iCardType; }		// カードの種類の取得
-		std::string					GetName()			{ return Name; }			// カード名の取得
-		std::vector<std::string>	GetSuiteList()		{ return Suite_List; }		// スートリストの取得
-		int							GetStrength()		{ return Strength; }		// 攻撃力の取得
-		int							GetDiffence()		{ return Diffence; }		// 防御力の取得
-		int							GetStrength_Buff()	{ return Strength; }		// 攻撃力(バフ)の取得
-		int							GetDiffence_Buff()	{ return Diffence; }		// 防御力(バフ)の取得
-		int							GetAttackRange()	{ return AttackRange; }		// 攻撃範囲の取得
-		float						GetRotationAngle()	{ return RotateAngle; }		// 回転角度の取得
-		int							GetCardState()		{ return CardState; }		// カード状態の取得
+		int							GetRarity()						{ return iRarity; }						// レアリティの取得
+		int							GetCardType()					{ return iCardType; }					// カードの種類の取得
+		std::string					GetName()						{ return Name; }						// カード名の取得
+		std::vector<std::string>	GetSuiteList()					{ return Suite_List; }					// スートリストの取得
+		int							GetStrength()					{ return Strength; }					// 攻撃力の取得
+		int							GetDiffence()					{ return Diffence; }					// 防御力の取得
+		int							GetStrength_Buff()				{ return Strength; }					// 攻撃力(バフ)の取得
+		int							GetDiffence_Buff()				{ return Diffence; }					// 防御力(バフ)の取得
+		int							GetAttackRange()				{ return AttackRange; }					// 攻撃範囲の取得
+		float						GetRotationAngle()				{ return RotateAngle; }					// 回転角度の取得
+		int							GetCardState()					{ return CardState; }					// カード状態の取得
+		bool						GetEffect_Action_Before_Flg()	{ return Effect_Action_Before_Flg; };	// 効果発動:行動直前を実行するかのフラグ
+		bool						GetEffect_Action_After_Flg()	{ return Effect_Action_After_Flg; };	// 効果発動:行動直後を実行するかのフラグ
 		// その他
 		Struct_2D::POSITION			GetNowPos()				{ return Now_Position; }		// 現在座標の取得
 		Struct_2D::POSITION			GetSettingPos()			{ return Setting_Position; }	// 設定座標の取得
@@ -141,17 +143,19 @@ class Card_Base : public std::enable_shared_from_this<Card_Base>
 		// データリスト
 		std::shared_ptr<DataList_Battle> pDataList_Battle;	// バトル用データリスト(※取得できない場合もあるので使用時はnullptrかチェックすること)
 		// カード情報
-		int								iRarity;			// レアリティ
-		int								iCardType;			// カードの種類
-		std::string						Name;				// カード名
-		std::vector<std::string>		Suite_List;			// スートリスト
-		int 							Strength;			// 攻撃力
-		int								Diffence;			// 防御力
-		int								Strength_Buff;		// 攻撃力バフ(永続)
-		int								Diffence_Buff;		// 防御力バフ(永続)
-		int								AttackRange;		// 攻撃範囲
-		std::string						ImageName;			// 画像の名前
-		int								CardState;			// カードの状態
+		int								iRarity;					// レアリティ
+		int								iCardType;					// カードの種類
+		std::string						Name;						// カード名
+		std::vector<std::string>		Suite_List;					// スートリスト
+		int 							Strength;					// 攻撃力
+		int								Diffence;					// 防御力
+		int								Strength_Buff;				// 攻撃力バフ(永続)
+		int								Diffence_Buff;				// 防御力バフ(永続)
+		int								AttackRange;				// 攻撃範囲
+		std::string						ImageName;					// 画像の名前
+		int								CardState;					// カードの状態
+		bool							Effect_Action_Before_Flg;	// 効果発動:行動直前を実行するかのフラグ
+		bool							Effect_Action_After_Flg;	// 効果発動:行動直後を実行するかのフラグ
 		// 画像
 		int								Image;				// 画像
 		std::shared_ptr<int>			Image_BackSide;		// 画像(裏面)

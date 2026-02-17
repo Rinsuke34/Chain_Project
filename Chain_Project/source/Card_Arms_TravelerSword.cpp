@@ -23,6 +23,9 @@ Card_Arms_TravelerSword::Card_Arms_TravelerSword() : Card_Arms_Base()
 	this->ImageName = "TravelerSword";		// 画像の名前
 	// 説明文
 	this->ExplanationText = "/cysこうどうまえ/ce/nこうげきりょくをきょうかする/n/cysこうかりょう/ce/nチェインすう";
+	// 行動前後の効果を実行するかのフラグ
+	this->Effect_Action_Before_Flg	= true;
+	this->Effect_Action_After_Flg	= false;
 }
 
 // 効果発動:行動直前

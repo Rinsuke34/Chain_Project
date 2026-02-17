@@ -372,37 +372,85 @@ void Scene_Battle::Update_BattleAction()
 	if (EffectList.size() == 0)
 	{
 		// 完了している場合
-		/* "ターン終了時"の効果発動フェイズへ遷移 */
-		this->iBattlePhase = BATTLE_PHASE_EFFECT_TRUN_END;
+		/* 戦闘行動の削除フェイズへ遷移 */
+		this->iBattlePhase = BATTLE_PHASE_BATTLE_ACTION_DELETE;
 
 		return;
 	}
 
-	/* 与効果の内容を取得＆リスト上からの削除 */
+	/* 与効果の内容を取得 */
 	std::shared_ptr<Action_Effect_Base> pEffect = EffectList.front();
-	this->pDataList_Battle->RemoveEffect(pEffect);
 
 	/* 実行者が生存しているか確認 */
 	std::shared_ptr<Character_Base>	EffectUser = pEffect->EffectUser;
 	if (EffectUser != nullptr)
 	{
 		// 生存している場合
-		/* その行動内容を実行者の行動内容から削除 */
-		EffectUser->Delete_Action_Effect(pEffect);
-
 		/* 効果の内容に応じた処理を実行 */
 		pEffect->ExecuteEffect();
 		pEffect->Sound_Effect_Play();
+
+		/* 効果処理後のディレイ時間を設定 */
+		this->iBattleActionDelay = 40;
+
+		/* カードによる行動であるならそのカードの設定されているエリア番号を取得 */
+		// ついでに現在座標を少し高い位置に変化させる
+		int CardAreaNo = -1;
+		if (pEffect->EffectCard != nullptr)
+		{
+			for (int i = 0; i < DataList_Battle::BATTLE_AREA_MAX; i++)
+			{
+				if (this->pDataList_Battle->GetBattleAreaCardList(i) == pEffect->EffectCard)
+				{
+					CardAreaNo = i;
+					break;
+				}
+			}
+
+			Struct_2D::POSITION CardNowPos = pEffect->EffectCard->GetNowPos();
+			pEffect->EffectCard->SetNowPos({ CardNowPos.iX, CardNowPos.iY - 30 });
+		}
+		this->ActionCardInAreaNo = CardAreaNo;
+
+		/* 再実行フラグが有効ならディレイ後もう一度実行する */
+		if ((pEffect->Restart_State == Action_Effect_Base::RESTART_RESTART) ||
+			(pEffect->Restart_State == Action_Effect_Base::RESTART_RESTART_MAINSKIP))
+		{
+			return;
+		}
+
+		/* その行動内容を実行者の行動内容から削除 */
+		EffectUser->Delete_Action_Effect(pEffect);
+
+		/* 行動内容を使用済み行動内容リストに設定 */
+		this->UsedActionEffectList.push_back(pEffect);
 	}
 
-	/* 使用した効果に紐づいたカードをトラッシュ */
-	Trash_UseCard(pEffect);
+	/* 行動内容を削除する */
+	this->pDataList_Battle->RemoveEffect(pEffect);
 
 	/* キャラクターが死亡しているか確認 */
 	Character_Death_Delete_Check();
+}
 
-	/* 効果処理後のディレイ時間を設定 */
-	this->iBattleActionDelay = 30;
+// 戦闘行動の削除
+void Scene_Battle::Update_BattleAction_Delete()
+{
+	/* 使用した効果に紐づいたカードをトラッシュ */
+	for (auto& Effect : UsedActionEffectList)
+	{
+		/* 使用した効果に紐づいたカードをトラッシュ */
+		Trash_UseCard(Effect);
+	}
+
+	/* カードの設定されたエリア番号を初期化 */
+	this->ActionCardInAreaNo = -1;
+
+	/* 使用済み行動内容リストを初期化 */
+	this->UsedActionEffectList.clear();
+
+	/* "ターン終了時"の効果発動フェイズへ遷移 */
+	this->iBattlePhase = BATTLE_PHASE_EFFECT_TRUN_END;
 }
 
 // "ターン終了時"の効果発動
@@ -1095,5 +1143,50 @@ void Scene_Battle::Update_Explanation()
 			this->UI_ExplanationText->SetDeleteFlg(true);
 			this->UI_ExplanationText = nullptr;
 		}
+	}
+}
+
+// 行動中のカードの強調表示アニメーションの更新
+void Scene_Battle::Update_ActionCardArea()
+{
+	/* 行動中のカードの強調表示アニメーションの中心座標更新 */
+	if (this->ActionCardInAreaNo == -1)
+	{
+		// 行動中のカードがバトルエリアにない場合
+		/* 待機場所に設定 */
+		this->ActionCardArea_Anim_CenterPos = { -1, BATTLE_AREA_POS_Y };
+	}
+	else
+	{
+		// 行動中のカードがバトルエリアにある場合
+		/* 現在のX座標が-1であるか */
+		bool bFirstSetFlg = (this->ActionCardArea_Anim_CenterPos.iX == -1);
+
+		/* 現在行動を行っているバトルエリアの中心座標を取得 */
+		Struct_2D::POSITION TargetCenterPos =
+		{
+			(SCREEN_SIZE_WIDE / 2) + (BATTLE_AREA_INTERVAL * (this->ActionCardInAreaNo - 2)),
+			BATTLE_AREA_POS_Y
+		};
+		
+		/* 強調表示アニメーションの中心座標を更新 */
+		if (bFirstSetFlg)
+		{
+			// 最初の設定である場合、中心座標をターゲット座標に設定する
+			this->ActionCardArea_Anim_CenterPos = TargetCenterPos;
+		}
+		else
+		{
+			// 最初の設定でない場合、中心座標をターゲット座標に徐々に近づける
+			this->ActionCardArea_Anim_CenterPos.iX += (TargetCenterPos.iX - this->ActionCardArea_Anim_CenterPos.iX) / 3;
+			this->ActionCardArea_Anim_CenterPos.iY += (TargetCenterPos.iY - this->ActionCardArea_Anim_CenterPos.iY) / 3;
+		}
+	}
+
+	/* 戦闘行動カード強調表示アニメーションのカウント */
+	this->ActionCard_Emphasis_AnimCount++;
+	if (this->ActionCard_Emphasis_AnimCount >= 15)
+	{
+		this->ActionCard_Emphasis_AnimCount = 0;
 	}
 }

@@ -209,13 +209,16 @@ void Scene_WoldMap::Update_Image()
 	ClearDrawScreen();
 
 	/* ”wŒi•`Ê */
-	BackGround_Draw();
+	BackGround_Draw(false);
 
 	/* Šeƒm[ƒh‚©‚ç‚Â‚È‚ª‚é“¹‚ğ•`Ê */
 	Road_Draw();
 
 	/* Šeƒm[ƒh‚Ì•`‰æˆ— */
 	Node_Draw();
+
+	/* ”wŒi•`Ê */
+	BackGround_Draw(true);
 
 	/* •`Êæ‚ğ— ‰æ–Ê‚É–ß‚· */
 	SetDrawScreen(DX_SCREEN_BACK);
@@ -326,8 +329,11 @@ void Scene_WoldMap::NextAreaCard_Draw()
 }
 
 // ”wŒi•`Ê
-void Scene_WoldMap::BackGround_Draw()
+void Scene_WoldMap::BackGround_Draw(bool FrameOnly)
 {
+	// ˆø”
+	// FrameOnly:ƒtƒŒ[ƒ€‚Ì‚İ•`Ê‚·‚é‚©‚Ç‚¤‚©(ƒtƒŒ[ƒ€‚Ì‚İ•`Ê‚·‚éê‡‚ÍTrueA”wŒi‚à•`Ê‚·‚éê‡‚ÍFalse)
+
 	/* ‰æ‘œŠÇ—ƒf[ƒ^ƒŠƒXƒg‚ğæ“¾ */
 	std::shared_ptr<DataList_Image> pDataList_Image = std::dynamic_pointer_cast<DataList_Image>(gpDataListServer->GetDataList("DataList_Image"));
 
@@ -338,6 +344,11 @@ void Scene_WoldMap::BackGround_Draw()
 	std::shared_ptr<int> Image_Frame_Line	= pDataList_Image->iGetImageHandle(ImageFilePath);
 	ImageFilePath = "UI/Button/Button_Frame_Inside_Over";
 	std::shared_ptr<int> Image_Frame_Inside	= pDataList_Image->iGetImageHandle(ImageFilePath);
+
+	if (FrameOnly)
+	{
+		*Image_Frame_Inside = -1;
+	}
 
 	/* ”wŒiAƒtƒŒ[ƒ€‚Ì•`Ê */
 	DRAW_FUNCTION::DrawFrame_Image(

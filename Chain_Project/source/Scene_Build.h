@@ -33,7 +33,7 @@ class Scene_Build : public Scene_Base
 		std::vector<std::shared_ptr<Card_Base>> ClassCardList;	// クラスカードリスト
 		std::vector<std::shared_ptr<Card_Base>> DeckCardList;	// デッキカードリスト
 		// UIのハンドル
-		std::shared_ptr<Scene_UI_Button> UI_Button[3];	// ボタンUI[0:HP強化, 1:アビリティ強化, 2:デッキ強化]
+		std::shared_ptr<Scene_UI_Button> UI_Button[4];	// ボタンUI[0:HP強化, 1:アビリティ強化, 2:デッキ強化, 3:タイトルへもどる]
 		// 画像
 		std::shared_ptr<int> Image_BackGround;		// 背景画像
 		std::shared_ptr<int> Image_Frame_Corner;	// 角
@@ -45,9 +45,11 @@ class Scene_Build : public Scene_Base
 		void SetCard_Class();		// クラスカードの設定
 		void SetCard_Deck();		// デッキカードの設定
 		void SetCardPosition();		// カードの位置を設定
-		void Updaate_SelectClass();	// クラス選択の更新
+		void Update_SelectClass();	// クラス選択の更新
 		void Draw_Class();			// クラス関連の描写
 		void Draw_Hp();				// HP関連の描写
 		void Draw_Ability();		// アビリティ関連の描写
 		void Draw_Deck();			// デッキ関連の描写
+		void Update_LevelUp();		// レベルアップ処理
+		void Draw_HaveExp();		// 所持経験値の描写
 };

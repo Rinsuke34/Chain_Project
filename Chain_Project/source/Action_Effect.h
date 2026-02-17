@@ -34,23 +34,30 @@ class Action_Effect_Base
 		std::shared_ptr<Card_Base>			EffectCard;			// 効果を使用するカード
 		int									IconType;			// アイコンのタイプ
 		std::string							ExplanationText;	// 説明文
+		int									Restart_State;		// 再実行に関連する状態
 
 		/* 定数 */
+		// アイコン
 		static const int ICON_TYPE_ATTACK	= 0;	// アイコンタイプ:攻撃
 		static const int ICON_TYPE_DEFENCE	= 1;	// アイコンタイプ:防御
 		static const int ICON_TYPE_HEAL		= 2;	// アイコンタイプ:回復
 		static const int ICON_TYPE_EXTRA	= 3;	// アイコンタイプ:特殊効果
+		// 再実行
+		static const int RESTART_FIRSTRUN			= 0;	// 最初の実行
+		static const int RESTART_NONE				= 1;	// リスタート不要
+		static const int RESTART_RESTART			= 2;	// リスタート必要
+		static const int RESTART_RESTART_MAINSKIP	= 3;	// リスタート必要(メインの処理スキップ)
 
 		/* ゲッター */
 		std::shared_ptr<int> GetImage()		{ return Image; }	// 画像取得
 
 	protected:
-
 		/* 変数 */
-		std::shared_ptr<DataList_Battle>	pDataList_Battle;	// 戦闘用データリスト
-		std::shared_ptr<int>				Image;				// 画像
-		std::shared_ptr<DataList_Sound>		pDataList_Sound;	// サウンド用データリスト
-		std::string							Sound_Effect_Name;	// 効果音名称
+		std::shared_ptr<DataList_Battle>	pDataList_Battle;		// 戦闘用データリスト
+		std::shared_ptr<int>				Image;					// 画像
+		std::shared_ptr<DataList_Sound>		pDataList_Sound;		// サウンド用データリスト
+		std::string							Sound_Effect_Name;		// 効果音名称
+		std::shared_ptr<Character_Base>		EffectTargetCharacter;	// 効果の対象キャラクター
 };
 
 // 攻撃

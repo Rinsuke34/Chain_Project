@@ -120,6 +120,16 @@ void Scene_UI_Button::Draw()
 	/* •¶š—ñ‚Ì‚‚³A•‚ğæ“¾ */
 	int iSizeX = GetDrawStringWidthToHandle(this->ButtonText.c_str(), static_cast<int>(strlenDx(this->ButtonText.c_str())), this->iFontHandle);
 	int iSizeY = GetFontSizeToHandle(this->iFontHandle);
+	// ‰üs‚ªŠÜ‚Ü‚ê‚Ä‚¢‚éê‡‚Í‚‚³‚ğ’²®
+	int iLineCount = 1;
+	for (size_t i = 0; i < this->ButtonText.length(); i++)
+	{
+		if (this->ButtonText[i] == '\n')
+		{
+			iLineCount++;
+		}
+	}
+	iSizeY *= iLineCount;
 
 	/* ˜g‚ğ•`Ê */
 	// Šp(¶ã)

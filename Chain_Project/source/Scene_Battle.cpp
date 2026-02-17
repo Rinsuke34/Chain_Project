@@ -25,6 +25,8 @@ Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 50, false, false)
 	this->iBattleActionDelay			= 0;		// バトルアクション間のディレイ時間
 	this->BattleArea_Anim_ImageNo		= 0;		// バトルエリアのアニメーションの画像番号
 	this->BattleArea_Anim_ChangeDelay	= 0;		// バトルエリアのアニメーションの変更までの待機時間
+	this->ActionCardInAreaNo			= -1;		// 行動中のカードが設定されているバトルエリアの番号
+	this->ActionCard_Emphasis_AnimCount	= 0;		// 戦闘行動カード強調表示アニメーションのカウント
 	for (int i = 0; i < 4; i++)
 	{
 		this->Chain_Anim_Count[i]		= 0;		// 鎖のアニメーションのカウント
@@ -84,6 +86,10 @@ Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 50, false, false)
 		this->Image_BattleArea_No_Number[3] = pDataList_Image->iGetImageHandle(ImageFilePath);
 		ImageFilePath = "UI/Battle/BattleArea_No_5";
 		this->Image_BattleArea_No_Number[4] = pDataList_Image->iGetImageHandle(ImageFilePath);
+
+		/* バトルエリアの戦闘行動カード強調表示 */
+		ImageFilePath = "UI/Battle/BattleArea_MoveCard";
+		Image_BattleArea_ActionCard_Emphasis = pDataList_Image->iGetImageHandle(ImageFilePath);
 	}
 
 	/* UI作成 */
@@ -202,6 +208,11 @@ void Scene_Battle::Update()
 			Update_BattleAction();
 			break;
 
+		// 戦闘行動の削除
+		case BATTLE_PHASE_BATTLE_ACTION_DELETE:
+			Update_BattleAction_Delete();
+			break;
+
 		// "ターン終了時"の効果発動
 		case BATTLE_PHASE_EFFECT_TRUN_END:
 			Update_EffectTurnEnd();
@@ -241,6 +252,9 @@ void Scene_Battle::Update()
 
 	/* 説明文の設定 */
 	Update_Explanation();
+
+	/* 行動中のカードの強調表示アニメーションの更新 */
+	Update_ActionCardArea();
 
 	/* 戦闘中であるかにより処理を変更 */
 	if (BattleEndFlg == false)

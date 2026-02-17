@@ -18,15 +18,17 @@
 Action_Effect_Base::Action_Effect_Base()
 {
 	/* 初期化 */
-	this->Target_Camp		= -1;		// 効果対象の陣営
-	this->Target_Position	= -1;		// 効果対象の立ち位置
-	this->EffectUser		= nullptr;	// 効果の使用者
-	this->AllRange			= false;	// 全体に効果を与えるか
-	this->Priority			= 0;		// 優先順位(高いほど先に実行)
-	this->EffectCard		= nullptr;	// 効果を使用するカード
-	this->IconType			= -1;		// アイコンのタイプ
-	this->ExplanationText	= "";		// 説明文
-	this->Sound_Effect_Name	= "";		// 効果音名称
+	this->Target_Camp			= -1;				// 効果対象の陣営
+	this->Target_Position		= -1;				// 効果対象の立ち位置
+	this->EffectUser			= nullptr;			// 効果の使用者
+	this->AllRange				= false;			// 全体に効果を与えるか
+	this->Priority				= 0;				// 優先順位(高いほど先に実行)
+	this->EffectCard			= nullptr;			// 効果を使用するカード
+	this->IconType				= -1;				// アイコンのタイプ
+	this->ExplanationText		= "";				// 説明文
+	this->Sound_Effect_Name		= "";				// 効果音名称
+	this->Restart_State			= RESTART_FIRSTRUN;	// 再実行に関連する状態
+	this->EffectTargetCharacter = nullptr;			// 効果の対象キャラクター
 
 	/* データリスト取得 */
 	// バトル用データリスト
@@ -97,88 +99,177 @@ Action_Effect_Attack::Action_Effect_Attack()
 // 効果実行
 void Action_Effect_Attack::ExecuteEffect()
 {
-	/* 効果の対象キャラクターを取得 */
-	if (this->Target_Camp == Character_Base::CAMP_ENEMY)
+	/* 行動時効果(行動直前)があるなら先に実行する */
+	if (this->Restart_State == RESTART_FIRSTRUN)
 	{
-		// 敵キャラクターが対象である場合
-		/* 全体攻撃であるか確認 */
-		if (this->AllRange)
+		/* 行動時効果(行動直前)が存在するなら実行 */
+		if (this->EffectCard && this->EffectCard->GetEffect_Action_Before_Flg())
 		{
-			// 全体攻撃である場合
-			/* 全ての敵キャラクターにダメージ処理を実行 */
-			for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
+			// 効果の対象キャラクターを取得
+			if (this->Target_Camp == Character_Base::CAMP_ENEMY)
 			{
-				std::shared_ptr<Character_Base> TargetEnemyCharacter = this->pDataList_Battle->GetEnemyCharacter(i);
-				if (TargetEnemyCharacter != nullptr)
+				// 敵キャラクターが対象である場合
+				/* 全体攻撃であるか確認 */
+				if (this->AllRange)
 				{
-					// 対象の敵キャラクターが存在する場合
-					/* 行動時効果(行動直前)を実行 */
-					if (this->EffectCard)
+					// 全体攻撃である場合
+					/* 全ての敵キャラクターに行動時効果(行動直前)を実行 */
+					for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
 					{
-						this->EffectCard->Effect_Action_Before(TargetEnemyCharacter);
+						std::shared_ptr<Character_Base> TargetEnemyCharacter = this->pDataList_Battle->GetEnemyCharacter(i);
+						if (TargetEnemyCharacter != nullptr)
+						{
+							// 対象の敵キャラクターが存在する場合
+							/* 行動時効果(行動直前)を実行 */
+							if (this->EffectCard)
+							{
+								this->EffectCard->Effect_Action_Before(TargetEnemyCharacter);
 
-						/* ダメージ量をバフ後の値に設定 */
-						this->DamageAmount = this->EffectCard->GetStrength() + this->EffectCard->GetStrength_Buff();
+								/* ダメージ量をバフ後の値に設定 */
+								this->DamageAmount = this->EffectCard->GetStrength() + this->EffectCard->GetStrength_Buff();
+							}
+						}
+					}
+				}
+				else
+				{
+					// 単体攻撃である場合
+					/* 対象の立ち位置の敵を取得 */
+					std::shared_ptr<Character_Base> TargetEnemyCharacter = nullptr;
+
+					/* 対象の敵が存在していて、HPが残っているか確認 */
+					for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
+					{
+						/* ターゲットの設定 */
+						this->Target_Position = (this->Target_Position + i) % DataList_Battle::POSITION_MAX;
+
+						/* ターゲットの敵を取得 */
+						TargetEnemyCharacter = this->pDataList_Battle->GetEnemyCharacter(this->Target_Position);
+
+						/* ターゲットの敵が存在していて、HPが1以上であるならループを抜ける */
+						if (TargetEnemyCharacter != nullptr && TargetEnemyCharacter->GetHP_Now() > 0)
+						{
+							this->EffectTargetCharacter = TargetEnemyCharacter;
+							break;
+						}
 					}
 
-					/* ダメージ処理を実行 */
-					TargetEnemyCharacter->Damage(this->DamageAmount);
-
-					/* 行動時効果(行動直後)を実行 */
-					if (this->EffectCard)
+					if (TargetEnemyCharacter != nullptr)
 					{
-						this->EffectCard->Effect_Action_After(TargetEnemyCharacter);
+						// 対象の敵キャラクターが存在する場合
+						/* 行動時効果(行動直前)を実行 */
+						if (this->EffectCard)
+						{
+							this->EffectCard->Effect_Action_Before(TargetEnemyCharacter);
+
+							/* ダメージ量をバフ後の値に設定 */
+							this->DamageAmount = this->EffectCard->GetStrength() + this->EffectCard->GetStrength_Buff();
+						}
+					}
+				}
+			}
+			else
+			{
+				// 仲間キャラクターが対象である場合
+				/* 全体攻撃であるか確認 */
+				if (this->AllRange)
+				{
+					// 全体攻撃である場合
+					/* 全ての仲間キャラクターにダメージ処理を実行 */
+					for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
+					{
+						std::shared_ptr<Character_Base> TargetFriendCharacter = this->pDataList_Battle->GetFriendCharacter(i);
+						if (TargetFriendCharacter != nullptr)
+						{
+							// 対象の仲間キャラクターが存在する場合
+							/* 行動時効果(行動直前)を実行 */
+							if (this->EffectCard)
+							{
+								this->EffectCard->Effect_Action_Before(TargetFriendCharacter);
+
+								/* ダメージ量をバフ後の値に設定 */
+								this->DamageAmount = this->EffectCard->GetStrength() + this->EffectCard->GetStrength_Buff();
+							}
+						}
+					}
+				}
+				else
+				{
+					// 単体攻撃である場合
+					/* 対象の立ち位置の仲間を取得 */
+					std::shared_ptr<Character_Base> TargetFriendCharacter = nullptr;
+
+					/* 対象の仲間が存在していて、HPが残っているか確認 */
+					for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
+					{
+						/* ターゲットの設定 */
+						this->Target_Position = (this->Target_Position + i) % DataList_Battle::POSITION_MAX;
+
+						/* ターゲットの仲間を取得 */
+						TargetFriendCharacter = this->pDataList_Battle->GetFriendCharacter(this->Target_Position);
+
+						/* ターゲットの仲間キャラクターが存在していて、HPが1以上であるならループを抜ける */
+						if (TargetFriendCharacter != nullptr && TargetFriendCharacter->GetHP_Now() > 0)
+						{
+							this->EffectTargetCharacter = TargetFriendCharacter;
+							break;
+						}
+					}
+
+					if (TargetFriendCharacter != nullptr)
+					{
+						// 対象の仲間キャラクターが存在する場合
+						/* 行動時効果(行動直前)を実行 */
+						if (this->EffectCard)
+						{
+							this->EffectCard->Effect_Action_Before(TargetFriendCharacter);
+
+							/* ダメージ量をバフ後の値に設定 */
+							this->DamageAmount = this->EffectCard->GetStrength() + this->EffectCard->GetStrength_Buff();
+						}
 					}
 				}
 			}
 
-			/* 攻撃リアクションを設定 */
-			if (this->EffectUser)
-			{
-				this->EffectUser->Action_Attack();
-			}
+			/* リスタートを必要な状態に設定 */
+			this->Restart_State = RESTART_RESTART;
+			return;
+		}
+	}
+
+	/* メインの攻撃処理を実施 */
+	if (this->Restart_State != RESTART_RESTART_MAINSKIP)
+	{
+		/* 行動後効果が存在するか確認 */
+		if (this->EffectCard && this->EffectCard->GetEffect_Action_After_Flg())
+		{
+			/* 行動後効果が存在する場合、リスタートを必要かつ面処理をスキップに設定する */
+			this->Restart_State = RESTART_RESTART_MAINSKIP;
 		}
 		else
 		{
-			// 単体攻撃である場合
-			/* 対象の立ち位置の敵を取得 */
-			std::shared_ptr<Character_Base> TargetEnemyCharacter = nullptr;
+			/* リスタートを不要な状態に設定 */
+			this->Restart_State = RESTART_NONE;
+		}
 
-			/* 対象の敵が存在していて、HPが残っているか確認 */
-			for(int i = 0; i < DataList_Battle::POSITION_MAX; i++)
+		// 効果の対象キャラクターを取得
+		if (this->Target_Camp == Character_Base::CAMP_ENEMY)
+		{
+			// 敵キャラクターが対象である場合
+			/* 全体攻撃であるか確認 */
+			if (this->AllRange)
 			{
-				/* ターゲットの設定 */
-				this->Target_Position = (this->Target_Position + i) % DataList_Battle::POSITION_MAX;
-
-				/* ターゲットの敵を取得 */
-				TargetEnemyCharacter = this->pDataList_Battle->GetEnemyCharacter(this->Target_Position);
-
-				/* ターゲットの敵が存在していて、HPが1以上であるならループを抜ける */
-				if (TargetEnemyCharacter != nullptr && TargetEnemyCharacter->GetHP_Now() > 0)
+				// 全体攻撃である場合
+				/* 全ての敵キャラクターにダメージ処理を実行 */
+				for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
 				{
-					break;
-				}
-			}
-
-			if (TargetEnemyCharacter != nullptr)
-			{
-				// 対象の敵キャラクターが存在する場合
-				/* 行動時効果(行動直前)を実行 */
-				if (this->EffectCard)
-				{
-					this->EffectCard->Effect_Action_Before(TargetEnemyCharacter);
-
-					/* ダメージ量をバフ後の値に設定 */
-					this->DamageAmount = this->EffectCard->GetStrength() + this->EffectCard->GetStrength_Buff();
-				}
-
-				/* ダメージ処理を実行 */
-				TargetEnemyCharacter->Damage(this->DamageAmount);
-
-				/* 行動時効果を実行 */
-				if (this->EffectCard)
-				{
-					this->EffectCard->Effect_Action_After(TargetEnemyCharacter);
+					std::shared_ptr<Character_Base> TargetEnemyCharacter = this->pDataList_Battle->GetEnemyCharacter(i);
+					if (TargetEnemyCharacter != nullptr)
+					{
+						// 対象の敵キャラクターが存在する場合
+						/* ダメージ処理を実行 */
+						TargetEnemyCharacter->Damage(this->DamageAmount);
+					}
 				}
 
 				/* 攻撃リアクションを設定 */
@@ -187,34 +278,181 @@ void Action_Effect_Attack::ExecuteEffect()
 					this->EffectUser->Action_Attack();
 				}
 			}
-		}
-	}
-	else
-	{
-		// 仲間キャラクターが対象である場合
-		/* 全体攻撃であるか確認 */
-		if (this->AllRange)
-		{
-			// 全体攻撃である場合
-			/* 全ての仲間キャラクターにダメージ処理を実行 */
-			for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
+			else
 			{
-				std::shared_ptr<Character_Base> TargetFriendCharacter = this->pDataList_Battle->GetFriendCharacter(i);
+				// 単体攻撃である場合
+				/* 対象の立ち位置の敵を取得 */
+				std::shared_ptr<Character_Base> TargetEnemyCharacter = nullptr;
+
+				/* 対象の敵が存在していて、HPが残っているか確認 */
+				for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
+				{
+					/* ターゲットの設定 */
+					this->Target_Position = (this->Target_Position + i) % DataList_Battle::POSITION_MAX;
+
+					/* ターゲットの敵を取得 */
+					TargetEnemyCharacter = this->pDataList_Battle->GetEnemyCharacter(this->Target_Position);
+
+					/* ターゲットの敵が存在していて、HPが1以上であるならループを抜ける */
+					if (TargetEnemyCharacter != nullptr && TargetEnemyCharacter->GetHP_Now() > 0)
+					{
+						break;
+					}
+				}
+
+				if (TargetEnemyCharacter != nullptr)
+				{
+					// 対象の敵キャラクターが存在する場合
+					/* ダメージ処理を実行 */
+					TargetEnemyCharacter->Damage(this->DamageAmount);
+
+					/* 攻撃リアクションを設定 */
+					if (this->EffectUser)
+					{
+						this->EffectUser->Action_Attack();
+					}
+				}
+			}
+		}
+		else
+		{
+			// 仲間キャラクターが対象である場合
+			/* 全体攻撃であるか確認 */
+			if (this->AllRange)
+			{
+				// 全体攻撃である場合
+				/* 全ての仲間キャラクターにダメージ処理を実行 */
+				for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
+				{
+					std::shared_ptr<Character_Base> TargetFriendCharacter = this->pDataList_Battle->GetFriendCharacter(i);
+					if (TargetFriendCharacter != nullptr)
+					{
+						// 対象の仲間キャラクターが存在する場合
+						/* ダメージ処理を実行 */
+						TargetFriendCharacter->Damage(this->DamageAmount);
+					}
+				}
+
+				/* 攻撃リアクションを設定 */
+				if (this->EffectUser)
+				{
+					this->EffectUser->Action_Attack();
+				}
+			}
+			else
+			{
+				// 単体攻撃である場合
+				/* 対象の立ち位置の仲間を取得 */
+				std::shared_ptr<Character_Base> TargetFriendCharacter = nullptr;
+
+				/* 対象の仲間が存在していて、HPが残っているか確認 */
+				for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
+				{
+					/* ターゲットの設定 */
+					this->Target_Position = (this->Target_Position + i) % DataList_Battle::POSITION_MAX;
+
+					/* ターゲットの仲間を取得 */
+					TargetFriendCharacter = this->pDataList_Battle->GetFriendCharacter(this->Target_Position);
+
+					/* ターゲットの仲間キャラクターが存在していて、HPが1以上であるならループを抜ける */
+					if (TargetFriendCharacter != nullptr && TargetFriendCharacter->GetHP_Now() > 0)
+					{
+						break;
+					}
+				}
+
 				if (TargetFriendCharacter != nullptr)
 				{
 					// 対象の仲間キャラクターが存在する場合
-					/* 行動時効果(行動直前)を実行 */
-					if (this->EffectCard)
-					{
-						this->EffectCard->Effect_Action_Before(TargetFriendCharacter);
-
-						/* ダメージ量をバフ後の値に設定 */
-						this->DamageAmount = this->EffectCard->GetStrength() + this->EffectCard->GetStrength_Buff();
-					}
-
 					/* ダメージ処理を実行 */
 					TargetFriendCharacter->Damage(this->DamageAmount);
 
+					/* 攻撃リアクションを設定 */
+					if (this->EffectUser)
+					{
+						this->EffectUser->Action_Attack();
+					}
+				}
+			}
+		}
+
+		return;
+	}
+	
+	/* 行動後効果を実行 */
+	if (this->Restart_State == RESTART_RESTART_MAINSKIP)
+	{
+		// 効果の対象キャラクターを取得
+		if (this->Target_Camp == Character_Base::CAMP_ENEMY)
+		{
+			// 敵キャラクターが対象である場合
+			/* 全体攻撃であるか確認 */
+			if (this->AllRange)
+			{
+				// 全体攻撃である場合
+				/* 全ての敵キャラクターにダメージ処理を実行 */
+				for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
+				{
+					std::shared_ptr<Character_Base> TargetEnemyCharacter = this->pDataList_Battle->GetEnemyCharacter(i);
+					if (TargetEnemyCharacter != nullptr)
+					{
+						// 対象の敵キャラクターが存在する場合
+						/* 行動時効果(行動直後)を実行 */
+						if (this->EffectCard)
+						{
+							this->EffectCard->Effect_Action_After(TargetEnemyCharacter);
+						}
+					}
+				}
+			}
+			else
+			{
+				// 単体攻撃である場合
+				/* 対象のキャラクターが存在するか */
+				std::shared_ptr<Character_Base> TargetEnemyCharacter = this->EffectTargetCharacter;
+
+				if ((TargetEnemyCharacter != nullptr) && (TargetEnemyCharacter->GetHP_Now() > 0))
+				{
+					// 対象の敵キャラクターが存在する場合
+					/* 行動時効果を実行 */
+					if (this->EffectCard)
+					{
+						this->EffectCard->Effect_Action_After(TargetEnemyCharacter);
+					}
+				}
+			}
+		}
+		else
+		{
+			// 仲間キャラクターが対象である場合
+			/* 全体攻撃であるか確認 */
+			if (this->AllRange)
+			{
+				// 全体攻撃である場合
+				/* 全ての仲間キャラクターにダメージ処理を実行 */
+				for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
+				{
+					std::shared_ptr<Character_Base> TargetFriendCharacter = this->pDataList_Battle->GetFriendCharacter(i);
+					if (TargetFriendCharacter != nullptr)
+					{
+						// 対象の仲間キャラクターが存在する場合
+						/* 行動時効果を実行 */
+						if (this->EffectCard)
+						{
+							this->EffectCard->Effect_Action_After(TargetFriendCharacter);
+						}
+					}
+				}
+			}
+			else
+			{
+				// 単体攻撃である場合
+				/* 対象の立ち位置の仲間を取得 */
+				std::shared_ptr<Character_Base> TargetFriendCharacter = this->EffectTargetCharacter;
+
+				if ((TargetFriendCharacter != nullptr) && (TargetFriendCharacter->GetHP_Now() > 0))
+				{
+					// 対象の仲間キャラクターが存在する場合
 					/* 行動時効果を実行 */
 					if (this->EffectCard)
 					{
@@ -222,63 +460,10 @@ void Action_Effect_Attack::ExecuteEffect()
 					}
 				}
 			}
-
-			/* 攻撃リアクションを設定 */
-			if (this->EffectUser)
-			{
-				this->EffectUser->Action_Attack();
-			}
 		}
-		else
-		{
-			// 単体攻撃である場合
-			/* 対象の立ち位置の仲間を取得 */
-			std::shared_ptr<Character_Base> TargetFriendCharacter = nullptr;
 
-			/* 対象の仲間が存在していて、HPが残っているか確認 */
-			for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
-			{
-				/* ターゲットの設定 */
-				this->Target_Position = (this->Target_Position + i) % DataList_Battle::POSITION_MAX;
-
-				/* ターゲットの仲間を取得 */
-				TargetFriendCharacter = this->pDataList_Battle->GetFriendCharacter(this->Target_Position);
-
-				/* ターゲットの仲間キャラクターが存在していて、HPが1以上であるならループを抜ける */
-				if (TargetFriendCharacter != nullptr && TargetFriendCharacter->GetHP_Now() > 0)
-				{
-					break;
-				}
-			}
-
-			if (TargetFriendCharacter != nullptr)
-			{
-				// 対象の仲間キャラクターが存在する場合
-				/* 行動時効果(行動直前)を実行 */
-				if (this->EffectCard)
-				{
-					this->EffectCard->Effect_Action_Before(TargetFriendCharacter);
-
-					/* ダメージ量をバフ後の値に設定 */
-					this->DamageAmount = this->EffectCard->GetStrength() + this->EffectCard->GetStrength_Buff();
-				}
-
-				/* ダメージ処理を実行 */
-				TargetFriendCharacter->Damage(this->DamageAmount);
-
-				/* 行動時効果を実行 */
-				if (this->EffectCard)
-				{
-					this->EffectCard->Effect_Action_After(TargetFriendCharacter);
-				}
-
-				/* 攻撃リアクションを設定 */
-				if (this->EffectUser)
-				{
-					this->EffectUser->Action_Attack();
-				}
-			}
-		}
+		/* リスタートを不要な状態に設定 */
+		this->Restart_State = RESTART_NONE;
 	}
 }
 

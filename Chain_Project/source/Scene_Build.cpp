@@ -67,7 +67,8 @@ Scene_Build::~Scene_Build()
 // 更新
 void Scene_Build::Update()
 {
-	if (gstKeyboardInputData.cgInput[INPUT_TRG][KEY_INPUT_Z] == TRUE)
+	/* "タイトルへ戻るボタンが押されるか、Escキーが入力されたらタイトル画面へ遷移" */
+	if ((this->UI_Button[3]->GetMouseOverFlg() && (gstKeyboardInputData.igInput[INPUT_TRG] & MOUSE_INPUT_LEFT)) || (gstKeyboardInputData.cgInput[INPUT_TRG][KEY_INPUT_ESCAPE] == TRUE))
 	{
 		gpSceneServer->SetDeleteCurrentSceneFlg(true);
 		LOAD_FUNCTION::AddLoadScene();
@@ -76,7 +77,10 @@ void Scene_Build::Update()
 	}
 
 	/* クラス選択の更新 */
-	Updaate_SelectClass();
+	Update_SelectClass();
+
+	/* レベルアップ処理 */
+	Update_LevelUp();
 }
 
 // 描画
@@ -101,6 +105,9 @@ void Scene_Build::Draw()
 
 	/* デッキ関連の描写 */
 	Draw_Deck();
+
+	/* 所持経験値の描写 */
+	Draw_HaveExp();
 }
 
 // ボタン追加
@@ -127,6 +134,13 @@ void Scene_Build::AddButton()
 	this->UI_Button[2]->SetCenterPos({ 200, 900 - 10 });
 	this->UI_Button[2]->SetFontHandle(giFont_DonguriDuel_32);
 	gpSceneServer->AddSceneReservation(this->UI_Button[2]);
+
+	/* タイトルへもどるボタンの作成 */
+	this->UI_Button[3] = std::make_shared<Scene_UI_Button>("Return_Title", 1);
+	this->UI_Button[3]->SetButtonText("タイトルへ\nもどる");
+	this->UI_Button[3]->SetCenterPos({ 200, 100 });
+	this->UI_Button[3]->SetFontHandle(giFont_DonguriDuel_32);
+	gpSceneServer->AddSceneReservation(this->UI_Button[3]);
 }
 
 // クラスカードの設定
@@ -181,7 +195,7 @@ void Scene_Build::SetCardPosition()
 }
 
 // クラス選択の更新
-void Scene_Build::Updaate_SelectClass()
+void Scene_Build::Update_SelectClass()
 {
 	/* 左クリックが入力されたか確認 */
 	if (gstKeyboardInputData.igInput[INPUT_TRG] & MOUSE_INPUT_LEFT)
@@ -212,11 +226,11 @@ void Scene_Build::Updaate_SelectClass()
 void Scene_Build::Draw_Class()
 {
 	/* 枠の描写 */
-	int CenterPosX = SCREEN_SIZE_WIDE / 2;
+	int CenterPosX = 1070;
 	int CenterPosY = 190;
 	DRAW_FUNCTION::DrawFrame_Image(
 		{ CenterPosX,	CenterPosY },
-		{ 1690,			290 },
+		{ 1460,			295 },
 		32,
 		*(this->Image_Frame_Corner),
 		*(this->Image_Frame_Line),
@@ -272,6 +286,19 @@ void Scene_Build::Draw_Hp()
 		Color,
 		giFont_DonguriDuel_32
 	);
+	// レベルが最大でない場合、次のレベルまでの経験値を描写する
+	if (this->pDataList_SaveData->GetLevel_Hp(this->pDataList_SaveData->GetPlayerClassNo()) < 5)
+	{
+		int NextLevelExp = 10 + (10 * (this->pDataList_SaveData->GetLevel_Hp(this->pDataList_SaveData->GetPlayerClassNo())));
+		std::string NextLevelExpText = std::to_string(NextLevelExp) + "Exp";
+		DrawStringToHandle(
+			CenterPosX - GetDrawStringWidthToHandle(NextLevelExpText.c_str(), static_cast<int>(strlenDx(NextLevelExpText.c_str())), giFont_DonguriDuel_32) / 2,
+			CenterPosY + 32 + 96,
+			NextLevelExpText.c_str(),
+			GetColor(255, 255, 255),
+			giFont_DonguriDuel_32
+		);
+	}
 
 	/* HP量の描写 */
 	int ClassNo		= this->pDataList_SaveData->GetPlayerClassNo();		// クラス番号
@@ -302,7 +329,7 @@ void Scene_Build::Draw_Hp()
 	std::string HpText = std::to_string(Hp_Max);
 	DrawStringToHandle(
 		CenterPosX - GetDrawStringWidthToHandle(HpText.c_str(), static_cast<int>(strlenDx(HpText.c_str())), giFont_DonguriDuel_64) / 2,
-		CenterPosY + 160,
+		CenterPosY + 170,
 		HpText.c_str(),
 		GetColor(255, 255, 255),
 		giFont_DonguriDuel_64
@@ -336,14 +363,14 @@ void Scene_Build::Draw_Ability()
 	);
 	std::string AvillityLevelText = "レベル　";
 	int Color = GetColor(255, 255, 255);
-	if (this->pDataList_SaveData->GetLevel_Hp(this->pDataList_SaveData->GetPlayerClassNo()) >= 3)
+	if (this->pDataList_SaveData->GetLevel_Ability(this->pDataList_SaveData->GetPlayerClassNo()) >= 3)
 	{
 		AvillityLevelText += "MAX";
 		Color = GetColor(255, 255, 0);
 	}
 	else
 	{
-		AvillityLevelText += std::to_string(this->pDataList_SaveData->GetLevel_Hp(this->pDataList_SaveData->GetPlayerClassNo()));
+		AvillityLevelText += std::to_string(this->pDataList_SaveData->GetLevel_Ability(this->pDataList_SaveData->GetPlayerClassNo()));
 	}
 	DrawStringToHandle(
 		CenterPosX - GetDrawStringWidthToHandle(AvillityLevelText.c_str(), static_cast<int>(strlenDx(AvillityLevelText.c_str())), giFont_DonguriDuel_32) / 2,
@@ -352,6 +379,19 @@ void Scene_Build::Draw_Ability()
 		Color,
 		giFont_DonguriDuel_32
 	);
+	/* レベルが最大でない場合、次のレベルまでの経験値を描写する */
+	if (this->pDataList_SaveData->GetLevel_Ability(this->pDataList_SaveData->GetPlayerClassNo()) < 3)
+	{
+		int NextLevelExp = 30 + (30 * (this->pDataList_SaveData->GetLevel_Ability(this->pDataList_SaveData->GetPlayerClassNo())));
+		std::string NextLevelExpText = std::to_string(NextLevelExp) + "Exp";
+		DrawStringToHandle(
+			CenterPosX - GetDrawStringWidthToHandle(NextLevelExpText.c_str(), static_cast<int>(strlenDx(NextLevelExpText.c_str())), giFont_DonguriDuel_32) / 2,
+			CenterPosY + 32 + 96,
+			NextLevelExpText.c_str(),
+			GetColor(255, 255, 255),
+			giFont_DonguriDuel_32
+		);
+	}
 
 	/* アビリティの文字列描写 */
 	std::string AvillityText;
@@ -423,14 +463,14 @@ void Scene_Build::Draw_Deck()
 	);
 	std::string DeckLevelText = "レベル　";
 	int Color = GetColor(255, 255, 255);
-	if (this->pDataList_SaveData->GetLevel_Hp(this->pDataList_SaveData->GetPlayerClassNo()) >= 3)
+	if (this->pDataList_SaveData->GetLevel_Deck(this->pDataList_SaveData->GetPlayerClassNo()) >= 3)
 	{
 		DeckLevelText += "MAX";
 		Color = GetColor(255, 255, 0);
 	}
 	else
 	{
-		DeckLevelText += std::to_string(this->pDataList_SaveData->GetLevel_Hp(this->pDataList_SaveData->GetPlayerClassNo()));
+		DeckLevelText += std::to_string(this->pDataList_SaveData->GetLevel_Deck(this->pDataList_SaveData->GetPlayerClassNo()));
 	}
 	DrawStringToHandle(
 		CenterPosX - GetDrawStringWidthToHandle(DeckLevelText.c_str(), static_cast<int>(strlenDx(DeckLevelText.c_str())), giFont_DonguriDuel_32) / 2,
@@ -439,10 +479,127 @@ void Scene_Build::Draw_Deck()
 		Color,
 		giFont_DonguriDuel_32
 	);
+	/* レベルが最大でない場合、次のレベルまでの経験値を描写する */
+	if (this->pDataList_SaveData->GetLevel_Deck(this->pDataList_SaveData->GetPlayerClassNo()) < 3)
+	{
+		int NextLevelExp = 30 + (30 * (this->pDataList_SaveData->GetLevel_Deck(this->pDataList_SaveData->GetPlayerClassNo())));
+		std::string NextLevelExpText = std::to_string(NextLevelExp) + "Exp";
+		DrawStringToHandle(
+			CenterPosX - GetDrawStringWidthToHandle(NextLevelExpText.c_str(), static_cast<int>(strlenDx(NextLevelExpText.c_str())), giFont_DonguriDuel_32) / 2,
+			CenterPosY + 32 + 96,
+			NextLevelExpText.c_str(),
+			GetColor(255, 255, 255),
+			giFont_DonguriDuel_32
+		);
+	}
 
 	/* デッキカードの描写 */
 	for (int i = 0; i < DeckCardList.size(); i++)
 	{
 		DeckCardList[i]->Draw();
 	}
+}
+
+// レベルアップ処理
+void Scene_Build::Update_LevelUp()
+{
+	/* 現在選択中のクラスを取得 */
+	int ClassNo = this->pDataList_SaveData->GetPlayerClassNo();
+
+	/* HP強化 */
+	if ((this->UI_Button[0]->GetMouseOverFlg() && (gstKeyboardInputData.igInput[INPUT_TRG] & MOUSE_INPUT_LEFT)))
+	{
+		/* 経験値が足りているか確認 */
+		// ※ (10 + (10 * 現在のHPレベル))の経験値が必要
+		int RequiredExp = 10 + (10 * this->pDataList_SaveData->GetLevel_Hp(ClassNo));
+		if (this->pDataList_SaveData->GetHaveExp() < RequiredExp)
+		{
+			// 足りていない場合は処理を終了
+			return;
+		}
+		else
+		{
+			// 足りている場合
+			/* 経験値を減らす */
+			this->pDataList_SaveData->SetHaveExp(this->pDataList_SaveData->GetHaveExp() - RequiredExp);
+
+			/* HPレベルを更新する(最大5Levl) */
+			int Level_Hp = this->pDataList_SaveData->GetLevel_Hp(ClassNo);
+			if (Level_Hp < 5)
+			{
+				this->pDataList_SaveData->SetLevel_Hp(ClassNo, Level_Hp + 1);
+			}
+		}
+	}
+
+	/* アビリティ強化 */
+	if ((this->UI_Button[1]->GetMouseOverFlg() && (gstKeyboardInputData.igInput[INPUT_TRG] & MOUSE_INPUT_LEFT)))
+	{
+		/* 経験値が足りているか確認 */
+		// ※ (30 + (30 * 現在のアビリティレベル))の経験値が必要
+		int RequiredExp = 30 + (30 * this->pDataList_SaveData->GetLevel_Ability(ClassNo));
+		if (this->pDataList_SaveData->GetHaveExp() < RequiredExp)
+		{
+			// 足りていない場合は処理を終了
+			return;
+		}
+		else
+		{
+			// 足りている場合
+			/* 経験値を減らす */
+			this->pDataList_SaveData->SetHaveExp(this->pDataList_SaveData->GetHaveExp() - RequiredExp);
+
+			/* アビリティレベルを更新する(最大3Level) */
+			int Level_Ability = this->pDataList_SaveData->GetLevel_Ability(ClassNo);
+			if (Level_Ability < 3)
+			{
+				this->pDataList_SaveData->SetLevel_Ability(ClassNo, Level_Ability + 1);
+			}
+		}
+	}
+
+	/* デッキ強化 */
+	if ((this->UI_Button[2]->GetMouseOverFlg() && (gstKeyboardInputData.igInput[INPUT_TRG] & MOUSE_INPUT_LEFT)))
+	{
+		/* 経験値が足りているか確認 */
+		// ※ (30 + (30 * 現在のデッキレベル))の経験値が必要
+		int RequiredExp = 30 + (30 * this->pDataList_SaveData->GetLevel_Deck(ClassNo));
+		if (this->pDataList_SaveData->GetHaveExp() < RequiredExp)
+		{
+			// 足りていない場合は処理を終了
+			return;
+		}
+		else
+		{
+			// 足りている場合
+			/* 経験値を減らす */
+			this->pDataList_SaveData->SetHaveExp(this->pDataList_SaveData->GetHaveExp() - RequiredExp);
+		}
+
+		/* デッキレベルを更新する(最大い3Level) */
+		int Level_Deck = this->pDataList_SaveData->GetLevel_Deck(ClassNo);
+		if (Level_Deck < 3)
+		{
+			this->pDataList_SaveData->SetLevel_Deck(ClassNo, Level_Deck + 1);
+		}
+	}
+}
+
+// 所持経験値の描写
+void Scene_Build::Draw_HaveExp()
+{
+	/* 現在の所持経験値を描写 */
+	Struct_2D::POSITION CenterPos	= { 200, 290 };
+	Struct_2D::POSITION IconSize	= { 170, 64 };
+	DRAW_FUNCTION::DrawFrame_Image(CenterPos, IconSize, 32, *(this->Image_Frame_Corner), *(this->Image_Frame_Line), *(this->Image_Frame_Inside));
+
+	CenterPos.iY -= 16;
+	std::string HaveExpText = "けいけんち\n" + std::to_string(this->pDataList_SaveData->GetHaveExp()) + "EXP";
+	DrawStringToHandle(
+		CenterPos.iX - 80,
+		CenterPos.iY - 16,
+		HaveExpText.c_str(),
+		GetColor(255, 255, 255),
+		giFont_DonguriDuel_32
+	);
 }

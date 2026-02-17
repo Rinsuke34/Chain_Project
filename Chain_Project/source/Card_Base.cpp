@@ -17,15 +17,17 @@ Card_Base::Card_Base()
 {
 	/* 初期化 */
 	// カード情報
-	this->iRarity		= 0;					// レアリティ
-	this->iCardType		= 0;					// カードの種類
-	this->Name			= "";					// カード名
-	this->Strength		= 0;					// 攻撃力
-	this->Diffence		= 0;					// 防御力
-	this->Strength_Buff	= 0;					// 攻撃力バフ
-	this->Diffence_Buff	= 0;					// 防御力バフ
-	this->AttackRange	= ATTACKRANGE_FRONT;	// 攻撃範囲
-	this->CardState		= CARDSTATE_NONE;		// カード状態
+	this->iRarity					= 0;					// レアリティ
+	this->iCardType					= 0;					// カードの種類
+	this->Name						= "";					// カード名
+	this->Strength					= 0;					// 攻撃力
+	this->Diffence					= 0;					// 防御力
+	this->Strength_Buff				= 0;					// 攻撃力バフ
+	this->Diffence_Buff				= 0;					// 防御力バフ
+	this->AttackRange				= ATTACKRANGE_FRONT;	// 攻撃範囲
+	this->CardState					= CARDSTATE_NONE;		// カード状態
+	this->Effect_Action_Before_Flg	= false;				// 効果発動:行動直前を実行するかのフラグ
+	this->Effect_Action_After_Flg	= false;				// 効果発動:行動直後を実行するかのフラグ
 	// 画像
 	this->Image = MakeScreen(IMAGE_SIZE_WIDTH, IMAGE_SIZE_HEIGHT, TRUE);
 	this->RotateAngle = 0.f;
