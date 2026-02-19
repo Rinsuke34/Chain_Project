@@ -35,5 +35,5 @@ void Card_Arms_TravelerShield::Effect_Action_Before(std::shared_ptr<Character_Ba
 	// Target : 効果対象のキャラクター
 
 	/* 防御力を加算 */
-	this->Add_Diffence_Buff(GetNowChainCount());	// 防御力バフ追加:チェイン数
+	this->Add_Diffence_Buff(MyChainCountGet_Buff());	// 防御力バフ追加:チェイン数
 }

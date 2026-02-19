@@ -5,7 +5,6 @@
 #include "Character_Npc_Slime_Blue.h"
 // 関連クラス
 #include "DataList_Battle.h"
-#include "Card_Include.h"
 
 // コンストラクタ
 Character_Slime_Blue::Character_Slime_Blue() : Character_Base()
@@ -19,10 +18,8 @@ Character_Slime_Blue::Character_Slime_Blue() : Character_Base()
 	this->DropCoin	= 5;			// ドロップするコインの枚数
 	SetUpImage("Character_Ilust/Npc/Slime_Blue");
 
-	/* ドロップするカード一覧の設定 */
-	std::vector<std::shared_ptr<Card_Base>> dropCardList;
-	if ((rand() % 100) < 50) { dropCardList.push_back(std::make_shared<Card_Item_PoisonPotion>()); }	// 50%の確率で"毒薬"をドロップ
-	SetDropCardList(dropCardList);
+	/* ドロップするカードの設定 */
+	DropItemSet();
 }
 
 // 行動

@@ -481,3 +481,19 @@ void Card_Base::Complement_Rotate()
 		this->RotateAngle += ROTATE_INTERPOLATION_SPEED;
 	}
 }
+
+// バフ込みでの現在のチェイン数
+int	Card_Base::MyChainCountGet_Buff()
+{
+	// 戻り値
+	// int <- バフ込みでの現在のチェイン数
+
+	/* データリストが無効であるならば0を返す */
+	if (this->pDataList_Battle == nullptr)
+	{
+		return 0;
+	}
+
+	int Chain = this->iNowChainCount;
+	return Chain;
+}

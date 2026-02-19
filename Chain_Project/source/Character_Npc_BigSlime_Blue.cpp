@@ -23,10 +23,8 @@ Character_BigSlime_Green::Character_BigSlime_Green() : Character_Base()
 	this->HPBarPosCorrectionY	= 130;							// HPバーの描写座標の補正値
 	SetUpImage("Character_Ilust/Npc/Slime_Green");
 
-	/* ドロップするカード一覧の設定 */
-	std::vector<std::shared_ptr<Card_Base>> dropCardList;
-	dropCardList.push_back(std::make_shared<Card_Item_PoisonPotion>());	// 100%の確率で"回復薬"をドロップ
-	SetDropCardList(dropCardList);
+	/* ドロップするカードの設定 */
+	DropItemSet();
 }
 
 // 行動

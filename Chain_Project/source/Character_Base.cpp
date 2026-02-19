@@ -11,6 +11,7 @@
 #include "DataList_Battle.h"
 #include "Buff_Debuff.h"
 #include "Action_Effect.h"
+#include "Card_Include.h"
 
 // コンストラクタ
 Character_Base::Character_Base()
@@ -711,4 +712,12 @@ bool Character_Base::MouseInCharacter()
 		// 存在しないならばfalseを返す
 		return false;
 	}
+}
+
+// ドロップアイテムの設定
+void Character_Base::DropItemSet()
+{
+	std::vector<std::shared_ptr<Card_Base>> dropCardList;
+	if ((rand() % 100) < 50) { dropCardList.push_back(std::make_shared<Card_Arms_PoisonDagger>()); }	// 50%の確率で"毒ナイフ"をドロップ
+	SetDropCardList(dropCardList);
 }

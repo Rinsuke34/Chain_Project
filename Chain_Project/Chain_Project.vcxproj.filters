@@ -337,6 +337,54 @@
     <Filter Include="ソース ファイル\カード\クラス情報">
       <UniqueIdentifier>{a0eda6e4-93e4-439a-af90-b12461dedd56}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\カード\武具%28Arms%29\木の弓">
+      <UniqueIdentifier>{1f206ca7-9c21-4a35-96bd-1602af102cd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\カード\武具%28Arms%29\木の弓">
+      <UniqueIdentifier>{b2990532-d507-4dd6-af2c-a4dcbf9e8720}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\カード\武具%28Arms%29\旅人の弓">
+      <UniqueIdentifier>{069a5336-07cb-4d96-99d6-4be21c6f993b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\カード\武具%28Arms%29\旅人の弓">
+      <UniqueIdentifier>{ce6fbdc4-b550-4a5b-abaf-4fe9e6ad916c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\カード\武具%28Arms%29\硝子の短剣">
+      <UniqueIdentifier>{4474b6ca-b892-41da-bc34-9557b938cadf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\カード\武具%28Arms%29\硝子の短剣">
+      <UniqueIdentifier>{d951c6dd-9b7b-4c8c-b456-50aecdb069f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\カード\武具%28Arms%29\嵐の弓">
+      <UniqueIdentifier>{e2ebbfd4-6f7a-4e50-b403-06471e22d3d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\カード\武具%28Arms%29\嵐の弓">
+      <UniqueIdentifier>{85212f1d-8658-4355-aab6-2e9970caa68e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\カード\武具%28Arms%29\執行者の剣">
+      <UniqueIdentifier>{ec767608-1d9e-48db-92a7-77058f089fe0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\カード\武具%28Arms%29\執行者の剣">
+      <UniqueIdentifier>{40703e34-5ce0-4a7b-a7f7-0738c32f3891}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\カード\道具%28Item%29\守護のポーション">
+      <UniqueIdentifier>{254df5ef-3a20-4c92-a0af-a8728d280e17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\カード\道具%28Item%29\力のポーション">
+      <UniqueIdentifier>{b5ccb074-06cd-4b3a-abb7-03a96a45b2c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\カード\道具%28Item%29\旅人のコンパス">
+      <UniqueIdentifier>{276cd998-96ac-48e8-8c41-9bcc72319842}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\カード\道具%28Item%29\守護のポーション">
+      <UniqueIdentifier>{356eb2f3-114f-43be-8752-e3c8fc7f86c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\カード\道具%28Item%29\力のポーション">
+      <UniqueIdentifier>{6bd40838-6d1b-4811-afda-87e53868bb96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\カード\道具%28Item%29\旅人のコンパス">
+      <UniqueIdentifier>{deaeecd4-f791-49f4-a59a-f724d5f82cd3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Main.cpp">
@@ -504,6 +552,30 @@
     <ClCompile Include="source\Card_Class.cpp">
       <Filter>ソース ファイル\カード\クラス情報</Filter>
     </ClCompile>
+    <ClCompile Include="source\Card_Arms_WoodenBow.cpp">
+      <Filter>ソース ファイル\カード\武具%28Arms%29\木の弓</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Card_Arms_TravelerBow.cpp">
+      <Filter>ソース ファイル\カード\武具%28Arms%29\旅人の弓</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Card_Arms_GrassDagger.cpp">
+      <Filter>ソース ファイル\カード\武具%28Arms%29\硝子の短剣</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Card_Arms_StormBow.cpp">
+      <Filter>ソース ファイル\カード\武具%28Arms%29\嵐の弓</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Card_Arms_ExecutorSword.cpp">
+      <Filter>ソース ファイル\カード\武具%28Arms%29\執行者の剣</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Card_Item_TravelerCompass.cpp">
+      <Filter>ヘッダー ファイル\カード\道具%28Item%29\旅人のコンパス</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Card_Item_PowerPotion.cpp">
+      <Filter>ヘッダー ファイル\カード\道具%28Item%29\力のポーション</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Card_Item_GuardianPotion.cpp">
+      <Filter>ヘッダー ファイル\カード\道具%28Item%29\守護のポーション</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Scene_Load_Checker.h">
@@ -661,6 +733,30 @@
     </ClInclude>
     <ClInclude Include="source\Card_Class.h">
       <Filter>ヘッダー ファイル\カード\クラス情報</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Card_Arms_WoodenBow.h">
+      <Filter>ヘッダー ファイル\カード\武具%28Arms%29\木の弓</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Card_Arms_TravelerBow.h">
+      <Filter>ヘッダー ファイル\カード\武具%28Arms%29\旅人の弓</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Card_Arms_GrassDagger.h">
+      <Filter>ヘッダー ファイル\カード\武具%28Arms%29\硝子の短剣</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Card_Arms_StormBow.h">
+      <Filter>ヘッダー ファイル\カード\武具%28Arms%29\嵐の弓</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Card_Arms_ExecutorSword.h">
+      <Filter>ヘッダー ファイル\カード\武具%28Arms%29\執行者の剣</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Card_Item_GuardianPotion.h">
+      <Filter>ヘッダー ファイル\カード\道具%28Item%29\守護のポーション</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Card_Item_PowerPotion.h">
+      <Filter>ヘッダー ファイル\カード\道具%28Item%29\力のポーション</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Card_Item_TravelerCompass.h">
+      <Filter>ヘッダー ファイル\カード\道具%28Item%29\旅人のコンパス</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

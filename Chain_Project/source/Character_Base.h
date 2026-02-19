@@ -38,6 +38,7 @@ class Character_Base : public std::enable_shared_from_this<Character_Base>
 		virtual void Delete_Action_Effect(std::shared_ptr<Action_Effect_Base> ActionEffect);									// 該当の行動内容の削除
 		virtual bool MouseInCharacter();																						// マウスカーソルがキャラクター上にあるか確認
 		virtual void Action_Extra() {};																							// 特殊行動(エネミーの特殊行動はこの関数を継承して行う)
+		virtual void DropItemSet();																								// ドロップアイテムの設定
 
 		/* ゲッター */
 		int 												GetHP_Max()				{ return iHP_Max; }				// 体力(最大値)の取得

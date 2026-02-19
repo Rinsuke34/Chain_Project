@@ -5,8 +5,6 @@
 #include "Character_Npc_Bat.h"
 // 関連クラス
 #include "DataList_Battle.h"
-#include "Card_Include.h"
-
 // コンストラクタ
 Character_Bat::Character_Bat() : Character_Base()
 {
@@ -19,10 +17,8 @@ Character_Bat::Character_Bat() : Character_Base()
 	this->DropCoin	= 5;			// ドロップするコインの枚数
 	SetUpImage("Character_Ilust/Npc/Bat");
 
-	/* ドロップするカード一覧の設定 */
-	std::vector<std::shared_ptr<Card_Base>> dropCardList;
-	if ((rand() % 100) < 50)	{ dropCardList.push_back(std::make_shared<Card_Arms_PoisonDagger>()); }	// 50%の確率で"毒ナイフ"をドロップ
-	SetDropCardList(dropCardList);
+	/* ドロップするカードの設定 */
+	DropItemSet();
 }
 
 // 行動

@@ -102,6 +102,10 @@ class Card_Base : public std::enable_shared_from_this<Card_Base>
 		inline static const std::string SUITE_POISON	= "Poison";		// 毒
 		inline static const std::string SUITE_GRASS		= "Grass";		// ガラス
 		inline static const std::string SUITE_DAGGER	= "Dagger";		// 短剣
+		inline static const std::string SUITE_BOW		= "Bow";		// 弓
+		inline static const std::string SUITE_DEATH		= "Death";		// 死者
+		inline static const std::string SUITE_SUMMON	= "Summon";		// 召喚
+		inline static const std::string SUITE_ELEMENT	= "Element";	// エレメント
 		// 画像のサイズ(実際のサイズより大きめにする)
 		static const int IMAGE_SIZE_WIDTH	= 256;	// 画像幅
 		static const int IMAGE_SIZE_HEIGHT	= 256;	// 画像高さ
@@ -179,4 +183,5 @@ class Card_Base : public std::enable_shared_from_this<Card_Base>
 		virtual void	CheckHavePlayer();		// プレイヤーを取得しているか確認
 		virtual void	Complement_Position();	// 座標補完処理
 		virtual void	Complement_Rotate();	// 回転補完処理
+		virtual int		MyChainCountGet_Buff();	// バフ込みでの現在のチェイン数
 };

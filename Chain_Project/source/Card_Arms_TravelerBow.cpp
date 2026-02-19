@@ -1,35 +1,35 @@
-/* "旅人の剣"カードの定義 */
+/* "旅人の弓"カードの定義 */
 
 /* 使用する要素のインクルード */
 // ヘッダファイル
-#include "Card_Arms_TravelerSword.h"
+#include "Card_Arms_TravelerBow.h"
 
 // コンストラクタ
-Card_Arms_TravelerSword::Card_Arms_TravelerSword() : Card_Arms_Base()
+Card_Arms_TravelerBow::Card_Arms_TravelerBow() : Card_Arms_Base()
 {
 	/* カード情報の設定 */
 	// レアリティ
 	this->iRarity = RARITY_COMMON;
 	// カード名
-	this->Name = "旅人の剣";
+	this->Name = "旅人の弓";
 	// スートリスト
-	this->Suite_List.push_back(SUITE_SWORD);	// 剣
+	this->Suite_List.push_back(SUITE_BOW);		// 弓
 	this->Suite_List.push_back(SUITE_TRAVELER);	// 旅人
 	// ステータス
-	this->Strength		= 10;					// 攻撃力
-	this->Diffence		= 0;					// 防御力
-	this->AttackRange	= ATTACKRANGE_FRONT;	// 攻撃範囲
+	this->Strength = 15;					// 攻撃力
+	this->Diffence = 0;						// 防御力
+	this->AttackRange = ATTACKRANGE_RANDOM;	// 攻撃範囲
 	// 画像の名前
-	this->ImageName = "TravelerSword";		// 画像の名前
+	this->ImageName = "TravelerBow";		// 画像の名前
 	// 説明文
 	this->ExplanationText = "/cysこうどうまえ/ce/nこうげきりょくをきょうかする/n/cysこうかりょう/ce/nチェインすう";
 	// 行動前後の効果を実行するかのフラグ
-	this->Effect_Action_Before_Flg	= true;
-	this->Effect_Action_After_Flg	= false;
+	this->Effect_Action_Before_Flg = true;
+	this->Effect_Action_After_Flg = false;
 }
 
 // 効果発動:行動直前
-void Card_Arms_TravelerSword::Effect_Action_Before(std::shared_ptr<Character_Base> Target)
+void Card_Arms_TravelerBow::Effect_Action_Before(std::shared_ptr<Character_Base> Target)
 {
 	// 引数
 	// Target : 効果対象のキャラクター

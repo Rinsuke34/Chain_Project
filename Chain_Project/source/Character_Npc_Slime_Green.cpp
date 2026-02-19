@@ -5,7 +5,6 @@
 #include "Character_Npc_Slime_Green.h"
 // 関連クラス
 #include "DataList_Battle.h"
-#include "Card_Include.h"
 
 // コンストラクタ
 Character_Slime_Green::Character_Slime_Green() : Character_Base()
@@ -19,10 +18,8 @@ Character_Slime_Green::Character_Slime_Green() : Character_Base()
 	this->DropCoin	= 5;			// ドロップするコインの枚数
 	SetUpImage("Character_Ilust/Npc/Slime_Green");
 
-	/* ドロップするカード一覧の設定 */
-	std::vector<std::shared_ptr<Card_Base>> dropCardList;
-	if ((rand() % 100) < 25) { dropCardList.push_back(std::make_shared<Card_Arms_WoodenShield>()); }	// 25%の確率で"木の剣"をドロップ
-	SetDropCardList(dropCardList);
+	/* ドロップするカードの設定 */
+	DropItemSet();
 }
 
 // 行動

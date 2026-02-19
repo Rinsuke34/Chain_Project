@@ -45,7 +45,7 @@ void Card_Arms_PoisonDagger::Effect_Action_After(std::shared_ptr<Character_Base>
 		/* 残りターン数をチェイン数分加算する */
 		for (auto& debuff : Poison)
 		{
-			debuff->Buff_Debuff_Time += GetNowChainCount() + 5;	// 残りターン数 += チェイン数 + 5
+			debuff->Buff_Debuff_Time += MyChainCountGet_Buff() + 5;	// 残りターン数 += チェイン数 + 5
 		}
 	}
 	else
@@ -53,7 +53,7 @@ void Card_Arms_PoisonDagger::Effect_Action_After(std::shared_ptr<Character_Base>
 		// 所持していないなら
 		/* "状態異常：毒"を付与する */
 		std::shared_ptr<Character_Debuff_Poison> New_Poison_Debuff = std::make_shared<Character_Debuff_Poison>();
-		New_Poison_Debuff->Buff_Debuff_Time = GetNowChainCount() + 5;	// 残りターン数 = チェイン数 + 5
+		New_Poison_Debuff->Buff_Debuff_Time = MyChainCountGet_Buff() + 5;	// 残りターン数 = チェイン数 + 5
 		Target->Add_Buff_Debuff(New_Poison_Debuff);
 	}
 }
