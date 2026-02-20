@@ -56,10 +56,14 @@ class Scene_Battle : public Scene_Base
 		static const int	CHARACTER_POS_Y						= 280;	// キャラクターのY座標
 		static const int	BATTLE_AREA_HEIGHT					= 328;	// バトルエリアの高さ
 		static const int	BATTLE_AREA_WIDE					= 258;	// バトルエリアの幅
+		static const int	DOUBLESPEEDBUTTON_POS_X				= 1750;	// 戦闘スピード倍速ボタンのX座標
+		static const int	DOUBLESPEEDBUTTON_POS_Y				= 380;	// 戦闘スピード倍速ボタンのY座標
 		// アニメーション関連
-		static const int EMPHASIS_ANIMATION_MAX					= 4;	// 強調表示アニメーションの最大数
-		static const int EMPHASIS_ANIMATION_SPEED				= 10;	// 強調表示アニメーションの速度(変更までのフレーム数)
-		static const int CHAIN_ANIMATION_MAX					= 40;	// 鎖のアニメーションの最大値
+		static const int	EMPHASIS_ANIMATION_MAX				= 4;	// 強調表示アニメーションの最大数
+		static const int	EMPHASIS_ANIMATION_SPEED			= 10;	// 強調表示アニメーションの速度(変更までのフレーム数)
+		static const int	CHAIN_ANIMATION_MAX					= 40;	// 鎖のアニメーションの最大値
+		// その他
+		static const int	BATTLEACTION_DELAY					= 40;	// 効果処理後のディレイ時間
 
 	private:
 		/* 変数 */
@@ -80,6 +84,7 @@ class Scene_Battle : public Scene_Base
 		int													ActionCardInAreaNo;				// 行動中のカードが設定されているバトルエリアの番号
 		Struct_2D::POSITION									ActionCardArea_Anim_CenterPos;	// 行動中のカードの強調表示アニメーションの中心座標
 		int													ActionCard_Emphasis_AnimCount;	// 戦闘行動カード強調表示アニメーションのカウント
+		bool												BattleSpeedDoubleFlg;			// 戦闘スピード倍速フラグ
 		// 画像
 		std::shared_ptr<int> Image_BattleArea[2];										// バトルエリア[0:通常時, 1:カーソル接触時]
 		std::shared_ptr<int> Image_BattleArea_Emphasis_Anim[EMPHASIS_ANIMATION_MAX];	// バトルエリア(カーソル接触時のアニメーション)[0～3]
@@ -88,8 +93,9 @@ class Scene_Battle : public Scene_Base
 		std::shared_ptr<int> Image_BattleArea_No_Number[5];								// バトルエリアの番号の数字[1～5]
 		std::shared_ptr<int> Image_BattleArea_ActionCard_Emphasis;						// バトルエリアの戦闘行動カード強調表示
 		// UIのハンドル
-		std::shared_ptr<Scene_UI_Button>			UI_DecisionButton;	// 決定ボタン
-		std::shared_ptr<Scene_UI_ExplanationText>	UI_ExplanationText; // 説明文表示UI
+		std::shared_ptr<Scene_UI_Button>			UI_DecisionButton;		// 決定ボタン
+		std::shared_ptr<Scene_UI_ExplanationText>	UI_ExplanationText;		// 説明文表示UI
+		std::shared_ptr<Scene_UI_Button>			UI_SpeedDoubleButton;	// 戦闘スピード倍速ボタン
 
 		/* 関数 */
 		// 各フェーズごとの更新処理
@@ -134,4 +140,5 @@ class Scene_Battle : public Scene_Base
 		void Update_Explanation();											// 説明文設定
 		void Update_ActionCardArea();										// 行動中のカードの強調表示アニメーションの更新
 		void ShuffledDeck();												// デッキのシャッフル処理
+		void Update_DoubleSpeedButton();									// 戦闘スピード倍速ボタンの更新処理
 };

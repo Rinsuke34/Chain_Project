@@ -362,7 +362,8 @@ void Scene_Battle::Update_BattleAction()
 	{
 		// 完了していない場合
 		/* ディレイ時間を減少 */
-		this->iBattleActionDelay--;
+		// ※倍速フラグが有効な場合は通常の半分の時間で行動する
+		this->iBattleActionDelay -= this->BattleSpeedDoubleFlg ? 2 : 1;
 		return;
 	}
 
@@ -392,8 +393,8 @@ void Scene_Battle::Update_BattleAction()
 		pEffect->Sound_Effect_Play();
 
 		/* 効果処理後のディレイ時間を設定 */
-		this->iBattleActionDelay = 40;
-
+		this->iBattleActionDelay = BATTLEACTION_DELAY;
+		
 		/* カードによる行動であるならそのカードの設定されているエリア番号を取得 */
 		// ついでに現在座標を少し高い位置に変化させる
 		int CardAreaNo = -1;
@@ -1227,4 +1228,32 @@ void Scene_Battle::ShuffledDeck()
 	
 	/* デッキのカード設定座標の設定 */
 	CardPosition_DeckSetSettingPosting();
+}
+
+// 戦闘スピード倍速ボタンの更新処理
+void Scene_Battle::Update_DoubleSpeedButton()
+{
+	/* "戦闘スピード倍速"ボタンが入力されたならば */
+	if (this->UI_SpeedDoubleButton->GetMouseOverFlg() && (gstKeyboardInputData.igInput[INPUT_TRG] & MOUSE_INPUT_LEFT))
+	{
+		/* 現在倍速フラグが有効であるか */
+		if (this->BattleSpeedDoubleFlg)
+		{
+			// 倍速フラグが有効である場合
+			/* 倍速フラグを無効にする */
+			this->BattleSpeedDoubleFlg = false;
+
+			/* テキストを変更する */
+			this->UI_SpeedDoubleButton->SetButtonText("ばいそくモード");
+		}
+		else
+		{
+			// 倍速フラグが無効である場合
+			/* 倍速フラグを有効にする */
+			this->BattleSpeedDoubleFlg = true;
+
+			/* テキストを変更する */
+			this->UI_SpeedDoubleButton->SetButtonText("とうそくモード");
+		}
+	}
 }

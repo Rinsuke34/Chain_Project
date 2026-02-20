@@ -27,6 +27,7 @@ Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 50, false, false)
 	this->BattleArea_Anim_ChangeDelay	= 0;		// バトルエリアのアニメーションの変更までの待機時間
 	this->ActionCardInAreaNo			= -1;		// 行動中のカードが設定されているバトルエリアの番号
 	this->ActionCard_Emphasis_AnimCount	= 0;		// 戦闘行動カード強調表示アニメーションのカウント
+	this->BattleSpeedDoubleFlg			= false;	// 戦闘スピード倍速フラグ
 	for (int i = 0; i < 4; i++)
 	{
 		this->Chain_Anim_Count[i]		= 0;		// 鎖のアニメーションのカウント
@@ -100,6 +101,14 @@ Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 50, false, false)
 		this->UI_DecisionButton->SetCenterPos({ DECISIONBUTTON_POS_X, DECISIONBUTTON_POS_Y });
 		this->UI_DecisionButton->SetFontHandle(giFont_DonguriDuel_32);
 		gpSceneServer->AddSceneReservation(this->UI_DecisionButton);
+
+
+		/* "戦闘スピード倍速"ボタンの作成 */
+		this->UI_SpeedDoubleButton = std::make_shared<Scene_UI_Button>("Battle_SpeedDoubleButton", this->iLayerOrder + 1);
+		this->UI_SpeedDoubleButton->SetButtonText("とうそくモード");
+		this->UI_SpeedDoubleButton->SetCenterPos({ DOUBLESPEEDBUTTON_POS_X, DOUBLESPEEDBUTTON_POS_Y });
+		this->UI_SpeedDoubleButton->SetFontHandle(giFont_DonguriDuel_32);
+		gpSceneServer->AddSceneReservation(this->UI_SpeedDoubleButton);
 	}
 
 	/* カード設定 */
@@ -144,6 +153,11 @@ Scene_Battle::~Scene_Battle()
 	{
 		this->UI_ExplanationText->SetDeleteFlg(true);
 		this->UI_ExplanationText = nullptr;
+	}
+	if (this->UI_SpeedDoubleButton)
+	{
+		this->UI_SpeedDoubleButton->SetDeleteFlg(true);
+		this->UI_SpeedDoubleButton = nullptr;
 	}
 
 	/* 次のステージ選択を未完了に戻す */
@@ -244,6 +258,9 @@ void Scene_Battle::Update()
 
 	/* 行動中のカードの強調表示アニメーションの更新 */
 	Update_ActionCardArea();
+
+	/* 戦闘スピード倍速ボタンの更新処理 */
+	Update_DoubleSpeedButton();
 
 	/* 戦闘中であるかにより処理を変更 */
 	if (BattleEndFlg == false)
