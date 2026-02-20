@@ -385,6 +385,42 @@
     <Filter Include="ソース ファイル\カード\道具%28Item%29\旅人のコンパス">
       <UniqueIdentifier>{deaeecd4-f791-49f4-a59a-f724d5f82cd3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\カード\武具%28Arms%29\王国軍の剣">
+      <UniqueIdentifier>{e3ee5616-a86e-47c0-9bb6-c60bb1ac6d47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\カード\武具%28Arms%29\王国軍の盾">
+      <UniqueIdentifier>{e39318d8-9da3-48f8-9c4e-ce9f24cdea1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\カード\武具%28Arms%29\王国軍の弓">
+      <UniqueIdentifier>{878dccee-7724-479a-978a-779604aee1d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\カード\武具%28Arms%29\王国軍の短剣">
+      <UniqueIdentifier>{80431d87-ac8e-487a-b1c2-576899f6a564}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\カード\道具%28Item%29\王国軍の軍旗">
+      <UniqueIdentifier>{96520ddb-4c79-4ed8-8336-ddeb1cfbf270}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\カード\武具%28Arms%29\王国軍の剣">
+      <UniqueIdentifier>{aeaccd8e-a44c-4de2-8e7f-7a72c273e77d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\カード\武具%28Arms%29\王国軍の盾">
+      <UniqueIdentifier>{7d53c054-36ec-47fe-825b-29c3a15c13df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\カード\武具%28Arms%29\王国軍の弓">
+      <UniqueIdentifier>{1dc4104c-3801-400b-9cd8-d46ca27dfa9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\カード\武具%28Arms%29\王国軍の短剣">
+      <UniqueIdentifier>{f694f99e-98d8-40ff-a074-ec165af6461a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\カード\道具%28Item%29\王国軍の軍旗">
+      <UniqueIdentifier>{10ee6564-b6c3-4daa-aa3b-b2e5d9d1a668}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\カード\魔法%28Spell%29\シールドバッシュ">
+      <UniqueIdentifier>{bd5cc7de-d9c7-401e-b21a-01b389d870ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\カード\魔法%28Spell%29\シールドバッシュ">
+      <UniqueIdentifier>{3ac4e3ca-7b6f-4b81-97c0-5e938215280f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Main.cpp">
@@ -567,14 +603,32 @@
     <ClCompile Include="source\Card_Arms_ExecutorSword.cpp">
       <Filter>ソース ファイル\カード\武具%28Arms%29\執行者の剣</Filter>
     </ClCompile>
-    <ClCompile Include="source\Card_Item_TravelerCompass.cpp">
-      <Filter>ヘッダー ファイル\カード\道具%28Item%29\旅人のコンパス</Filter>
+    <ClCompile Include="source\Card_Item_GuardianPotion.cpp">
+      <Filter>ソース ファイル\カード\道具%28Item%29\守護のポーション</Filter>
     </ClCompile>
     <ClCompile Include="source\Card_Item_PowerPotion.cpp">
-      <Filter>ヘッダー ファイル\カード\道具%28Item%29\力のポーション</Filter>
+      <Filter>ソース ファイル\カード\道具%28Item%29\力のポーション</Filter>
     </ClCompile>
-    <ClCompile Include="source\Card_Item_GuardianPotion.cpp">
-      <Filter>ヘッダー ファイル\カード\道具%28Item%29\守護のポーション</Filter>
+    <ClCompile Include="source\Card_Item_TravelerCompass.cpp">
+      <Filter>ソース ファイル\カード\道具%28Item%29\旅人のコンパス</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Card_Arms_RoyalDagger.cpp">
+      <Filter>ソース ファイル\カード\武具%28Arms%29\王国軍の短剣</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Card_Arms_RoyalBow.cpp">
+      <Filter>ソース ファイル\カード\武具%28Arms%29\王国軍の弓</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Card_Arms_RoyalShield.cpp">
+      <Filter>ソース ファイル\カード\武具%28Arms%29\王国軍の盾</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Card_Arms_RoyalSword.cpp">
+      <Filter>ソース ファイル\カード\武具%28Arms%29\王国軍の剣</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Card_Item_RoyalFlag.cpp">
+      <Filter>ソース ファイル\カード\道具%28Item%29\王国軍の軍旗</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Card_Spell_ShieldBash.cpp">
+      <Filter>ソース ファイル\カード\魔法%28Spell%29\シールドバッシュ</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -757,6 +811,24 @@
     </ClInclude>
     <ClInclude Include="source\Card_Item_TravelerCompass.h">
       <Filter>ヘッダー ファイル\カード\道具%28Item%29\旅人のコンパス</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Card_Arms_RoyalSword.h">
+      <Filter>ヘッダー ファイル\カード\武具%28Arms%29\王国軍の剣</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Card_Arms_RoyalShield.h">
+      <Filter>ヘッダー ファイル\カード\武具%28Arms%29\王国軍の盾</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Card_Arms_RoyalBow.h">
+      <Filter>ヘッダー ファイル\カード\武具%28Arms%29\王国軍の弓</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Card_Arms_RoyalDagger.h">
+      <Filter>ヘッダー ファイル\カード\武具%28Arms%29\王国軍の短剣</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Card_Item_RoyalFlag.h">
+      <Filter>ヘッダー ファイル\カード\道具%28Item%29\王国軍の軍旗</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Card_Spell_ShieldBash.h">
+      <Filter>ヘッダー ファイル\カード\魔法%28Spell%29\シールドバッシュ</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

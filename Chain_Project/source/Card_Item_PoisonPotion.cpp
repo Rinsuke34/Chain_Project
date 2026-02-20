@@ -14,16 +14,16 @@ Card_Item_PoisonPotion::Card_Item_PoisonPotion() : Card_Item_Base()
 {
 	/* カード情報の設定 */
 	// レアリティ
-	this->iRarity = RARITY_COMMON;
+	this->iRarity	= RARITY_RARE;
 	// カード名
-	this->Name = "毒薬";
+	this->Name		= "毒薬";
 	// スートリスト
 	this->Suite_List.push_back(SUITE_POTION);	// 薬(ポーション)
 	this->Suite_List.push_back(SUITE_POISON);	// 毒
 	// 画像の名前
 	this->ImageName = "PoisonPotion";			// 画像の名前
 	// 説明文
-	this->ExplanationText = "てきぜんたいにどくをふよ/n/cysこうかりょう/cys/nチェインすう+５";
+	this->ExplanationText = "てきぜんたいにどくをXふよする/nXはチェインすう+５";
 }
 
 // カード効果(特殊効果)
@@ -38,15 +38,12 @@ void Card_Item_PoisonPotion::Card_Effect_Extra_Process()
 		{
 			// 敵が存在するなら
 			/* 攻撃対象が"状態異常：毒"を所持しているか確認 */
-			std::vector<std::shared_ptr<Character_Buff_Debuff_Base>> Poison = EnemyCharacter->CheckGet_Buff_Debuff("Debuff_Poison");
-			if (Poison.size() > 0)
+			std::shared_ptr<Character_Buff_Debuff_Base> Poison = EnemyCharacter->CheckGet_Buff_Debuff("Debuff_Poison");
+			if (Poison != nullptr)
 			{
 				// 所持しているなら
 				/* 残りターン数をチェイン数分加算する */
-				for (auto& debuff : Poison)
-				{
-					debuff->Buff_Debuff_Time += GetNowChainCount() + 5;	// 残りターン数 += チェイン数 + 5
-				}
+				Poison->Buff_Debuff_Time += GetNowChainCount() + 5;	// 残りターン数 += チェイン数 + 5
 			}
 			else
 			{

@@ -35,6 +35,7 @@ class Card_Base : public std::enable_shared_from_this<Card_Base>
 		virtual bool	MouseInCard();														// マウスカーソルがカード上にあるか確認
 		virtual void	SetUp_DataList();													// データリストの取得処理を行う
 		virtual void	Reset_Buff();														// バフのリセット処理
+		virtual bool	CheckSute(std::string SuiteName);									// 対象のスートを所持しているか確認
 		
 		/* セッター */
 		// カード情報
@@ -64,8 +65,8 @@ class Card_Base : public std::enable_shared_from_this<Card_Base>
 		std::vector<std::string>	GetSuiteList()					{ return Suite_List; }					// スートリストの取得
 		int							GetStrength()					{ return Strength; }					// 攻撃力の取得
 		int							GetDiffence()					{ return Diffence; }					// 防御力の取得
-		int							GetStrength_Buff()				{ return Strength; }					// 攻撃力(バフ)の取得
-		int							GetDiffence_Buff()				{ return Diffence; }					// 防御力(バフ)の取得
+		int							GetStrength_Buff()				{ return Strength_Buff; }				// 攻撃力(バフ)の取得
+		int							GetDiffence_Buff()				{ return Diffence_Buff; }				// 防御力(バフ)の取得
 		int							GetAttackRange()				{ return AttackRange; }					// 攻撃範囲の取得
 		float						GetRotationAngle()				{ return RotateAngle; }					// 回転角度の取得
 		int							GetCardState()					{ return CardState; }					// カード状態の取得
@@ -106,6 +107,7 @@ class Card_Base : public std::enable_shared_from_this<Card_Base>
 		inline static const std::string SUITE_DEATH		= "Death";		// 死者
 		inline static const std::string SUITE_SUMMON	= "Summon";		// 召喚
 		inline static const std::string SUITE_ELEMENT	= "Element";	// エレメント
+		inline static const std::string SUITE_ROYAL		= "Royal";		// 王国
 		// 画像のサイズ(実際のサイズより大きめにする)
 		static const int IMAGE_SIZE_WIDTH	= 256;	// 画像幅
 		static const int IMAGE_SIZE_HEIGHT	= 256;	// 画像高さ

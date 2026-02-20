@@ -32,13 +32,13 @@ class Character_Base : public std::enable_shared_from_this<Character_Base>
 		virtual void ShieldReset_EndTurn();		// シールドリセット(ターン終了時)
 		virtual void Heal(int Heal);			// 回復処理
 		virtual void Update_Buff_Debuff();		// バフ、デバフの更新
-		virtual void Add_Buff_Debuff(const std::shared_ptr<Character_Buff_Debuff_Base>& Buff_Debuff);							// バフ、デバフの追加
-		virtual std::vector<std::shared_ptr<Character_Buff_Debuff_Base>> CheckGet_Buff_Debuff(std::string Buff_Debuff_Name);	// 対象の名称のバフ、デバフを取得
-		virtual void Draw_Action_Effect();																						// 行動内容の描写
-		virtual void Delete_Action_Effect(std::shared_ptr<Action_Effect_Base> ActionEffect);									// 該当の行動内容の削除
-		virtual bool MouseInCharacter();																						// マウスカーソルがキャラクター上にあるか確認
-		virtual void Action_Extra() {};																							// 特殊行動(エネミーの特殊行動はこの関数を継承して行う)
-		virtual void DropItemSet();																								// ドロップアイテムの設定
+		virtual void Add_Buff_Debuff(const std::shared_ptr<Character_Buff_Debuff_Base>& Buff_Debuff);				// バフ、デバフの追加
+		virtual std::shared_ptr<Character_Buff_Debuff_Base> CheckGet_Buff_Debuff(std::string Buff_Debuff_Name);		// 対象の名称のバフ、デバフを取得
+		virtual void Draw_Action_Effect();																			// 行動内容の描写
+		virtual void Delete_Action_Effect(std::shared_ptr<Action_Effect_Base> ActionEffect);						// 該当の行動内容の削除
+		virtual bool MouseInCharacter();																			// マウスカーソルがキャラクター上にあるか確認
+		virtual void Action_Extra() {};																				// 特殊行動(エネミーの特殊行動はこの関数を継承して行う)
+		virtual void DropItemSet(int Rank);																			// ドロップアイテムの設定
 
 		/* ゲッター */
 		int 												GetHP_Max()				{ return iHP_Max; }				// 体力(最大値)の取得

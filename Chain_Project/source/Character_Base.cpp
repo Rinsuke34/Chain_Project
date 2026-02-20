@@ -246,6 +246,17 @@ void Character_Base::Damage(int DamageAmount)
 	int OldHP		= this->iHP_Now;
 	int OldShield	= this->iShield_Now;
 
+	/* 防御力バフ分ダメージ量を減らす */
+	std::shared_ptr<Character_Buff_Debuff_Base> DefenseBuff = CheckGet_Buff_Debuff("Buff_Strength");
+	if (DefenseBuff != nullptr)
+	{
+		DamageAmount -= DefenseBuff->Buff_Debuff_Time;
+		if(DamageAmount < 0)
+		{
+			DamageAmount = 0;
+		}
+	}
+
 	/* シールドでダメージを軽減 */
 	if (this->iShield_Now > 0)
 	{
@@ -363,15 +374,12 @@ void Character_Base::Update_Buff_Debuff()
 {
 	/* 毒ダメージ処理 */
 	// 毒デバフを取得
-	std::vector<std::shared_ptr<Character_Buff_Debuff_Base>> Poison = this->CheckGet_Buff_Debuff("Debuff_Poison");
-	if (Poison.size() > 0)
+	std::shared_ptr<Character_Buff_Debuff_Base> Poison = this->CheckGet_Buff_Debuff("Debuff_Poison");
+	if (Poison != nullptr)
 	{
 		// 所持しているなら
 		/* 残りターン数分のダメージを受ける */
-		for (auto& debuff : Poison)
-		{
-			Damage(debuff->Buff_Debuff_Time);
-		}
+		Damage(Poison->Buff_Debuff_Time);
 	}
 
 	/* すべてのバフ、デバフのカウントを進める */
@@ -405,13 +413,12 @@ void Character_Base::Add_Buff_Debuff(const std::shared_ptr<Character_Buff_Debuff
 }
 
 // 対象の名称のバフ、デバフを取得
-std::vector<std::shared_ptr<Character_Buff_Debuff_Base>> Character_Base::CheckGet_Buff_Debuff(std::string Buff_Debuff_Name)
+std::shared_ptr<Character_Buff_Debuff_Base> Character_Base::CheckGet_Buff_Debuff(std::string Buff_Debuff_Name)
 {
 	// 引数
 	// Buff_Debuff_Name : 対象の名称のバフ、デバフの名称
-
-	/* 取得用配列 */
-	std::vector<std::shared_ptr<Character_Buff_Debuff_Base>> ReturnList;
+	// 戻り値
+	// 対象の名称のバフ、デバフ(ないならnullptr)
 
 	/* すべてのバフ、デバフを確認 */
 	for (auto& BuffDebuff : this->Buff_Debuff_List)
@@ -419,12 +426,12 @@ std::vector<std::shared_ptr<Character_Buff_Debuff_Base>> Character_Base::CheckGe
 		/* 対象の名称のバフ、デバフであるなら取得用配列に追加 */
 		if (BuffDebuff->Name == Buff_Debuff_Name)
 		{
-			ReturnList.push_back(BuffDebuff);
+			return BuffDebuff;
 		}
 	}
 
 	/* 取得用配列を返す */
-	return ReturnList;
+	return nullptr;
 }
 
 // 各リアクションによる座標補正
@@ -715,9 +722,82 @@ bool Character_Base::MouseInCharacter()
 }
 
 // ドロップアイテムの設定
-void Character_Base::DropItemSet()
+void Character_Base::DropItemSet(int Rank)
 {
-	std::vector<std::shared_ptr<Card_Base>> dropCardList;
-	if ((rand() % 100) < 50) { dropCardList.push_back(std::make_shared<Card_Arms_PoisonDagger>()); }	// 50%の確率で"毒ナイフ"をドロップ
-	SetDropCardList(dropCardList);
+	// 引数
+	// Rank : ドロップ品のランク
+
+	/* ドロップするかの判定 */
+	// 50%の確率でドロップするものとする
+	if (rand() % 100 < 50)
+	{
+		// ドロップしない場合は処理を終了
+		return;
+	}
+
+	/* ランクに応じたドロップアイテムの追加 */
+	std::shared_ptr<Card_Base> DropCard = nullptr;
+	switch (Rank)
+	{
+		// コモン
+		case Card_Base::RARITY_COMMON:
+			{
+				/* カードリスト */
+				std::vector<std::function<std::shared_ptr<Card_Base>()>> CommonCards = {
+					[]() { return std::make_shared<Card_Arms_TravelerSword>(); },
+					[]() { return std::make_shared<Card_Arms_TravelerShield>(); },
+					[]() { return std::make_shared<Card_Arms_TravelerBow>(); },
+					[]() { return std::make_shared<Card_Arms_RoyalSword>(); },
+					[]() { return std::make_shared<Card_Arms_RoyalShield>(); },
+					[]() { return std::make_shared<Card_Arms_RoyalBow>(); },
+					[]() { return std::make_shared<Card_Spell_ShieldBash>(); }
+				};
+
+				/* ランダムに選択 */
+				int RandomIndex = GetRand(CommonCards.size() - 1);
+				DropCard = CommonCards[RandomIndex]();
+			}
+			break;
+
+		// レア
+		case Card_Base::RARITY_RARE:
+			{
+				/* カードリスト */
+				std::vector<std::function<std::shared_ptr<Card_Base>()>> CommonCards = {
+					[]() { return std::make_shared<Card_Arms_PoisonDagger>(); },
+					[]() { return std::make_shared<Card_Arms_ExecutorSword>(); },
+					[]() { return std::make_shared<Card_Arms_GrassSword>(); },
+					[]() { return std::make_shared<Card_Arms_GrassDagger>(); },
+					[]() { return std::make_shared<Card_Item_PoisonPotion>(); },
+					[]() { return std::make_shared<Card_Item_HealingPotion>(); },
+					[]() { return std::make_shared<Card_Item_PowerPotion>(); },
+					[]() { return std::make_shared<Card_Item_GuardianPotion>(); },
+					[]() { return std::make_shared<Card_Item_TravelerCompass>(); },
+					[]() { return std::make_shared<Card_Item_RoyalFlag>(); },
+					[]() { return std::make_shared<Card_Spell_ArmsEnhancement>(); }
+				};
+
+				/* ランダムに選択 */
+				int RandomIndex = GetRand(CommonCards.size() - 1);
+				DropCard = CommonCards[RandomIndex]();
+			}
+			break;
+
+		// エピック
+		case Card_Base::RARITY_EPIC:
+			{
+				/* カードリスト */
+				std::vector<std::function<std::shared_ptr<Card_Base>()>> CommonCards = {
+					[]() { return std::make_shared<Card_Arms_StormBow>(); }
+				};
+
+				/* ランダムに選択 */
+				int RandomIndex = GetRand(CommonCards.size() - 1);
+				DropCard = CommonCards[RandomIndex]();
+			}
+			break;
+	}
+
+	/* ドロップアイテムとして設定 */
+	this->DropCardList.push_back(DropCard);
 }

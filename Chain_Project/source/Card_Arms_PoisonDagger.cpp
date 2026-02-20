@@ -12,7 +12,7 @@ Card_Arms_PoisonDagger::Card_Arms_PoisonDagger() : Card_Arms_Base()
 {
 	/* カード情報の設定 */
 	// レアリティ
-	this->iRarity = RARITY_COMMON;
+	this->iRarity = RARITY_RARE;
 	// カード名
 	this->Name = "毒ナイフ";
 	// スートリスト
@@ -38,15 +38,12 @@ void Card_Arms_PoisonDagger::Effect_Action_After(std::shared_ptr<Character_Base>
 	// Target : 効果対象のキャラクター
 
 	/* 攻撃対象が"状態異常：毒"を所持しているか確認 */
-	std::vector<std::shared_ptr<Character_Buff_Debuff_Base>> Poison = Target->CheckGet_Buff_Debuff("Debuff_Poison");
-	if (Poison.size() > 0)
+	std::shared_ptr<Character_Buff_Debuff_Base> Poison = Target->CheckGet_Buff_Debuff("Debuff_Poison");
+	if (Poison != nullptr)
 	{
 		// 所持しているなら
 		/* 残りターン数をチェイン数分加算する */
-		for (auto& debuff : Poison)
-		{
-			debuff->Buff_Debuff_Time += MyChainCountGet_Buff() + 5;	// 残りターン数 += チェイン数 + 5
-		}
+		Poison->Buff_Debuff_Time += MyChainCountGet_Buff() + 5;	// 残りターン数 += チェイン数 + 5
 	}
 	else
 	{

@@ -5,6 +5,8 @@
 #include "Character_Npc_Bat.h"
 // 関連クラス
 #include "DataList_Battle.h"
+#include "Card_Base.h"
+
 // コンストラクタ
 Character_Bat::Character_Bat() : Character_Base()
 {
@@ -18,7 +20,7 @@ Character_Bat::Character_Bat() : Character_Base()
 	SetUpImage("Character_Ilust/Npc/Bat");
 
 	/* ドロップするカードの設定 */
-	DropItemSet();
+	DropItemSet(Card_Base::RARITY_COMMON);
 }
 
 // 行動

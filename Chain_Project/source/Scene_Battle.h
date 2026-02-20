@@ -116,6 +116,7 @@ class Scene_Battle : public Scene_Base
 		void Draw_DeckCard();					// 山札のカードの描写
 		// その他
 		void CardPosition_HandSetSettingPosting();							// 手札のカード設定座標の設定
+		void CardPosition_DeckSetSettingPosting();							// デッキのカード設定座標の設定
 		void Card_Update();													// カードの更新処理
 		void Character_SetPosition();										// キャラクターの座標の設定
 		std::shared_ptr<Card_Base>	GetMouseInCard();						// マウスが重なっているカードを取得
@@ -132,4 +133,5 @@ class Scene_Battle : public Scene_Base
 		void Update_Chain_Anim();											// 鎖のアニメーションの更新
 		void Update_Explanation();											// 説明文設定
 		void Update_ActionCardArea();										// 行動中のカードの強調表示アニメーションの更新
+		void ShuffledDeck();												// デッキのシャッフル処理
 };

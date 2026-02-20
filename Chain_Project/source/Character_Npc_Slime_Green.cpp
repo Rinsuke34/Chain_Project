@@ -5,6 +5,7 @@
 #include "Character_Npc_Slime_Green.h"
 // 関連クラス
 #include "DataList_Battle.h"
+#include "Card_Base.h"
 
 // コンストラクタ
 Character_Slime_Green::Character_Slime_Green() : Character_Base()
@@ -19,7 +20,7 @@ Character_Slime_Green::Character_Slime_Green() : Character_Base()
 	SetUpImage("Character_Ilust/Npc/Slime_Green");
 
 	/* ドロップするカードの設定 */
-	DropItemSet();
+	DropItemSet(Card_Base::RARITY_COMMON);
 }
 
 // 行動

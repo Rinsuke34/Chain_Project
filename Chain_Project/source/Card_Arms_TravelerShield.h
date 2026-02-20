@@ -15,4 +15,8 @@ class Card_Arms_TravelerShield : public Card_Arms_Base
 
 		/* 関数 */
 		virtual void Effect_Action_Before(std::shared_ptr<Character_Base> Target) override;		// 効果発動:行動直前
+
+	protected:
+		/* 変数 */
+		int PermanenceBuff_Def;		// 防御力の永続バフ
 };

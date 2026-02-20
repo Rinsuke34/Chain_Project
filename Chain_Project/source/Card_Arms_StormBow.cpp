@@ -9,7 +9,7 @@ Card_Arms_StormBow::Card_Arms_StormBow() : Card_Arms_Base()
 {
 	/* カード情報の設定 */
 	// レアリティ
-	this->iRarity = RARITY_COMMON;
+	this->iRarity = RARITY_EPIC;
 	// カード名
 	this->Name = "旅人の弓";
 	// スートリスト

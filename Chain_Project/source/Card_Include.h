@@ -3,14 +3,44 @@
 
 #pragma once
 
-/* 使用する要素のインクルード */
-// 関連クラス
+/* 親クラス */
+#include "Card_Base.h"
+
+/* 武具カード */
+// 木製 
 #include "Card_Arms_WoodenShield.h"
 #include "Card_Arms_WoodenSword.h"
-#include "Card_Item_HealingPotion.h"
-#include "Card_Spell_ArmsEnhancement.h"
-#include "Card_Arms_GrassSword.h"
-#include "Card_Arms_PoisonDagger.h"
+#include "Card_Arms_WoodenBow.h"
+// 旅人
 #include "Card_Arms_TravelerSword.h"
-#include "Card_Item_PoisonPotion.h"
 #include "Card_Arms_TravelerShield.h"
+#include "Card_Arms_TravelerBow.h"
+// 王国
+#include "Card_Arms_RoyalSword.h"
+#include "Card_Arms_RoyalShield.h"
+#include "Card_Arms_RoyalBow.h"
+// 毒
+#include "Card_Arms_PoisonDagger.h"
+// 死者
+#include "Card_Arms_ExecutorSword.h"
+// ガラス
+#include "Card_Arms_GrassSword.h"
+#include "Card_Arms_GrassDagger.h"
+// エレメント
+#include "Card_Arms_StormBow.h"
+
+/* 道具カード */
+// 薬
+#include "Card_Item_PoisonPotion.h"
+#include "Card_Item_HealingPotion.h"
+#include "Card_Item_PowerPotion.h"
+#include "Card_Item_GuardianPotion.h"
+// 旅人
+#include "Card_Item_TravelerCompass.h"
+// 王国
+#include "Card_Item_RoyalFlag.h"
+
+// 魔法カード
+// 武具系
+#include "Card_Spell_ArmsEnhancement.h"
+#include "Card_Spell_ShieldBash.h"

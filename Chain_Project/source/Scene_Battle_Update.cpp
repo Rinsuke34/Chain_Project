@@ -81,20 +81,21 @@ void Scene_Battle::Update_DrawCard()
 		{
 			// デッキにカード無しかつ、手札が0枚の場合
 			/* リロードフラグを有効化する */
-			this->bReloadFlg = true;			
+			this->bReloadFlg = true;
 
-			/* 捨て札のカードを手札に戻す */
-			int TrashSize = static_cast<int>(this->pDataList_Battle->GetTrashCardList().size());
-			for (int i = 0; i < TrashSize; i++)
+			/* 捨て札のカードを山札に戻す */
+			std::vector<std::shared_ptr<Card_Base>> TrashCardList = this->pDataList_Battle->GetTrashCardList();
+			for (auto& pCard : TrashCardList)
 			{
-				std::vector<std::shared_ptr<Card_Base>> TrashCardList = this->pDataList_Battle->GetTrashCardList();
-				std::shared_ptr<Card_Base> pCard = TrashCardList[0];
 				if (pCard != nullptr)
 				{
 					this->pDataList_Battle->AddDeckCard(pCard);
 					this->pDataList_Battle->RemoveTrashCard(pCard);
 				}
 			}
+
+			/* デッキリストのシャッフル */
+			ShuffledDeck();
 			break;
 		}
 	}
@@ -549,6 +550,17 @@ void Scene_Battle::CardPosition_HandSetSettingPosting()
 
 		/* カードに設定座標を設定 */
 		this->pDataList_Battle->GetHandCardList()[i]->SetSettingPos(SettingPos);
+	}
+}
+
+// デッキのカード設定座標の設定
+void Scene_Battle::CardPosition_DeckSetSettingPosting()
+{
+	/* デッキのカードの初期化処理時に実施 */
+	for (auto& Deck : this->pDataList_GameResource->GetDeckCardList())
+	{
+		Deck->SetCardState(Card_Base::CARDSTATE_DECK);
+		Deck->Update();
 	}
 }
 
@@ -1189,4 +1201,30 @@ void Scene_Battle::Update_ActionCardArea()
 	{
 		this->ActionCard_Emphasis_AnimCount = 0;
 	}
+}
+
+// デッキのシャッフル処理
+void Scene_Battle::ShuffledDeck()
+{
+	/* デッキ内容を取得 */
+	std::vector<std::shared_ptr<Card_Base>> DeckCardList = this->pDataList_GameResource->GetDeckCardList();
+
+	/* ランダムになるようシャッフルする */
+	std::vector<std::shared_ptr<Card_Base>> ShuffledDeckCardList;
+	while (DeckCardList.size() > 0)
+	{
+		// ランダムなインデックスを取得
+		int RandomIndex = GetRand(DeckCardList.size() - 1);
+		// シャッフル後のデッキリストに追加
+		ShuffledDeckCardList.push_back(DeckCardList[RandomIndex]);
+		// 元のデッキリストから削除
+		DeckCardList.erase(DeckCardList.begin() + RandomIndex);
+	}
+	DeckCardList = ShuffledDeckCardList;
+	
+	/* シャッフルしたデッキ内容を設定 */
+	this->pDataList_Battle->SetDeckCardList(DeckCardList);
+	
+	/* デッキのカード設定座標の設定 */
+	CardPosition_DeckSetSettingPosting();
 }

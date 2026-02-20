@@ -12,4 +12,8 @@ class Card_Arms_GrassDagger : public Card_Arms_Base
 	public:
 		Card_Arms_GrassDagger();				// コンストラクタ
 		virtual ~Card_Arms_GrassDagger() {};	// デストラクタ
+
+	protected:
+		/* 関数 */
+		virtual void Effect_Action_After(std::shared_ptr<Character_Base> Target) override;		// 効果発動:行動直後
 };

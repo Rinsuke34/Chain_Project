@@ -33,4 +33,7 @@ class Card_Arms_Base : public Card_Base
 		virtual void	DrawFrame()			override;	// フレームを描写
 		virtual void	DrawName()			override;	// 名前を描写
 		virtual void	DrawExText()		override;	// 追加テキストの描写
+
+		/* 変数 */
+		int		StatusDrawBaseColor[2];					// ステータスの基本描写色[0:こうげき, 1:ぼうぎょ]
 };

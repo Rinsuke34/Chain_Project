@@ -24,7 +24,7 @@ Character_BigSlime_Green::Character_BigSlime_Green() : Character_Base()
 	SetUpImage("Character_Ilust/Npc/Slime_Green");
 
 	/* ドロップするカードの設定 */
-	DropItemSet();
+	DropItemSet(Card_Base::RARITY_RARE);
 }
 
 // 行動
@@ -105,7 +105,9 @@ void Character_BigSlime_Green::Action_Extra()
 		// 存在しない場合
 		/* 前衛に青スライムを召喚 */
 		std::shared_ptr<Character_Slime_Blue> pBlueSlime = std::make_shared<Character_Slime_Blue>();
+		// ドロップアイテムを無しに設定
 		pBlueSlime->SetDropCoin(0);
+		pBlueSlime->SetDropCardList(std::vector<std::shared_ptr<Card_Base>>());
 		this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_FRONT, pBlueSlime);
 	}
 
@@ -115,7 +117,9 @@ void Character_BigSlime_Green::Action_Extra()
 		// 存在しない場合
 		/* 中衛に緑スライムを召喚 */
 		std::shared_ptr<Character_Slime_Green> pGreenSlime = std::make_shared<Character_Slime_Green>();
+		// ドロップアイテムを無しに設定
 		pGreenSlime->SetDropCoin(0);
+		pGreenSlime->SetDropCardList(std::vector<std::shared_ptr<Card_Base>>());
 		this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_MIDDLE, pGreenSlime);
 	}
 }

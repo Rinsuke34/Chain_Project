@@ -15,4 +15,7 @@ class Card_Arms_TravelerSword : public Card_Arms_Base
 
 		/* 関数 */
 		virtual void Effect_Action_Before(std::shared_ptr<Character_Base> Target) override;		// 効果発動:行動直前
+
+		/* 変数 */
+		int PermanenceBuff_Atk;		// 攻撃力の永続バフ
 };

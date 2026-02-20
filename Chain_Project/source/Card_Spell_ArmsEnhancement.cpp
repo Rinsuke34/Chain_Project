@@ -11,7 +11,7 @@ Card_Spell_ArmsEnhancement::Card_Spell_ArmsEnhancement() : Card_Spell_Base()
 {
 	/* カード情報の設定 */
 	// レアリティ
-	this->iRarity = RARITY_COMMON;
+	this->iRarity = RARITY_RARE;
 	// カード名
 	this->Name = "武具強化";
 	// スートリスト
@@ -30,7 +30,7 @@ Card_Spell_ArmsEnhancement::Card_Spell_ArmsEnhancement() : Card_Spell_Base()
 // カード効果(特殊効果)
 void Card_Spell_ArmsEnhancement::Card_Effect_Extra_Process()
 {
-	/* 手札と山札とバトルエリアの武具カードにチェイン数分の攻撃バフと防御バフを与える */
+	/* 手札と山札の武具カードにチェイン数分の攻撃バフと防御バフを与える */
 	// 山札の武具カードにバフを与える
 	for (int i = 0; i < this->pDataList_Battle->GetDeckCardList().size(); i++)
 	{

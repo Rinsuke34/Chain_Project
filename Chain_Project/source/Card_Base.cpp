@@ -11,6 +11,7 @@
 #include "DataList_Image.h"
 #include "DataList_Battle.h"
 #include "Character_Base.h"
+#include "Buff_Debuff.h"
 
 // コンストラクタ
 Card_Base::Card_Base()
@@ -67,6 +68,18 @@ void Card_Base::BattleAction()
 	/* プレイヤーを取得できていないならプレイヤーを取得する */
 	CheckHavePlayer();
 
+	/* 攻撃力バフを所持しているなら、その残りターン数を取得する */
+	int Strength_Buff_Time = 0;
+	std::shared_ptr<Character_Buff_Debuff_Base> StrengthBuff = this->pPlayer->CheckGet_Buff_Debuff("Buff_Strength");
+	if (StrengthBuff != nullptr)
+	{
+		Strength_Buff_Time = StrengthBuff->Buff_Debuff_Time;
+	}
+
+	/* 与ダメージ量を先に算出 */
+	// 基礎攻撃力+カードの攻撃力バフ+プレイヤーの攻撃力バフの残りターン数(残りターン数分だけダメージが増えるため)
+	int DamageAmount = this->Strength + this->Strength_Buff + Strength_Buff_Time;
+
 	/* 攻撃力が1以上であるか確認 */
 	if (this->Strength + this->Strength_Buff > 0)
 	{
@@ -88,7 +101,7 @@ void Card_Base::BattleAction()
 							std::shared_ptr<Action_Effect_Attack> addEffect = std::make_shared<Action_Effect_Attack>();
 							addEffect->Target_Camp		= Character_Base::CAMP_ENEMY;			// 効果対象の陣営:敵
 							addEffect->Target_Position	= i;									// 効果対象の立ち位置:確認した敵キャラクターの位置
-							addEffect->DamageAmount		= this->Strength + this->Strength_Buff;	// ダメージ量:カードの攻撃力
+							addEffect->DamageAmount		= DamageAmount;							// ダメージ量:カードの攻撃力
 							addEffect->AllRange			= false;								// 全体攻撃でない
 							addEffect->EffectUser		= this->pPlayer;						// 効果の使用者:プレイヤーキャラクター
 							addEffect->Priority			= 100 - this->GetMyAreaNo();			// 100-設定されたエリア番号を優先順位に設定
@@ -118,7 +131,7 @@ void Card_Base::BattleAction()
 							std::shared_ptr<Action_Effect_Attack> addEffect = std::make_shared<Action_Effect_Attack>();
 							addEffect->Target_Camp		= Character_Base::CAMP_ENEMY;			// 効果対象の陣営:敵
 							addEffect->Target_Position	= positionNo;							// 効果対象の立ち位置:確認した敵キャラクターの位置
-							addEffect->DamageAmount		= this->Strength + this->Strength_Buff;	// ダメージ量:カードの攻撃力
+							addEffect->DamageAmount		= DamageAmount;							// ダメージ量:カードの攻撃力
 							addEffect->AllRange			= false;								// 全体攻撃でない
 							addEffect->EffectUser		= this->pPlayer;						// 効果の使用者:プレイヤーキャラクター
 							addEffect->Priority			= 100 - this->GetMyAreaNo();			// 100-設定されたエリア番号を優先順位に設定
@@ -138,7 +151,7 @@ void Card_Base::BattleAction()
 					std::shared_ptr<Action_Effect_Attack> addEffect = std::make_shared<Action_Effect_Attack>();
 					addEffect->Target_Camp		= Character_Base::CAMP_ENEMY;			// 効果対象の陣営:敵
 					addEffect->Target_Position	= 0;									// 効果対象の立ち位置:無し
-					addEffect->DamageAmount		= this->Strength + this->Strength_Buff;	// ダメージ量:カードの攻撃力
+					addEffect->DamageAmount		= DamageAmount;							// ダメージ量:カードの攻撃力
 					addEffect->AllRange			= true;									// 全体攻撃である
 					addEffect->EffectUser		= this->pPlayer;						// 効果の使用者:プレイヤーキャラクター
 					addEffect->Priority			= 100 - this->GetMyAreaNo();			// 100-設定されたエリア番号を優先順位に設定
@@ -152,14 +165,24 @@ void Card_Base::BattleAction()
 	/* 防御力が1以上であるか確認 */
 	if (this->Diffence + this->Diffence_Buff > 0)
 	{
-		/* 自陣営の全キャラクターに防御力分のシールドを付与する */
+		/* 自身に防御力分のシールドを付与する */
+		// プレイヤーの立ち位置を取得
+		int PlayerPosition = 0;
+		for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
+		{
+			if (this->pDataList_Battle->GetFriendCharacter(i) == this->pPlayer)
+			{
+				PlayerPosition = i;
+				break;
+			}
+		}
 		// シールド付与を設定する
 		std::shared_ptr<Action_Effect_Defence> addEffect = std::make_shared<Action_Effect_Defence>();
 		addEffect->Target_Camp		= Character_Base::CAMP_FRIEND;			// 効果対象の陣営:仲間
-		addEffect->Target_Position	= 0;									// 効果対象の立ち位置:無し
+		addEffect->Target_Position	= PlayerPosition;						// 効果対象の立ち位置:プレイヤーの位置
 		addEffect->ShieldAmount		= this->Diffence + this->Diffence_Buff;	// シールド付与量:カードの防御力
 		addEffect->EffectUser		= this->pPlayer;						// 効果の使用者:プレイヤーキャラクター
-		addEffect->AllRange			= true;									// 全体付与である
+		addEffect->AllRange			= false;								// 自身のみ
 		addEffect->Priority			= 100 - this->GetMyAreaNo();			// 100-設定されたエリア番号を優先順位に設定
 		addEffect->EffectCard		= shared_from_this();					// 効果を使用するカード:このカード
 		this->pDataList_Battle->AddEffect(addEffect);
@@ -438,6 +461,23 @@ void Card_Base::Reset_Buff()
 
 	/* 画像更新 */
 	UpdateImage();
+}
+
+// 対象のスートを所持しているか確認
+bool Card_Base::CheckSute(std::string SuiteName)
+{
+	// 引数
+	// SuiteName	<- 確認するスートの名称
+
+	/* スートが存在するか確認 */
+	for (int i = 0; i < this->Suite_List.size(); i++)
+	{
+		if (this->Suite_List[i] == SuiteName)
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 // 座標補完処理

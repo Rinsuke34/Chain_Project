@@ -16,6 +16,10 @@ Card_Arms_Base::Card_Arms_Base() : Card_Base()
 {
 	/* カード情報の設定 */
 	this->iCardType = Card_Base::TYPE_ARMS;	// カード種類:武具
+
+	/* ステータス描写の基本色の設定 */
+	this->StatusDrawBaseColor[0] = GetColor(255, 255, 255);
+	this->StatusDrawBaseColor[1] = GetColor(255, 255, 255);
 }
 
 // 攻撃力バフ追加
@@ -244,7 +248,7 @@ void Card_Arms_Base::DrawExText()
 		(IMAGE_SIZE_WIDTH / 2) - (iSizeX / 2) + ARMS_ATTACK_X_POS,
 		(IMAGE_SIZE_HEIGHT / 2) - (CARD_HEIGHT / 2) + ARMS_STATUS_Y_POS - (iSizeY / 2),
 		strAttack.c_str(),
-		this->Strength_Buff == 0 ? GetColor(255, 255, 255) : GetColor(255, 255, 0),
+		this->Strength_Buff == 0 ? this->StatusDrawBaseColor[0] : GetColor(255, 255, 0),
 		giFont_JF_Dot_MPlus10_24
 	);
 
@@ -259,7 +263,7 @@ void Card_Arms_Base::DrawExText()
 		(IMAGE_SIZE_WIDTH / 2) - (iSizeX / 2) + ARMS_DIFFENSE_X_POS,
 		(IMAGE_SIZE_HEIGHT / 2) - (CARD_HEIGHT / 2) + ARMS_STATUS_Y_POS - (iSizeY / 2),
 		strDiffence.c_str(),
-		this->Diffence_Buff == 0 ? GetColor(255, 255, 255) : GetColor(255, 255, 0),
+		this->Diffence_Buff == 0 ? this->StatusDrawBaseColor[1] : GetColor(255, 255, 0),
 		giFont_JF_Dot_MPlus10_24
 	);
 }
