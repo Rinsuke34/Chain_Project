@@ -85,6 +85,8 @@ class Scene_Battle : public Scene_Base
 		Struct_2D::POSITION									ActionCardArea_Anim_CenterPos;	// 行動中のカードの強調表示アニメーションの中心座標
 		int													ActionCard_Emphasis_AnimCount;	// 戦闘行動カード強調表示アニメーションのカウント
 		bool												BattleSpeedDoubleFlg;			// 戦闘スピード倍速フラグ
+		bool												NumberDrawFlg_Deck;				// 山札の枚数描写フラグ
+		bool												NumberDrawFlg_Trash;			// 捨て札の枚数描写フラグ
 		// 画像
 		std::shared_ptr<int> Image_BattleArea[2];										// バトルエリア[0:通常時, 1:カーソル接触時]
 		std::shared_ptr<int> Image_BattleArea_Emphasis_Anim[EMPHASIS_ANIMATION_MAX];	// バトルエリア(カーソル接触時のアニメーション)[0～3]
@@ -141,4 +143,5 @@ class Scene_Battle : public Scene_Base
 		void Update_ActionCardArea();										// 行動中のカードの強調表示アニメーションの更新
 		void ShuffledDeck();												// デッキのシャッフル処理
 		void Update_DoubleSpeedButton();									// 戦闘スピード倍速ボタンの更新処理
+		void Draw_Number();													// 山札、トラッシュの枚数描写
 };

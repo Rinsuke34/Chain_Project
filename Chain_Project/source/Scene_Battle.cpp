@@ -28,6 +28,8 @@ Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 50, false, false)
 	this->ActionCardInAreaNo			= -1;		// 行動中のカードが設定されているバトルエリアの番号
 	this->ActionCard_Emphasis_AnimCount	= 0;		// 戦闘行動カード強調表示アニメーションのカウント
 	this->BattleSpeedDoubleFlg			= false;	// 戦闘スピード倍速フラグ
+	this->NumberDrawFlg_Deck			= false;	// 山札の枚数描写フラグ
+	this->NumberDrawFlg_Trash			= false;	// 捨て札の枚数描写フラグ
 	for (int i = 0; i < 4; i++)
 	{
 		this->Chain_Anim_Count[i]		= 0;		// 鎖のアニメーションのカウント
@@ -329,4 +331,7 @@ void Scene_Battle::Draw()
 
 	/* ドロップアイテムの描写 */
 	Draw_DropItem();
+
+	/* 山札、トラッシュの枚数描写 */
+	Draw_Number();
 }

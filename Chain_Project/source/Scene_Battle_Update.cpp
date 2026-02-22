@@ -16,6 +16,8 @@
 #include "Character_Player.h"
 #include "Action_Effect.h"
 #include "Drop_Item.h"
+// 共通定義
+#include "VariableDefine.h"
 
 /* 各フェーズごとの更新処理 */
 // "ターン開始時"の効果発動
@@ -1059,6 +1061,10 @@ void Scene_Battle::Update_Chain_Anim()
 // 説明文設定
 void Scene_Battle::Update_Explanation()
 {
+	/* 各種フラグの初期化 */
+	this->NumberDrawFlg_Deck	= false;   // 山札の枚数描写フラグを初期化
+	this->NumberDrawFlg_Trash	= false;   // 捨て札の枚数描写フラグを初期化
+
 	/* 優先順位は"行動内容の説明文 > カードの説明文"とする */
 	bool ExplanationDrowFlg = false;
 
@@ -1099,7 +1105,17 @@ void Scene_Battle::Update_Explanation()
 					/* 描写フラグを有効化する */
 					ExplanationDrowFlg = true;
 				}
-				return;
+				// トラッシュ、デッキのカードである場合は、説明の代わりに枚数を表示する
+				else if (CardState == Card_Base::CARDSTATE_TRASH)
+				{
+					/* 捨て札の枚数描写フラグを有効化 */
+					this->NumberDrawFlg_Trash = true;
+				}
+				else if (CardState == Card_Base::CARDSTATE_DECK)
+				{
+					/* 山札の枚数描写フラグを有効化 */
+					this->NumberDrawFlg_Deck = true;
+				}
 			}
 		}
 	}

@@ -350,3 +350,68 @@ void Scene_Battle::Draw_DeckCard()
 		DeckCard->Draw();
 	}
 }
+
+/* 山札、トラッシュの枚数描写 */
+void Scene_Battle::Draw_Number()
+{
+	// 枠のオフセット
+	const int offsets[8][2] = {
+		{ -3, -3 }, {  0, -3 },	{  3, -3 },
+		{ -3,  0 },				{  3,  0 },
+		{ -3,  3 }, {  0,  3 }, {  3,  3 }
+	};
+
+	/* 山札の枚数の描写 */
+	if (this->NumberDrawFlg_Deck)
+	{
+		std::string DeckText = std::to_string(this->pDataList_Battle->GetDeckCardList().size()) + "枚";
+		int x = SCREEN_SIZE_WIDE - 50 - 20;
+		int y = SCREEN_SIZE_HEIGHT / 2 + 100 - 10;
+
+		// 黒枠を描写
+		for (int i = 0; i < 8; ++i) {
+			DrawStringToHandle(
+				x + offsets[i][0],
+				y + offsets[i][1],
+				DeckText.c_str(),
+				GetColor(0, 0, 0),
+				giFont_JF_Dot_MPlus10_20
+			);
+		}
+		// 本体（白色）を描写
+		DrawStringToHandle(
+			x,
+			y,
+			DeckText.c_str(),
+			GetColor(255, 255, 255),
+			giFont_JF_Dot_MPlus10_20
+		);
+	}
+
+	/* 捨て札の枚数の描写 */
+	if (this->NumberDrawFlg_Trash)
+	{
+		std::string TrashText = std::to_string(this->pDataList_Battle->GetTrashCardList().size()) + "枚";
+		int x = 100 - 20;
+		int y = SCREEN_SIZE_HEIGHT / 2 + 100 - 10;
+
+		// 黒枠を描写
+		for (int i = 0; i < 8; ++i) {
+			DrawStringToHandle(
+				x + offsets[i][0],
+				y + offsets[i][1],
+				TrashText.c_str(),
+				GetColor(0, 0, 0),
+				giFont_JF_Dot_MPlus10_20
+			);
+		}
+		// 本体（白色）を描写
+		DrawStringToHandle(
+			x,
+			y,
+			TrashText.c_str(),
+			GetColor(255, 255, 255),
+			giFont_JF_Dot_MPlus10_20
+		);
+	}
+}
