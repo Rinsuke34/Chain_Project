@@ -274,6 +274,17 @@ void Scene_Battle::Update()
 	else
 	{
 		// 戦闘終了の場合
+		/* プレイヤー陣営のシールドのリセット */
+		for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
+		{
+			// 仲間
+			auto FriendCharacter = this->pDataList_Battle->GetFriendCharacter(i);
+			if (FriendCharacter != nullptr)
+			{
+				FriendCharacter->ShieldReset_EndTurn();
+			}
+		}
+
 		/* 戦闘終了後の処理 */
 		if (this->iBattlePhase == BATTLE_PHASE_BATTLE_END_WIN)
 		{

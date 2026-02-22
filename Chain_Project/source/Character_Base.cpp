@@ -300,9 +300,16 @@ void Character_Base::Damage(int DamageAmount)
 	if ((OldHP - this->iHP_Now) > 0)
 	{
 		std::shared_ptr<Scene_Particles_Text> AddText = std::make_shared<Scene_Particles_Text>();
-		std::string DamageText = std::to_string(OldHP - this->iHP_Now);
+		std::string DamageText = std::to_string(DamageAmount);
+		/* テキストサイズ取得 */
+		int iSizeX = GetDrawStringWidthToHandle(DamageText.c_str(), static_cast<int>(strlenDx(DamageText.c_str())), giFont_JF_Dot_MPlus10_20_Edge);
+		int iSizeY = GetFontSizeToHandle(giFont_JF_Dot_MPlus10_20_Edge);
+		/* 中央揃え座標計算 */
+		int x = this->BasePos.iX - (iSizeX / 2);
+		int y = this->BasePos.iY - this->SizeY - HPBAR_UPPER + ((HPBAR_HEIGHT - iSizeY) / 2) + this->HPBarPosCorrectionY;
+
 		AddText->SetText(DamageText);
-		AddText->SetPosition({ this->BasePos.iX, this->BasePos.iY - this->SizeY - HPBAR_UPPER + (HPBAR_HEIGHT / 2) });
+		AddText->SetPosition({ x, y });
 		AddText->SetFontHandle(giFont_JF_Dot_MPlus10_20_Edge);
 		AddText->SetMove({ 0, -1 });
 		AddText->SetAlpha(0);
