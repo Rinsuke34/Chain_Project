@@ -18,4 +18,4 @@
 #include "Character_Npc_Dragon.h"
 #include "Character_Npc_Robot_Mother.h"
 #include "Character_Npc_Robot_Security.h"
-
+#include "Character_Npc_Servant.h"

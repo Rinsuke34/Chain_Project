@@ -37,6 +37,7 @@ class Card_Base : public std::enable_shared_from_this<Card_Base>
 		virtual void	Reset_Buff();														// バフのリセット処理
 		virtual bool	CheckSute(std::string SuiteName);									// 対象のスートを所持しているか確認
 		virtual void	Effect_BattleStart() {};											// 効果発動:戦闘開始時
+		virtual int		MyChainCountGet_Buff();												// バフ込みでの現在のチェイン数
 		
 		/* セッター */
 		// カード情報
@@ -186,5 +187,4 @@ class Card_Base : public std::enable_shared_from_this<Card_Base>
 		virtual void	CheckHavePlayer();		// プレイヤーを取得しているか確認
 		virtual void	Complement_Position();	// 座標補完処理
 		virtual void	Complement_Rotate();	// 回転補完処理
-		virtual int		MyChainCountGet_Buff();	// バフ込みでの現在のチェイン数
 };

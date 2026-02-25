@@ -12,6 +12,7 @@
 #include "Scene_UI_Button.h"
 #include "Card_Base.h"
 #include "Scene_UI_ExplanationText.h"
+#include "DataList_SaveData.h"
 
 /* 商品クラス */
 // コンストラクタ
@@ -22,6 +23,13 @@ Shop_Item::Shop_Item(std::shared_ptr<Card_Base> card, int price)
 	this->ItemPrice				= price;	// 商品価格
 	this->SoldOutFlg			= false;	// 売り切れフラグ
 	this->CardCenterPosition	= { 0, 0 }; // カード中心位置
+
+	/* プレイヤーが商人であるなら商品価格を半額にする */
+	std::shared_ptr<DataList_SaveData> pDataList_SaveData = std::dynamic_pointer_cast<DataList_SaveData>(gpDataListServer->GetDataList("DataList_SaveData"));
+	if (pDataList_SaveData->GetPlayerClassNo() == DataList_SaveData::CLASS_MARCHANT)
+	{
+		this->ItemPrice /= 2;
+	}
 }
 
 /* ショップクラス */

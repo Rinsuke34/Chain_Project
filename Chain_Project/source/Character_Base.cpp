@@ -12,6 +12,7 @@
 #include "Buff_Debuff.h"
 #include "Action_Effect.h"
 #include "Card_Include.h"
+#include "DataList_SaveData.h"
 
 // コンストラクタ
 Character_Base::Character_Base()
@@ -201,12 +202,12 @@ void Character_Base::Draw_StatusBar()
 		std::string TurnText = std::to_string(this->Buff_Debuff_List[i]->Buff_Debuff_Time);
 
 		// 文字サイズ取得
-		int textWidth	= GetDrawStringWidthToHandle(TurnText.c_str(), static_cast<int>(strlenDx(TurnText.c_str())), giFont_JF_Dot_MPlus10_16);
-		int textHeight	= GetFontSizeToHandle(giFont_JF_Dot_MPlus10_16);
+		int textWidth = GetDrawStringWidthToHandle(TurnText.c_str(), static_cast<int>(strlenDx(TurnText.c_str())), giFont_JF_Dot_MPlus10_16);
+		int textHeight = GetFontSizeToHandle(giFont_JF_Dot_MPlus10_16);
 
-		// 中央揃え座標
-		int baseX = this->BasePos.iX - (HPBAR_WIDE / 2) + (i * 32) + 8 - (textWidth / 2);
-		int baseY = this->BasePos.iY - (HPBAR_WIDE) - 64 + this->HPBarPosCorrectionY - (textHeight / 2);
+		// 中央揃え座標（アイコンの中心に配置）
+		int baseX = this->BasePos.iX - (HPBAR_WIDE / 2) + (i * 32) + 16 - (textWidth / 2);
+		int baseY = this->BasePos.iY - (this->SizeY) - 64 + 16 + this->HPBarPosCorrectionY - (textHeight / 2);
 
 		// 8方向オフセット
 		const int offsets[8][2] = {
@@ -769,8 +770,17 @@ void Character_Base::DropItemSet(int Rank)
 	// Rank : ドロップ品のランク
 
 	/* ドロップするかの判定 */
-	// 50%の確率でドロップするものとする
-	if (rand() % 100 < 50)
+	// ドロップ率設定
+	// ※50%の確率でドロップするものとする
+	int DropRate = 50;
+	// 盗賊であるならば、ドロップ率を25%上昇させる
+	std::shared_ptr<DataList_SaveData> SaveData = std::dynamic_pointer_cast<DataList_SaveData>(gpDataListServer->GetDataList("DataList_SaveData"));
+	if (SaveData->GetPlayerClassNo() == DataList_SaveData::CLASS_ROGUE)
+	{
+		DropRate += 25;
+	}
+	
+	if (rand() % 100 >= DropRate)
 	{
 		// ドロップしない場合は処理を終了
 		return;

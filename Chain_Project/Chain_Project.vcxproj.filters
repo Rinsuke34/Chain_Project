@@ -538,6 +538,27 @@
     <Filter Include="ヘッダー ファイル\カード\魔法%28Spell%29\剣の加護">
       <UniqueIdentifier>{f29642d3-1e85-4513-ad03-5cc0f4d422ec}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\カード\魔法%28Spell%29\剣の加護">
+      <UniqueIdentifier>{3279210d-e2a0-42a5-9a4a-bb92c838640d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\カード\魔法%28Spell%29\火の魔法">
+      <UniqueIdentifier>{9d2f96b1-d3fd-48db-b517-2942063b88af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\カード\魔法%28Spell%29\風の魔法">
+      <UniqueIdentifier>{97a94e79-40a5-4cc6-8d0a-08f7d8fd915e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\カード\魔法%28Spell%29\大地の魔法">
+      <UniqueIdentifier>{e7636706-1289-4c3d-b4b2-58f76e1ce3d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\カード\魔法%28Spell%29\水の魔法">
+      <UniqueIdentifier>{8df9bbba-e591-4a7f-bf50-1175d271ba05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\キャラクター\NPC\使い魔%28仲間%29">
+      <UniqueIdentifier>{4455cf35-5ce9-4685-be53-77f895e99eb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\キャラクター\NPC\使い魔%28仲間%29">
+      <UniqueIdentifier>{08827045-17b0-49b4-8605-203b1cac7106}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Main.cpp">
@@ -798,20 +819,23 @@
     <ClCompile Include="source\Card_Arms_AsuraKatana.cpp">
       <Filter>ソース ファイル\カード\武具%28Arms%29\修羅刀</Filter>
     </ClCompile>
+    <ClCompile Include="source\Card_Spell_FireMagic.cpp">
+      <Filter>ソース ファイル\カード\魔法%28Spell%29\火の魔法</Filter>
+    </ClCompile>
     <ClCompile Include="source\Card_Spell_BlessingSword.cpp">
-      <Filter>ヘッダー ファイル\カード\魔法%28Spell%29\剣の加護</Filter>
+      <Filter>ソース ファイル\カード\魔法%28Spell%29\剣の加護</Filter>
     </ClCompile>
     <ClCompile Include="source\Card_Spell_WaterMagic.cpp">
-      <Filter>ヘッダー ファイル\カード\魔法%28Spell%29\水の魔法</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Card_Spell_FireMagic.cpp">
-      <Filter>ヘッダー ファイル\カード\魔法%28Spell%29\火の魔法</Filter>
+      <Filter>ソース ファイル\カード\魔法%28Spell%29\水の魔法</Filter>
     </ClCompile>
     <ClCompile Include="source\Card_Spell_EarthMagic.cpp">
-      <Filter>ヘッダー ファイル\カード\魔法%28Spell%29\大地の魔法</Filter>
+      <Filter>ソース ファイル\カード\魔法%28Spell%29\大地の魔法</Filter>
     </ClCompile>
     <ClCompile Include="source\Card_Spell_WindMagic.cpp">
-      <Filter>ヘッダー ファイル\カード\魔法%28Spell%29\風の魔法</Filter>
+      <Filter>ソース ファイル\カード\魔法%28Spell%29\風の魔法</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Character_Npc_Servant.cpp">
+      <Filter>ソース ファイル\キャラクター\NPC\使い魔%28仲間%29</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1078,6 +1102,9 @@
     </ClInclude>
     <ClInclude Include="source\Card_Spell_WindMagic.h">
       <Filter>ヘッダー ファイル\カード\魔法%28Spell%29\風の魔法</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Character_Npc_Servant.h">
+      <Filter>ヘッダー ファイル\キャラクター\NPC\使い魔%28仲間%29</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

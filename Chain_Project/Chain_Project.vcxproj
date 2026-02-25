@@ -223,6 +223,7 @@
     <ClCompile Include="source\Character_Npc_Golem_Stone.cpp" />
     <ClCompile Include="source\Character_Npc_Robot_Mother.cpp" />
     <ClCompile Include="source\Character_Npc_Robot_Security.cpp" />
+    <ClCompile Include="source\Character_Npc_Servant.cpp" />
     <ClCompile Include="source\Character_Npc_Skeleton.cpp" />
     <ClCompile Include="source\Character_Npc_Slime_Blue.cpp" />
     <ClCompile Include="source\Character_Npc_Slime_Green.cpp" />
@@ -322,6 +323,7 @@
     <ClInclude Include="source\Character_Npc_Include.h" />
     <ClInclude Include="source\Character_Npc_Robot_Mother.h" />
     <ClInclude Include="source\Character_Npc_Robot_Security.h" />
+    <ClInclude Include="source\Character_Npc_Servant.h" />
     <ClInclude Include="source\Character_Npc_Skeleton.h" />
     <ClInclude Include="source\Character_Npc_Slime_Blue.h" />
     <ClInclude Include="source\Character_Npc_Slime_Green.h" />

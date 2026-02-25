@@ -37,7 +37,7 @@ void DataList_SaveData::SaveData_Load()
 	using json = nlohmann::json;
 
 	// ファイルパス
-	const std::string filePath = "resource/SetupData/SaveData.json";
+	const std::string filePath = "resource/SaveData/SaveData.json";
 
 	std::ifstream ifs(filePath);
 	if (!ifs.is_open()) {
@@ -85,44 +85,36 @@ void DataList_SaveData::SaveData_Save()
 	using json = nlohmann::json;
 
 	// ファイルパス
-	const std::string filePath = "resource/SetupData/SaveData.json";
+	const std::string filePath = "resource/SaveData/SaveData.json";
 
-	std::ifstream ifs(filePath);
-	if (!ifs.is_open()) {
-		// ファイルが存在しない場合は何もしない
+	// JSONオブジェクトを構築
+	json j;
+
+	// PublicStateの書き込み
+	j["PublicState"] =
+	{
+		{"ClassNo", this->PlayerClassNo},
+		{"HaveExp", this->HaveExp}
+	};
+
+	// ClassStateの書き込み
+	j["ClassState"] = json::array();
+	for (int i = 0; i < CLASS_MAX; i++)
+	{
+		j["ClassState"].push_back({
+			{"ClassNo", std::to_string(i)},
+			{"Level_Hp", std::to_string(this->Level_Hp[i])},
+			{"Level_Ability", std::to_string(this->Level_Ability[i])},
+			{"Level_Deck", std::to_string(this->Level_Deck[i])}
+			});
+	}
+
+	// ファイルに書き込み
+	std::ofstream ofs(filePath);
+	if (!ofs.is_open())
+	{
+		// ファイルを開けない場合はエラー処理
 		return;
 	}
-
-	json j;
-	ifs >> j;
-
-	// PublicStateの読み込み
-	if (j.contains("PublicState")) {
-		const auto& pub = j["PublicState"];
-		if (pub.contains("ClassNo")) {
-			this->PlayerClassNo = pub["ClassNo"].get<int>();
-		}
-		if (pub.contains("HaveExp")) {
-			this->HaveExp = pub["HaveExp"].get<int>();
-		}
-	}
-
-	// ClassStateの読み込み
-	if (j.contains("ClassState") && j["ClassState"].is_array()) {
-		for (const auto& cls : j["ClassState"]) {
-			if (!cls.contains("ClassNo")) continue;
-			int classNo = std::stoi(cls["ClassNo"].get<std::string>());
-			if (classNo < 0 || classNo >= CLASS_MAX) continue;
-
-			if (cls.contains("Level_Hp")) {
-				this->Level_Hp[classNo] = std::stoi(cls["Level_Hp"].get<std::string>());
-			}
-			if (cls.contains("Level_Ability")) {
-				this->Level_Ability[classNo] = std::stoi(cls["Level_Ability"].get<std::string>());
-			}
-			if (cls.contains("Level_Deck")) {
-				this->Level_Deck[classNo] = std::stoi(cls["Level_Deck"].get<std::string>());
-			}
-		}
-	}
+	ofs << j.dump(4);  // インデント4でフォーマット
 }

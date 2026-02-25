@@ -198,11 +198,6 @@ void Scene_Battle::Update()
 			Update_PlayerActionDecision();
 			break;
 
-		// カードのチェイン数確認
-		case BATTLE_PHASE_CARD_CHAIN_CHECK:
-			Update_CardChainCheck();
-			break;
-
 		// "行動開始時"の効果発動
 		case BATTLE_PHASE_EFFECT_ACTION_START:
 			Update_EffectActionStart();
@@ -239,7 +234,6 @@ void Scene_Battle::Update()
 			BattleEndFlg = true;
 			break;
 	}
-
 	/* カードの設定座標の設定 */
 	CardPosition_HandSetSettingPosting();
 
@@ -256,6 +250,9 @@ void Scene_Battle::Update()
 
 	/* キャラクターが死亡しているか確認 */
 	Character_Death_Delete_Check();
+
+	/* カードのチェイン数確認 */
+	Update_CardChainCheck();
 
 	/* 鎖のアニメーション更新 */
 	Update_Chain_Anim();
@@ -350,4 +347,7 @@ void Scene_Battle::Draw()
 
 	/* 山札、トラッシュの枚数描写 */
 	Draw_Number();
+
+	/* チェイン数の描写 */
+	Draw_ChainNo();
 }

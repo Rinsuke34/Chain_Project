@@ -159,6 +159,7 @@ void Scene_Battle::Draw_Chain()
 				StartPos.iX -= 60;
 				EndPos.iX	+= 60;
 				DRAW_FUNCTION::DrawChain_Anim(StartPos, EndPos, this->Chain_Anim_Count[3]);
+
 				// 2:左下から右上
 				StartPos	= BattleAreaPos_Left;
 				EndPos		= BattleAreaPos_Right;
@@ -167,12 +168,14 @@ void Scene_Battle::Draw_Chain()
 				StartPos.iX += 60;
 				EndPos.iX	-= 60;
 				DRAW_FUNCTION::DrawChain_Anim(StartPos, EndPos, this->Chain_Anim_Count[2]);
+
 				// 1:ちょっと右上からちょっと左下
 				StartPos	= BattleAreaPos_Right;
 				EndPos		= BattleAreaPos_Left;
 				StartPos.iY	-= 40;
 				EndPos.iY	+= 40;
 				DRAW_FUNCTION::DrawChain_Anim(StartPos, EndPos, this->Chain_Anim_Count[1]);
+
 				// 0:ちょっと左上からちょっと右下
 				StartPos	= BattleAreaPos_Left;
 				EndPos		= BattleAreaPos_Right;
@@ -225,10 +228,10 @@ void Scene_Battle::Draw_BattleArea()
 
 		/* 番号の背景 */
 		DrawExtendGraph(
-			(SCREEN_SIZE_WIDE / 2)	- (200 / 2) + (BATTLE_AREA_INTERVAL * (i - 2)),
-			BATTLE_AREA_POS_Y		- (BATTLE_AREA_HEIGHT / 2) - (100),
-			(SCREEN_SIZE_WIDE / 2)	+ (200 / 2) + (BATTLE_AREA_INTERVAL * (i - 2)),
-			BATTLE_AREA_POS_Y		- (BATTLE_AREA_HEIGHT / 2),
+			(SCREEN_SIZE_WIDE / 2)	- (64 / 2) + (BATTLE_AREA_INTERVAL * (i - 2))	- 20,
+			BATTLE_AREA_POS_Y		- (BATTLE_AREA_HEIGHT / 2) - 50 - (64 / 2)		- 20,
+			(SCREEN_SIZE_WIDE / 2)	+ (64 / 2) + (BATTLE_AREA_INTERVAL * (i - 2))	+ 20,
+			BATTLE_AREA_POS_Y		- (BATTLE_AREA_HEIGHT / 2) - 50 + (64 / 2)		+ 20,
 			*(this->Image_BattleArea_No_Base), TRUE);
 
 		/* 番号 */
@@ -413,5 +416,102 @@ void Scene_Battle::Draw_Number()
 			GetColor(255, 255, 255),
 			giFont_JF_Dot_MPlus10_20
 		);
+	}
+}
+
+// チェイン数の描写
+void Scene_Battle::Draw_ChainNo()
+{
+	// 枠のオフセット
+	const int offsets[8][2] = {
+		{ -2, -2 }, {  0, -2 },	{  2, -2 },
+		{ -2,  0 },				{  2,  0 },
+		{ -2,  2 }, {  0,  2 }, {  2,  2 }
+	};
+
+	/* 各バトルエリアのチェイン数を描写 */
+	for (int i = 0; i < DataList_Battle::BATTLE_AREA_MAX; i++)
+	{
+		/* 設定されたカードを取得 */
+		auto BattleCard = this->pDataList_Battle->GetBattleAreaCardList(i);
+
+		/* カードが設定されているか確認 */
+		if (BattleCard != nullptr)
+		{
+			/* チェイン数を取得 */
+			int ChainNo = BattleCard->GetNowChainCount();
+
+			/* チェイン数が0より大きいなら描写する */
+			if (ChainNo > 0)
+			{
+				/* 枠を描写 */
+				SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128); // 半透明モードを設定(0-255, 128=50%透明)
+				DrawBox(
+					BattleCard->GetNowPos().iX - 65, BattleCard->GetNowPos().iY - 5,
+					BattleCard->GetNowPos().iX + 65, BattleCard->GetNowPos().iY + 25,
+					GetColor(0, 0, 0), TRUE);
+				SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0); // ブレンドモードを元に戻す
+
+				std::string ChainText = std::to_string(ChainNo) + "チェイン";
+				int x = BattleCard->GetNowPos().iX - 50;
+				int y = BattleCard->GetNowPos().iY;
+
+				/* チェイン数が実際の値と異なる場合、再分を描写 */
+				int ActualChainNo = BattleCard->MyChainCountGet_Buff();
+				if (ChainNo != ActualChainNo)
+				{
+					// チェイン数の差分を描写
+					std::string ChainDiffText = ((ActualChainNo - ChainNo) > 0 ? "+" : "") + std::to_string(ActualChainNo - ChainNo) + "チェイン";
+					int diffX = x + 20;	// チェイン数の差分はチェイン数の右側に描写
+					int diffY = y + 20;	// チェイン数の差分はチェイン数の右側に描写
+
+					/* 枠を描写 */
+					SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128); // 半透明モードを設定(0-255, 128=50%透明)
+					DrawBox(
+						diffX - 10, diffY - 5,
+						diffX + 110, diffY + 25,
+						GetColor(0, 0, 0), TRUE);
+					SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0); // ブレンドモードを元に戻す
+
+					// 黒枠を描写
+					for (int j = 0; j < 8; ++j) {
+						DrawStringToHandle(
+							diffX + offsets[j][0],
+							diffY + offsets[j][1],
+							ChainDiffText.c_str(),
+							GetColor(0, 0, 0),
+							giFont_JF_Dot_MPlus10_20
+						);
+					}
+					// 本体（白色）を描写
+					DrawStringToHandle(
+						diffX,
+						diffY,
+						ChainDiffText.c_str(),
+						GetColor((ActualChainNo - ChainNo) > 0 ? 0 : 255, (ActualChainNo - ChainNo) > 0 ? 255 : 0, 0), // 増加なら緑、減少なら赤
+						giFont_JF_Dot_MPlus10_20
+					);
+				}
+
+				// 黒枠を描写
+				for (int j = 0; j < 8; ++j) {
+					DrawStringToHandle(
+						x + offsets[j][0],
+						y + offsets[j][1],
+						ChainText.c_str(),
+						GetColor(0, 0, 0),
+						giFont_JF_Dot_MPlus10_20
+					);
+				}
+				// 本体（白色）を描写
+				DrawStringToHandle(
+					x,
+					y,
+					ChainText.c_str(),
+					GetColor(255, 255, 0),
+					giFont_JF_Dot_MPlus10_20
+				);
+			}
+		}
 	}
 }

@@ -94,14 +94,14 @@ void Character_Npc_Slime_Red::Action_Extra()
 			{
 				// 所持しているなら
 				/* 残りターン数を+5する */
-				Strength->Buff_Debuff_Time += 5;	// 残りターン数 + 5
+				Strength->Buff_Debuff_Time += 3;	// 残りターン数 + 3
 			}
 			else
 			{
 				// 所持していないなら
 				/* "状態異常：攻撃力強化"を付与する */
 				std::shared_ptr<Character_Buff_Strength> New_Strength_Debuff = std::make_shared<Character_Buff_Strength>();
-				New_Strength_Debuff->Buff_Debuff_Time	= 5;	// 残りターン数 =  5
+				New_Strength_Debuff->Buff_Debuff_Time	= 3;	// 残りターン数 =  3
 				EnemyCharacter->Add_Buff_Debuff(New_Strength_Debuff);
 			}
 		}

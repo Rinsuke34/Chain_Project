@@ -16,6 +16,7 @@
 #include "Character_Player.h"
 #include "Action_Effect.h"
 #include "Drop_Item.h"
+#include "DataList_SaveData.h"
 // 共通定義
 #include "VariableDefine.h"
 
@@ -78,9 +79,18 @@ void Scene_Battle::Update_EffectTurnStart()
 // カードドロー
 void Scene_Battle::Update_DrawCard()
 {
-	/* ドロー処理 */
 	this->bReloadFlg = false;
-	for (int i = 0; i < 5; i++)
+	int DrawCount = 5;
+
+	/* プレイヤーが旅人であるなら、ドロー枚数を+１する */
+	std::shared_ptr<DataList_SaveData> SaveData = std::dynamic_pointer_cast<DataList_SaveData>(gpDataListServer->GetDataList("DataList_SaveData"));
+	if (SaveData->GetPlayerClassNo() == DataList_SaveData::CLASS_TRAVELER)
+	{
+		DrawCount += 1;
+	}
+
+	/* ドロー処理 */
+	for (int i = 0; i < DrawCount; i++)
 	{
 		/* デッキにカードが存在するか確認 */
 		if (this->pDataList_Battle->GetDeckCardList().size() > 0)
@@ -150,8 +160,8 @@ void Scene_Battle::Update_PlayerActionDecision()
 	/* リロードフラグが有効ならばこのフェーズをスキップする */
 	if (this->bReloadFlg)
 	{
-		/* "カードチェイン数確認"フェイズへ遷移 */
-		this->iBattlePhase = BATTLE_PHASE_CARD_CHAIN_CHECK;
+		/* "行動開始時の効果発動"フェイズへ遷移 */
+		this->iBattlePhase = BATTLE_PHASE_EFFECT_ACTION_START;
 		return;
 	}
 
@@ -259,8 +269,8 @@ void Scene_Battle::Update_PlayerActionDecision()
 	/* "決定"ボタンが入力されたならば */
 	if (this->UI_DecisionButton->GetMouseOverFlg() && (gstKeyboardInputData.igInput[INPUT_TRG] & MOUSE_INPUT_LEFT))
 	{
-		/* "カードチェイン数確認"フェイズへ遷移 */
-		this->iBattlePhase = BATTLE_PHASE_CARD_CHAIN_CHECK;
+		/* "行動開始時の効果発動"フェイズへ遷移 */
+		this->iBattlePhase = BATTLE_PHASE_EFFECT_ACTION_START;
 	}
 }
 
@@ -268,50 +278,40 @@ void Scene_Battle::Update_PlayerActionDecision()
 void Scene_Battle::Update_CardChainCheck()
 {
 	/* 各バトルエリアにチェイン数を設定する */
-	int CheckStartAreaNo	= -1;
-	int CheinCount			= 0;
+	int ChainCount = 0;
+
 	for (int BattleAreaNo = 0; BattleAreaNo < DataList_Battle::BATTLE_AREA_MAX; BattleAreaNo++)
 	{
-		/* 確認開始エリア番号が無効であるか */
-		if (CheckStartAreaNo == -1)
-		{
-			// 無効である場合
-			/* カードが設定されているならその地点を確認開始箇所とする */
-			if (this->pDataList_Battle->GetBattleAreaCardList(BattleAreaNo))
-			{
-				CheckStartAreaNo	= BattleAreaNo;
-				CheinCount			= 0;
-			}
-		}
-		else
-		{
-			// 有効である場合
-			/* 前のバトルエリアのカードとチェインがつながっているか確認 */
-			if (this->pDataList_Battle->GetChain_Suite_List(BattleAreaNo - 1).size() > 0)
-			{
-				// つながっている場合
-				/* チェインカウントを加算する */
-				CheinCount += this->pDataList_Battle->GetChain_Suite_List(BattleAreaNo - 1).size();
+		/* 現在のバトルエリアのカードを取得 */
+		std::shared_ptr<Card_Base> CurrentCard = this->pDataList_Battle->GetBattleAreaCardList(BattleAreaNo);
 
-				/* 現在のバトルエリアのカードにチェイン数を設定 */
-				this->pDataList_Battle->GetBattleAreaCardList(BattleAreaNo)->SetNowChainCount(CheinCount);
+		/* カードが存在しない場合はチェイン数をリセット */
+		if (CurrentCard == nullptr)
+		{
+			ChainCount = 0;
+			continue;
+		}
+
+		/* 現在のカードにチェイン数を設定 */
+		CurrentCard->SetNowChainCount(ChainCount);
+
+		/* 次のバトルエリアとのチェイン判定 */
+		if (BattleAreaNo < DataList_Battle::BATTLE_AREA_MAX - 1)
+		{
+			/* 次のエリアとのチェイン状態を確認 */
+			std::vector<std::string> ChainSuiteList = this->pDataList_Battle->GetChain_Suite_List(BattleAreaNo);
+			if (ChainSuiteList.size() > 0)
+			{
+				// チェインが繋がっている場合、次のカードのためにカウントを加算
+				ChainCount += static_cast<int>(ChainSuiteList.size());
 			}
 			else
 			{
-				// つながっていない場合
-				/* カードが設定されているならその地点を確認開始箇所とする */
-				CheckStartAreaNo	= -1;
-				CheinCount			= 0;
-				if (this->pDataList_Battle->GetBattleAreaCardList(BattleAreaNo))
-				{
-					CheckStartAreaNo = BattleAreaNo;
-				}
+				// チェインが途切れた場合、カウントをリセット
+				ChainCount = 0;
 			}
 		}
 	}
-
-	/* "行動開始時の効果発動"フェイズへ遷移 */
-	this->iBattlePhase = BATTLE_PHASE_EFFECT_ACTION_START;
 }
 
 // "行動開始時"の効果発動

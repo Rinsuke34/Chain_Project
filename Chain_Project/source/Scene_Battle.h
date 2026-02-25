@@ -36,16 +36,15 @@ class Scene_Battle : public Scene_Base
 		static const int	BATTLE_PHASE_DRAW_CARD				= 1;	// カードドロー
 		static const int	BATTLE_PHASE_ENEMY_ACTION_DECISION	= 2;	// 敵の行動決定
 		static const int	BATTLE_PHASE_PLAYER_ACTION_DECISION	= 3;	// プレイヤーの行動決定
-		static const int	BATTLE_PHASE_CARD_CHAIN_CHECK		= 4;	// カードのチェイン数確認
-		static const int	BATTLE_PHASE_EFFECT_ACTION_START	= 5;	// "行動開始時"の効果発動
-		static const int	BATTLE_PHASE_BATTLE_ACTION_DECISION = 6;	// 戦闘行動の決定
-		static const int	BATTLE_PHASE_BATTLE_ACTION			= 7;	// 戦闘行動
-		static const int	BATTLE_PHASE_BATTLE_ACTION_DELETE	= 8;	// 戦闘行動の削除
-		static const int	BATTLE_PHASE_EFFECT_TRUN_END		= 9;	// "ターン終了時"の効果発動
-		static const int	BATTLE_PHASE_STATUS_EFFECT_ADVANCE	= 10;	// 状態変化のターン進行
-		static const int	BATTLE_PHASE_BATTLE_END_WIN			= 11;	// 戦闘終了(プレイヤー勝利)
-		static const int	BATTLE_PHASE_BATTLE_END_GAMEOVER	= 12;	// 戦闘終了(プレイヤー敗北)
-		static const int	BATTLE_PHASE_MAX					= 13;	// バトルフェーズ総数
+		static const int	BATTLE_PHASE_EFFECT_ACTION_START	= 4;	// "行動開始時"の効果発動
+		static const int	BATTLE_PHASE_BATTLE_ACTION_DECISION = 5;	// 戦闘行動の決定
+		static const int	BATTLE_PHASE_BATTLE_ACTION			= 6;	// 戦闘行動
+		static const int	BATTLE_PHASE_BATTLE_ACTION_DELETE	= 7;	// 戦闘行動の削除
+		static const int	BATTLE_PHASE_EFFECT_TRUN_END		= 8;	// "ターン終了時"の効果発動
+		static const int	BATTLE_PHASE_STATUS_EFFECT_ADVANCE	= 9;	// 状態変化のターン進行
+		static const int	BATTLE_PHASE_BATTLE_END_WIN			= 10;	// 戦闘終了(プレイヤー勝利)
+		static const int	BATTLE_PHASE_BATTLE_END_GAMEOVER	= 11;	// 戦闘終了(プレイヤー敗北)
+		static const int	BATTLE_PHASE_MAX					= 12;	// バトルフェーズ総数
 		// 座標関係
 		static const int	BATTLE_AREA_INTERVAL				= 300;	// バトルエリアの間隔
 		static const int	BATTLE_AREA_POS_Y					= 600;	// バトルエリアのY座標
@@ -124,6 +123,8 @@ class Scene_Battle : public Scene_Base
 		void Draw_HoldCard();					// ホールド中のカードを描写
 		void Draw_TrashCard();					// 捨て札のカードの描写
 		void Draw_DeckCard();					// 山札のカードの描写
+		void Draw_Number();						// 山札、トラッシュの枚数描写
+		void Draw_ChainNo();					// チェイン数の描写
 		// その他
 		void CardPosition_HandSetSettingPosting();							// 手札のカード設定座標の設定
 		void CardPosition_DeckSetSettingPosting();							// デッキのカード設定座標の設定
@@ -137,7 +138,6 @@ class Scene_Battle : public Scene_Base
 		void CheckGameEnd();												// 戦闘が終了しているかの確認
 		void Trash_UseCard(std::shared_ptr<Action_Effect_Base> pEffect);	// 効果を使用したカードのトラッシュ処理
 		void Update_EmphasisAnim();											// バトルエリアのカーソル接触時のアニメーションを設定
-		void Update_DropItem();												// ドロップアイテムの更新処理
 		void Draw_DropItem();												// ドロップアイテムの描写処理
 		void Create_DropItem();												// ドロップアイテムの作成処理
 		void Update_Chain_Anim();											// 鎖のアニメーションの更新
@@ -145,5 +145,5 @@ class Scene_Battle : public Scene_Base
 		void Update_ActionCardArea();										// 行動中のカードの強調表示アニメーションの更新
 		void ShuffledDeck();												// デッキのシャッフル処理
 		void Update_DoubleSpeedButton();									// 戦闘スピード倍速ボタンの更新処理
-		void Draw_Number();													// 山札、トラッシュの枚数描写
+		void Update_DropItem();												// ドロップアイテムの更新処理
 };

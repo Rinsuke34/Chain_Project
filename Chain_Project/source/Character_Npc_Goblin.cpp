@@ -33,7 +33,7 @@ void Character_Npc_Goblin::Action()
 	int RandAction = GetRand(1);
 	switch (RandAction)
 	{
-		/* 全体に毒付与 */
+		/* 全体に能力強化 */
 		case 0:
 			{
 				/* 特殊行動を設定する */
@@ -99,14 +99,14 @@ void Character_Npc_Goblin::Action_Extra()
 			{
 				// 所持しているなら
 				/* 残りターン数を+5する */
-				Strength->Buff_Debuff_Time += 3;	// 残りターン数 + 3
+				Strength->Buff_Debuff_Time += 2;	// 残りターン数 + 2
 			}
 			else
 			{
 				// 所持していないなら
 				/* "状態異常：攻撃力強化"を付与する */
 				std::shared_ptr<Character_Buff_Debuff_Base> Strength = std::make_shared<Character_Buff_Strength>();
-				Strength->Buff_Debuff_Time = 3;	// 残りターン数 =  3
+				Strength->Buff_Debuff_Time = 2;	// 残りターン数 =  2
 				Enemy->Add_Buff_Debuff(Strength);
 			}
 
@@ -116,14 +116,14 @@ void Character_Npc_Goblin::Action_Extra()
 			{
 				// 所持しているなら
 				/* 残りターン数を+3する */
-				Defence->Buff_Debuff_Time += 3;	// 残りターン数 + 3
+				Defence->Buff_Debuff_Time += 2;	// 残りターン数 + 2
 			}
 			else
 			{
 				// 所持していないなら
 				/* "状態異常：防御力強化"を付与する */
 				std::shared_ptr<Character_Buff_Debuff_Base> Defence = std::make_shared<Character_Buff_Diffence>();
-				Defence->Buff_Debuff_Time = 3;	// 残りターン数	=  3
+				Defence->Buff_Debuff_Time = 2;	// 残りターン数	=  2
 				Enemy->Add_Buff_Debuff(Defence);
 			}
 		}

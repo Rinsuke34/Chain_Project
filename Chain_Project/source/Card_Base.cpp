@@ -10,8 +10,10 @@
 #include "Scene_Particles_Text.h"
 #include "DataList_Image.h"
 #include "DataList_Battle.h"
+#include "DataList_SaveData.h"
 #include "Character_Base.h"
 #include "Buff_Debuff.h"
+#include "Character_Player.h"
 
 // コンストラクタ
 Card_Base::Card_Base()
@@ -365,10 +367,17 @@ void Card_Base::CheckHavePlayer()
 		// バトル用データリストからプレイヤーキャラクターを取得する
 		for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
 		{
-			if (this->pDataList_Battle->GetFriendCharacter(i))
+			std::shared_ptr<Character_Base> pCharacter = this->pDataList_Battle->GetFriendCharacter(i);
+			if (pCharacter != nullptr)
 			{
-				this->pPlayer = this->pDataList_Battle->GetFriendCharacter(i);
-				break;
+				// Character_Playerにキャストできるか確認
+				std::shared_ptr<Character_Player> pPlayerCandidate = std::dynamic_pointer_cast<Character_Player>(pCharacter);
+				if (pPlayerCandidate != nullptr)
+				{
+					// キャスト成功 = プレイヤーキャラクター
+					this->pPlayer = pCharacter;
+					break;
+				}
 			}
 		}
 	}
@@ -528,12 +537,61 @@ int	Card_Base::MyChainCountGet_Buff()
 	// 戻り値
 	// int <- バフ込みでの現在のチェイン数
 
+	int Chain = this->iNowChainCount;
+
 	/* データリストが無効であるならば0を返す */
 	if (this->pDataList_Battle == nullptr)
 	{
 		return 0;
 	}
 
-	int Chain = this->iNowChainCount;
+	/* 各クラスに応じた処理 */
+	// データリスト取得
+	std::shared_ptr<DataList_SaveData> SaveData = std::dynamic_pointer_cast<DataList_SaveData>(gpDataListServer->GetDataList("DataList_SaveData"));
+	// メイン処理
+	switch (SaveData->GetPlayerClassNo())
+	{
+		// 旅人
+		case DataList_SaveData::CLASS_TRAVELER:
+			// スート：たびびとを所持しているならチェイン数をレベル分加算
+			if (CheckSute("Traveler"))
+			{
+				Chain += SaveData->GetLevel_Ability(DataList_SaveData::CLASS_TRAVELER);
+			}
+			break;
+
+		// 剣士
+		case DataList_SaveData::CLASS_SWORDSMAN:
+			// スート：剣 を所持しているならチェイン数をレベル分加算
+			if (CheckSute("Sword"))
+			{
+				Chain += SaveData->GetLevel_Ability(DataList_SaveData::CLASS_SWORDSMAN);
+			}
+			break;
+
+		// 魔法使い
+		case DataList_SaveData::CLASS_WIZARD:
+			// カードタイプが魔法であるならチェイン数をレベル分加算
+			if (GetCardType() == TYPE_SPELL)
+			{
+				Chain += SaveData->GetLevel_Ability(DataList_SaveData::CLASS_WIZARD);
+			}
+			break;
+
+		// 盗賊
+		case DataList_SaveData::CLASS_ROGUE:
+			// 無し
+			break;
+
+		// 商人
+		case DataList_SaveData::CLASS_MARCHANT:
+			// カードタイプがアイテムであるならチェイン数をレベル分加算
+			if (GetCardType() == TYPE_ITEM)
+			{
+				Chain += SaveData->GetLevel_Ability(DataList_SaveData::CLASS_MARCHANT);
+			}
+			break;
+	}
+
 	return Chain;
 }
