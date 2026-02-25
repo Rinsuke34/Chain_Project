@@ -14,5 +14,5 @@ class Card_Item_TravelerCompass : public Card_Item_Base
 		virtual ~Card_Item_TravelerCompass() {};	// デストラクタ
 
 		/* 関数 */
-		virtual void BattleAction() override;		// 戦闘行動
+		virtual void Card_Effect_Extra_Process() override;		// カード効果(特殊効果)
 };

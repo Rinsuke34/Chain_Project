@@ -25,8 +25,8 @@ Card_Item_PowerPotion::Card_Item_PowerPotion() : Card_Item_Base()
 	this->ExplanationText = "じぶんにこうげきりょくアップじょうたいをふよ/n/cysこうかりょう/ce/nチェインすう";
 }
 
-// 戦闘行動
-void Card_Item_PowerPotion::BattleAction()
+// カード効果(特殊効果)
+void Card_Item_PowerPotion::Card_Effect_Extra_Process()
 {
 	/* プレイヤーを取得できていないならプレイヤーを取得する */
 	CheckHavePlayer();

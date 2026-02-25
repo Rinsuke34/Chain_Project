@@ -36,6 +36,7 @@ class Card_Base : public std::enable_shared_from_this<Card_Base>
 		virtual void	SetUp_DataList();													// データリストの取得処理を行う
 		virtual void	Reset_Buff();														// バフのリセット処理
 		virtual bool	CheckSute(std::string SuiteName);									// 対象のスートを所持しているか確認
+		virtual void	Effect_BattleStart() {};											// 効果発動:戦闘開始時
 		
 		/* セッター */
 		// カード情報
@@ -105,7 +106,7 @@ class Card_Base : public std::enable_shared_from_this<Card_Base>
 		inline static const std::string SUITE_DAGGER	= "Dagger";		// 短剣
 		inline static const std::string SUITE_BOW		= "Bow";		// 弓
 		inline static const std::string SUITE_DEATH		= "Death";		// 死者
-		inline static const std::string SUITE_SUMMON	= "Summon";		// 召喚
+		inline static const std::string SUITE_GOLD		= "Gold";		// 金
 		inline static const std::string SUITE_ELEMENT	= "Element";	// エレメント
 		inline static const std::string SUITE_ROYAL		= "Royal";		// 王国
 		// 画像のサイズ(実際のサイズより大きめにする)

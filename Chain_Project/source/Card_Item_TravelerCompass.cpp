@@ -23,8 +23,8 @@ Card_Item_TravelerCompass::Card_Item_TravelerCompass() : Card_Item_Base()
 	this->ExplanationText = "スート：たびびと をもつカードをやまふだから２まいドロー\nてふだのスート：たびびと をもつカードのこうげきりょくを+Xする\nXはチェインすう";
 }
 
-// 戦闘行動
-void Card_Item_TravelerCompass::BattleAction()
+// カード効果(特殊効果)
+void Card_Item_TravelerCompass::Card_Effect_Extra_Process()
 {
 	/* 山札を取得 */
 	auto DeckCardList = this->pDataList_Battle->GetDeckCardList();

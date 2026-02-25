@@ -12,6 +12,7 @@
 #include "DataList_Image.h"
 #include "DataList_Sound.h"
 #include "Character_Player.h"
+#include "Buff_Debuff.h"
 
 /* ベース */
 // コンストラクタ
@@ -99,6 +100,19 @@ Action_Effect_Attack::Action_Effect_Attack()
 // 効果実行
 void Action_Effect_Attack::ExecuteEffect()
 {
+	/* 攻撃バフの量を取得 */
+	int StrengthBuffAmount = 0;
+	if (this->EffectUser != nullptr)
+	{
+		std::shared_ptr<Character_Buff_Debuff_Base> Strength = this->EffectUser->CheckGet_Buff_Debuff("Buff_Strength");
+		if (Strength != nullptr)
+		{
+			// 攻撃バフを所持している場合
+			/* 効果時間を攻撃バフ量とする */
+			StrengthBuffAmount = Strength->Buff_Debuff_Time;
+		}
+	}
+
 	/* 行動時効果(行動直前)があるなら先に実行する */
 	if (this->Restart_State == RESTART_FIRSTRUN)
 	{
@@ -268,7 +282,7 @@ void Action_Effect_Attack::ExecuteEffect()
 					{
 						// 対象の敵キャラクターが存在する場合
 						/* ダメージ処理を実行 */
-						TargetEnemyCharacter->Damage(this->DamageAmount);
+						TargetEnemyCharacter->Damage(this->DamageAmount + StrengthBuffAmount);
 					}
 				}
 
@@ -304,7 +318,7 @@ void Action_Effect_Attack::ExecuteEffect()
 				{
 					// 対象の敵キャラクターが存在する場合
 					/* ダメージ処理を実行 */
-					TargetEnemyCharacter->Damage(this->DamageAmount);
+					TargetEnemyCharacter->Damage(this->DamageAmount + StrengthBuffAmount);
 
 					/* 攻撃リアクションを設定 */
 					if (this->EffectUser)
@@ -329,7 +343,7 @@ void Action_Effect_Attack::ExecuteEffect()
 					{
 						// 対象の仲間キャラクターが存在する場合
 						/* ダメージ処理を実行 */
-						TargetFriendCharacter->Damage(this->DamageAmount);
+						TargetFriendCharacter->Damage(this->DamageAmount + StrengthBuffAmount);
 					}
 				}
 
@@ -365,7 +379,7 @@ void Action_Effect_Attack::ExecuteEffect()
 				{
 					// 対象の仲間キャラクターが存在する場合
 					/* ダメージ処理を実行 */
-					TargetFriendCharacter->Damage(this->DamageAmount);
+					TargetFriendCharacter->Damage(this->DamageAmount + StrengthBuffAmount);
 
 					/* 攻撃リアクションを設定 */
 					if (this->EffectUser)

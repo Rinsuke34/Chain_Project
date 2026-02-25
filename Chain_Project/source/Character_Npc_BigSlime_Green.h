@@ -10,11 +10,11 @@
 class DataList_Battle;
 
 // キャラクター(スライム(巨大/緑))のクラス
-class Character_BigSlime_Green : public Character_Base
+class Character_Boss_BigSlime_Green : public Character_Base
 {
 	public:
-		Character_BigSlime_Green();				// コンストラクタ
-		virtual ~Character_BigSlime_Green() {};	// デストラクタ
+		Character_Boss_BigSlime_Green();				// コンストラクタ
+		virtual ~Character_Boss_BigSlime_Green() {};	// デストラクタ
 
 		/* 関数 */
 		virtual void Action()		override;	// 行動

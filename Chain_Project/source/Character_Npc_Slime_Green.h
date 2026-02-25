@@ -10,12 +10,12 @@
 class DataList_Battle;
 
 // キャラクター(スライム(緑))のクラス
-class Character_Slime_Green : public Character_Base
+class Character_Npc_Slime_Green : public Character_Base
 {
 	public:
-		Character_Slime_Green();				// コンストラクタ
-		virtual ~Character_Slime_Green() {};	// デストラクタ
+		Character_Npc_Slime_Green();				// コンストラクタ
+		virtual ~Character_Npc_Slime_Green() {};	// デストラクタ
 
 		/* 関数 */
-		virtual void Action() override;		// 行動
+		virtual void Action()		override;	// 行動
 };

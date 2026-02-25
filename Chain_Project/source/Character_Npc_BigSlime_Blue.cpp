@@ -8,13 +8,14 @@
 #include "Card_Include.h"
 #include "Character_Npc_Slime_Blue.h"
 #include "Character_Npc_Slime_Green.h"
+#include "Character_Npc_Slime_Red.h"
 
 // コンストラクタ
-Character_BigSlime_Green::Character_BigSlime_Green() : Character_Base()
+Character_Boss_BigSlime_Green::Character_Boss_BigSlime_Green() : Character_Base()
 {
 	/* 初期化 */
-	this->iHP_Max				= 150;							// 体力(最大値)
-	this->iHP_Now				= 150;							// 体力(現在値)
+	this->iHP_Max				= 50;							// 体力(最大値)
+	this->iHP_Now				= 50;							// 体力(現在値)
 	this->Camp					= Character_Base::CAMP_ENEMY;	// 陣営:敵陣営
 	this->SizeX					= 300;							// キャラクターの幅
 	this->SizeY					= 300;							// キャラクターの高さ
@@ -24,15 +25,17 @@ Character_BigSlime_Green::Character_BigSlime_Green() : Character_Base()
 	SetUpImage("Character_Ilust/Npc/Slime_Green");
 
 	/* ドロップするカードの設定 */
+	DropItemSet(Card_Base::RARITY_COMMON);
 	DropItemSet(Card_Base::RARITY_RARE);
+	DropItemSet(Card_Base::RARITY_EPIC);
 }
 
 // 行動
-void Character_BigSlime_Green::Action()
+void Character_Boss_BigSlime_Green::Action()
 {
 	switch (this->ActionCount)
 	{
-		/* 前衛に青スライム、中衛に緑スライムを召喚 */
+		/* 前衛と中衛にスライムを召喚 */
 		case 0:
 			{
 				/* 特殊行動を設定する */
@@ -97,29 +100,64 @@ void Character_BigSlime_Green::Action()
 }
 
 // 特殊行動(エネミーの特殊行動はこの関数を継承して行う)
-void Character_BigSlime_Green::Action_Extra()
+void Character_Boss_BigSlime_Green::Action_Extra()
 {
+
 	/* 前衛にキャラクターが存在するか確認 */
 	if (this->pDataList_Battle->GetEnemyCharacter(DataList_Battle::POSITION_FRONT) == nullptr)
 	{
 		// 存在しない場合
-		/* 前衛に青スライムを召喚 */
-		std::shared_ptr<Character_Slime_Blue> pBlueSlime = std::make_shared<Character_Slime_Blue>();
+		std::shared_ptr<Character_Base> pSummonCharacter = nullptr;
+		switch (GetRand(2))
+		{
+			case 0:
+				/* 前衛に青スライムを召喚 */
+				pSummonCharacter = std::make_shared<Character_Npc_Slime_Blue>();
+				break;
+
+			case 1:
+				/* 前衛に緑スライムを召喚 */
+				pSummonCharacter = std::make_shared<Character_Npc_Slime_Green>();
+				break;
+
+			case 2:
+				/* 前衛に赤スライムを召喚 */
+				pSummonCharacter = std::make_shared<Character_Npc_Slime_Red>();
+				break;
+		}
+
 		// ドロップアイテムを無しに設定
-		pBlueSlime->SetDropCoin(0);
-		pBlueSlime->SetDropCardList(std::vector<std::shared_ptr<Card_Base>>());
-		this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_FRONT, pBlueSlime);
+		pSummonCharacter->SetDropCoin(0);
+		pSummonCharacter->SetDropCardList(std::vector<std::shared_ptr<Card_Base>>());
+		this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_FRONT, pSummonCharacter);
 	}
 
 	/* 中衛にキャラクターが存在するか確認 */
 	if (this->pDataList_Battle->GetEnemyCharacter(DataList_Battle::POSITION_MIDDLE) == nullptr)
 	{
 		// 存在しない場合
-		/* 中衛に緑スライムを召喚 */
-		std::shared_ptr<Character_Slime_Green> pGreenSlime = std::make_shared<Character_Slime_Green>();
+		std::shared_ptr<Character_Base> pSummonCharacter = nullptr;
+		switch (GetRand(2))
+		{
+			case 0:
+				/* 前衛に青スライムを召喚 */
+				pSummonCharacter = std::make_shared<Character_Npc_Slime_Blue>();
+				break;
+
+			case 1:
+				/* 前衛に緑スライムを召喚 */
+				pSummonCharacter = std::make_shared<Character_Npc_Slime_Green>();
+				break;
+
+			case 2:
+				/* 前衛に赤スライムを召喚 */
+				pSummonCharacter = std::make_shared<Character_Npc_Slime_Red>();
+				break;
+		}
+
 		// ドロップアイテムを無しに設定
-		pGreenSlime->SetDropCoin(0);
-		pGreenSlime->SetDropCardList(std::vector<std::shared_ptr<Card_Base>>());
-		this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_MIDDLE, pGreenSlime);
+		pSummonCharacter->SetDropCoin(0);
+		pSummonCharacter->SetDropCardList(std::vector<std::shared_ptr<Card_Base>>());
+		this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_MIDDLE, pSummonCharacter);
 	}
 }

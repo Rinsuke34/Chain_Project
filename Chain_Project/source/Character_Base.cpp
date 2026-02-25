@@ -199,9 +199,37 @@ void Character_Base::Draw_StatusBar()
 
 		/* 残りターン数の描写 */
 		std::string TurnText = std::to_string(this->Buff_Debuff_List[i]->Buff_Debuff_Time);
+
+		// 文字サイズ取得
+		int textWidth	= GetDrawStringWidthToHandle(TurnText.c_str(), static_cast<int>(strlenDx(TurnText.c_str())), giFont_JF_Dot_MPlus10_16);
+		int textHeight	= GetFontSizeToHandle(giFont_JF_Dot_MPlus10_16);
+
+		// 中央揃え座標
+		int baseX = this->BasePos.iX - (HPBAR_WIDE / 2) + (i * 32) + 8 - (textWidth / 2);
+		int baseY = this->BasePos.iY - (HPBAR_WIDE) - 64 + this->HPBarPosCorrectionY - (textHeight / 2);
+
+		// 8方向オフセット
+		const int offsets[8][2] = {
+			{ -2, -2 }, {  0, -2 }, {  2, -2 },
+			{ -2,  0 },				{  2,  0 },
+			{ -2,  2 }, {  0,  2 }, {  2,  2 }
+		};
+
+		// 黒色で8方向に描画
+		for (int j = 0; j < 8; ++j) {
+			DrawStringToHandle(
+				baseX + offsets[j][0],
+				baseY + offsets[j][1],
+				TurnText.c_str(),
+				GetColor(0, 0, 0),
+				giFont_JF_Dot_MPlus10_16
+			);
+		}
+
+		// 白色で中央に描画
 		DrawStringToHandle(
-			this->BasePos.iX - (HPBAR_WIDE / 2) + (i * 32) + 4,
-			this->BasePos.iY - (HPBAR_WIDE) - 64 + 16 + this->HPBarPosCorrectionY,
+			baseX,
+			baseY,
 			TurnText.c_str(),
 			GetColor(255, 255, 255),
 			giFont_JF_Dot_MPlus10_16
@@ -247,7 +275,7 @@ void Character_Base::Damage(int DamageAmount)
 	int OldShield	= this->iShield_Now;
 
 	/* 防御力バフ分ダメージ量を減らす */
-	std::shared_ptr<Character_Buff_Debuff_Base> DefenseBuff = CheckGet_Buff_Debuff("Buff_Strength");
+	std::shared_ptr<Character_Buff_Debuff_Base> DefenseBuff = CheckGet_Buff_Debuff("Buff_Diffence");
 	if (DefenseBuff != nullptr)
 	{
 		DamageAmount -= DefenseBuff->Buff_Debuff_Time;
@@ -354,6 +382,12 @@ void Character_Base::Heal(int Heal)
 {
 	// 引数
 	// Heal	<-	回復量
+
+	/* 現在のHPが0であるなら処理を行わない */
+	if (this->iHP_Now <= 0)
+	{
+		return;
+	}
 
 	/* 体力を回復 */
 	this->iHP_Now += Heal;
@@ -757,7 +791,14 @@ void Character_Base::DropItemSet(int Rank)
 					[]() { return std::make_shared<Card_Arms_RoyalSword>(); },
 					[]() { return std::make_shared<Card_Arms_RoyalShield>(); },
 					[]() { return std::make_shared<Card_Arms_RoyalBow>(); },
-					[]() { return std::make_shared<Card_Spell_ShieldBash>(); }
+					[]() { return std::make_shared<Card_Spell_ShieldBash>(); },
+					[]() { return std::make_shared<Card_Arms_BoneBow>(); },
+					[]() { return std::make_shared<Card_Arms_BoneSword>(); },
+					[]() { return std::make_shared<Card_Arms_BoneDagger>(); },
+					[]() { return std::make_shared<Card_Spell_FireMagic>(); },
+					[]() { return std::make_shared<Card_Spell_EarthMagic>(); },
+					[]() { return std::make_shared<Card_Spell_WindMagic>(); },
+					[]() { return std::make_shared<Card_Spell_WaterMagic>(); }
 				};
 
 				/* ランダムに選択 */
@@ -772,7 +813,6 @@ void Character_Base::DropItemSet(int Rank)
 				/* カードリスト */
 				std::vector<std::function<std::shared_ptr<Card_Base>()>> CommonCards = {
 					[]() { return std::make_shared<Card_Arms_PoisonDagger>(); },
-					[]() { return std::make_shared<Card_Arms_ExecutorSword>(); },
 					[]() { return std::make_shared<Card_Arms_GrassSword>(); },
 					[]() { return std::make_shared<Card_Arms_GrassDagger>(); },
 					[]() { return std::make_shared<Card_Item_PoisonPotion>(); },
@@ -781,7 +821,10 @@ void Character_Base::DropItemSet(int Rank)
 					[]() { return std::make_shared<Card_Item_GuardianPotion>(); },
 					[]() { return std::make_shared<Card_Item_TravelerCompass>(); },
 					[]() { return std::make_shared<Card_Item_RoyalFlag>(); },
-					[]() { return std::make_shared<Card_Spell_ArmsEnhancement>(); }
+					[]() { return std::make_shared<Card_Spell_ArmsEnhancement>(); },
+					[]() { return std::make_shared<Card_Arms_GoldSword>(); },
+					[]() { return std::make_shared<Card_Arms_GoldDagger>(); },
+					[]() { return std::make_shared<Card_Arms_Katana>(); }
 				};
 
 				/* ランダムに選択 */
@@ -795,7 +838,9 @@ void Character_Base::DropItemSet(int Rank)
 			{
 				/* カードリスト */
 				std::vector<std::function<std::shared_ptr<Card_Base>()>> CommonCards = {
-					[]() { return std::make_shared<Card_Arms_StormBow>(); }
+					[]() { return std::make_shared<Card_Arms_StormBow>(); },
+					[]() { return std::make_shared<Card_Arms_ExecutorSword>(); },
+					[]() { return std::make_shared<Card_Arms_AsuraKatana>(); }
 				};
 
 				/* ランダムに選択 */

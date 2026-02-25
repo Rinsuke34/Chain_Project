@@ -17,6 +17,21 @@ void Scene_Shop::ShopSetup(int Level)
 	std::shared_ptr<Shop_Item> pShopItem	= nullptr;
 	switch (Level)
 	{
+		// ステージ1
+		case 0:
+			AddCard		= std::make_shared<Card_Arms_TravelerSword>();
+			pShopItem	= std::make_shared<Shop_Item>(AddCard, 10);
+			this->ShopItemList.push_back(pShopItem);
+
+			AddCard		= std::make_shared<Card_Arms_RoyalSword>();
+			pShopItem	= std::make_shared<Shop_Item>(AddCard, 10);
+			this->ShopItemList.push_back(pShopItem);
+
+			AddCard		= std::make_shared<Card_Arms_GrassSword>();
+			pShopItem	= std::make_shared<Shop_Item>(AddCard, 10);
+			this->ShopItemList.push_back(pShopItem);
+			break;
+
 		case 1:
 			AddCard		= std::make_shared<Card_Arms_TravelerSword>();
 			pShopItem	= std::make_shared<Shop_Item>(AddCard, 10);
@@ -35,13 +50,66 @@ void Scene_Shop::ShopSetup(int Level)
 			this->ShopItemList.push_back(pShopItem);
 			break;
 
+		// ステージ2
 		case 10:
+			AddCard = std::make_shared<Card_Item_HealingPotion>();
+			pShopItem = std::make_shared<Shop_Item>(AddCard, 15);
+			this->ShopItemList.push_back(pShopItem);
+
+			AddCard = std::make_shared<Card_Arms_GrassSword>();
+			pShopItem = std::make_shared<Shop_Item>(AddCard, 20);
+			this->ShopItemList.push_back(pShopItem);
+
+			AddCard = std::make_shared<Card_Item_TravelerCompass>();
+			pShopItem = std::make_shared<Shop_Item>(AddCard, 30);
+			this->ShopItemList.push_back(pShopItem);
 			break;
 
 		case 11:
+			AddCard = std::make_shared<Card_Item_HealingPotion>();
+			pShopItem = std::make_shared<Shop_Item>(AddCard, 15);
+			this->ShopItemList.push_back(pShopItem);
+
+			AddCard = std::make_shared<Card_Arms_GrassSword>();
+			pShopItem = std::make_shared<Shop_Item>(AddCard, 20);
+			this->ShopItemList.push_back(pShopItem);
+
+			AddCard = std::make_shared<Card_Item_RoyalFlag>();
+			pShopItem = std::make_shared<Shop_Item>(AddCard, 30);
+			this->ShopItemList.push_back(pShopItem);
 			break;
 
+		// ステージ3
 		case 20:
+			AddCard = std::make_shared<Card_Spell_ArmsEnhancement>();
+			pShopItem = std::make_shared<Shop_Item>(AddCard, 30);
+			this->ShopItemList.push_back(pShopItem);
+
+			AddCard = std::make_shared<Card_Item_RoyalFlag>();
+			pShopItem = std::make_shared<Shop_Item>(AddCard, 30);
+			this->ShopItemList.push_back(pShopItem);
+
+			AddCard = std::make_shared<Card_Item_TravelerCompass>();
+			pShopItem = std::make_shared<Shop_Item>(AddCard, 30);
+			this->ShopItemList.push_back(pShopItem);
+			break;
+
+		case 21:
+			AddCard = std::make_shared<Card_Item_HealingPotion>();
+			pShopItem = std::make_shared<Shop_Item>(AddCard, 15);
+			this->ShopItemList.push_back(pShopItem);
+
+			AddCard = std::make_shared<Card_Item_PoisonPotion>();
+			pShopItem = std::make_shared<Shop_Item>(AddCard, 15);
+			this->ShopItemList.push_back(pShopItem);
+
+			AddCard = std::make_shared<Card_Item_PowerPotion>();
+			pShopItem = std::make_shared<Shop_Item>(AddCard, 15);
+			this->ShopItemList.push_back(pShopItem);
+
+			AddCard = std::make_shared<Card_Item_GuardianPotion>();
+			pShopItem = std::make_shared<Shop_Item>(AddCard, 15);
+			this->ShopItemList.push_back(pShopItem);
 			break;
 	}
 

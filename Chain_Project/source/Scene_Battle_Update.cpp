@@ -20,6 +20,19 @@
 #include "VariableDefine.h"
 
 /* 各フェーズごとの更新処理 */
+// "戦闘開始時"の効果発動
+void Scene_Battle::Update_EffectBattleStart()
+{
+	/* 各カードの"戦闘開始時"効果を実行 */
+	for (auto& Deck : this->pDataList_Battle->GetDeckCardList())
+	{
+		Deck->Effect_BattleStart();
+	}
+
+	/* "ターン開始時"の効果発動フェイズへ遷移遷移 */
+	this->iBattlePhase = BATTLE_PHASE_EFFECT_TRUN_START;
+}
+
 // "ターン開始時"の効果発動
 void Scene_Battle::Update_EffectTurnStart()
 {
@@ -110,7 +123,6 @@ void Scene_Battle::Update_DrawCard()
 void Scene_Battle::Update_EnemyActionDecision()
 {
 	/* 全てのキャラクターの行動決定処理を行う */
-	// 敵キャラクターのシールドリセットもここで行う
 	for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
 	{
 		// 仲間キャラクター
@@ -1260,7 +1272,7 @@ void Scene_Battle::Update_DoubleSpeedButton()
 			this->BattleSpeedDoubleFlg = false;
 
 			/* テキストを変更する */
-			this->UI_SpeedDoubleButton->SetButtonText("ばいそくモード");
+			this->UI_SpeedDoubleButton->SetButtonText("とうそくモード");
 		}
 		else
 		{
@@ -1269,7 +1281,7 @@ void Scene_Battle::Update_DoubleSpeedButton()
 			this->BattleSpeedDoubleFlg = true;
 
 			/* テキストを変更する */
-			this->UI_SpeedDoubleButton->SetButtonText("とうそくモード");
+			this->UI_SpeedDoubleButton->SetButtonText("ばいそくモード");
 		}
 	}
 }

@@ -421,6 +421,123 @@
     <Filter Include="ヘッダー ファイル\カード\魔法%28Spell%29\シールドバッシュ">
       <UniqueIdentifier>{3ac4e3ca-7b6f-4b81-97c0-5e938215280f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\キャラクター\NPC\ゴーレム%28土%29">
+      <UniqueIdentifier>{21788af7-8959-4711-9910-de6761c01d45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\キャラクター\NPC\ゴーレム%28土%29">
+      <UniqueIdentifier>{fb9c169a-5faa-4cfd-bb00-f40462c4412c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\キャラクター\NPC\ゴーレム%28石%29">
+      <UniqueIdentifier>{42799087-81f9-42e8-bde3-c3d6ac58172e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\キャラクター\NPC\ゴブリン">
+      <UniqueIdentifier>{bd2768e9-6a6a-491d-ad10-9b5109025d93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\キャラクター\NPC\ゴーレム%28石%29">
+      <UniqueIdentifier>{eeb4b53c-664f-4ca9-b43e-3f9df8ab25b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\キャラクター\NPC\ゴブリン">
+      <UniqueIdentifier>{677fec91-9793-4ebd-b388-16845a29d464}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\キャラクター\NPC\スケルトン">
+      <UniqueIdentifier>{35811ad3-b04a-4c88-bd4b-c48c8f055eb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\キャラクター\NPC\スケルトン">
+      <UniqueIdentifier>{e29e91a0-5652-4923-b9fa-b89848291508}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\キャラクター\NPC\ドラゴン">
+      <UniqueIdentifier>{9f8879d9-8244-4095-8750-593a507208fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\キャラクター\NPC\ドラゴン">
+      <UniqueIdentifier>{9ab11360-d8dc-46b4-90a4-70e5d5d83709}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\キャラクター\NPC\キメラ">
+      <UniqueIdentifier>{f007486f-7d86-458a-bd7d-ab65172e1195}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\キャラクター\NPC\ロボット%28マザー%29">
+      <UniqueIdentifier>{84505b17-c989-4236-8b3b-080ed82022d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\キャラクター\NPC\ロボット%28警備%29">
+      <UniqueIdentifier>{c26a42e4-c531-4338-8a4b-66ad6d3d253f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\キャラクター\NPC\キメラ">
+      <UniqueIdentifier>{e5937939-ce56-47c4-b2b4-d244fa9e5790}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\キャラクター\NPC\ロボット%28マザー%29">
+      <UniqueIdentifier>{6d8f7731-b7db-4b50-971f-1e0691013fff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\キャラクター\NPC\ロボット%28警備%29">
+      <UniqueIdentifier>{c6d59f34-1fc3-4fce-9204-bff691401abb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\キャラクター\NPC\スライム%28赤%29">
+      <UniqueIdentifier>{34f736cf-2d47-43ec-b3d3-46cf17c7d716}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\キャラクター\NPC\スライム%28赤%29">
+      <UniqueIdentifier>{720b9333-cb4c-41c2-95d6-74d2595dd51e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\カード\武具%28Arms%29\金の剣">
+      <UniqueIdentifier>{4be8317f-29f4-4217-b632-965516f4ecea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\カード\武具%28Arms%29\金のナイフ">
+      <UniqueIdentifier>{d3d6ace3-dcb6-4c8a-a1aa-d73d19b9b45a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\カード\武具%28Arms%29\骨のナイフ">
+      <UniqueIdentifier>{7b785683-a85d-4b44-9a64-b148e1862b7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\カード\武具%28Arms%29\骨の剣">
+      <UniqueIdentifier>{d678a3fc-d3c1-4594-9fb6-b906a933d946}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\カード\武具%28Arms%29\骨の弓">
+      <UniqueIdentifier>{2eebacf0-a245-4129-b441-e87486f2e09d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\カード\武具%28Arms%29\骨の剣">
+      <UniqueIdentifier>{9fb4c2c3-23a8-45a4-a116-18567dffce2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\カード\武具%28Arms%29\骨のナイフ">
+      <UniqueIdentifier>{630b5481-8be3-427f-901d-fe2df281e4e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\カード\武具%28Arms%29\骨の弓">
+      <UniqueIdentifier>{7db6c0e2-c42b-4ac9-a017-78c01118f07a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\カード\武具%28Arms%29\金の剣">
+      <UniqueIdentifier>{df77ea76-cc65-473c-979a-c1ed7023f1d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\カード\武具%28Arms%29\金のナイフ">
+      <UniqueIdentifier>{727e044f-a0a1-4fb8-8d5a-80f0db1c5dfa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\カード\武具%28Arms%29\打刀">
+      <UniqueIdentifier>{1645533d-6f43-4f46-931f-0bdaef271131}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\カード\武具%28Arms%29\妖刀">
+      <UniqueIdentifier>{59e1125e-d441-402f-a182-a051cceecfc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\カード\武具%28Arms%29\修羅刀">
+      <UniqueIdentifier>{f8097476-6368-4e34-a768-f5f464e18ea5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\カード\武具%28Arms%29\打刀">
+      <UniqueIdentifier>{6cf33cc6-0674-4977-b5ad-63cecd686158}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\カード\武具%28Arms%29\妖刀">
+      <UniqueIdentifier>{3f496fcd-2360-4c3e-936f-bd563c10ae61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\カード\武具%28Arms%29\修羅刀">
+      <UniqueIdentifier>{7b642751-58da-4ea3-932d-4c706a0f8166}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\カード\魔法%28Spell%29\火の魔法">
+      <UniqueIdentifier>{a53495be-6545-4e17-bf83-63f1a0662d4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\カード\魔法%28Spell%29\風の魔法">
+      <UniqueIdentifier>{fd5df80c-0ca7-449f-8abc-ad2bddc6b998}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\カード\魔法%28Spell%29\大地の魔法">
+      <UniqueIdentifier>{18273618-d3ea-439c-ba17-3708db9248d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\カード\魔法%28Spell%29\水の魔法">
+      <UniqueIdentifier>{ea45b21e-4cd5-4527-b101-711368f7ce14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\カード\魔法%28Spell%29\剣の加護">
+      <UniqueIdentifier>{f29642d3-1e85-4513-ad03-5cc0f4d422ec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Main.cpp">
@@ -630,6 +747,72 @@
     <ClCompile Include="source\Card_Spell_ShieldBash.cpp">
       <Filter>ソース ファイル\カード\魔法%28Spell%29\シールドバッシュ</Filter>
     </ClCompile>
+    <ClCompile Include="source\Character_Npc_Goblin.cpp">
+      <Filter>ソース ファイル\キャラクター\NPC\ゴブリン</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Character_Npc_Golem_Stone.cpp">
+      <Filter>ソース ファイル\キャラクター\NPC\ゴーレム%28石%29</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Character_Npc_Golem_Soil.cpp">
+      <Filter>ソース ファイル\キャラクター\NPC\ゴーレム%28土%29</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Character_Npc_Skeleton.cpp">
+      <Filter>ソース ファイル\キャラクター\NPC\スケルトン</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Character_Npc_Dragon.cpp">
+      <Filter>ソース ファイル\キャラクター\NPC\ドラゴン</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Character_Npc_Chimera.cpp">
+      <Filter>ソース ファイル\キャラクター\NPC\キメラ</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Character_Npc_Robot_Mother.cpp">
+      <Filter>ソース ファイル\キャラクター\NPC\ロボット%28マザー%29</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Character_Npc_Robot_Security.cpp">
+      <Filter>ソース ファイル\キャラクター\NPC\ロボット%28警備%29</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Character_Npc_Slime_Red.cpp">
+      <Filter>ソース ファイル\キャラクター\NPC\スライム%28赤%29</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Card_Arms_BoneBow.cpp">
+      <Filter>ソース ファイル\カード\武具%28Arms%29\骨の弓</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Card_Arms_BoneSword.cpp">
+      <Filter>ソース ファイル\カード\武具%28Arms%29\骨の剣</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Card_Arms_BoneDagger.cpp">
+      <Filter>ソース ファイル\カード\武具%28Arms%29\骨のナイフ</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Card_Arms_GoldDagger.cpp">
+      <Filter>ソース ファイル\カード\武具%28Arms%29\金のナイフ</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Card_Arms_GoldSword.cpp">
+      <Filter>ソース ファイル\カード\武具%28Arms%29\金の剣</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Card_Arms_Katana.cpp">
+      <Filter>ソース ファイル\カード\武具%28Arms%29\打刀</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Card_Arms_CursedKatana.cpp">
+      <Filter>ソース ファイル\カード\武具%28Arms%29\妖刀</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Card_Arms_AsuraKatana.cpp">
+      <Filter>ソース ファイル\カード\武具%28Arms%29\修羅刀</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Card_Spell_BlessingSword.cpp">
+      <Filter>ヘッダー ファイル\カード\魔法%28Spell%29\剣の加護</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Card_Spell_WaterMagic.cpp">
+      <Filter>ヘッダー ファイル\カード\魔法%28Spell%29\水の魔法</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Card_Spell_FireMagic.cpp">
+      <Filter>ヘッダー ファイル\カード\魔法%28Spell%29\火の魔法</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Card_Spell_EarthMagic.cpp">
+      <Filter>ヘッダー ファイル\カード\魔法%28Spell%29\大地の魔法</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Card_Spell_WindMagic.cpp">
+      <Filter>ヘッダー ファイル\カード\魔法%28Spell%29\風の魔法</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Scene_Load_Checker.h">
@@ -829,6 +1012,72 @@
     </ClInclude>
     <ClInclude Include="source\Card_Spell_ShieldBash.h">
       <Filter>ヘッダー ファイル\カード\魔法%28Spell%29\シールドバッシュ</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Character_Npc_Golem_Soil.h">
+      <Filter>ヘッダー ファイル\キャラクター\NPC\ゴーレム%28土%29</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Character_Npc_Golem_Stone.h">
+      <Filter>ヘッダー ファイル\キャラクター\NPC\ゴーレム%28石%29</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Character_Npc_Goblin.h">
+      <Filter>ヘッダー ファイル\キャラクター\NPC\ゴブリン</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Character_Npc_Skeleton.h">
+      <Filter>ヘッダー ファイル\キャラクター\NPC\スケルトン</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Character_Npc_Dragon.h">
+      <Filter>ヘッダー ファイル\キャラクター\NPC\ドラゴン</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Character_Npc_Chimera.h">
+      <Filter>ヘッダー ファイル\キャラクター\NPC\キメラ</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Character_Npc_Robot_Mother.h">
+      <Filter>ヘッダー ファイル\キャラクター\NPC\ロボット%28マザー%29</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Character_Npc_Robot_Security.h">
+      <Filter>ヘッダー ファイル\キャラクター\NPC\ロボット%28警備%29</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Character_Npc_Slime_Red.h">
+      <Filter>ヘッダー ファイル\キャラクター\NPC\スライム%28赤%29</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Card_Arms_GoldSword.h">
+      <Filter>ヘッダー ファイル\カード\武具%28Arms%29\金の剣</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Card_Arms_GoldDagger.h">
+      <Filter>ヘッダー ファイル\カード\武具%28Arms%29\金のナイフ</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Card_Arms_BoneDagger.h">
+      <Filter>ヘッダー ファイル\カード\武具%28Arms%29\骨のナイフ</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Card_Arms_BoneSword.h">
+      <Filter>ヘッダー ファイル\カード\武具%28Arms%29\骨の剣</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Card_Arms_BoneBow.h">
+      <Filter>ヘッダー ファイル\カード\武具%28Arms%29\骨の弓</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Card_Arms_Katana.h">
+      <Filter>ヘッダー ファイル\カード\武具%28Arms%29\打刀</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Card_Arms_CursedKatana.h">
+      <Filter>ヘッダー ファイル\カード\武具%28Arms%29\妖刀</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Card_Arms_AsuraKatana.h">
+      <Filter>ヘッダー ファイル\カード\武具%28Arms%29\修羅刀</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Card_Spell_BlessingSword.h">
+      <Filter>ヘッダー ファイル\カード\魔法%28Spell%29\剣の加護</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Card_Spell_WaterMagic.h">
+      <Filter>ヘッダー ファイル\カード\魔法%28Spell%29\水の魔法</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Card_Spell_FireMagic.h">
+      <Filter>ヘッダー ファイル\カード\魔法%28Spell%29\火の魔法</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Card_Spell_EarthMagic.h">
+      <Filter>ヘッダー ファイル\カード\魔法%28Spell%29\大地の魔法</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Card_Spell_WindMagic.h">
+      <Filter>ヘッダー ファイル\カード\魔法%28Spell%29\風の魔法</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

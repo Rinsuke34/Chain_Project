@@ -19,17 +19,17 @@
 Scene_Battle::Scene_Battle() : Scene_Base("Scene_Battle", 50, false, false)
 {
 	/* 初期化 */
-	this->iBattlePhase					= 0;		// バトルフェーズ
-	this->iBattlePhase_NowBattleAreaNo	= 0;		// 現在処理の実行中のバトルエリア
-	this->bReloadFlg					= false;	// ドロー失敗フラグ
-	this->iBattleActionDelay			= 0;		// バトルアクション間のディレイ時間
-	this->BattleArea_Anim_ImageNo		= 0;		// バトルエリアのアニメーションの画像番号
-	this->BattleArea_Anim_ChangeDelay	= 0;		// バトルエリアのアニメーションの変更までの待機時間
-	this->ActionCardInAreaNo			= -1;		// 行動中のカードが設定されているバトルエリアの番号
-	this->ActionCard_Emphasis_AnimCount	= 0;		// 戦闘行動カード強調表示アニメーションのカウント
-	this->BattleSpeedDoubleFlg			= false;	// 戦闘スピード倍速フラグ
-	this->NumberDrawFlg_Deck			= false;	// 山札の枚数描写フラグ
-	this->NumberDrawFlg_Trash			= false;	// 捨て札の枚数描写フラグ
+	this->iBattlePhase					= BATTLE_PHASE_BATTLESTART;		// バトルフェーズ
+	this->iBattlePhase_NowBattleAreaNo	= 0;							// 現在処理の実行中のバトルエリア
+	this->bReloadFlg					= false;						// ドロー失敗フラグ
+	this->iBattleActionDelay			= 0;							// バトルアクション間のディレイ時間
+	this->BattleArea_Anim_ImageNo		= 0;							// バトルエリアのアニメーションの画像番号
+	this->BattleArea_Anim_ChangeDelay	= 0;							// バトルエリアのアニメーションの変更までの待機時間
+	this->ActionCardInAreaNo			= -1;							// 行動中のカードが設定されているバトルエリアの番号
+	this->ActionCard_Emphasis_AnimCount	= 0;							// 戦闘行動カード強調表示アニメーションのカウント
+	this->BattleSpeedDoubleFlg			= false;						// 戦闘スピード倍速フラグ
+	this->NumberDrawFlg_Deck			= false;						// 山札の枚数描写フラグ
+	this->NumberDrawFlg_Trash			= false;						// 捨て札の枚数描写フラグ
 	for (int i = 0; i < 4; i++)
 	{
 		this->Chain_Anim_Count[i]		= 0;		// 鎖のアニメーションのカウント
@@ -173,6 +173,11 @@ void Scene_Battle::Update()
 	bool BattleEndFlg = false;
 	switch (this->iBattlePhase)
 	{
+		// 戦闘開始時の効果発動
+		case BATTLE_PHASE_BATTLESTART:
+			Update_EffectBattleStart();
+			break;
+
 		// "ターン開始時"の効果発動
 		case BATTLE_PHASE_EFFECT_TRUN_START:
 			Update_EffectTurnStart();

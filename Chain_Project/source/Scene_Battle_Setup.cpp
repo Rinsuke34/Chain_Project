@@ -26,14 +26,21 @@ void Scene_Battle::Character_Setup(int Level, bool BossFlg)
 		// ボスである場合
 		switch (Level)
 		{
+			// ステージ1
 			case 1:
-				this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_BACK,	std::make_shared<Character_BigSlime_Green>());
+				this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_BACK,	std::make_shared<Character_Boss_BigSlime_Green>());
 				break;
 
+			// ステージ2
 			case 2:
+				this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_MIDDLE, std::make_shared<Character_Boss_Dragon>());
 				break;
 
+			// ステージ3
 			case 3:
+				this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_FRONT, std::make_shared<Character_Npc_Robot_Security>());
+				this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_MIDDLE, std::make_shared<Character_Npc_Robot_Security>());
+				this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_BACK, std::make_shared<Character_Npc_Robot_Mother>());
 				break;
 		}
 	}
@@ -42,37 +49,126 @@ void Scene_Battle::Character_Setup(int Level, bool BossFlg)
 		// ボスでない場合
 		switch (Level)
 		{
+			// ステージ1
 			case 0:
-				this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_FRONT,	std::make_shared<Character_Slime_Green>());
+				this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_MIDDLE,	std::make_shared<Character_Npc_Slime_Green>());
 				break;
 
 			case 1:
-				this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_FRONT,	std::make_shared<Character_Slime_Blue>());
-				this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_MIDDLE,	std::make_shared<Character_Slime_Green>());
-				this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_BACK,	std::make_shared<Character_Bat>());
+				this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_FRONT,	std::make_shared<Character_Npc_Slime_Blue>());
+				this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_MIDDLE,	std::make_shared<Character_Npc_Slime_Red>());
+				this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_BACK,	std::make_shared<Character_Npc_Slime_Green>());
 				break;
 
 			case 2:
-				this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_FRONT,	std::make_shared<Character_Slime_Green>());
-				this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_MIDDLE,	std::make_shared<Character_Slime_Green>());
+				this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_FRONT,	std::make_shared<Character_Npc_Golem_Soil>());
+				this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_MIDDLE,	std::make_shared<Character_Npc_Slime_Red>());
+				this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_BACK,	std::make_shared<Character_Npc_Slime_Green>());
 				break;
 
+			// ステージ2
 			case 10:
+				this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_FRONT,	std::make_shared<Character_Npc_Goblin>());
+				this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_MIDDLE,	std::make_shared<Character_Npc_Skeleton>());
+				this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_BACK,	std::make_shared<Character_Npc_Bat>());
 				break;
 
 			case 11:
+				this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_FRONT,	std::make_shared<Character_Npc_Goblin>());
+				this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_MIDDLE,	std::make_shared<Character_Npc_Goblin>());
+				this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_BACK,	std::make_shared<Character_Npc_Goblin>());
 				break;
 
-			case 21:
+			case 12:
+				{
+					// NPCのリスト
+					std::vector<std::function<std::shared_ptr<Character_Base>()>> npcFactories = {
+						[]() { return std::make_shared<Character_Npc_Goblin>(); },
+						[]() { return std::make_shared<Character_Npc_Bat>(); },
+						[]() { return std::make_shared<Character_Npc_Skeleton>(); },
+						[]() { return std::make_shared<Character_Npc_Golem_Soil>(); },
+					};
+
+					// 前衛
+					int RandIndex = GetRand(static_cast<int>(npcFactories.size() - 1));
+					std::shared_ptr<Character_Base> randomNpc = npcFactories[RandIndex]();
+					this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_FRONT, randomNpc);
+					// 中衛
+					RandIndex = GetRand(static_cast<int>(npcFactories.size() - 1));
+					randomNpc = npcFactories[RandIndex]();
+					this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_MIDDLE, randomNpc);
+					// 後衛
+					RandIndex = GetRand(static_cast<int>(npcFactories.size() - 1));
+					randomNpc = npcFactories[RandIndex]();
+					this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_BACK, randomNpc);
+				}
 				break;
 
-			case 22:
+			// ステージ3
+			case 20:
+				this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_FRONT,	std::make_shared<Character_Npc_Chimera>());
 				break;
 
 			case 23:
+				{
+					this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_MIDDLE, std::make_shared<Character_Npc_Chimera>());
+					int RandIndex = GetRand(1);
+					if (RandIndex >= 1)
+					{
+						this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_FRONT, std::make_shared<Character_Npc_Chimera>());
+					}
+					if (RandIndex >= 2)
+					{
+						this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_BACK, std::make_shared<Character_Npc_Chimera>());
+					}
+				}
 				break;
 
-			case 24:
+			case 21:
+				{
+					// NPCのリスト
+					std::vector<std::function<std::shared_ptr<Character_Base>()>> npcFactories = {
+						[]() { return std::make_shared<Character_Npc_Chimera>(); },
+						[]() { return std::make_shared<Character_Npc_Chimera>(); },
+						[]() { return std::make_shared<Character_Npc_Robot_Security>(); },
+					};
+
+					// 前衛
+					int RandIndex = GetRand(static_cast<int>(npcFactories.size() - 1));
+					std::shared_ptr<Character_Base> randomNpc = npcFactories[RandIndex]();
+					this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_FRONT, randomNpc);
+					// 中衛
+					RandIndex = GetRand(static_cast<int>(npcFactories.size() - 1));
+					randomNpc = npcFactories[RandIndex]();
+					this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_MIDDLE, randomNpc);
+					// 後衛
+					RandIndex = GetRand(static_cast<int>(npcFactories.size() - 1));
+					randomNpc = npcFactories[RandIndex]();
+					this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_BACK, randomNpc);
+				}
+				break;
+
+			case 22:
+				{
+					// NPCのリスト
+					std::vector<std::function<std::shared_ptr<Character_Base>()>> npcFactories = {
+						[]() { return std::make_shared<Character_Npc_Chimera>(); },
+						[]() { return std::make_shared<Character_Npc_Robot_Security>(); },
+					};
+
+					// 前衛
+					int RandIndex = GetRand(static_cast<int>(npcFactories.size() - 1));
+					std::shared_ptr<Character_Base> randomNpc = npcFactories[RandIndex]();
+					this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_FRONT, randomNpc);
+					// 中衛
+					RandIndex = GetRand(static_cast<int>(npcFactories.size() - 1));
+					randomNpc = npcFactories[RandIndex]();
+					this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_MIDDLE, randomNpc);
+					// 後衛
+					RandIndex = GetRand(static_cast<int>(npcFactories.size() - 1));
+					randomNpc = npcFactories[RandIndex]();
+					this->pDataList_Battle->SetEnemyCharacter(DataList_Battle::POSITION_BACK, randomNpc);
+				}
 				break;
 		}
 	}

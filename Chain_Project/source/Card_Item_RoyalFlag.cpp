@@ -23,8 +23,8 @@ Card_Item_RoyalFlag::Card_Item_RoyalFlag() : Card_Item_Base()
 	this->ExplanationText = "スート：おうこく をもつカードをすてふだからXまいてふだにくわえる/nXはチェインすう";
 }
 
-// 戦闘行動
-void Card_Item_RoyalFlag::BattleAction()
+// カード効果(特殊効果)
+void Card_Item_RoyalFlag::Card_Effect_Extra_Process()
 {
 	/* 捨て札エリアのカードを取得 */
 	auto TrashCardList = this->pDataList_Battle->GetTrashCardList();

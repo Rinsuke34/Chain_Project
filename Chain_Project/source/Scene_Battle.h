@@ -31,6 +31,7 @@ class Scene_Battle : public Scene_Base
 
 		/* 定数 */
 		// バトルフェーズ
+		static const int	BATTLE_PHASE_BATTLESTART			= -1;	// 戦闘開始時の効果発動
 		static const int	BATTLE_PHASE_EFFECT_TRUN_START		= 0;	// "ターン開始時"の効果発動
 		static const int	BATTLE_PHASE_DRAW_CARD				= 1;	// カードドロー
 		static const int	BATTLE_PHASE_ENEMY_ACTION_DECISION	= 2;	// 敵の行動決定
@@ -101,6 +102,7 @@ class Scene_Battle : public Scene_Base
 
 		/* 関数 */
 		// 各フェーズごとの更新処理
+		void Update_EffectBattleStart();		// "戦闘開始時"の効果発動
 		void Update_EffectTurnStart();			// "ターン開始時"の効果発動
 		void Update_DrawCard();					// カードドロー
 		void Update_EnemyActionDecision();		// 敵の行動決定
