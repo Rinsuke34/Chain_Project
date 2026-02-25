@@ -5,6 +5,7 @@
 #include "DataList_SaveData.h"
 // 標準ライブラリ
 #include <fstream>
+#include <filesystem>
 #include <nlohmann/json.hpp>
 
 // コンストラクタ
@@ -109,8 +110,15 @@ void DataList_SaveData::SaveData_Save()
 			});
 	}
 
+	// ディレクトリが存在しない場合は作成
+	std::filesystem::path filePathObj(filePath);
+	if (filePathObj.has_parent_path())
+	{
+		std::filesystem::create_directories(filePathObj.parent_path());
+	}
+
 	// ファイルに書き込み
-	std::ofstream ofs(filePath);
+	std::ofstream ofs(filePath, std::ios::out | std::ios::trunc);
 	if (!ofs.is_open())
 	{
 		// ファイルを開けない場合はエラー処理

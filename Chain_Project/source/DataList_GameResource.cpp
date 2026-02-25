@@ -3,8 +3,6 @@
 /* 使用する要素のインクルード */
 // ヘッダファイル
 #include "DataList_GameResource.h"
-// カードクラス
-#include "Card_Include.h"
 // プレイヤーキャラクタークラス
 #include "Character_Player.h"
 
@@ -25,22 +23,8 @@ DataList_GameResource::DataList_GameResource() : DataList_Base("DataList_GameRes
 	/* プレイヤーキャラクターの生成 */
 	this->PlayerCharacter = std::make_shared<Character_Player>();
 
-	/* テスト用のカード生成処理 */
-	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenSword>());
-	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenSword>());
-	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenShield>());
-	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenShield>());
-	DeckCardList.push_back(std::make_shared<Card_Arms_TravelerSword>());
-	DeckCardList.push_back(std::make_shared<Card_Arms_TravelerShield>());
-	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenSword>());
-	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenSword>());
-	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenShield>());
-	DeckCardList.push_back(std::make_shared<Card_Arms_WoodenShield>());
-	DeckCardList.push_back(std::make_shared<Card_Arms_TravelerSword>());
-	DeckCardList.push_back(std::make_shared<Card_Arms_TravelerShield>());
-	DeckCardList.push_back(std::make_shared<Card_Item_HealingPotion>());
-	DeckCardList.push_back(std::make_shared<Card_Spell_ArmsEnhancement>());
-	DeckCardList.push_back(std::make_shared<Card_Spell_ArmsEnhancement>());
+	// カードのセットアップ処理
+	CardSetup(this->DeckCardList);
 }
 
 // コインを追加

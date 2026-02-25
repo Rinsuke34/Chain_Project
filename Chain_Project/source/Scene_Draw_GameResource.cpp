@@ -17,8 +17,10 @@ Scene_Draw_GameResource::Scene_Draw_GameResource() : Scene_Base("Scene_Draw_Game
 	this->pDataList_GameResource = std::dynamic_pointer_cast<DataList_GameResource>(gpDataListServer->GetDataList("DataList_GameResource"));
 
 	/* 初期化 */
-	this->CoinScaleUp	= 0;											// コインアイコンのスケールアップ量
-	this->Coin_Old		= this->pDataList_GameResource->GetHaveCoin();	// 変更前のコイン枚数
+	this->CoinScaleUp	= 0;														// コインアイコンのスケールアップ量
+	this->Coin_Old		= this->pDataList_GameResource->GetHaveCoin();				// 変更前のコイン枚数
+	this->CardScaleUp	= 0;														// カードアイコンのスケールアップ量
+	this->Card_Old		= this->pDataList_GameResource->GetDeckCardList().size();	// 変更前のカード枚数
 
 	/* 画像取得 */
 	std::shared_ptr<DataList_Image> pDataList_Image = std::dynamic_pointer_cast<DataList_Image>(gpDataListServer->GetDataList("DataList_Image"));

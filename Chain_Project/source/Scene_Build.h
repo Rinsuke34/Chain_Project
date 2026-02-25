@@ -26,12 +26,19 @@ class Scene_Build : public Scene_Base
 		static const int CARD_INTERVAL		= 170;	// カードの間隔
 
 	private:
+		/* 構造体 */
+		struct DECK_CARD
+		{
+			std::shared_ptr<Card_Base> Card;	// カード
+			int Count;							// 枚数
+		};
+
 		/* 変数 */
 		// データリスト
 		std::shared_ptr<DataList_SaveData> pDataList_SaveData;	// セーブデータ管理データリスト
 		// カードリスト
 		std::vector<std::shared_ptr<Card_Base>> ClassCardList;	// クラスカードリスト
-		std::vector<std::shared_ptr<Card_Base>> DeckCardList;	// デッキカードリスト
+		std::vector<DECK_CARD>					DrawDeckCardList;	// デッキカードリスト
 		// UIのハンドル
 		std::shared_ptr<Scene_UI_Button> UI_Button[4];	// ボタンUI[0:HP強化, 1:アビリティ強化, 2:デッキ強化, 3:タイトルへもどる]
 		// 画像

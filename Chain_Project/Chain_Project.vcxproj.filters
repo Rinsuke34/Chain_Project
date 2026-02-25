@@ -837,6 +837,9 @@
     <ClCompile Include="source\Character_Npc_Servant.cpp">
       <Filter>ソース ファイル\キャラクター\NPC\使い魔%28仲間%29</Filter>
     </ClCompile>
+    <ClCompile Include="source\DataList_GameResource_CardSetup.cpp">
+      <Filter>ソース ファイル\データリスト\ゲームリソース管理</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Scene_Load_Checker.h">

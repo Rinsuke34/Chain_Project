@@ -19,9 +19,10 @@ class DataList_GameResource : public DataList_Base
 		virtual ~DataList_GameResource() {};	// デストラクタ
 
 		/* 関数 */
-		void AddCoin(int coin);								// コインを追加
-		void AddDropCard(std::shared_ptr<Card_Base> card);	// ドロップカードを追加
-		void ClearDropCardList();							// ドロップカードリストをクリア
+		void AddCoin(int coin);													// コインを追加
+		void AddDropCard(std::shared_ptr<Card_Base> card);						// ドロップカードを追加
+		void ClearDropCardList();												// ドロップカードリストをクリア
+		void CardSetup(std::vector<std::shared_ptr<Card_Base>>&	DeckCardList);	// カードのセットアップ処理
 
 		/* ゲッター */
 		int										GetGameState()			{ return GameState; }			// ゲームの状態

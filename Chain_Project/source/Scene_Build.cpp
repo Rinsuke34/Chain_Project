@@ -15,6 +15,7 @@
 #include "DataList_SaveData.h"
 #include "Card_Class.h"
 #include "Card_Include.h"
+#include "DataList_GameResource.h"
 
 // コンストラクタ
 Scene_Build::Scene_Build() : Scene_Base("Scene_Build", 0, false, false)
@@ -169,9 +170,51 @@ void Scene_Build::SetCard_Class()
 // デッキカードの設定
 void Scene_Build::SetCard_Deck()
 {
+	/* 現在のデッキカードリストをクリア */
+	this->DrawDeckCardList.clear();
+
 	/* 現在のクラスに応じた種類のカードを取得 */
 	int PlayerClassNo = this->pDataList_SaveData->GetPlayerClassNo();
-	
+
+	/* ゲームリソースデータリストの仮作成(関数を使用したいため、作成する) */
+	std::shared_ptr<DataList_GameResource> pDataList_GameResource = std::make_shared<DataList_GameResource>();
+
+	/* 現在のデッキの場合のカードリストを取得する */
+	std::vector<std::shared_ptr<Card_Base>> DeckCardList;
+	pDataList_GameResource->CardSetup(DeckCardList);
+
+	/* 現在のデッキのカードリストを参照し、描写用カード構造体に各種類のカードを一枚ずつ登録 */
+	for (int i = 0; i < DeckCardList.size(); i++)
+	{
+		/* 既に同じカードが登録されているか確認 */
+		bool bAlreadyRegistered = false;
+		for (int j = 0; j < this->DrawDeckCardList.size(); j++)
+		{
+			/* カード名で比較 */
+			if (this->DrawDeckCardList[j].Card->GetName() == DeckCardList[i]->GetName())
+			{
+				// 既に登録されている場合、カード枚数を増やす
+				this->DrawDeckCardList[j].Count++;
+				bAlreadyRegistered = true;
+				break;
+			}
+		}
+
+		/* まだ登録されていない場合、新規登録 */
+		if (!bAlreadyRegistered)
+		{
+			DECK_CARD newCardData;
+			newCardData.Card = DeckCardList[i];
+			newCardData.Count = 1;
+			this->DrawDeckCardList.push_back(newCardData);
+		}
+	}
+
+	/* 登録されているデッキのカードの画像を更新する */
+	for (int i = 0; i < this->DrawDeckCardList.size(); i++)
+	{
+		this->DrawDeckCardList[i].Card->UpdateImage();
+	}
 }
 
 // カードの位置を設定
@@ -191,6 +234,21 @@ void Scene_Build::SetCardPosition()
 
 		this->ClassCardList[i]->SetSettingPos(SettingPos);
 		this->ClassCardList[i]->SetNowPos(SettingPos);
+	}
+
+	/* デッキカードの総数を取得 */
+	HandCardCount = static_cast<int>(this->DrawDeckCardList.size());
+
+	/* デッキカードの座標設定 */
+	for (int i = 0; i < HandCardCount; i++)
+	{
+		Struct_2D::POSITION SettingPos =
+		{
+			400 + 180 * i,
+			900
+		};
+		this->DrawDeckCardList[i].Card->SetSettingPos(SettingPos);
+		this->DrawDeckCardList[i].Card->SetNowPos(SettingPos);
 	}
 }
 
@@ -217,6 +275,12 @@ void Scene_Build::Update_SelectClass()
 
 				/* プレイヤーのクラスを選択したクラスに設定する */
 				this->pDataList_SaveData->SetPlayerClassNo(i);
+
+				/* デッキカードの設定 */
+				SetCard_Deck();
+
+				/* カードの位置を設定 */
+				SetCardPosition();
 			}
 		}
 	}
@@ -494,9 +558,29 @@ void Scene_Build::Draw_Deck()
 	}
 
 	/* デッキカードの描写 */
-	for (int i = 0; i < DeckCardList.size(); i++)
+	for (int i = 0; i < DrawDeckCardList.size(); i++)
 	{
-		DeckCardList[i]->Draw();
+		/* カードの描写 */
+		DrawDeckCardList[i].Card->Draw();
+
+		/* カード枚数の描写 */
+		// 背景
+		/* 枠を描写 */
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128); // 半透明モードを設定(0-255, 128=50%透明)
+		DrawBox(
+			DrawDeckCardList[i].Card->GetNowPos().iX + 30 - 10, DrawDeckCardList[i].Card->GetNowPos().iY + 65,
+			DrawDeckCardList[i].Card->GetNowPos().iX + 30 + 37, DrawDeckCardList[i].Card->GetNowPos().iY + 65 + 37,
+			GetColor(0, 0, 0), TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0); // ブレンドモードを元に戻す
+		// 文字
+		std::string CountText = "x" + std::to_string(DrawDeckCardList[i].Count);
+		DrawStringToHandle(
+			DrawDeckCardList[i].Card->GetNowPos().iX + 30,
+			DrawDeckCardList[i].Card->GetNowPos().iY + 65,
+			CountText.c_str(),
+			GetColor(255, 255, 255),
+			giFont_DonguriDuel_32
+		);
 	}
 }
 
@@ -582,6 +666,12 @@ void Scene_Build::Update_LevelUp()
 		{
 			this->pDataList_SaveData->SetLevel_Deck(ClassNo, Level_Deck + 1);
 		}
+
+		/* デッキカードの設定 */
+		SetCard_Deck();
+
+		/* カードの位置を設定 */
+		SetCardPosition();
 	}
 }
 

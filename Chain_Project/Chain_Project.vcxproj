@@ -232,6 +232,7 @@
     <ClCompile Include="source\DataList_Battle.cpp" />
     <ClCompile Include="source\DataList_Font.cpp" />
     <ClCompile Include="source\DataList_GameResource.cpp" />
+    <ClCompile Include="source\DataList_GameResource_CardSetup.cpp" />
     <ClCompile Include="source\DataList_Image.cpp" />
     <ClCompile Include="source\DataList_SaveData.cpp" />
     <ClCompile Include="source\DataList_Sound.cpp" />
