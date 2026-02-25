@@ -36,7 +36,7 @@ void Card_Spell_FireMagic::Card_Effect_Extra_Process()
 	for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
 	{
 		auto EnemyCharacter = this->pDataList_Battle->GetEnemyCharacter(i);
-		if (EnemyCharacter != nullptr)
+		if (EnemyCharacter != nullptr && EnemyCharacter->GetHP_Now() > 0)
 		{
 			// “G‚ª‘¶Ý‚·‚é‚È‚ç
 			if (EnemyCharacter->GetHP_Now() < TargetHP)

@@ -39,7 +39,7 @@ void Character_Npc_Golem_Stone::Action()
 			for (int i = DataList_Battle::POSITION_FRONT; i < DataList_Battle::POSITION_MAX; i++)
 			{
 				std::shared_ptr<Character_Base> pCheckCharacter = this->pDataList_Battle->GetEnemyCharacter(i);
-				if (pCheckCharacter != nullptr)
+				if (pCheckCharacter != nullptr && pCheckCharacter->GetHP_Now() > 0)
 				{
 					if (pCheckCharacter.get() == this)
 					{
@@ -76,7 +76,7 @@ void Character_Npc_Golem_Stone::Action()
 				for (int i = DataList_Battle::POSITION_FRONT; i < DataList_Battle::POSITION_MAX; i++)
 				{
 					pTargetCharacter = this->pDataList_Battle->GetFriendCharacter(i);
-					if (pTargetCharacter != nullptr)
+					if (pTargetCharacter != nullptr && pTargetCharacter->GetHP_Now() > 0)
 					{
 						// ランダムなバトルエリアを対象とする
 						int BattleAreaNo = GetRand(DataList_Battle::BATTLE_AREA_MAX - 1);

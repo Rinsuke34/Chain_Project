@@ -50,7 +50,7 @@ void Character_Npc_Robot_Mother::Action()
 			{
 				for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
 				{
-					if (this->pDataList_Battle->GetEnemyCharacter(i) != nullptr)
+					if (this->pDataList_Battle->GetEnemyCharacter(i) != nullptr && this->pDataList_Battle->GetEnemyCharacter(i)->GetHP_Now() > 0)
 					{
 						/* 防御行動を設定する */
 						std::shared_ptr<Action_Effect_Defence> defenceEffect = std::make_shared<Action_Effect_Defence>();
@@ -72,7 +72,7 @@ void Character_Npc_Robot_Mother::Action()
 		{
 			for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
 			{
-				if (this->pDataList_Battle->GetEnemyCharacter(i) != nullptr)
+				if (this->pDataList_Battle->GetEnemyCharacter(i) != nullptr && this->pDataList_Battle->GetEnemyCharacter(i)->GetHP_Now() > 0)
 				{
 					/* 回復行動を設定する */
 					std::shared_ptr<Action_Effect_Heal> addEffect = std::make_shared<Action_Effect_Heal>();
@@ -101,7 +101,7 @@ void Character_Npc_Robot_Mother::Action()
 						for (int i = DataList_Battle::POSITION_FRONT; i < DataList_Battle::POSITION_MAX; i++)
 						{
 							pTargetCharacter = this->pDataList_Battle->GetFriendCharacter(i);
-							if (pTargetCharacter != nullptr)
+							if (pTargetCharacter != nullptr && pTargetCharacter->GetHP_Now() > 0)
 							{
 								// ランダムなバトルエリアを対象とする
 								int BattleAreaNo = GetRand(DataList_Battle::BATTLE_AREA_MAX - 1);
@@ -143,7 +143,7 @@ void Character_Npc_Robot_Mother::Action_Extra()
 	for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
 	{
 		auto EnemyCharacter = this->pDataList_Battle->GetEnemyCharacter(i);
-		if (EnemyCharacter != nullptr)
+		if (EnemyCharacter != nullptr && EnemyCharacter->GetHP_Now() > 0)
 		{
 			// 敵が存在するなら
 			/* 攻撃対象が"状態異常：毒"を所持しているか確認 */

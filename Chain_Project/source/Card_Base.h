@@ -38,6 +38,7 @@ class Card_Base : public std::enable_shared_from_this<Card_Base>
 		virtual bool	CheckSute(std::string SuiteName);									// 対象のスートを所持しているか確認
 		virtual void	Effect_BattleStart() {};											// 効果発動:戦闘開始時
 		virtual int		MyChainCountGet_Buff();												// バフ込みでの現在のチェイン数
+		virtual void	Effect_EnemyDeathCheck() {};										// 効果発動::敵の死亡確認時
 		
 		/* セッター */
 		// カード情報
@@ -164,6 +165,7 @@ class Card_Base : public std::enable_shared_from_this<Card_Base>
 		int								CardState;					// カードの状態
 		bool							Effect_Action_Before_Flg;	// 効果発動:行動直前を実行するかのフラグ
 		bool							Effect_Action_After_Flg;	// 効果発動:行動直後を実行するかのフラグ
+		int								AddMoveCount;					// 行動回数
 		// 画像
 		int								Image;				// 画像
 		std::shared_ptr<int>			Image_BackSide;		// 画像(裏面)

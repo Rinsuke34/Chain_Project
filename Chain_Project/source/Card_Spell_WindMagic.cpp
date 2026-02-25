@@ -35,7 +35,7 @@ void Card_Spell_WindMagic::Card_Effect_Extra_Process()
 	for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
 	{
 		auto EnemyCharacter = this->pDataList_Battle->GetEnemyCharacter(i);
-		if (EnemyCharacter != nullptr)
+		if (EnemyCharacter != nullptr && EnemyCharacter->GetHP_Now() > 0)
 		{
 			// 敵が存在するなら
 			/* 配列に追加する */
@@ -53,14 +53,15 @@ void Card_Spell_WindMagic::Card_Effect_Extra_Process()
 			break;
 		}
 		/* ランダムな敵を選択する */
-		int TargetIndex = GetRand(TargetCharacter.size() - 1);	// 対象のインデックス
-		auto TargetEnemyCharacter = TargetCharacter[TargetIndex];	// 対象の敵キャラクター
+		int TargetIndex				= GetRand(TargetCharacter.size() - 1);	// 対象のインデックス
+		auto TargetEnemyCharacter	= TargetCharacter[TargetIndex];	// 対象の敵キャラクター
 
 		/* ダメージ量 = 15 + 10×チェイン数 */
 		int DamageAmount = 15 + 10 * this->iNowChainCount;
 
 		/* 対象の敵にダメージを与える */
 		TargetEnemyCharacter->Damage(DamageAmount);
+
 		/* 対象の敵が倒れたなら配列から削除する */
 		if (TargetEnemyCharacter->GetHP_Now() <= 0)
 		{

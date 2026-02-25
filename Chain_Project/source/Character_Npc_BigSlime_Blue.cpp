@@ -72,7 +72,7 @@ void Character_Boss_BigSlime_Green::Action()
 				for (int i = DataList_Battle::POSITION_FRONT; i < DataList_Battle::POSITION_MAX; i++)
 				{
 					pTargetCharacter = this->pDataList_Battle->GetFriendCharacter(i);
-					if (pTargetCharacter != nullptr)
+					if (pTargetCharacter != nullptr && pTargetCharacter->GetHP_Now() > 0)
 					{
 						// 攻撃行動を設定する
 						std::shared_ptr<Action_Effect_Attack> addEffect = std::make_shared<Action_Effect_Attack>();
@@ -104,7 +104,7 @@ void Character_Boss_BigSlime_Green::Action_Extra()
 {
 
 	/* 前衛にキャラクターが存在するか確認 */
-	if (this->pDataList_Battle->GetEnemyCharacter(DataList_Battle::POSITION_FRONT) == nullptr)
+	if (this->pDataList_Battle->GetEnemyCharacter(DataList_Battle::POSITION_FRONT) == nullptr && this->pDataList_Battle->GetEnemyCharacter(DataList_Battle::POSITION_FRONT)->GetHP_Now() > 0)
 	{
 		// 存在しない場合
 		std::shared_ptr<Character_Base> pSummonCharacter = nullptr;
@@ -133,7 +133,7 @@ void Character_Boss_BigSlime_Green::Action_Extra()
 	}
 
 	/* 中衛にキャラクターが存在するか確認 */
-	if (this->pDataList_Battle->GetEnemyCharacter(DataList_Battle::POSITION_MIDDLE) == nullptr)
+	if (this->pDataList_Battle->GetEnemyCharacter(DataList_Battle::POSITION_MIDDLE) == nullptr && this->pDataList_Battle->GetEnemyCharacter(DataList_Battle::POSITION_MIDDLE)->GetHP_Now() > 0)
 	{
 		// 存在しない場合
 		std::shared_ptr<Character_Base> pSummonCharacter = nullptr;

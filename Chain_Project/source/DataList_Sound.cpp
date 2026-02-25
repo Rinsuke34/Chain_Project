@@ -236,3 +236,15 @@ void DataList_Sound::PlayBgmSound_Now()
 	ChangeNextPlayVolumeSoundMem(75, this->PlayBgm);
 	PlaySoundMem(this->PlayBgm, DX_PLAYTYPE_LOOP);
 }
+
+// Œ»İÄ¶’†‚ÌBGM‚ª‚ ‚é‚©
+bool DataList_Sound::CheckPlayBgm()
+{
+	/* Œ»İBGM‚ªÄ¶‚³‚ê‚Ä‚¢‚é‚©Šm”F */
+	if (CheckSoundMem(this->PlayBgm) == TRUE)
+	{
+		// Ä¶‚³‚ê‚Ä‚¢‚éê‡
+		return true;
+	}
+	return false;
+}

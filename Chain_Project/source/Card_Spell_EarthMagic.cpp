@@ -34,7 +34,7 @@ void Card_Spell_EarthMagic::Card_Effect_Extra_Process()
 	for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
 	{
 		auto EnemyCharacter = this->pDataList_Battle->GetEnemyCharacter(i);
-		if (EnemyCharacter != nullptr)
+		if (EnemyCharacter != nullptr && EnemyCharacter->GetHP_Now() > 0)
 		{
 			// 敵が存在するなら
 			// ダメージ量 = 5 + 10×チェイン数

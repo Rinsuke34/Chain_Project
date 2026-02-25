@@ -39,6 +39,7 @@ class Character_Base : public std::enable_shared_from_this<Character_Base>
 		virtual bool MouseInCharacter();																			// マウスカーソルがキャラクター上にあるか確認
 		virtual void Action_Extra() {};																				// 特殊行動(エネミーの特殊行動はこの関数を継承して行う)
 		virtual void DropItemSet(int Rank);																			// ドロップアイテムの設定
+		virtual void Reset_Buff_Debuff();																			// バフ、デバフのリセット
 
 		/* ゲッター */
 		int 												GetHP_Max()				{ return iHP_Max; }				// 体力(最大値)の取得

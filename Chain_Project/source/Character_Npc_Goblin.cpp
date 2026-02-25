@@ -58,7 +58,7 @@ void Character_Npc_Goblin::Action()
 					for (int i = DataList_Battle::POSITION_FRONT; i < DataList_Battle::POSITION_MAX; i++)
 					{
 						pTargetCharacter = this->pDataList_Battle->GetFriendCharacter(i);
-						if (pTargetCharacter != nullptr)
+						if (pTargetCharacter != nullptr && pTargetCharacter->GetHP_Now() > 0)
 						{
 							// ランダムなバトルエリアを対象とする
 							int BattleAreaNo = GetRand(DataList_Battle::BATTLE_AREA_MAX - 1);
@@ -67,7 +67,7 @@ void Character_Npc_Goblin::Action()
 							std::shared_ptr<Action_Effect_Attack> addEffect = std::make_shared<Action_Effect_Attack>();
 							addEffect->Target_Camp		= Character_Base::CAMP_FRIEND;	// 効果対象の陣営:味方
 							addEffect->Target_Position	= i;							// 効果対象の立ち位置:確認した敵キャラクターの位置
-							addEffect->DamageAmount		= 8;							// ダメージ量
+							addEffect->DamageAmount		= 4;							// ダメージ量
 							addEffect->EffectUser		= shared_from_this();			// 効果の使用者:自分自身
 							addEffect->Priority			= 0;							// 優先順位：最遅
 							addEffect->EffectCard = nullptr;							// 効果を使用するカード:無し

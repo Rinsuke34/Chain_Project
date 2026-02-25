@@ -135,7 +135,7 @@ class Scene_Battle : public Scene_Base
 		void Character_Death_Delete_Check();								// キャラクターが死亡していて、削除するかの確認処理
 		void CheckLostCard();												// ロスト対象のカードを確認し、ロストカード一覧に入れる
 		void ResetChain();													// チェイン数をリセット
-		void CheckGameEnd();												// 戦闘が終了しているかの確認
+		bool CheckGameEnd(bool NextStage);									// 戦闘が終了しているかの確認
 		void Trash_UseCard(std::shared_ptr<Action_Effect_Base> pEffect);	// 効果を使用したカードのトラッシュ処理
 		void Update_EmphasisAnim();											// バトルエリアのカーソル接触時のアニメーションを設定
 		void Draw_DropItem();												// ドロップアイテムの描写処理

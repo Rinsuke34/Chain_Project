@@ -135,6 +135,26 @@ void Scene_Shop::Draw_BackGround()
 		*(this->Image_Frame_Line),
 		*(this->Image_Frame_Inside)
 	);
+
+	/* ショップの文字描写 */
+	// フレーム
+	DRAW_FUNCTION::DrawFrame_Image(
+		{ SCREEN_SIZE_WIDE / 2, 344 + 25 },
+		{ 250, 75 },
+		32,
+		*(this->Image_Frame_Corner),
+		*(this->Image_Frame_Line),
+		*(this->Image_Frame_Inside)
+	);
+	// 文字
+	std::string ShopText = "ショップ";
+	int TextSizeX = 200;
+	DrawStringToHandle(
+		(SCREEN_SIZE_WIDE / 2) - (TextSizeX / 2), 344 - 10,
+		ShopText.c_str(),
+		GetColor(255, 255, 255),
+		giFont_DonguriDuel_64
+	);
 }
 
 // ショップ商品描写

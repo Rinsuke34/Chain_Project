@@ -13,8 +13,8 @@ class Card_Arms_AsuraKatana : public Card_Arms_Base
 		Card_Arms_AsuraKatana();				// コンストラクタ
 		virtual ~Card_Arms_AsuraKatana() {};	// デストラクタ
 
-		virtual void	Effect_BattleStart()	override;	// 効果発動:戦闘開始時
-		virtual void	Effect_StartTurn()		override;	// 効果発動:ターン開始時
+		virtual void	Effect_BattleStart()		override;	// 効果発動:戦闘開始時
+		virtual void	Effect_EnemyDeathCheck()	override;	// 効果発動::敵の死亡確認時
 
 	private:
 		bool LiveFlg[3];	// 生存フラグ

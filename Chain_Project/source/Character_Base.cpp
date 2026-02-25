@@ -454,6 +454,13 @@ void Character_Base::Add_Buff_Debuff(const std::shared_ptr<Character_Buff_Debuff
 	this->Buff_Debuff_List.push_back(Buff_Debuff);
 }
 
+// バフ、デバフのリセット
+void Character_Base::Reset_Buff_Debuff()
+{
+	/* バフ、デバフをすべて削除 */
+	this->Buff_Debuff_List.clear();
+}
+
 // 対象の名称のバフ、デバフを取得
 std::shared_ptr<Character_Buff_Debuff_Base> Character_Base::CheckGet_Buff_Debuff(std::string Buff_Debuff_Name)
 {

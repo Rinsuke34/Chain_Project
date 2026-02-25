@@ -298,9 +298,12 @@ void Scene_WoldMap::NextAreaCard_Update()
 	/* カードの位置設定処理 */
 	for (int i = 0; i < NextAreaCardCount; i++)
 	{
+		// 左右逆転：インデックスを反転
+		int reverseIndex = NextAreaCardCount - 1 - i;
+
 		/* 設定座標の算出 */
 		Struct_2D::POSITION SetPosition = {
-			NEXTAREA_CARD_CENTER_X - (i - (NextAreaCardCount - 1) / 2.0f) * NEXTAREA_CARD_INTERVAL,
+			NEXTAREA_CARD_CENTER_X - (reverseIndex - (NextAreaCardCount - 1) / 2.0f) * NEXTAREA_CARD_INTERVAL,
 			NEXTAREA_CARD_POS_Y
 		};
 

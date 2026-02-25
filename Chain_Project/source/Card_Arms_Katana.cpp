@@ -47,8 +47,8 @@ void Card_Arms_Katana::Effect_BattleStart()
 	}
 }
 
-// 効果発動:ターン開始時
-void Card_Arms_Katana::Effect_StartTurn()
+// 効果発動::敵の死亡確認時
+void Card_Arms_Katana::Effect_EnemyDeathCheck()
 {
 	/* 死亡カウントを更新 */
 	for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)

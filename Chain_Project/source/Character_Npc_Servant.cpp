@@ -35,7 +35,7 @@ void Character_Npc_Servant::Action()
 			for (int i = DataList_Battle::POSITION_FRONT; i < DataList_Battle::POSITION_MAX; i++)
 			{
 				std::shared_ptr<Character_Base> pCheckCharacter = this->pDataList_Battle->GetEnemyCharacter(i);
-				if (pCheckCharacter != nullptr)
+				if (pCheckCharacter != nullptr && pCheckCharacter->GetHP_Now() > 0)
 				{
 					if (pCheckCharacter.get() == this)
 					{

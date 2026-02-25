@@ -234,6 +234,7 @@ void Scene_Battle::Update()
 			BattleEndFlg = true;
 			break;
 	}
+
 	/* カードの設定座標の設定 */
 	CardPosition_HandSetSettingPosting();
 
@@ -271,12 +272,12 @@ void Scene_Battle::Update()
 	{
 		// 戦闘中の場合
 		/* 戦闘終了確認 */
-		CheckGameEnd();
+		CheckGameEnd(true);
 	}
 	else
 	{
 		// 戦闘終了の場合
-		/* プレイヤー陣営のシールドのリセット */
+		/* プレイヤー陣営のシールドとバフ、デバフのリセット */
 		for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
 		{
 			// 仲間
@@ -284,6 +285,7 @@ void Scene_Battle::Update()
 			if (FriendCharacter != nullptr)
 			{
 				FriendCharacter->ShieldReset_EndTurn();
+				FriendCharacter->Reset_Buff_Debuff();
 			}
 		}
 

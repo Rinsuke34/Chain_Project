@@ -69,4 +69,5 @@ class Scene_GetDropItem : public Scene_Base
 		void Update_Phase();				// フェーズの更新
 		void EndCheck();					// 終了確認
 		void Update_Explanation();			// 説明文設定
+		void Draw_String();					// 文字描写
 };

@@ -41,6 +41,7 @@ Card_Base::Card_Base()
 	this->iNowChainCount	= 0;		// 現在のチェイン数(ターン開始時に設定)
 	this->pPlayer			= nullptr;	// プレイヤーキャラクターのポインタ
 	this->ExplanationText	= "";		// 説明文
+	this->AddMoveCount			= 0;		// 行動回数
 
 	/* 画像取得 */
 	/* 画像管理データリストを取得 */
@@ -82,21 +83,43 @@ void Card_Base::BattleAction()
 	// 基礎攻撃力+カードの攻撃力バフ+プレイヤーの攻撃力バフの残りターン数(残りターン数分だけダメージが増えるため)
 	int DamageAmount = this->Strength + this->Strength_Buff + Strength_Buff_Time;
 
+	/* 各クラスに応じた処理 */
+	// データリスト取得
+	std::shared_ptr<DataList_SaveData> SaveData = std::dynamic_pointer_cast<DataList_SaveData>(gpDataListServer->GetDataList("DataList_SaveData"));
+	// メイン処理
+	switch (SaveData->GetPlayerClassNo())
+	{
+		// 盗賊
+		case DataList_SaveData::CLASS_ROGUE:
+		{
+			// 短剣スートが含まれているか確認
+			if (CheckSute("Dagger"))
+			{
+				// 追加行動回数をチェイン数に設定
+				this->AddMoveCount = iNowChainCount;
+			}
+		}
+		break;
+	}
+
 	/* 攻撃力が1以上であるか確認 */
 	if (this->Strength + this->Strength_Buff > 0)
 	{
-		/* 攻撃範囲に応じて処理を変更 */
-		switch (this->AttackRange)
+		// 行動回数分実施
+		for (int i = 0; i < this->AddMoveCount + 1; i++)
 		{
-			// 先頭から
-			case ATTACKRANGE_FRONT:
+			/* 攻撃範囲に応じて処理を変更 */
+			switch (this->AttackRange)
+			{
+				// 先頭から
+				case ATTACKRANGE_FRONT:
 				{
 					/* 前衛から順に敵が存在するか確認 */
 					for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
 					{
 						/* 敵キャラクターが存在するか確認 */
 						std::shared_ptr<Character_Base> pEnemyCharacter = this->pDataList_Battle->GetEnemyCharacter(i);
-						if (pEnemyCharacter != nullptr)
+						if (pEnemyCharacter != nullptr && pEnemyCharacter->GetHP_Now() > 0)
 						{
 							/* 存在するなら */
 							// 攻撃行動を設定する
@@ -115,8 +138,8 @@ void Card_Base::BattleAction()
 				}
 				break;
 
-			// ランダム
-			case ATTACKRANGE_RANDOM:
+				// ランダム
+				case ATTACKRANGE_RANDOM:
 				{
 					/* ランダムな相手に攻撃処理を行う */
 					while (true)
@@ -126,7 +149,7 @@ void Card_Base::BattleAction()
 
 						/* 敵キャラクターが存在するか確認 */
 						std::shared_ptr<Character_Base> pEnemyCharacter = this->pDataList_Battle->GetEnemyCharacter(positionNo);
-						if (pEnemyCharacter != nullptr)
+						if (pEnemyCharacter != nullptr && pEnemyCharacter->GetHP_Now() > 0)
 						{
 							/* 存在するなら */
 							// 攻撃行動を設定する
@@ -145,8 +168,8 @@ void Card_Base::BattleAction()
 				}
 				break;
 
-			// 全体
-			case ATTACKRANGE_ALL:
+				// 全体
+				case ATTACKRANGE_ALL:
 				{
 					/* 全体攻撃を行う */
 					// 攻撃行動を設定する
@@ -161,6 +184,7 @@ void Card_Base::BattleAction()
 					this->pDataList_Battle->AddEffect(addEffect);
 				}
 				break;
+			}
 		}
 	}
 

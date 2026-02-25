@@ -143,8 +143,11 @@ void Scene_Title::Update()
 				/* BGM再生 */
 				// サウンド管理データリスト取得
 				std::shared_ptr<DataList_Sound> pDataList_Sound = std::dynamic_pointer_cast<DataList_Sound>(gpDataListServer->GetDataList("DataList_Sound"));
-				// 現在読み込まれているBGM音声データ再生
-				pDataList_Sound->PlayBgmSound_Now();
+				if (!pDataList_Sound->CheckPlayBgm())
+				{
+					// 現在読み込まれているBGM音声データ再生
+					pDataList_Sound->PlayBgmSound_Now();
+				}
 			}
 			else
 			{

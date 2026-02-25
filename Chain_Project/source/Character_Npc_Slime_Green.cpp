@@ -57,7 +57,7 @@ void Character_Npc_Slime_Green::Action()
 					for (int i = DataList_Battle::POSITION_FRONT; i < DataList_Battle::POSITION_MAX; i++)
 					{
 						pTargetCharacter = this->pDataList_Battle->GetFriendCharacter(i);
-						if (pTargetCharacter != nullptr)
+						if (pTargetCharacter != nullptr && pTargetCharacter->GetHP_Now() > 0)
 						{
 							// ランダムなバトルエリアを対象とする
 							int BattleAreaNo = GetRand(DataList_Battle::BATTLE_AREA_MAX - 1);

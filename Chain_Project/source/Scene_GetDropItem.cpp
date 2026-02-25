@@ -130,6 +130,9 @@ void Scene_GetDropItem::Draw()
 	/* 背景描写 */
 	BackGround_Drow();
 
+	/* 文字描写 */
+	Draw_String();
+
 	/* 取得カードの描写 */
 	Draw_GetCard();
 }
@@ -241,12 +244,43 @@ void Scene_GetDropItem::CardPosition_Setup()
 	}
 }
 
+// 文字描写
+void Scene_GetDropItem::Draw_String()
+{
+	/* 取得アイテムの文字描写 */
+	std::string GameOverText = "しゅとくアイテム";
+	int iSizeX	= 350;
+	int PosY	= SceneGetDropItemDrawPos.iY + 50;
+	DrawStringToHandle(
+		(SCREEN_SIZE_WIDE / 2) - (iSizeX / 2),
+		PosY,
+		GameOverText.c_str(),
+		GetColor(255, 255, 255),
+		giFont_DonguriDuel_64
+	);
+}
+
 // 取得カード描写
 void Scene_GetDropItem::Draw_GetCard()
 {
 	for (auto& Card : this->GetCardList)
 	{
 		Card->Draw();
+	}
+
+	// 取得カードがない場合、"どろっぷなし"と描写
+	if (this->GetCardList.size() == 0)
+	{
+		std::string NoItemText = "ドロップなし";
+		int iSizeX = 350;
+		int PosY = SceneGetDropItemDrawPos.iY + GETCARD_POS_Y;
+		DrawStringToHandle(
+			(SCREEN_SIZE_WIDE / 2) - (iSizeX / 2),
+			PosY,
+			NoItemText.c_str(),
+			GetColor(255, 255, 255),
+			giFont_DonguriDuel_64
+		);
 	}
 }
 

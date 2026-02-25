@@ -37,6 +37,12 @@ void Card_Arms_PoisonDagger::Effect_Action_After(std::shared_ptr<Character_Base>
 	// 引数
 	// Target : 効果対象のキャラクター
 
+	/* ターゲットが以内なら処理を行わない */
+	if (Target == nullptr && Target->GetHP_Now() <= 0)
+	{
+		return;
+	}
+
 	/* 攻撃対象が"状態異常：毒"を所持しているか確認 */
 	std::shared_ptr<Character_Buff_Debuff_Base> Poison = Target->CheckGet_Buff_Debuff("Debuff_Poison");
 	if (Poison != nullptr)

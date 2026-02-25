@@ -38,6 +38,7 @@ void Card_Item_RoyalFlag::Card_Effect_Extra_Process()
 			// スート：おうこく をもつカードなら
 			this->pDataList_Battle->AddHandCard(Card);		// 手札に加える
 			this->pDataList_Battle->RemoveTrashCard(Card);	// 捨て札から削除する
+			Card->SetCardState(Card_Base::CARDSTATE_HAND);
 			Added_Card_Count++;								// 加えたカードの枚数を加算する
 
 			if (Added_Card_Count >= this->iNowChainCount)

@@ -30,24 +30,24 @@ void Character_Npc_Skeleton::Action()
 	/* プレイヤー側の最もうしろのキャラクターに対して攻撃を作成する */
 	if (this->pDataList_Battle != nullptr)
 	{
-		// 最も後ろの仲間キャラクターを取得
+		// 最も前の仲間キャラクターを取得
 		std::shared_ptr<Character_Base> pTargetCharacter = nullptr;
-		for (int i = DataList_Battle::POSITION_BACK; i <= DataList_Battle::POSITION_FRONT; i++)
+		for (int i = DataList_Battle::POSITION_FRONT; i < DataList_Battle::POSITION_MAX; i++)
 		{
 			pTargetCharacter = this->pDataList_Battle->GetFriendCharacter(i);
-			if (pTargetCharacter != nullptr)
+			if (pTargetCharacter != nullptr && pTargetCharacter->GetHP_Now() > 0)
 			{
 				// ランダムなバトルエリアを対象とする
 				int BattleAreaNo = GetRand(DataList_Battle::BATTLE_AREA_MAX - 1);
 
 				// 攻撃行動を設定する
 				std::shared_ptr<Action_Effect_Attack> addEffect = std::make_shared<Action_Effect_Attack>();
-				addEffect->Target_Camp		= Character_Base::CAMP_FRIEND;	// 効果対象の陣営:味方
-				addEffect->Target_Position	= i;							// 効果対象の立ち位置:確認した敵キャラクターの位置
-				addEffect->DamageAmount		= 5;							// ダメージ量
-				addEffect->EffectUser		= shared_from_this();			// 効果の使用者:自分自身
-				addEffect->Priority			= 0;							// 優先順位：最遅
-				addEffect->EffectCard		= nullptr;						// 効果を使用するカード:無し
+				addEffect->Target_Camp = Character_Base::CAMP_FRIEND;	// 効果対象の陣営:味方
+				addEffect->Target_Position = i;							// 効果対象の立ち位置:確認した敵キャラクターの位置
+				addEffect->DamageAmount = 10;							// ダメージ量
+				addEffect->EffectUser = shared_from_this();			// 効果の使用者:自分自身
+				addEffect->Priority = 0;							// 優先順位：最遅
+				addEffect->EffectCard = nullptr;							// 効果を使用するカード:無し
 				this->pDataList_Battle->AddEffect(addEffect);
 				this->ActionEffectList.push_back(addEffect);
 				break;

@@ -33,11 +33,12 @@ void Card_Item_TravelerCompass::Card_Effect_Extra_Process()
 	int Drawn_Card_Count = 0;	// ドローしたカードの枚数
 	for (auto& Card : DeckCardList)
 	{
-		if (Card->GetSuiteList().size() > 0 && Card->GetSuiteList()[0] == SUITE_TRAVELER)
+		if (Card->CheckSute(SUITE_TRAVELER))
 		{
 			// スート：たびびと をもつカードなら
 			this->pDataList_Battle->AddHandCard(Card);		// 手札に加える
 			this->pDataList_Battle->RemoveDeckCard(Card);	// 山札から削除する
+			Card->SetCardState(Card_Base::CARDSTATE_HAND);
 			Drawn_Card_Count++;								// ドローしたカードの枚数を加算する
 			if (Drawn_Card_Count >= 2)
 			{
@@ -51,7 +52,7 @@ void Card_Item_TravelerCompass::Card_Effect_Extra_Process()
 	for (int i = 0; i < this->pDataList_Battle->GetHandCardList().size(); i++)
 	{
 		auto HandCard = this->pDataList_Battle->GetHandCardList()[i];
-		if (HandCard != nullptr && HandCard->GetSuiteList().size() > 0 && HandCard->CheckSute(SUITE_TRAVELER))
+		if (HandCard != nullptr && HandCard->CheckSute(SUITE_TRAVELER))
 		{
 			HandCard->Add_Strength_Buff(this->iNowChainCount);	// 攻撃力バフを設定:チェイン数
 			HandCard->UpdateImage();							// 画像を更新する

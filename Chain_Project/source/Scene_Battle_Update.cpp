@@ -371,6 +371,12 @@ void Scene_Battle::Update_BattleAction_Decision()
 // 戦闘行動
 void Scene_Battle::Update_BattleAction()
 {
+	/* ゲームが終了しているなら処理を行わない */
+	if (CheckGameEnd(false))
+	{
+		return;
+	}
+
 	/* 戦闘行動間のディレイ時間が完了しているか確認 */
 	if (this->iBattleActionDelay > 0)
 	{
@@ -861,8 +867,23 @@ void Scene_Battle::ResetChain()
 }
 
 // 戦闘が終了しているかの確認
-void Scene_Battle::CheckGameEnd()
+bool Scene_Battle::CheckGameEnd(bool NextStage)
 {
+	// 引数
+	// bool NextStage <- 次のステージへ遷移するかのフラグ(遷移するならtrue、しないならfalse)
+	// 戻り値
+	// bool <- 戦闘が終了しているかのフラグ(終了しているならtrue、していないならfalse)
+
+	/* 全てのカードの敵の死亡確認時の効果を発動させる */
+	std::vector<std::shared_ptr<Card_Base>> AllDeckCardList = this->pDataList_Battle->GetAllDeckCardList();
+	for (const auto& card : AllDeckCardList)
+	{
+		if (card)
+		{
+			card->Effect_EnemyDeathCheck();
+		}
+	}
+
 	/* プレイヤーキャラクターが存在しているか確認 */
 	bool bPlayerCharacterExist = false;
 	for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)
@@ -872,7 +893,7 @@ void Scene_Battle::CheckGameEnd()
 		if (FriendCharacter != nullptr)
 		{
 			auto CastedPlayerCharacter = std::dynamic_pointer_cast<Character_Player>(FriendCharacter);
-			if (CastedPlayerCharacter != nullptr)
+			if (CastedPlayerCharacter != nullptr && CastedPlayerCharacter->GetHP_Now() > 0)
 			{
 				// プレイヤーキャラクターが存在している場合、処理を抜ける
 				bPlayerCharacterExist = true;
@@ -883,13 +904,16 @@ void Scene_Battle::CheckGameEnd()
 	if (!bPlayerCharacterExist)
 	{
 		// プレイヤーキャラクターが存在していない場合
-		/* 戦闘終了(プレイヤー敗北)フェイズへ遷移 */
-		this->iBattlePhase = BATTLE_PHASE_BATTLE_END_GAMEOVER;
+		if (NextStage == true)
+		{
+			/* 戦闘終了(プレイヤー敗北)フェイズへ遷移 */
+			this->iBattlePhase = BATTLE_PHASE_BATTLE_END_GAMEOVER;
 
-		/* シーン"ゲームオーバー"を作成 */
-		gpSceneServer->AddSceneReservation(std::make_shared<Scene_GameOver>());
+			/* シーン"ゲームオーバー"を作成 */
+			gpSceneServer->AddSceneReservation(std::make_shared<Scene_GameOver>());
+		}
 
-		return;
+		return true;
 	}
 
 	/* 体力が1以上の敵キャラクターが存在するか確認 */
@@ -914,17 +938,22 @@ void Scene_Battle::CheckGameEnd()
 		/* ドロップアイテムが盤面上に残っているなら処理を抜ける(ドロップアイテムが消滅するまで待つ) */
 		if (this->DropItem_List.size() > 0)
 		{
-			return;
+			return true;
 		}
 
-		/* 戦闘終了(プレイヤー勝利)フェイズへ遷移 */
-		this->iBattlePhase = BATTLE_PHASE_BATTLE_END_WIN;
+		if (NextStage == true)
+		{
+			/* 戦闘終了(プレイヤー勝利)フェイズへ遷移 */
+			this->iBattlePhase = BATTLE_PHASE_BATTLE_END_WIN;
 
-		/* ドロップアイテム確認シーンを有効化 */
-		this->pDataList_GameResource->SetDropItemCheckFlg(true);
+			/* ドロップアイテム確認シーンを有効化 */
+			this->pDataList_GameResource->SetDropItemCheckFlg(true);
+		}
 
-		return;
+		return true;
 	}
+
+	return false;
 }
 
 // 効果を使用したカードのトラッシュ処理
