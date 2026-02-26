@@ -24,7 +24,7 @@ Card_Arms_CursedKatana::Card_Arms_CursedKatana() : Card_Arms_Base()
 	// 画像の名前
 	this->ImageName = "CursedKatana";			// 画像の名前
 	// 説明文
-	this->ExplanationText = "/cysこうげき後/ce/nXかいふくする/nXはこれのこうげきりょく";
+	this->ExplanationText = "いちばんまえのてきをこうげきする/cysこうげきご/ce/nXかいふくする/nXはこれのこうげきりょく";
 	// 行動前後の効果を実行するかのフラグ
 	this->Effect_Action_Before_Flg	= false;
 	this->Effect_Action_After_Flg	= true;

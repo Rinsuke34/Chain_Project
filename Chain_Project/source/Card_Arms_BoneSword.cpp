@@ -24,7 +24,7 @@ Card_Arms_BoneSword::Card_Arms_BoneSword() : Card_Arms_Base()
 	// 画像の名前
 	this->ImageName = "BoneSword";		// 画像の名前
 	// 説明文
-	this->ExplanationText = "/cysターンかいしじ/ce/nこうげきりょくをXにする\nXはすてられたカードのまいすう+１０";
+	this->ExplanationText = "いちばんまえのてきをこうげきする/cysターンかいしじ/ce/nこうげきりょくをXにする\nXはすてられたカードのまいすう+１０";
 	// 行動前後の効果を実行するかのフラグ
 	this->Effect_Action_Before_Flg = false;
 	this->Effect_Action_After_Flg = false;

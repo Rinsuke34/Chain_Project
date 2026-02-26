@@ -31,7 +31,7 @@ namespace SCENE_SET
 	void	SetFastScene()
 	{
 		LOAD_FUNCTION::AddLoadScene();
-		gpSceneServer->AddSceneReservation(std::make_shared<Scene_Title>());
+		gpSceneServer->AddSceneReservation(std::make_shared<Scene_Title>(true));
 	}
 }
 

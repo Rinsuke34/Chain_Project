@@ -269,6 +269,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="resource.h" />
     <ClInclude Include="source\Action_Effect.h" />
     <ClInclude Include="source\Buff_Debuff.h" />
     <ClInclude Include="source\Card_Arms_AsuraKatana.h" />
@@ -358,6 +359,12 @@
     <ClInclude Include="source\WoldMap_Node_Enemy.h" />
     <ClInclude Include="source\WoldMap_Node_Shop.h" />
     <ClInclude Include="source\Card_Include.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resource\ImageData\Logo\Icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resource.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

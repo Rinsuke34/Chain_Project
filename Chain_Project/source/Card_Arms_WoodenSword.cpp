@@ -21,5 +21,5 @@ Card_Arms_WoodenSword::Card_Arms_WoodenSword() : Card_Arms_Base()
 	// ‰æ‘œ‚Ì–¼‘O
 	this->ImageName		= "WoodenSword";		// ‰æ‘œ‚Ì–¼‘O
 	// à–¾•¶
-	this->ExplanationText = "";
+	this->ExplanationText = "‚¢‚¿‚Î‚ñ‚Ü‚¦‚Ì‚Ä‚«‚ð‚±‚¤‚°‚«‚·‚é";
 }

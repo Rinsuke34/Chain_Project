@@ -24,7 +24,7 @@ Card_Arms_GoldDagger::Card_Arms_GoldDagger() : Card_Arms_Base()
 	// 画像の名前
 	this->ImageName = "GoldDagger";		// 画像の名前
 	// 説明文
-	this->ExplanationText = "/cysターンかいしじ/ce/nこうげきりょくをXにする\nXはしょじコインのまいすう+８";
+	this->ExplanationText = "いちばんまえのてきをこうげきする/n/cysターンかいしじ/ce/nこうげきりょくをXにする\nXはしょじコインのまいすう+８";
 	// 行動前後の効果を実行するかのフラグ
 	this->Effect_Action_Before_Flg	= false;
 	this->Effect_Action_After_Flg	= false;

@@ -24,7 +24,7 @@ Card_Arms_ExecutorSword::Card_Arms_ExecutorSword() : Card_Arms_Base()
 	// 画像の名前
 	this->ImageName		= "ExecutorSword";		// 画像の名前
 	// 説明文
-	this->ExplanationText = "/cysターンかいしじ/ce/nこうげきりょくを+Xする\nXはすてられたカードのまいすう×２";
+	this->ExplanationText = "いちばんまえのてきをこうげきする/n/cysターンかいしじ/ce/nこうげきりょくを+Xする\nXはすてられたカードのまいすう×２";
 }
 
 // 効果発動:ターン開始時

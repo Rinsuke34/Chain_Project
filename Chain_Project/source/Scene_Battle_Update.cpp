@@ -910,7 +910,7 @@ bool Scene_Battle::CheckGameEnd(bool NextStage)
 			this->iBattlePhase = BATTLE_PHASE_BATTLE_END_GAMEOVER;
 
 			/* シーン"ゲームオーバー"を作成 */
-			gpSceneServer->AddSceneReservation(std::make_shared<Scene_GameOver>());
+			gpSceneServer->AddSceneReservation(std::make_shared<Scene_GameOver>(false));
 		}
 
 		return true;

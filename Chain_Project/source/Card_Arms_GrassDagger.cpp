@@ -22,7 +22,7 @@ Card_Arms_GrassDagger::Card_Arms_GrassDagger() : Card_Arms_Base()
 	// 画像の名前
 	this->ImageName		= "GrassDagger";		// 画像の名前
 	// 説明文
-	this->ExplanationText = "";
+	this->ExplanationText = "いちばんまえのてきをこうげきする/n/cysこうげきご/ce/nX％でこわれる/nXは２５ー（チェインすう×５）";
 }
 
 // 効果発動:行動直後

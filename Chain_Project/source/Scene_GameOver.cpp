@@ -11,13 +11,14 @@
 #include "Scene_UI_Button.h"
 
 // コンストラクタ
-Scene_GameOver::Scene_GameOver() : Scene_Base("Scene_GameOver", 100, false, false)
+Scene_GameOver::Scene_GameOver(bool Winflg) : Scene_Base("Scene_GameOver", 100, false, false)
 {
 	/* 初期化 */
 	this->GameEndFlg		= false;		// ゲーム終了フラグ
 	this->BackgroundAlpha	= 0;			// 背景のアルファ値
 	this->iPhase			= PHASE_FADEIN;	// フェーズ
 	this->UI_DecisionButton = nullptr;		// 決定ボタンのハンドル
+	this->WinFlg			= Winflg;		// 勝利したかのフラグ
 
 	/* データリスト取得 */
 	// ゲームリソース管理用データリスト
@@ -106,16 +107,38 @@ void Scene_GameOver::Draw()
 	/* 背景(ブラックアウト)の描写 */
 	DrawBox(0, 0, SCREEN_SIZE_WIDE, SCREEN_SIZE_HEIGHT, GetColor(0, 0, 0), TRUE);
 
-	/* ゲームオーバーの文字描写 */
-	std::string GameOverText = "ゲームオーバー";
-	int iSizeX = 350;
-	DrawStringToHandle(
-		(SCREEN_SIZE_WIDE / 2) - (iSizeX / 2),
-		(SCREEN_SIZE_HEIGHT / 2) - 200,
-		GameOverText.c_str(),
-		GetColor(255, 255, 255),
-		giFont_DonguriDuel_64
-	);
+	/* 文字の描写 */
+	std::string GameOverText = "";
+	int iSizeX = 0;
+	/* ゲームクリアであるか確認 */
+	if (this->WinFlg)
+	{
+		// ゲームクリアの場合
+		/* ゲームクリアの文字描写 */
+		GameOverText = "ゲームクリア";
+		iSizeX = 300;
+		DrawStringToHandle(
+			(SCREEN_SIZE_WIDE / 2)		- (iSizeX / 2),
+			(SCREEN_SIZE_HEIGHT / 2)	- 200,
+			GameOverText.c_str(),
+			GetColor(255, 255, 0),
+			giFont_DonguriDuel_64
+		);
+	}
+	else
+	{
+		// ゲームオーバーの場合
+		/* ゲームオーバーの文字描写 */
+		GameOverText	= "ゲームオーバー";
+		iSizeX			= 350;
+		DrawStringToHandle(
+			(SCREEN_SIZE_WIDE / 2) - (iSizeX / 2),
+			(SCREEN_SIZE_HEIGHT / 2) - 200,
+			GameOverText.c_str(),
+			GetColor(255, 255, 255),
+			giFont_DonguriDuel_64
+		);
+	}
 
 	/* 取得した経験値を描写 */
 	std::string GetExpText = "かくとく　" + std::to_string(this->GetExp) + "EXP";

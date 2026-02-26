@@ -20,7 +20,7 @@ Card_Item_TravelerCompass::Card_Item_TravelerCompass() : Card_Item_Base()
 	// 画像の名前
 	this->ImageName = "TravelerCompass";			// 画像の名前
 	// 説明文
-	this->ExplanationText = "スート：たびびと をもつカードをやまふだから２まいドロー\nてふだのスート：たびびと をもつカードのこうげきりょくを+Xする\nXはチェインすう";
+	this->ExplanationText = "/cysスート：たびびと/ceをもつカードをやまふだから２まいドロー\nてふだのスート：たびびと をもつカードのこうげきりょくを+Xする\nXはチェイン+１";
 }
 
 // カード効果(特殊効果)
@@ -54,8 +54,8 @@ void Card_Item_TravelerCompass::Card_Effect_Extra_Process()
 		auto HandCard = this->pDataList_Battle->GetHandCardList()[i];
 		if (HandCard != nullptr && HandCard->CheckSute(SUITE_TRAVELER))
 		{
-			HandCard->Add_Strength_Buff(this->iNowChainCount);	// 攻撃力バフを設定:チェイン数
-			HandCard->UpdateImage();							// 画像を更新する
+			HandCard->Add_Strength_Buff(this->iNowChainCount + 1);	// 攻撃力バフを設定:チェイン数
+			HandCard->UpdateImage();								// 画像を更新する
 		}
 	}
 }

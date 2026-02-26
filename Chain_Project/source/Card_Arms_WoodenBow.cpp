@@ -21,7 +21,7 @@ Card_Arms_WoodenBow::Card_Arms_WoodenBow() : Card_Arms_Base()
 	// 画像の名前
 	this->ImageName		= "WoodenBow";			// 画像の名前
 	// 説明文
-	this->ExplanationText = "ランダムな相手に攻撃する";
+	this->ExplanationText = "ランダムなあいてをこうげきする";
 	// 行動前後の効果を実行するかのフラグ
 	this->Effect_Action_Before_Flg	= false;
 	this->Effect_Action_After_Flg	= false;

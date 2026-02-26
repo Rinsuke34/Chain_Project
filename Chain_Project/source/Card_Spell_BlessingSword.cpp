@@ -23,7 +23,7 @@ Card_Spell_BlessingSword::Card_Spell_BlessingSword() : Card_Spell_Base()
 	// 画像の名前
 	this->ImageName = "BlessingSword";	// 画像の名前
 	// 説明文
-	this->ExplanationText = "スート：けん をもつカードをやまふだからXまいドロー\nXはチェイン+１";
+	this->ExplanationText = "/cysスート：けん/ceをもつカードをやまふだからXまいドローする\nXはチェイン+１";
 }
 
 // カード効果(特殊効果)

@@ -24,7 +24,7 @@ Card_Spell_FireMagic::Card_Spell_FireMagic() : Card_Spell_Base()
 	// 画像の名前
 	this->ImageName = "FireMagic";	// 画像の名前
 	// 説明文
-	this->ExplanationText = "たいりょくがもっともひくいてきにXだめーじ/nXは１５+（１０×チェイン）";
+	this->ExplanationText = "たいりょくがもっともひくいてきにXダメージをあたえる/nXは１５+（１０×チェイン）";
 }
 
 // カード効果(特殊効果)

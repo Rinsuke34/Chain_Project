@@ -49,7 +49,7 @@ void Scene_UI_ExplanationText::Draw()
 	std::wstring wtext = PUBLIC_PROCESS::MByteToWstring(text);
 
 	const int lineHeight		= 22;	// s‚Ì‚‚³
-	const int maxCharsPerLine	= 8;	// 1s‚ ‚½‚è‚ÌÅ‘å•¶Žš”i‘SŠpŠ·ŽZA”¼Šp‚È‚ç2•¶Žš•ªj
+	const int maxCharsPerLine	= 12;	// 1s‚ ‚½‚è‚ÌÅ‘å•¶Žš”i‘SŠpŠ·ŽZA”¼Šp‚È‚ç2•¶Žš•ªj
 
 	/* 1. s”‚ðŽZo */
 	int totalLines = 1;
@@ -115,10 +115,10 @@ void Scene_UI_ExplanationText::Draw()
 
 	/* 4. ”wŒi‚ð•`ŽÊ */
 	// ‰¡•‚ÍÅ‘å8•¶Žš•ªi‘SŠp16px/”¼Šp8px‚Å128px’ö“xjA‚‚³‚ÍlineHeight*totalLines
-	const int boxWidth	= maxCharsPerLine * 20;
+	const int boxWidth	= maxCharsPerLine * 20 + 8;
 	const int boxHeight	= lineHeight * totalLines;
 	DRAW_FUNCTION::DrawFrame_Image(
-		{ baseX + boxWidth / 2, startY + boxHeight / 2 },
+		{ baseX + (boxWidth / 2) + 4, startY + boxHeight / 2 },
 		{ boxWidth, boxHeight },
 		FRAME_THICKNESS,
 		*(this->Image_Frame_Corner),
@@ -196,4 +196,3 @@ void Scene_UI_ExplanationText::Draw()
 	}
 	flushBuffer();
 }
-

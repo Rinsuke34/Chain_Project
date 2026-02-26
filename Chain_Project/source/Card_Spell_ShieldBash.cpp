@@ -25,7 +25,7 @@ Card_Spell_ShieldBash::Card_Spell_ShieldBash() : Card_Spell_Base()
 	// 画像の名前
 	this->ImageName		= "ShieldBash";			// 画像の名前
 	// 説明文
-	this->ExplanationText = "てき１たいにXダメージをあたえる/nXはじぶんのシールドりょう";
+	this->ExplanationText = "いちばんまえのてき１たいにXダメージをあたえる/nXはじぶんのシールドりょう";
 }
 
 // カード効果(特殊効果)

@@ -24,7 +24,7 @@ Card_Spell_EarthMagic::Card_Spell_EarthMagic() : Card_Spell_Base()
 	// 画像の名前
 	this->ImageName = "EarthMagic";	// 画像の名前
 	// 説明文
-	this->ExplanationText = "てきぜんたいにXダメージ/nXは５+（１０×チェイン）";
+	this->ExplanationText = "てきぜんたいにXダメージをあたえる/nXは５+（１０×チェイン）";
 }
 
 // カード効果(特殊効果)

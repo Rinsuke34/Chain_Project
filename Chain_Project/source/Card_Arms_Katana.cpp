@@ -24,7 +24,7 @@ Card_Arms_Katana::Card_Arms_Katana() : Card_Arms_Base()
 	// 画像の名前
 	this->ImageName		= "Katana";				// 画像の名前
 	// 説明文
-	this->ExplanationText = "てきをあと２０たいたおすとしんか";
+	this->ExplanationText = "いちばんまえのてきをこうげきする/nてきをあと２０たいたおすとしんかする";
 	// その他
 	this->Kill_Count = 0;	// 撃破数
 	for (int i = 0; i < DataList_Battle::POSITION_MAX; i++)	this->LiveFlg[i] = false;	// 生存フラグ
@@ -83,8 +83,20 @@ void Card_Arms_Katana::Effect_EnemyDeathCheck()
 		/* このカードのロストフラグを有効化 */
 		this->bLostFlag = true;
 
-		/* デッキに妖刀を追加 */
+		/* 妖刀を手札に追加する */
 		std::shared_ptr<Card_Arms_CursedKatana> New_Cursed_Katana = std::make_shared<Card_Arms_CursedKatana>();
-		this->pDataList_Battle->AddDeckCard(New_Cursed_Katana);
+
+		// 手札に加える
+		this->pDataList_Battle->AddHandCard(New_Cursed_Katana);
+		New_Cursed_Katana->SetCardState(Card_Base::CARDSTATE_HAND);
+
+		/* 現在の全カードリストを取得 */
+		std::vector<std::shared_ptr<Card_Base>> AllDeckCardList = this->pDataList_Battle->GetAllDeckCardList();
+
+		/* 現在の全カードリストに妖刀を追加する */
+		AllDeckCardList.push_back(New_Cursed_Katana);
+
+		/* 更新した全カードリストを設定する */
+		this->pDataList_Battle->SetAllDeckCardList(AllDeckCardList);
 	}
 }

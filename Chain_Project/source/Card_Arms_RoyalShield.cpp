@@ -22,7 +22,7 @@ Card_Arms_RoyalShield::Card_Arms_RoyalShield() : Card_Arms_Base()
 	// 画像の名前
 	this->ImageName = "RoyalShield";		// 画像の名前
 	// 説明文
-	this->ExplanationText = "/cysこうどうまえ/ce/nぼうぎょりょくをきょうかする/n/cysこうかりょう/ce/nチェインすう";
+	this->ExplanationText = "じぶんにシールドをふよする/n/cysこうどうまえ/ce/nぼうぎょりょくをXきょうか/nXはチェイン×２";
 	// 行動前後の効果を実行するかのフラグ
 	this->Effect_Action_Before_Flg	= true;
 	this->Effect_Action_After_Flg	= false;
@@ -35,5 +35,5 @@ void Card_Arms_RoyalShield::Effect_Action_Before(std::shared_ptr<Character_Base>
 	// Target : 効果対象のキャラクター
 
 	/* 防御力を加算 */
-	this->Add_Diffence_Buff(MyChainCountGet_Buff());	// 防御力バフ追加:チェイン数
+	this->Add_Diffence_Buff(MyChainCountGet_Buff() * 2);	// 防御力バフ追加:チェイン数 * 2
 }

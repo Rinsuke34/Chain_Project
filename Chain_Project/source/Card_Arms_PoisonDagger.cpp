@@ -25,7 +25,7 @@ Card_Arms_PoisonDagger::Card_Arms_PoisonDagger() : Card_Arms_Base()
 	// 画像の名前
 	this->ImageName	= "PoisonDagger";		// 画像の名前
 	// 説明文
-	this->ExplanationText = "/cysこうげきじ/ce/nこうげきたいしょうにどくをあたえる/n/cysこうかりょう/ce/nチェインすう+５";
+	this->ExplanationText = "いちばんまえのてきをこうげきする/n/cysこうげきじ/ce/nこうげきたいしょうにどくをXふよ/nXはチェインすう+５";
 	// 行動前後の効果を実行するかのフラグ
 	this->Effect_Action_Before_Flg	= false;
 	this->Effect_Action_After_Flg	= true;

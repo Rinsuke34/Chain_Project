@@ -23,7 +23,7 @@ Card_Item_PoisonPotion::Card_Item_PoisonPotion() : Card_Item_Base()
 	// 画像の名前
 	this->ImageName = "PoisonPotion";			// 画像の名前
 	// 説明文
-	this->ExplanationText = "てきぜんたいにどくをXふよする/nXはチェインすう+５";
+	this->ExplanationText = "てきぜんたいにどくをXふよ/nXはチェイン+５";
 }
 
 // カード効果(特殊効果)

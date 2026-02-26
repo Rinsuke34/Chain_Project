@@ -1109,5 +1109,18 @@
     <ClInclude Include="source\Character_Npc_Servant.h">
       <Filter>ヘッダー ファイル\キャラクター\NPC\使い魔%28仲間%29</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resource\ImageData\Logo\Icon.ico">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resource.rc">
+      <Filter>リソース ファイル</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

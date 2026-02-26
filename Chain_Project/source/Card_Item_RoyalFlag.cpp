@@ -20,7 +20,7 @@ Card_Item_RoyalFlag::Card_Item_RoyalFlag() : Card_Item_Base()
 	// 画像の名前
 	this->ImageName = "RoyalFlag";				// 画像の名前
 	// 説明文
-	this->ExplanationText = "スート：おうこく をもつカードをすてふだからXまいてふだにくわえる/nXはチェインすう";
+	this->ExplanationText = "/cysスート：おうこく/ceをもつカードをすてふだからXまいてふだにくわえる/nXはチェイン";
 }
 
 // カード効果(特殊効果)

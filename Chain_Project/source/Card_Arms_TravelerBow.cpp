@@ -22,7 +22,7 @@ Card_Arms_TravelerBow::Card_Arms_TravelerBow() : Card_Arms_Base()
 	// 画像の名前
 	this->ImageName = "TravelerBow";		// 画像の名前
 	// 説明文
-	this->ExplanationText = "/cysこうどうまえ/ce/nこうげきりょくをえいぞくてきにきょうかする/n/cysこうかりょう/ce/nチェインすう";
+	this->ExplanationText = "ランダムなあいてをこうげきする/n/cysこうどうまえ/ce/nこうげきりょくをえいぞくてきに+Xする/nXはチェイン";
 	// 行動前後の効果を実行するかのフラグ
 	this->Effect_Action_Before_Flg	= true;
 	this->Effect_Action_After_Flg	= false;

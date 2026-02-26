@@ -22,7 +22,7 @@ Card_Item_PowerPotion::Card_Item_PowerPotion() : Card_Item_Base()
 	// 画像の名前
 	this->ImageName = "PowerPotion";			// 画像の名前
 	// 説明文
-	this->ExplanationText = "じぶんにこうげきりょくアップじょうたいをふよ/n/cysこうかりょう/ce/nチェインすう";
+	this->ExplanationText = "じぶんにアタックアップをXをふよ/nXはチェイン+１";
 }
 
 // カード効果(特殊効果)
@@ -38,14 +38,14 @@ void Card_Item_PowerPotion::Card_Effect_Extra_Process()
 	{
 		// 所持しているなら
 		/* 残りターン数をチェイン数分加算する */
-		StrengthBuff->Buff_Debuff_Time += GetNowChainCount();	// 残りターン数 += チェイン数
+		StrengthBuff->Buff_Debuff_Time += GetNowChainCount() + 1;	// 残りターン数 += チェイン数 + 1
 	}
 	else
 	{
 		// 所持していないなら
 		/* "状態異常：攻撃力強化"を付与する */
 		std::shared_ptr<Character_Buff_Debuff_Base> New_Strength_Buff = std::make_shared<Character_Buff_Strength>();
-		New_Strength_Buff->Buff_Debuff_Time = GetNowChainCount();	// 残りターン数 = チェイン数
+		New_Strength_Buff->Buff_Debuff_Time = GetNowChainCount() + 1;	// 残りターン数 = チェイン数 + 1
 		this->pPlayer->Add_Buff_Debuff(New_Strength_Buff);
 	}
 }

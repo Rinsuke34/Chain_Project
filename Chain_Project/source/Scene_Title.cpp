@@ -18,18 +18,38 @@
 #include "DataList_Sound.h"
 
 // コンストラクタ
-Scene_Title::Scene_Title() : Scene_Base("Scene_Title", 0, false, false)
+Scene_Title::Scene_Title(bool AnimFlg) : Scene_Base("Scene_Title", 0, false, false)
 {
+	// 引数
+	// bool AnimFlg : アニメーションフラグ(有効ならばアニメーションあり、無効ならばアニメーションなし)
+
 	/* 初期化 */
 	this->RotationAngle_MagicalCircle	= 0.0;					// 魔法陣の回転角度
-	this->iPhase						= PHASE_BLACKOUT;		// フェーズ
-	this->Counter_Phase					= 100;					// フェーズ用カウンター
 	this->LogoAlpha_White				= 0;					// タイトルロゴ(白)のアルファ値
 	this->LogoAlpha						= 0;					// タイトルロゴのアルファ値
 	this->CompassPosY					= -550;					// コンパスの描写座標
 	this->MagicalCircleScale			= 0.f;					// 魔法陣の拡大率
 	this->BuildingPosY					= SCREEN_SIZE_HEIGHT;	// 建物の描写座標Y
 	this->SkyAlpha						= 0;					// 空のアルファ値
+
+	if (AnimFlg)
+	{
+		// アニメーションありの場合はブラックアウトから開始
+		this->iPhase		= PHASE_TEAMLOGO;		// フェーズ
+		this->Counter_Phase = 300;					// フェーズ用カウンター
+	}
+	else
+	{
+		// アニメーションなしの場合は最初から完全に描写された状態で開始
+		this->iPhase				= PHASE_ADD_BUTTON;
+		this->LogoAlpha_White		= 0;		// タイトルロゴ(白)のアルファ値
+		this->LogoAlpha				= 255;		// タイトルロゴのアルファ値
+		this->CompassPosY			= 400;		// コンパスの描写座標
+		this->MagicalCircleScale	= 1.75f;	// 魔法陣の拡大率
+		this->BuildingPosY			= 100;		// 建物の描写座標Y
+		this->SkyAlpha				= 255;		// 空のアルファ値
+	}
+	
 
 	/* BGM音声データ読み込み */
 	// サウンド管理データリスト取得
@@ -62,13 +82,23 @@ void Scene_Title::Update()
 	/* フェーズに応じた処理を行う */
 	switch (this->iPhase)
 	{
+		// チームロゴ描写
+		case PHASE_TEAMLOGO:
+			this->Counter_Phase--;
+			if (this->Counter_Phase <= 0)
+			{
+				this->iPhase		= PHASE_BLACKOUT;
+				this->Counter_Phase	= 100;
+			}
+			break;
+
 		// ブラックアウト
 		case PHASE_BLACKOUT:
 			this->Counter_Phase--;
 			if (this->Counter_Phase <= 0)
 			{
-				this->iPhase = PHASE_LOGO_WHITE;
-				this->Counter_Phase = 200;
+				this->iPhase		= PHASE_LOGO_WHITE;
+				this->Counter_Phase	= 200;
 			}
 			break;
 
@@ -205,6 +235,40 @@ void Scene_Title::Update()
 // 描画
 void Scene_Title::Draw()
 {
+	/* ロゴの描写 */
+	if (this->iPhase == PHASE_TEAMLOGO)
+	{
+		/* 背景(白)の描写 */
+		// フェーズ用カウンターに基づいてアルファ値を計算
+		int alpha = 0;
+		if (this->Counter_Phase >= 200)
+		{
+			// 200～300 : 徐々に薄くなる (255 → 0)
+			alpha = (300 - this->Counter_Phase) * 255 / 100;
+		}
+		else if (this->Counter_Phase >= 100)
+		{
+			// 100～200 : 完全に描写
+			alpha = 255;
+		}
+		else if (this->Counter_Phase >= 0)
+		{
+			// 0～100 : 徐々に濃くなる (0 → 255)	
+			alpha = this->Counter_Phase * 255 / 100;
+		}
+
+		// アルファブレンドモードを設定して描写
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
+		DrawBox(0, 0, SCREEN_SIZE_WIDE, SCREEN_SIZE_HEIGHT, GetColor(255, 255, 255), TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
+		/* 文字の描写 */
+		DrawExtendGraph(
+			(SCREEN_SIZE_WIDE / 2) - 256, (SCREEN_SIZE_HEIGHT / 2) - 256,
+			(SCREEN_SIZE_WIDE / 2) + 256, (SCREEN_SIZE_HEIGHT / 2) + 256,
+			*(this->Image_TeamLogo), TRUE);
+	}
+
 	/* 空の描写 */
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, this->SkyAlpha);
 	DrawExtendGraph(0, 0, SCREEN_SIZE_WIDE, SCREEN_SIZE_HEIGHT, *(this->Image_BackGround[0]), TRUE);
@@ -280,10 +344,14 @@ void Scene_Title::AdvanceImageLoad()
 	// タイトル背景
 	ImageFilePath = "BackGround/Title_BackSky";
 	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
-	Image_BackGround[0] = pDataList_Image->iGetImageHandle(ImageFilePath);;
+	Image_BackGround[0] = pDataList_Image->iGetImageHandle(ImageFilePath);
 	ImageFilePath = "BackGround/Title_BackBuilding";
 	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
-	Image_BackGround[1] = pDataList_Image->iGetImageHandle(ImageFilePath);;
+	Image_BackGround[1] = pDataList_Image->iGetImageHandle(ImageFilePath);
+	// チームロゴ
+	ImageFilePath = "Logo/TeamRogo";
+	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);
+	Image_TeamLogo = pDataList_Image->iGetImageHandle(ImageFilePath);
 	// UI(ボタン)
 	ImageFilePath = "UI/Button/Button_Frame_Corner";
 	pDataList_Image->LoadImageHandle_ASync(ImageFilePath);

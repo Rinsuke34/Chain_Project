@@ -24,7 +24,7 @@ Card_Spell_WaterMagic::Card_Spell_WaterMagic() : Card_Spell_Base()
 	// 画像の名前
 	this->ImageName = "WaterMagic";	// 画像の名前
 	// 説明文
-	this->ExplanationText = "せんとうのてきにXダメージをあたえる/nそのうしろのてきにははんぶんのダメージをあたえ、そのさらにうしろのてきにはさらにはんぶんのダメージをあたえる/nXは１０+（１０×チェイン）";
+	this->ExplanationText = "せんとうのてきにXダメージをあたえる/nそのうしろのてきにははんぶんのダメージをあえたる/nそのさらにうしろのてきにはさらにはんぶんのダメージをあたえる/nXは１０+（１０×チェイン）";
 }
 
 // カード効果(特殊効果)

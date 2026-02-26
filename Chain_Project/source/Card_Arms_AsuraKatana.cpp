@@ -24,7 +24,7 @@ Card_Arms_AsuraKatana::Card_Arms_AsuraKatana() : Card_Arms_Base()
 	// 画像の名前
 	this->ImageName		= "AsuraKatana";		// 画像の名前
 	// 説明文
-	this->ExplanationText = "/cysターンかいしじ/ce/nこうげきりょくをXにする\nXはたおしたてきのかず";
+	this->ExplanationText = "いちばんまえのてきをこうげきする/n/cysターンかいしじ/ce/nこうげきりょくをXにする\nXはたおしたてきのかず";
 	// 行動前後の効果を実行するかのフラグ
 	this->Effect_Action_Before_Flg	= false;
 	this->Effect_Action_After_Flg	= true;

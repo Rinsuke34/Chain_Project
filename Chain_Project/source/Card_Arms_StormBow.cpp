@@ -22,7 +22,7 @@ Card_Arms_StormBow::Card_Arms_StormBow() : Card_Arms_Base()
 	// 画像の名前
 	this->ImageName = "StormBow";		// 画像の名前
 	// 説明文
-	this->ExplanationText	= "Xかいこうげきする/nXはチェイン+１";
+	this->ExplanationText	= "ランダムなあいてをこうげきする/nこれはXかいおこなわれる/nXはチェイン+１";
 
 	// 行動前後の効果を実行するかのフラグ
 	this->Effect_Action_Before_Flg	= false;

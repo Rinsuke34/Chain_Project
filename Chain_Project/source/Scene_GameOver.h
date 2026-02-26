@@ -14,8 +14,8 @@ class Scene_UI_Button;
 class Scene_GameOver : public Scene_Base
 {
 	public:
-		Scene_GameOver();			// コンストラクタ
-		virtual ~Scene_GameOver();	// デストラクタ
+		Scene_GameOver(bool Winflg);	// コンストラクタ
+		virtual ~Scene_GameOver();		// デストラクタ
 
 		/* 関数 */
 		virtual void	Update()			override;	// 更新
@@ -39,4 +39,5 @@ class Scene_GameOver : public Scene_Base
 		bool									GameEndFlg;				// ゲーム終了フラグ
 		int 									iPhase;					// フェーズ
 		int										GetExp;					// 取得経験値
+		bool									WinFlg;					// 勝利したかのフラグ
 };

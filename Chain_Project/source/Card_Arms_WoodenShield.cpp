@@ -21,5 +21,5 @@ Card_Arms_WoodenShield::Card_Arms_WoodenShield() : Card_Arms_Base()
 	// 画像の名前
 	this->ImageName		= "WoodenShield";		// 画像の名前
 	// 説明文
-	this->ExplanationText = "";
+	this->ExplanationText = "じぶんにシールドをふよする";
 }

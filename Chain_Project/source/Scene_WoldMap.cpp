@@ -536,7 +536,7 @@ void Scene_WoldMap::CheckStageEnd()
 		{
 			// 最終ステージである場合
 			/* シーン"ゲームオーバー"を作成 */
-			gpSceneServer->AddSceneReservation(std::make_shared<Scene_GameOver>());
+			gpSceneServer->AddSceneReservation(std::make_shared<Scene_GameOver>(true));
 			this->GameOverCreateFlg = true;
 		}
 		else

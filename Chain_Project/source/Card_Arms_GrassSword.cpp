@@ -22,7 +22,7 @@ Card_Arms_GrassSword::Card_Arms_GrassSword() : Card_Arms_Base()
 	// 画像の名前
 	this->ImageName = "GrassSword";		// 画像の名前
 	// 説明文
-	this->ExplanationText = "きょうりょくだがX％でこわれる/nXは２５ー（チェインすう×５）";
+	this->ExplanationText = "いちばんまえのてきをこうげきする/n/cysこうげきご/ce/nX％でこわれる/nXは２５ー（チェインすう×５）";
 }
 
 // 効果発動:行動直後

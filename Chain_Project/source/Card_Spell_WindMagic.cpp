@@ -18,8 +18,8 @@ Card_Spell_WindMagic::Card_Spell_WindMagic() : Card_Spell_Base()
 	// スートリスト
 	this->Suite_List.push_back(SUITE_ELEMENT);	// エレメント
 	// ステータス
-	this->Strength = 0;					// 攻撃力
-	this->Diffence = 0;					// 防御力
+	this->Strength	= 0;					// 攻撃力
+	this->Diffence	= 0;					// 防御力
 	this->AttackRange = ATTACKRANGE_FRONT;	// 攻撃範囲
 	// 画像の名前
 	this->ImageName = "WindMagic";	// 画像の名前

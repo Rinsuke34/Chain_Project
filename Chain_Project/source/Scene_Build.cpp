@@ -73,7 +73,7 @@ void Scene_Build::Update()
 	{
 		gpSceneServer->SetDeleteCurrentSceneFlg(true);
 		LOAD_FUNCTION::AddLoadScene();
-		gpSceneServer->AddSceneReservation(std::make_shared<Scene_Title>());
+		gpSceneServer->AddSceneReservation(std::make_shared<Scene_Title>(false));
 		return;
 	}
 

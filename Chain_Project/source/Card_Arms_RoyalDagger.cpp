@@ -22,7 +22,7 @@ Card_Arms_RoyalDagger::Card_Arms_RoyalDagger() : Card_Arms_Base()
 	// 画像の名前
 	this->ImageName		= "RoyalDagger";		// 画像の名前
 	// 説明文
-	this->ExplanationText = "/cysこうどうまえ/ce/nこうげきりょくをきょうかする/n/cysこうかりょう/ce/nチェインすう";
+	this->ExplanationText = "いちばんまえのてきをこうげきする/n/cysこうどうまえ/ce/nこうげきりょくをXきょうか/nXはチェイン×２";
 	// 行動前後の効果を実行するかのフラグ
 	this->Effect_Action_Before_Flg	= true;
 	this->Effect_Action_After_Flg	= false;
@@ -35,5 +35,5 @@ void Card_Arms_RoyalDagger::Effect_Action_Before(std::shared_ptr<Character_Base>
 	// Target : 効果対象のキャラクター
 
 	/* 攻撃力を加算 */
-	this->Add_Strength_Buff(MyChainCountGet_Buff());	// 攻撃力バフ追加:チェイン数
+	this->Add_Strength_Buff(MyChainCountGet_Buff() * 2);	// 攻撃力バフ追加:チェイン数 * 2
 }
